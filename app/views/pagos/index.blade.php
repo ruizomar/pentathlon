@@ -5,29 +5,24 @@
 @endsection
 @section('contenido')
 <div>
-  
 
       {{ Form::open(array('url' => 'elemento','role' => 'form','id' => 'fbuscar')) }}
         <div class="col-md-12">
         <h2>Pago de membresia</h2>
-            <div class="col-md-3">  
-              {{ Form::label('nombre', 'Nombre (s)') }}
+            <div class="col-md-3 form-group">  
+              {{ Form::label('nombre', 'Nombre (s)',array('class' => 'control-label')) }}
               {{ Form::text('nombre', null, array('placeholder' => 'introduce nombre','class' => 'form-control')) }}
             </div>
-            <div class="col-md-3">
-              {{ Form::label('paterno', 'Apellido paterno') }}
+            <div class="col-md-3 form-group">
+              {{ Form::label('paterno', 'Apellido paterno',array('class' => 'control-label')) }}
               {{ Form::text('paterno', null, array('placeholder' => 'introduce apellido paterno','class' => 'form-control')) }}
             </div>
-            <div class="col-md-3">
-              {{ Form::label('materno', 'Apellido materno') }}
+            <div class="col-md-3 form-group">
+              {{ Form::label('materno', 'Apellido materno',array('class' => 'control-label')) }}
               {{ Form::text('materno', null, array('placeholder' => 'introduce apellido materno','class' => 'form-control')) }}
             </div>
-            <div class="col-md-2">
-              {{ Form::label('Matricula', 'Numero de matricula') }}
-              {{ Form::text('matricula', null, array('placeholder' => 'introduce matricula','class' => 'form-control')) }}
-            </div>
             <div class="col-md-1">
-              {{ Form::button('<i class="fa fa-search fa-lg"></i> Buscar',array('class' => 'btn btn-primary','id' => 'buscar')) }}
+              {{ Form::button('<i class="fa fa-search fa-lg"></i> Buscar',array('class' => 'btn btn-primary','id' => 'buscar','type' => 'submit')) }}
             </div>
         </div>       
       {{ Form::close() }}
@@ -95,4 +90,9 @@
 </div>
 </div>
 <!-- End Modal -->
+@endsection
+@section('scripts')
+<script src="js/bootstrapValidator.js" type="text/javascript"></script>
+<script src="js/es_ES.js" type="text/javascript"></script>
+<script src="js/buscar.js" type="text/javascript"></script>
 @endsection
