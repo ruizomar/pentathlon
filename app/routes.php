@@ -15,12 +15,22 @@ Route::get('/', function()
 {
 	return View::make('hello');
 });
-Route::get('pagos', function()
-{
-	return View::make('pagos/index');
-});
+
 Route::get('alta', function()
 {
 	return View::make('registro/alta');
 });
+
+
+Route::controller('pagos', 'MembresiasController');
+/*Route::get('pagos', function(){
+	return View::make('pagos/index');
+});
 Route::post('elemento', 'MembresiasController@buscar');
+Route::post('registrarpago', 'MembresiasController@registrarpago');
+Route::post('recibo','MembresiasController@imprecion');*/
+
+Route::get('companias', function()
+{
+	return View::make('administracion/companias');
+});

@@ -1,5 +1,5 @@
 <?php
-class Matricula extends Eloquent{
+class Pago extends Eloquent{
 	public $timestamps = false;
 
 	public function elemento(){

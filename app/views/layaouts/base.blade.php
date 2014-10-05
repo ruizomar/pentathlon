@@ -4,12 +4,13 @@
     <title>@yield('titulo')</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="font-awesome/css/font-awesome.css">
-    <link rel="stylesheet" type="text/css" href="css/theme.css">
-    <script src="js/jquery-1.11.1.js" type="text/javascript"></script>
-    <script src="js/bootstrap.js"></script>
+    {{  HTML::style('css/bootstrap.css');  }}
+    {{  HTML::style('css/bootstrap-theme.min.css');  }}
+    {{  HTML::style('font-awesome/css/font-awesome.css');  }}
+    {{  HTML::style('css/theme.css');  }}
+
+    {{  HTML::script('js/jquery-1.11.1.js'); }}
+    {{  HTML::script('js/bootstrap.js'); }}
   </head>
   <body>
 <!-- navbar -->

@@ -5,8 +5,14 @@
 @endsection
 @section('contenido')
 <div>
-
-      {{ Form::open(array('url' => 'elemento','role' => 'form','id' => 'fbuscar')) }}
+<?php $status=Session::get('status'); ?>
+@if($status=='fail_create')
+  <div id="ooo" class="col-md-12" style="margin-top:10px;">
+        <p class="alert alert-danger"><i class="fa fa-exclamation-triangle fa-lg"></i> Ocurrio un error!
+        </p>
+  </div>
+@endif
+      {{ Form::open(array('url' => 'pagos/buscar','role' => 'form','id' => 'fbuscar')) }}
         <div class="col-md-12">
         <h2>Pago de membresia</h2>
             <div class="col-md-3 form-group">  
@@ -26,22 +32,24 @@
             </div>
         </div>       
       {{ Form::close() }}
-      <div id="error" class="col-md-12 hidden" style="margin-top:15px;">
-        <p class="alert alert-danger">No se encontro al Elemento</p>
+      <div id="error" class="col-md-12 hidden" style="margin-top:10px;">
+
+        <p class="alert alert-danger"><i class="fa fa-exclamation-triangle fa-lg"></i> No se encontro al Elemento
+        </p>
       </div>
-      <i class="fa fa-spinner fa-2x fa-spin hidden"></i>
-      <div class="col-md-12 tabla hidden">
-        <h2 style="">Elementos</h2>
-        <table class="table">
+      <i class="fa fa-spinner fa-2x fa-spin hidden spin-form"></i>
+      <div id="elemento" class="col-md-12 tabla hidden">
+        <h2 style="">Elemento</h2>
+        <table id="telemento"class="table">
           <thead>
             <tr>
               <th>id</th>
-              <th>Nombre</th>
+              <th>Nombre(s)</th>
               <th>Apellido paterno</th>
               <th>Apellido materno</th>
               <th>Fecha de nacimiento</th>
-              <th>Matricula</th>
-              <th>Operaciones</th>
+              <th>Numero de Matricula</th>
+              <th>Cantidad</th>
             </tr>
           </thead>
           <tbody>
@@ -52,46 +60,93 @@
               <td></td>
               <td></td>
               <td></td>
-              <td><a class="btn btn-success" href="" data-toggle="modal" data-target="#myModal">Registrar pago</a></span></td>
+              <td>
+                {{ Form::open(array('url' => 'pagos/registrarpago','role' => 'form','id' => 'pagar','class' => 'form-inline')) }}
+                <div class="form-group">
+                {{ Form::text('cantidad', null, array('class' => 'form-control','placeholder' => 'Cantidad')) }}
+                {{ Form::text('id', null, array('class' => 'hidden form-control')) }}
+                </div>
+                {{ Form::button('Registrar pago',array('class' => 'pagar btn btn-success','type' => 'submit','id' => 'bpagar')) }}
+                {{form::close()}}
+              </td>
             </tr>
           </tbody>
         </table>
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel"><i class="fa icon-plus"></i> Pago membresia</h4>
       </div>
-      <div class="modal-body">
-
-        {{ Form::open(array('url' => 'imprimir/recibo','role' => 'form')) }}
-      <form role="form" action="imprimir/recibomembresia" method="post">
-        <div class="form-group">
-          El pago se a registrado:
-          <label for="exampleInputEmail1">1</label>
-          <label for="exampleInputEmail1">Omar</label>
-          <label for="exampleInputEmail1">Ruiz</label>
-          <label for="exampleInputEmail1">Meza</label>
-          <label for="exampleInputEmail1"><strong>20015</strong></label>
-          <label for="exampleInputEmail1">2014</label>
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="myModalLabel">
+            <i class="fa fa-plus"></i> Pago membresia
+            <i class="fa fa-spinner fa-2x fa-spin hidden spin-modal"></i>
+          </h4>
         </div>
+        <div class="modal-body">
 
-      </div>
-      <div class="modal-footer">
-        {{ Form::button('Cancelar',array('class' => 'btn btn-warning','data-dismiss' => 'modal')) }}
-        {{ Form::button('Imprimir recibo',array('class' => 'btn btn-success','type' => 'submit')) }}
-    </form> 
-    {{form::close()}}
+            <div class=" hidden alert alert-danger" role="alert">
+              <label id="message">
+            </label>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+          {{ Form::open(array('url' => 'pagos/recibo','role' => 'form','id' => 'recibo','class' => 'form-inline')) }}
+              {{ Form::text('id', null, array('class' => 'hidden form-control')) }}
+            <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
+            {{ Form::button('Imprimir recibo',array('class' => 'btn btn-success','type' => 'submit','id' => 'imprimir')) }}
+          {{form::close()}}
+        </div>
       </div>
     </div>
   </div>
+  <!-- End Modal -->
+    <!-- Modal -->
+  <div class="modal fade" id="Elementos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="Elementos">
+            <i class="fa fa-plus"></i> Elementos
+          </h4>
+        </div>
+        <div class="modal-body">
+
+          <table id="elementos" class="table">
+            <thead>
+              <tr>
+                <th>id</th>
+                <th>Nombre(s)</th>
+                <th>Apellido paterno</th>
+                <th>Apellido materno</th>
+                <th>Fecha de nacimiento</th>
+                <th>Numero de Matricula</th>
+                <th>select</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Modal -->
 </div>
-</div>
-<!-- End Modal -->
 @endsection
 @section('scripts')
+<style type="text/css">
+.cantidad{
+    right: 0 !important;
+    top: 0 !important;
+}
+</style>
 <script src="js/bootstrapValidator.js" type="text/javascript"></script>
 <script src="js/es_ES.js" type="text/javascript"></script>
 <script src="js/buscar.js" type="text/javascript"></script>

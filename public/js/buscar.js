@@ -7,57 +7,41 @@ $(document).ready(function() {
         },
         fields: {
             nombre: {
-                message: 'The username is not valid',
                 validators: {
                     notEmpty: {
-                        message: 'The username is required and cannot be empty'
                     },
                     regexp: {
-                        regexp: /^[a-zA-Z]+$/,
-                        message: 'The username can only consist of alphabetical and number'
-                    },
-                    different: {
-                        field: 'password',
-                        message: 'The username and password cannot be the same as each other'
+                        regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+                        message: 'Por favor verifica el campo'
                     }
                 }
             },
             paterno: {
                 validators: {
-                    notEmpty: {
-                        message: 'The username is required and cannot be empty'
-                    },
+                    notEmpty: { },
                     regexp: {
-                        regexp: /^[a-zA-Z]+$/,
-                        message: 'The username can only consist of alphabetical and number'
-                    },
-                    different: {
-                        field: 'password',
-                        message: 'The username and password cannot be the same as each other'
+                        regexp:/^[a-zA-ZáéíóúñÑÁÉÍÓÚ]+$/,
+                        message: 'Por favor verifica el campo'
                     }
                 }
             },
             materno: {
                 validators: {
-                    notEmpty: {
-                        message: 'The password is required and cannot be empty'
-                    },
+                    regexp: {
+                        regexp:/^[a-zA-ZáéíóúñÑÁÉÍÓÚ]+$/
+                        ,
+                        message: 'Por favor verifica el campo'
+                    }
                 }
-            }
+            },
         }
     })
-.on('success.form.bv', function(e) {
-            // Prevent form submission
+    .on('success.form.bv', function(e) {
             e.preventDefault();
-
-            // Get the form instance
             var $form = $(e.target);
-
-            // Get the BootstrapValidator instance
             var bv = $form.data('bootstrapValidator');
 
-            // Use Ajax to submit form data
-            $('.fa-spin').removeClass('hidden');
+            $('.spin-form').removeClass('hidden');
             $.post($form.attr('action'), $form.serialize(), function(json) {
                 if (json.success) {
                     $('.table tbody tr td:first-child').text(json.id);
@@ -67,14 +51,90 @@ $(document).ready(function() {
                     $('.table tbody tr td:nth-child(5)').text(json.fecha);
                     $('.table tbody tr td:nth-child(6)').text(json.matricula);
                     
-                    $('.tabla').removeClass('hidden');
-                    $('.fa-spin').addClass('hidden');
+                    $('#elemento').removeClass('hidden');
                     $('#error').addClass('hidden');
-                } else {
-                   $('#error').removeClass('hidden');
-                   $('.fa-spin').addClass('hidden');
-                   $('.tabla').addClass('hidden');
                 }
-            }, 'json');
-        });;
+                else if(json.success == false){
+                   $('#error').removeClass('hidden'); 
+                }
+                else{
+                    $( "#elementos tbody" ).html('');
+                    for (var i = json.length - 1; i >= 0; i--) {
+                        var matricula='';
+                        if(json[i].matricula!=null)
+                                matricula=json[i].matricula.matricula;
+                        $( "<tr>" ).append(
+                            "<td>"+json[i].id+'</td>'+  
+                            "<td>"+json[i].nombre+'</td>'+
+                            "<td>"+json[i].paterno+'</td>'+
+                            "<td>"+json[i].materno+'</td>'+
+                            "<td>"+json[i].fecha+'</td>'+
+                            "<td>"+matricula+'</td>'+
+                            '<td><button type="button" onclick="llenartabla(this)" class="btn btn-success select">select</button></td>').appendTo( "#elementos tbody" );
+                    };
+                    $('#Elementos').modal('show')
+                }
+                $('.fa-spin').addClass('hidden');
+                //$('#elementos').addClass('hidden');
+    }, 'json');
+    }); 
+    
+   $('#pagar').bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok cantidad',
+            invalid: 'glyphicon glyphicon-remove cantidad',
+            validating: 'glyphicon glyphicon-refresh cantidad'
+        },
+        fields: {
+            cantidad: {
+                validators: {
+                    notEmpty: {
+                    },
+                    regexp: {
+                        regexp:/^[0-9]*\.?[0-9]+$/,
+                        message: 'Por favor introduce una cantidad'
+                    }
+                }
+            }
+        }
+    })
+    .on('success.form.bv', function(e) {
+            e.preventDefault();
+            var $form = $(e.target);
+            var bv = $form.data('bootstrapValidator');
+            $('#myModal').modal('show')
+            $('.spin-modal').removeClass('hidden');
+            $('[name=id]').val($('#elemento tbody tr td:first-child').text());
+            $('#recibo').attr('href','recibo/'+$('#telemento tbody tr td:first-child').text());
+            $('.alert').addClass('hidden');
+            $.post($form.attr('action'), $form.serialize(), function(json) {
+                if (json.success) {
+                    $('#message').html(json.message+json.matricula);
+                    $('.alert').removeClass('hidden alert-danger');
+                    $('.alert').addClass('alert-success');
+                } else {
+                    $('#message').html(json.errormessage);
+                    $('.alert').removeClass('hidden alert-success');
+                    $('.alert').addClass('alert-danger');
+                }
+                $('.spin-modal').addClass('hidden');
+                $('#pagar').data('bootstrapValidator').resetField('cantidad', true)
+
+    }, 'json');
+    });
+
+
 });
+    function llenartabla(a) {
+        $('#Elementos').modal('hide');
+        var $row = $(a).closest("tr");
+
+        $('#telemento tbody tr td:first-child').text($row.find("td:nth-child(1)").text());
+        $('#telemento tbody tr td:nth-child(2)').text($row.find("td:nth-child(2)").text());
+        $('#telemento tbody tr td:nth-child(3)').text($row.find("td:nth-child(3)").text());
+        $('#telemento tbody tr td:nth-child(4)').text($row.find("td:nth-child(4)").text());
+        $('#telemento tbody tr td:nth-child(5)').text($row.find("td:nth-child(5)").text());
+        $('#telemento tbody tr td:nth-child(6)').text($row.find("td:nth-child(6)").text());
+
+        $('#elemento').removeClass('hidden');
+    }
