@@ -3,26 +3,6 @@
 class MembresiasController extends BaseController {
 
 	public function getIndex(){
-		/*$elemento = Elemento::whereHas('persona',function($q){ 
-			$q->where('nombre','like','eliel'.'%')
-			->where('apellidopaterno','=','nava')
-			->where('apellidomaterno','like',''.'%');
-		})->get();
-		//$we = array('omar' => array('er' => "chas") );
-		//$we['omar'] = array('er' => "chas");
-		$dato = array();
-		foreach ($elemento as $elemento) {
-			 $dato[] = array(
-			 	'id' => $elemento->id,
-			 	'nombre' => $elemento->persona->nombre,
-			 	'apellidopaterno' => $elemento->persona->apellidopaterno,
-			 	'apellidomaterno' => $elemento->persona->apellidomaterno,
-			 	'fecha' => $elemento->fechanacimiento,
-			 	'matricula' => $elemento->matricula,
-			 	);
-		}
-		return Response::json($dato);*/
-		//print_r ( $dato );
 		return View::make('pagos/index');
 	}
 
@@ -163,17 +143,6 @@ class MembresiasController extends BaseController {
 				);
 			return View::make('pagos/recibomembrecia')-> with('datos',$datos);
 		}
-
-		//$hacienda = Cargo::find(1)->elementos()->where('fecha_fin','=',null)->first();
-		//echo($hacienda->persona->nombre.' '.$hacienda->persona->apellidopaterno.' '.$hacienda->persona->apellidomaterno);
-		//echo($hacienda->grados()->orderBy('fecha','desc')->first()->nombre);
-		////////////////////////////////////
-		//$elemento = Elemento::find(1)->grados()->orderBy('fecha','desc')->first();
-		//echo($elemento->elementos->first()->persona->nombre.'- '.
-		//	$elemento->nombre.'- '.
-		//	$elemento->elementos->first()->reclutamiento.'- '.
-		//	$elemento->elementos->first()->fechaingreso);
-		///////////////////////////
 		else
 		return View::make('pagos/recibomembrecia');
 	}

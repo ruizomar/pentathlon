@@ -23,14 +23,4 @@ Route::get('alta', function()
 
 
 Route::controller('pagos', 'MembresiasController');
-/*Route::get('pagos', function(){
-	return View::make('pagos/index');
-});
-Route::post('elemento', 'MembresiasController@buscar');
-Route::post('registrarpago', 'MembresiasController@registrarpago');
-Route::post('recibo','MembresiasController@imprecion');*/
-
-Route::get('companias', function()
-{
-	return View::make('administracion/companias');
-});
+Route::controller('companias','CompaniasController');

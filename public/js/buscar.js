@@ -55,7 +55,8 @@ $(document).ready(function() {
                     $('#error').addClass('hidden');
                 }
                 else if(json.success == false){
-                   $('#error').removeClass('hidden'); 
+                   $('#error').removeClass('hidden');
+                   $('#elemento').addClass('hidden'); 
                 }
                 else{
                     $( "#elementos tbody" ).html('');
@@ -70,12 +71,12 @@ $(document).ready(function() {
                             "<td>"+json[i].materno+'</td>'+
                             "<td>"+json[i].fecha+'</td>'+
                             "<td>"+matricula+'</td>'+
-                            '<td><button type="button" onclick="llenartabla(this)" class="btn btn-success select">select</button></td>').appendTo( "#elementos tbody" );
+                            '<td><button type="button" onclick="llenartabla(this)" class="btn btn-info select btn-sm">seleccionar</button></td>').appendTo( "#elementos tbody" );
                     };
                     $('#Elementos').modal('show')
+                    $('#error').addClass('hidden');
                 }
                 $('.fa-spin').addClass('hidden');
-                //$('#elementos').addClass('hidden');
     }, 'json');
     }); 
     
@@ -128,13 +129,8 @@ $(document).ready(function() {
     function llenartabla(a) {
         $('#Elementos').modal('hide');
         var $row = $(a).closest("tr");
-
-        $('#telemento tbody tr td:first-child').text($row.find("td:nth-child(1)").text());
-        $('#telemento tbody tr td:nth-child(2)').text($row.find("td:nth-child(2)").text());
-        $('#telemento tbody tr td:nth-child(3)').text($row.find("td:nth-child(3)").text());
-        $('#telemento tbody tr td:nth-child(4)').text($row.find("td:nth-child(4)").text());
-        $('#telemento tbody tr td:nth-child(5)').text($row.find("td:nth-child(5)").text());
-        $('#telemento tbody tr td:nth-child(6)').text($row.find("td:nth-child(6)").text());
-
+        for (var i = 1; i < 7; i++) {
+            $('#telemento tbody tr td:nth-child('+i+')').text($row.find("td:nth-child("+i+")").text());
+        };
         $('#elemento').removeClass('hidden');
     }

@@ -16,4 +16,7 @@ class Elemento extends Eloquent{
 	public function cargos(){
 		return $this->belongsToMany('Cargo','cargosobtenido')->withPivot('fecha_inicio','fecha_fin');
 	}
+	public function subsonacompania(){
+		return $this->belongsTo('Subsonacompania');
+	}
 }

@@ -15,19 +15,19 @@
       {{ Form::open(array('url' => 'pagos/buscar','role' => 'form','id' => 'fbuscar')) }}
         <div class="col-md-12">
         <h2>Pago de membresia</h2>
-            <div class="col-md-3 form-group">  
+            <div class="col-sm-3 form-group">  
               {{ Form::label('nombre', 'Nombre (s)',array('class' => 'control-label')) }}
               {{ Form::text('nombre', null, array('placeholder' => 'introduce nombre','class' => 'form-control')) }}
             </div>
-            <div class="col-md-3 form-group">
+            <div class="col-sm-3 form-group">
               {{ Form::label('paterno', 'Apellido paterno',array('class' => 'control-label')) }}
               {{ Form::text('paterno', null, array('placeholder' => 'introduce apellido paterno','class' => 'form-control')) }}
             </div>
-            <div class="col-md-3 form-group">
+            <div class="col-sm-3 form-group">
               {{ Form::label('materno', 'Apellido materno',array('class' => 'control-label')) }}
               {{ Form::text('materno', null, array('placeholder' => 'introduce apellido materno','class' => 'form-control')) }}
             </div>
-            <div class="col-md-1">
+            <div class="col-sm-1">
               {{ Form::button('<i class="fa fa-search fa-lg"></i> Buscar',array('class' => 'btn btn-primary','id' => 'buscar','type' => 'submit')) }}
             </div>
         </div>       
@@ -48,7 +48,7 @@
               <th>Apellido paterno</th>
               <th>Apellido materno</th>
               <th>Fecha de nacimiento</th>
-              <th>Numero de Matricula</th>
+              <th>Numero de Matrícula</th>
               <th>Cantidad</th>
             </tr>
           </thead>
@@ -80,7 +80,7 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
           <h4 class="modal-title" id="myModalLabel">
-            <i class="fa fa-plus"></i> Pago membresia
+            <i class="fa fa-floppy-o"></i> Pago membresia
             <i class="fa fa-spinner fa-2x fa-spin hidden spin-modal"></i>
           </h4>
         </div>
@@ -104,13 +104,13 @@
   </div>
   <!-- End Modal -->
     <!-- Modal -->
-  <div class="modal fade" id="Elementos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+  <div class="modal fade bs-example-modal-lg" id="Elementos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
           <h4 class="modal-title" id="Elementos">
-            <i class="fa fa-plus"></i> Elementos
+            <i class="fa fa-eye"></i> Elementos
           </h4>
         </div>
         <div class="modal-body">
@@ -123,8 +123,8 @@
                 <th>Apellido paterno</th>
                 <th>Apellido materno</th>
                 <th>Fecha de nacimiento</th>
-                <th>Numero de Matricula</th>
-                <th>select</th>
+                <th>Matrícula</th>
+                <th>seleccionar</th>
               </tr>
             </thead>
             <tbody>
