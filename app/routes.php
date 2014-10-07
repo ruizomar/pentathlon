@@ -13,14 +13,22 @@
 
 Route::get('/', function()
 {
-	return View::make('hello');
+	return "hola";
 });
 
-Route::get('alta', function()
+/*
+Route::get('/ejemplo', function()
 {
-	return View::make('registro/alta');
+	return View::make('registro.ejemplo');
 });
+*/
 
+
+Route::get('recluta/alta','AltaReclutaController@get_nuevo');
+Route::post('recluta/alta','AltaReclutaController@post_nuevo');
+Route::get('recluta/editar','EditaReclutaController@editar');
+Route::post('recluta/editar','EditaReclutaController@buscar');
+Route::get('recluta/lista','AltaReclutaController@lista');
 
 Route::controller('pagos', 'MembresiasController');
 Route::controller('companias','CompaniasController');
