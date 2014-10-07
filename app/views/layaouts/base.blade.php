@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>@yield('titulo')</title>
+    <title> @yield('titulo') </title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {{  HTML::style('css/bootstrap.css');  }}
-    {{  HTML::style('css/bootstrap-theme.min.css');  }}
-    {{  HTML::style('font-awesome/css/font-awesome.css');  }}
-    {{  HTML::style('css/theme.css');  }}
+    {{HTML::style('css/bootstrap.css')}}
+    {{HTML::style('css/bootstrap-theme.min.css')}}
+    {{HTML::style('font-awesome/css/font-awesome.css')}}
+    {{HTML::script('js/bootstrap.js')}}
+    {{HTML::script('js/jquery-1.11.1.js')}}
 
-    {{  HTML::script('js/jquery-1.11.1.js'); }}
-    {{  HTML::script('js/bootstrap.js'); }}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {{HTML::style('css/theme.css')}}
+    <!-- <link rel="stylesheet" type="text/css" href="css/theme.css"> -->
+    <!-- BootstrapValidator JS -->
+    @yield('link')
+
   </head>
   <body>
 <!-- navbar -->
@@ -20,7 +24,7 @@
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
               <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand" href="admin"><img src="imgs/pdmu.png" alt=""> PDMU</a>
+            <a class="navbar-brand" href="admin"><img src="../imgs/pdmu.png" alt=""> PDMU</a>
           </div>
           <div class="hidden-xs">
                   <ul class="nav navbar-nav navbar-right">
@@ -97,8 +101,6 @@
     @yield('contenido')
       <footer>
           <hr>
-          <p class="pull-right">Design by <a href="#" target="_blank">Omar Ruiz</a></p>
-          <p>© 2014 Omar Ruiz</p>
       </footer>
     </div>
   </body>
