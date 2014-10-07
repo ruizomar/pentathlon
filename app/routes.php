@@ -24,10 +24,3 @@ Route::get('alta', function()
 
 Route::controller('pagos', 'MembresiasController');
 Route::controller('companias','CompaniasController');
-
-
-Route::get('recluta/alta','AltaReclutaController@get_nuevo');
-Route::post('recluta/alta','AltaReclutaController@post_nuevo');
-Route::get('recluta/lista','AltaReclutaController@lista');
-Route::get('recluta/editar','EditaReclutaController@editar');
-Route::post('recluta/editar','EditaReclutaController@buscar');
