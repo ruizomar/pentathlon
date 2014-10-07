@@ -8,15 +8,14 @@ class MembresiasController extends BaseController {
 
 	public function postBuscar(){
 		$rules = array(
-			'nombre' => 'required|alpha',
-			'paterno' => 'required|alpha',
-			'materno' => 'alpha'
+			'nombre' => 'required',
+			'paterno' => 'required',
 			);
-		
+
 		$validation = Validator::make(Input::all(), $rules);
 		if($validation->fails())
-		{		
-		  $dato = array('success' => false,'errormessage' => '<i class="fa fa-exclamation-triangle fa-lg"></i>Ocurrio un error');
+		{
+			$dato = array('success' => false,'errormessage' => '<i class="fa fa-exclamation-triangle fa-lg"></i>Ocurrio un error');
 			return Response::json($dato);
 		}
 

@@ -27,7 +27,9 @@ Route::get('/ejemplo', function()
 Route::get('recluta/alta','AltaReclutaController@get_nuevo');
 Route::post('recluta/alta','AltaReclutaController@post_nuevo');
 Route::get('recluta/editar','EditaReclutaController@editar');
-Route::post('recluta/editar','EditaReclutaController@buscar');
+Route::get('recluta/prueba','EditaReclutaController@prueba');
+Route::get('recluta/otro','EditaReclutaController@otro');
+Route::post('recluta/buscar','EditaReclutaController@buscar');
 Route::get('recluta/lista','AltaReclutaController@lista');
 
 Route::controller('pagos', 'MembresiasController');

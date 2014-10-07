@@ -15,7 +15,7 @@
       {{ Form::open(array('url' => 'pagos/buscar','role' => 'form','id' => 'fbuscar')) }}
         <div class="col-md-12">
         <h2>Pago de membresia</h2>
-            <div class="col-sm-3 form-group">  
+            <div class="col-sm-3 form-group">
               {{ Form::label('nombre', 'Nombre (s)',array('class' => 'control-label')) }}
               {{ Form::text('nombre', null, array('placeholder' => 'introduce nombre','class' => 'form-control')) }}
             </div>
@@ -30,7 +30,7 @@
             <div class="col-sm-1">
               {{ Form::button('<i class="fa fa-search fa-lg"></i> Buscar',array('class' => 'btn btn-primary','id' => 'buscar','type' => 'submit')) }}
             </div>
-        </div>       
+        </div>
       {{ Form::close() }}
       <div id="error" class="col-md-12 hidden" style="margin-top:10px;">
 

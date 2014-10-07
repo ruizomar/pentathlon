@@ -6,38 +6,75 @@
 	<link href="css/ui-lightness/jquery-ui-1.10.0.custom.css" rel="stylesheet">
 @endsection
 @section('contenido')
-<form id="buscarcondatos" role="form" method="POST">
-	<div class="col-md-12">
-		<h3>Búsqueda por datos</h3>
-		<div class="col-md-3 form-group">
-			{{ Form::label('reclunombre', 'Nombre (s)',array('class' => 'control-label')) }}
-			{{ Form::text('reclunombre', null, array('placeholder' => 'introduce nombre','class' => 'form-control')) }}
-		</div>
-		<div class="col-md-3 form-group">
-			{{ Form::label('reclupaterno', 'Apellido paterno') }}
-			{{ Form::text('reclupaterno', null, array('placeholder' => 'introduce apellido paterno','class' => 'form-control')) }}
-		</div>
-		<div class="col-md-3 form-group">
-			{{ Form::label('reclumaterno', 'Apellido materno') }}
-			{{ Form::text('reclumaterno', null, array('placeholder' => 'introduce apellido materno','class' => 'form-control')) }}
-		</div>
-		<div class="col-md-2">
-			{{ Form::submit('Buscar', array('placeholder' => '','class' => 'btn btn-primary')) }}
-		</div>
-	</div>
-</form>
-<form id="buscarconmatricula" role="form" method="POST">
-	<div class="col-md-12">
-		<h3>Búsqueda por matricula</h3>
-		<div class="col-md-3 form-group">
-			{{ Form::label('matricula', 'Nombre (s)',array('class' => 'control-label')) }}
-			{{ Form::text('matricula', null, array('placeholder' => 'introduce nombre','class' => 'form-control')) }}
-		</div>
-		<div class="col-md-2">
-			{{ Form::submit('Buscar', array('placeholder' => '','class' => 'btn btn-primary'))}}
-		</div>
-	</div>
-</form>
+    <form id="buscarcondatos" role="form" method="POST" action="buscar">
+        <div class="col-md-12">
+            <h3>Búsqueda por datos</h3>
+            <div class="col-md-3 form-group">
+                {{ Form::label('reclunombre', 'Nombre (s)',array('class' => 'control-label')) }}
+                {{ Form::text('reclunombre', null, array('placeholder' => 'introduce nombre','class' => 'form-control')) }}
+            </div>
+            <div class="col-md-3 form-group">
+                {{ Form::label('reclupaterno', 'Apellido paterno') }}
+                {{ Form::text('reclupaterno', null, array('placeholder' => 'introduce apellido paterno','class' => 'form-control')) }}
+            </div>
+            <div class="col-md-3 form-group">
+                {{ Form::label('reclumaterno', 'Apellido materno') }}
+                {{ Form::text('reclumaterno', null, array('placeholder' => 'introduce apellido materno','class' => 'form-control')) }}
+            </div>
+            <div class="col-md-2">
+                {{ Form::submit('Buscar', array('placeholder' => '','class' => 'btn btn-primary')) }}
+            </div>
+        </div>
+    </form>
+    <form id="buscarconmatricula" role="form" method="POST">
+        <div class="col-md-12">
+            <h3>Búsqueda por matricula</h3>
+            <div class="col-md-3 form-group">
+                {{ Form::label('matricula', 'Nombre (s)',array('class' => 'control-label')) }}
+                {{ Form::text('matricula', null, array('placeholder' => 'introduce nombre','class' => 'form-control')) }}
+            </div>
+            <div class="col-md-2">
+                {{ Form::submit('Buscar', array('placeholder' => '','class' => 'btn btn-primary'))}}
+            </div>
+        </div>
+    </form>
+    <!--44444444444444444444444444444444444444444444444444444444 -->
+    <i class="fa fa-spinner fa-2x fa-spin hidden spin-form"></i>
+    <div id="elemento" class="col-md-12 tabla hidden">
+    <h2 style="">Elemento</h2>
+    <table id="telemento"class="table">
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>Nombre(s)</th>
+          <th>Apellido paterno</th>
+          <th>Apellido materno</th>
+          <th>Fecha de nacimiento</th>
+          <th>Numero de Matrícula</th>
+          <th>Cantidad</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>
+            {{ Form::open(array('url' => 'pagos/registrarpago','role' => 'form','id' => 'pagar','class' => 'form-inline')) }}
+            <div class="form-group">
+            {{ Form::text('cantidad', null, array('class' => 'form-control','placeholder' => 'Cantidad')) }}
+            {{ Form::text('id', null, array('class' => 'hidden form-control')) }}
+            </div>
+            {{ Form::button('Registrar pago',array('class' => 'pagar btn btn-success','type' => 'submit','id' => 'bpagar')) }}
+            {{form::close()}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
 @endsection
 @section('scripts')
 <!-- Para Bootstrap Validator -->

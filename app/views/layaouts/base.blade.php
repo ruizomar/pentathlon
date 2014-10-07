@@ -97,8 +97,8 @@
     @yield('contenido')
       <footer>
           <hr>
-          <p class="pull-right">Design by <a href="#" target="_blank">Omar Ruiz</a></p>
-          <p>© 2014 Omar Ruiz</p>
+          <p class="pull-right"><a href="#" target="_blank">Patria, Honor y Fuerza</a></p>
+          <p>2014</p>
       </footer>
     </div>
   </body>

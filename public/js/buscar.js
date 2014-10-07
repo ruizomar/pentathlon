@@ -1,5 +1,5 @@
 $(document).ready(function() {
-   $('#fbuscar').bootstrapValidator({
+   $('#fbuscar2').bootstrapValidator({
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
             invalid: 'glyphicon glyphicon-remove',
