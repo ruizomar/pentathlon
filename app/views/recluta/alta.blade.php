@@ -316,7 +316,7 @@ $(document).ready(function() {
 );
 </script>
 <script type="text/javascript" src="../js/bootstrapValidator.js"></script>
-<script type="text/javascript" src="../js/language/es_ES.js"></script>
+<script type="text/javascript" src="../js/es_ES.js"></script>
 <!-- Para type="Date" en IE Mozilla JS -->
 	<script src="../js/jquery-ui.custom.js"></script>
 	<script src="../js/modernizr.js"></script>

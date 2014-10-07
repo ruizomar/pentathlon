@@ -20,7 +20,7 @@ $(document).ready(function() {
                 validators: {
                     notEmpty: { },
                     regexp: {
-                        regexp:/^[a-zA-ZáéíóúñÑÁÉÍÓÚ]+$/,
+                        regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
                         message: 'Por favor verifica el campo'
                     }
                 }
@@ -28,7 +28,7 @@ $(document).ready(function() {
             materno: {
                 validators: {
                     regexp: {
-                        regexp:/^[a-zA-ZáéíóúñÑÁÉÍÓÚ]+$/
+                        regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/
                         ,
                         message: 'Por favor verifica el campo'
                     }
