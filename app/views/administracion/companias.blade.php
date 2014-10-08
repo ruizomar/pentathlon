@@ -113,7 +113,7 @@
 
         <div id="malert" class="modal-body">
             
-            <h2 class=""><i class="fa fa-exclamation-triangle fa-lg text-danger"></i>  Esta operacion dara de baja a los elementos inscritos en esta 
+            <h2 class=""><i class="fa fa-exclamation-triangle fa-lg text-danger"></i>  Esta operacion dará de baja a los elementos inscritos en esta 
             </h2>
            
         </div>

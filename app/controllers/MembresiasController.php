@@ -13,9 +13,10 @@ class MembresiasController extends BaseController {
 			);
 
 		$validation = Validator::make(Input::all(), $rules);
-		if($validation -> fails())
+		if($validation->fails())
 		{
-			$dato = array('success' => false,'errormessage' => '<i class="fa fa-exclamation-triangle fa-lg"></i>Ocurrio un error');
+			$dato = array('success'=>false,
+				'errormessage'=>'<i class="fa fa-exclamation-triangle fa-lg"></i>Ocurrio un error');
 			return Response::json($dato);
 		}
 
@@ -24,24 +25,24 @@ class MembresiasController extends BaseController {
 		$materno = Input::get('materno');
 
 		$elemento = Elemento::whereHas('persona',function($q) use ($nombre,$paterno,$materno){ 
-			$q -> where('nombre','like',$nombre.'%')
-			-> where('apellidopaterno','=',$paterno)
-			-> where('apellidomaterno','like',$materno.'%');
-		}) -> get();
+			$q->where('nombre','like',$nombre.'%','and')
+			->where('apellidopaterno','=',$paterno,'and')
+			->where('apellidomaterno','like',$materno.'%');
+		})->get();
 
 		if(count($elemento) == 1){
-			$elemento = $elemento -> first();
-			$matricula = $elemento -> matricula;
+			$elemento = $elemento->first();
+			$matricula = $elemento->matricula;
 				$nummatricula = "";
 				if(!is_null($matricula))
-					$nummatricula = $matricula -> matricula;
+					$nummatricula = $matricula->matricula;
 				$dato = array(
 					'success' => true,
-					'id' => $elemento -> id,
-					'name' => $elemento -> persona -> nombre,
-					'paterno' => $elemento -> persona -> apellidopaterno,
-					'materno' => $elemento -> persona -> apellidomaterno,
-					'fecha'	=> $elemento -> fechanacimiento,
+					'id' => $elemento->id,
+					'name' => $elemento->persona->nombre,
+					'paterno' => $elemento->persona->apellidopaterno,
+					'materno' => $elemento->persona->apellidomaterno,
+					'fecha'	=> date('d/m/Y',strtotime($elemento->fechanacimiento)),
 					'matricula'	=> $nummatricula,
 				);
 		}
@@ -49,12 +50,12 @@ class MembresiasController extends BaseController {
 			$dato = array();
 			foreach ($elemento as $elemento) {
 				$dato[] = array(
-					'id' => $elemento -> id,
-					'nombre' => $elemento -> persona -> nombre,
-					'paterno' => $elemento -> persona -> apellidopaterno,
-					'materno' => $elemento -> persona -> apellidomaterno,
-					'fecha' => $elemento -> fechanacimiento,
-					'matricula' => $elemento -> matricula,
+					'id' => $elemento->id,
+					'nombre' => $elemento->persona->nombre,
+					'paterno' => $elemento->persona->apellidopaterno,
+					'materno' => $elemento->persona->apellidomaterno,
+					'fecha' => $elemento->fechanacimiento,
+					'matricula' => $elemento->matricula,
 					);
 			}
 		}
@@ -73,53 +74,41 @@ class MembresiasController extends BaseController {
 		$validation = Validator::make(Input::all(), $rules);
 		if($validation -> fails())
 		{
-			$dato = array('success' => false,'errormessage' => '<i class="fa fa-exclamation-triangle fa-lg"></i>Ocurrio un error');
+			$dato = array('success' => false,
+				'errormessage' => '<i class="fa fa-exclamation-triangle fa-lg"></i>Ocurrio un error');
 			return Response::json($dato);
 		}
 
 		$id = Input::get('id');
 		$cantidad = Input::get('cantidad');
 
-<<<<<<< HEAD
-		$pagos = Pago::where('elemento_id','=',$id) -> where('fecha','like',date("Y").'%') -> first();
-=======
 		$pagos = Pago::where('elemento_id','=',$id,'and')
 				->where('fecha','like',date("Y").'%','and')
 				->where('concepto','=','Matricula')->first();
->>>>>>> origin/master
+
 		if(is_null($pagos)){
-
-			$matricula = Elemento::find($id) -> matricula;
-
+			$matricula = Elemento::find($id)->matricula;
 			if(is_null($matricula)){
 				$matricula = new Matricula;
-					$matricula -> elemento_id = $id;
-					$matricula -> matricula = '002579';
-				$matricula -> save();
+					$matricula->elemento_id = $id;
+					$matricula->matricula = '002579';
+				$matricula->save();
 			}
 				$pago = new Pago;
-<<<<<<< HEAD
-					$pago -> elemento_id = $id;
-					$pago -> concepto = 'matricula';
-					$pago -> fecha = date("Y-m-d");
-					$pago -> cantidad = $cantidad;
-				$pago -> save();
-=======
 					$pago->elemento_id = $id;
 					$pago->concepto = 'Matricula';
 					$pago->fecha = date("Y-m-d");
 					$pago->cantidad = $cantidad;
 				$pago->save();
->>>>>>> origin/master
-
 				$dato = array(
 					'success' => true,
-					'matricula' => '<strong>'.$matricula -> matricula.'</strong>',
+					'matricula' => '<strong>'.$matricula->matricula.'</strong>',
 					'message' => 'El pago se a registrado exitosamente numero de Matricula: '
 					);
 		}
 		else
-			$dato = array('success' => false,'errormessage' => 'El pago ya se fue registrado el <strong>'.date("d/m/Y",strtotime($pagos -> fecha)).'</strong>');
+			$dato = array('success' => false,
+				'errormessage' => 'El pago ya se fue registrado el <strong>'.date("d/m/Y",strtotime($pagos->fecha)).'</strong>');
 
 		return Response::json($dato);
 	}
@@ -130,31 +119,30 @@ class MembresiasController extends BaseController {
 			);
 
 		$validation = Validator::make(Input::all(), $rules);
-		if($validation -> fails())
+		if($validation->fails())
 		{
-			return Redirect::back() -> with('status', 'fail_create');
+			return Redirect::back()->with('status', 'fail_create');
 		}
 
 		$id = Input::get('id');
 
 		$elemento = Elemento::find($id);
-		$hacienda = Cargo::find(1) -> elementos() -> where('fecha_fin','=',null) -> first();
+		$hacienda = Cargo::find(1)->elementos()->where('fecha_fin','=',null)->first();
 
 		if(!is_null($elemento)){
 			$datos = array(
-				'name' => $elemento -> persona -> nombre.' '.
-							$elemento -> persona -> apellidopaterno.' '.
-							$elemento -> persona -> apellidomaterno,
-				'grado' => $elemento -> grados() -> orderBy('fecha','desc') -> first() -> nombre,
-				'reclutamiento' => $elemento -> reclutamiento,
-				'fecha' => date('d/m/Y',strtotime($elemento -> fechaingreso)),
-
-				'hacienda' => $hacienda -> persona -> nombre.' '.
-								$hacienda -> persona -> apellidopaterno.' '.
-								$hacienda -> persona -> apellidomaterno,
-				'gradohacienda' => $hacienda -> grados() -> orderBy('fecha','desc') -> first() -> nombre
+				'name' => $elemento->persona->nombre.' '.
+						  $elemento->persona->apellidopaterno.' '.
+						  $elemento->persona->apellidomaterno,
+				'grado' => $elemento->grados()->orderBy('fecha','desc')->first()->nombre,
+				'reclutamiento' => $elemento->reclutamiento,
+				'fecha' => date('d/m/Y',strtotime($elemento->fechaingreso)),
+				'hacienda' => $hacienda->persona->nombre.' '.
+							  $hacienda->persona->apellidopaterno.' '.
+							  $hacienda->persona->apellidomaterno,
+				'gradohacienda' => $hacienda->grados()->orderBy('fecha','desc')->first()->nombre
 				);
-			return View::make('pagos/recibomembrecia') ->  with('datos',$datos);
+			return View::make('pagos/recibomembrecia')->with('datos',$datos);
 		}
 		else
 		return View::make('pagos/recibomembrecia');

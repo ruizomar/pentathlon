@@ -6,8 +6,6 @@ $(document).ready(function() {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
-<<<<<<< HEAD
-=======
             nombre: {
                 validators: {
                     notEmpty: {
@@ -36,7 +34,6 @@ $(document).ready(function() {
                     }
                 }
             },
->>>>>>> origin/master
         }
     })
     .on('success.form.bv', function(e) {
@@ -63,7 +60,7 @@ $(document).ready(function() {
                 else{
                     $( "#elementos tbody" ).html('');
                     for (var i = json.length - 1; i >= 0; i--) {
-                        var matricula='';
+                        var matricula = '';
                         if(json[i].matricula!=null)
                                 matricula=json[i].matricula.matricula;
                         $( "<tr>" ).append(
@@ -81,7 +78,49 @@ $(document).ready(function() {
                 $('.fa-spin').addClass('hidden');
     }, 'json');
     });
+    $('#pagar').bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok cantidad',
+            invalid: 'glyphicon glyphicon-remove cantidad',
+            validating: 'glyphicon glyphicon-refresh cantidad'
+        },
+        fields: {
+            cantidad: {
+                validators: {
+                    notEmpty: {
+                    },
+                    regexp: {
+                        regexp:/^[0-9]*\.?[0-9]+$/,
+                        message: 'Por favor introduce una cantidad'
+                    }
+                }
+            }
+        }
+    })
+    .on('success.form.bv', function(e) {
+            e.preventDefault();
+            var $form = $(e.target);
+            var bv = $form.data('bootstrapValidator');
+            $('#myModal').modal('show')
+            $('.spin-modal').removeClass('hidden');
+            $('[name=id]').val($('#elemento tbody tr td:first-child').text());
+            $('#recibo').attr('href','recibo/'+$('#telemento tbody tr td:first-child').text());
+            $('.alert').addClass('hidden');
+            $.post($form.attr('action'), $form.serialize(), function(json) {
+                if (json.success) {
+                    $('#message').html(json.message+json.matricula);
+                    $('.alert').removeClass('hidden alert-danger');
+                    $('.alert').addClass('alert-success');
+                } else {
+                    $('#message').html(json.errormessage);
+                    $('.alert').removeClass('hidden alert-success');
+                    $('.alert').addClass('alert-danger');
+                }
+                $('.spin-modal').addClass('hidden');
+                $('#pagar').data('bootstrapValidator').resetField('cantidad', true)
 
+    }, 'json');
+    });
 
 });
     function llenartabla(a) {

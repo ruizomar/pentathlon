@@ -43,31 +43,34 @@ class CompaniasController extends BaseController{
 			$compania->save();
 			if ($compania->estatus == 'Inactiva');
 				CompaniasController::bajaElementos($compania->id);
+				CompaniasController::bajainstructor($compania->id);
 			}
 		
-		//return Redirect::back()->with('status', 'ok_create');
+		return Redirect::back()->with('status', 'ok_create');
 	}
 
-	public function bajaElementos($id){
+	public function bajaElementos($compania){
 
-		$elementos = Elemento::where('companiasysubzona_id','=',$id)->get();
+		$elementos = Elemento::where('companiasysubzona_id','=',$compania)->get();
 		foreach ($elementos as $elemento) {
-			$estatus = $elemento->status()->where('fin','=',null,'and')
-								->where('tipo','=','Alta')->first();
-			if (!is_null($estatus)) {
-				$estatus->fin = date("Y-m-d");
-				$estatus->save();
+			$estatus = $elemento->status()->orderBy('inicio','desc')->first();
+			if ($estatus->tipo == 'Activo') {
 				$statu = new Statu(array(
 					'tipo' => 'Inactivo',
 					'inicio' => date("Y-m-d"),
 					'descripcion' => 'Su compañia esta Inactiva'));
 				$status = $elemento->status()->save($statu);
 			}
-			
 		}
 	}
 
-	public function bajaInstructor($is){
-		
+	public function bajaInstructor($compania){
+		$instructores = Cargo::find(6)->elementos()->where('fecha_fin','=',null,'and')
+						->where('Companiasysubzona_id','=',1)->get();
+		 
+		foreach ($instructores as $instructor) {
+				$instructor->pivot->fecha_fin = date("Y-m-d");
+				$instructor->pivot->save();
+		}
 	}
 }

@@ -5,13 +5,6 @@
 @endsection
 @section('contenido')
 <div>
-<?php $status=Session::get('status'); ?>
-@if($status=='fail_create')
-  <div id="ooo" class="col-md-12" style="margin-top:10px;">
-        <p class="alert alert-danger"><i class="fa fa-exclamation-triangle fa-lg"></i> Ocurrio un error!
-        </p>
-  </div>
-@endif
       {{ Form::open(array('url' => 'pagos/buscar','role' => 'form','id' => 'fbuscar')) }}
         <div class="col-md-12">
         <h2>Pago de membresia</h2>
@@ -33,7 +26,6 @@
         </div>
       {{ Form::close() }}
       <div id="error" class="col-md-12 hidden" style="margin-top:10px;">
-
         <p class="alert alert-danger"><i class="fa fa-exclamation-triangle fa-lg"></i> No se encontro al Elemento
         </p>
       </div>
@@ -43,7 +35,7 @@
         <table id="telemento"class="table">
           <thead>
             <tr>
-              <th>ird</th>
+              <th>id</th>
               <th>Nombre(s)</th>
               <th>Apellido paterno</th>
               <th>Apellido materno</th>
@@ -110,7 +102,7 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
           <h4 class="modal-title" id="Elementos">
-            <i class="fa fa-eye"></i> Elementoss
+            <i class="fa fa-eye"></i> Elementos
           </h4>
         </div>
         <div class="modal-body">
