@@ -43,7 +43,7 @@
         <table id="telemento"class="table">
           <thead>
             <tr>
-              <th>id</th>
+              <th>ird</th>
               <th>Nombre(s)</th>
               <th>Apellido paterno</th>
               <th>Apellido materno</th>
@@ -110,7 +110,7 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
           <h4 class="modal-title" id="Elementos">
-            <i class="fa fa-eye"></i> Elementos
+            <i class="fa fa-eye"></i> Elementoss
           </h4>
         </div>
         <div class="modal-body">

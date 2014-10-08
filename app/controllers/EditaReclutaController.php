@@ -8,63 +8,51 @@ class EditaReclutaController extends BaseController {
 
 	public function buscar()
 	{
-		/*
-		$personaElemento = Persona::where('nombre','=',Input::get('reclunombre'),
-							'and apellidomaterno =',Input::get('reclupaterno'),
-							'and apellidopaterno =',Input::get('reclumaterno')
-							)->first();
-		$num = $personaElemento->id;
-		$phone = Elemento::find(16)->id;
-		$elemento_id = Elemento::where('persona_id','=',$personaElemento->id
-							)->orderBy('id', 'desc')->first();
-		//echo($personaElemento);
-		$user      = Persona::find($num);
-		$company   = $user->elemento->id;
-		echo($company);
-		*/
-	}
-	public function prueba()
-	{
-		$persona = Persona::create(array(
-			'nombre' => 'david',
-			'apellidopaterno' => 'ramirez',
-			'apellidomaterno' => 'velasquez',
-			'sexo' => 'H',
-		));
+		$nombre = Input::get('reclunombre');
+		$paterno = Input::get('reclupaterno');
+		$materno = Input::get('reclumaterno');
 
-		$elemento = Elemento::create(array(
-			'persona_id' => $persona->id,
-			'estatura' => Input::get('estatura'),
-			'peso' => Input::get('peso'),
-			'ocupacion' => Input::get('ocupacion'),
-			'estadocivil' => Input::get('estadocivil'),
-			'fechanacimiento' => Input::get('birthday'),
-			'escolaridad' => Input::get('escolaridad'),
-			'escuela' => Input::get('escuela'),
-			'fechaingreso' => date('Y-m-d'),
-			'lugarnacimiento' => Input::get('lugnac'),
-			'curp' => Input::get('curp'),
-			'calle' => Input::get('domicilio'),
-			'colonia' => Input::get('colonia'),
-			'cp' => Input::get('postal'),
-			'municipio' => Input::get('municipio'),
-			'estado' => Input::get('estado'),
-			'reclutamiento' => 33,
-			'email' => Input::get('email'),
-			'alergias' => Input::get('alergia'),
-			'adiccion' => Input::get('vicios'),
-			'tipoarma_id' =>1,
-			'tipocuerpo_id' =>1,
-			'companiasysubzona_id' =>1
-		));
+		$elemento = Elemento::whereHas('persona',function($q) use ($nombre,$paterno,$materno)
+			{
+				$q->where('nombre','like',$nombre.'%')
+				->where('apellidopaterno','=',$paterno)
+				->where('apellidomaterno','like',$materno.'%');
+			})
+			->get();
+		//echo $elemento;
+		if(count($elemento) == 1){
+			$elemento = $elemento -> first();
+			$matricula = $elemento -> matricula;
+				$nummatricula = "";
+				if(!is_null($matricula))
+					$nummatricula = $matricula -> matricula;
+				$dato = array(
+					'success' => true,
+					'id' => $elemento -> id,
+					'name' => $elemento -> persona -> nombre,
+					'paterno' => $elemento -> persona -> apellidopaterno,
+					'materno' => $elemento -> persona -> apellidomaterno,
+					'fecha'	=> $elemento -> fechanacimiento,
+					'matricula'	=> $nummatricula,
+				);
+		}
+		else if(count($elemento) > 1){
+			$dato = array();
+			foreach ($elemento as $elemento) {
+				$dato[] = array(
+					'id' => $elemento -> id,
+					'nombre' => $elemento -> persona -> nombre,
+					'paterno' => $elemento -> persona -> apellidopaterno,
+					'materno' => $elemento -> persona -> apellidomaterno,
+					'fecha' => $elemento -> fechanacimiento,
+					'matricula' => $elemento -> matricula,
+					);
+			}
+		}
+		else
+		$dato = array('success' => false);
+//asñkdnvnlnvlernvpwrnvpnwrvnkvnwñvnqpihvpowhvwoehvohevhwrovhwprhbworhbhwrpobh
+		return Response::json($dato);
 
-	}
-	public function otro()
-	{
-			$personaElemento = Persona::where('nombre','=','david','and')
-			->where('apellidopaterno','=','ramirez','and')
-			->where('apellidomaterno','=','velasquez')
-			->orderBy('id', 'desc')->first();
-			echo ($personaElemento);
 	}
 }

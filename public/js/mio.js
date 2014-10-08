@@ -1,5 +1,5 @@
 $(document).ready(function() {
-   $('#fbuscar').bootstrapValidator({
+   $('#buscarelemento').bootstrapValidator({
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
             invalid: 'glyphicon glyphicon-remove',
@@ -22,6 +22,7 @@ $(document).ready(function() {
                     $('.table tbody tr td:nth-child(4)').text(json.materno);
                     $('.table tbody tr td:nth-child(5)').text(json.fecha);
                     $('.table tbody tr td:nth-child(6)').text(json.matricula);
+
                     $('#elemento').removeClass('hidden');
                     $('#error').addClass('hidden');
                 }
@@ -48,6 +49,49 @@ $(document).ready(function() {
                     $('#error').addClass('hidden');
                 }
                 $('.fa-spin').addClass('hidden');
+    }, 'json');
+    });
+   $('#pagar').bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok cantidad',
+            invalid: 'glyphicon glyphicon-remove cantidad',
+            validating: 'glyphicon glyphicon-refresh cantidad'
+        },
+        fields: {
+            cantidad: {
+                validators: {
+                    notEmpty: {
+                    },
+                    regexp: {
+                        regexp:/^[0-9]*\.?[0-9]+$/,
+                        message: 'Por favor introduce una cantidad'
+                    }
+                }
+            }
+        }
+    })
+    .on('success.form.bv', function(e) {
+            e.preventDefault();
+            var $form = $(e.target);
+            var bv = $form.data('bootstrapValidator');
+            $('#myModal').modal('show')
+            $('.spin-modal').removeClass('hidden');
+            $('[name=id]').val($('#elemento tbody tr td:first-child').text());
+            $('#recibo').attr('href','recibo/'+$('#telemento tbody tr td:first-child').text());
+            $('.alert').addClass('hidden');
+            $.post($form.attr('action'), $form.serialize(), function(json) {
+                if (json.success) {
+                    $('#message').html(json.message+json.matricula);
+                    $('.alert').removeClass('hidden alert-danger');
+                    $('.alert').addClass('alert-success');
+                } else {
+                    $('#message').html(json.errormessage);
+                    $('.alert').removeClass('hidden alert-success');
+                    $('.alert').addClass('alert-danger');
+                }
+                $('.spin-modal').addClass('hidden');
+                $('#pagar').data('bootstrapValidator').resetField('cantidad', true)
+
     }, 'json');
     });
 

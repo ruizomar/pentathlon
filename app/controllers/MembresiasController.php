@@ -9,11 +9,11 @@ class MembresiasController extends BaseController {
 	public function postBuscar(){
 		$rules = array(
 			'nombre' => 'required',
-			'paterno' => 'required',
+			'paterno' => 'required'
 			);
 
 		$validation = Validator::make(Input::all(), $rules);
-		if($validation->fails())
+		if($validation -> fails())
 		{
 			$dato = array('success' => false,'errormessage' => '<i class="fa fa-exclamation-triangle fa-lg"></i>Ocurrio un error');
 			return Response::json($dato);
@@ -24,44 +24,44 @@ class MembresiasController extends BaseController {
 		$materno = Input::get('materno');
 
 		$elemento = Elemento::whereHas('persona',function($q) use ($nombre,$paterno,$materno){ 
-			$q->where('nombre','like',$nombre.'%')
-			->where('apellidopaterno','=',$paterno)
-			->where('apellidomaterno','like',$materno.'%');
-		})->get();
+			$q -> where('nombre','like',$nombre.'%')
+			-> where('apellidopaterno','=',$paterno)
+			-> where('apellidomaterno','like',$materno.'%');
+		}) -> get();
 
 		if(count($elemento) == 1){
-			$elemento = $elemento->first();
-			$matricula = $elemento->matricula;
+			$elemento = $elemento -> first();
+			$matricula = $elemento -> matricula;
 				$nummatricula = "";
 				if(!is_null($matricula))
-					$nummatricula = $matricula->matricula;
+					$nummatricula = $matricula -> matricula;
 				$dato = array(
-		            'success' => true,
-		            'id' => $elemento->id,
-					'name' => $elemento->persona->nombre,
-		            'paterno' => $elemento->persona->apellidopaterno,
-					'materno' => $elemento->persona->apellidomaterno,
-					'fecha'	=> $elemento->fechanacimiento,
-					'matricula'	=> 	$nummatricula,
-		        );
+					'success' => true,
+					'id' => $elemento -> id,
+					'name' => $elemento -> persona -> nombre,
+					'paterno' => $elemento -> persona -> apellidopaterno,
+					'materno' => $elemento -> persona -> apellidomaterno,
+					'fecha'	=> $elemento -> fechanacimiento,
+					'matricula'	=> $nummatricula,
+				);
 		}
-    	else if(count($elemento) > 1){
-    		$dato = array();
+		else if(count($elemento) > 1){
+			$dato = array();
 			foreach ($elemento as $elemento) {
-				 $dato[] = array(
-				 	'id' => $elemento->id,
-				 	'nombre' => $elemento->persona->nombre,
-				 	'paterno' => $elemento->persona->apellidopaterno,
-				 	'materno' => $elemento->persona->apellidomaterno,
-				 	'fecha' => $elemento->fechanacimiento,
-				 	'matricula' => $elemento->matricula,
-				 	);
+				$dato[] = array(
+					'id' => $elemento -> id,
+					'nombre' => $elemento -> persona -> nombre,
+					'paterno' => $elemento -> persona -> apellidopaterno,
+					'materno' => $elemento -> persona -> apellidomaterno,
+					'fecha' => $elemento -> fechanacimiento,
+					'matricula' => $elemento -> matricula,
+					);
 			}
-    	}
-    	else
+		}
+		else
 		$dato = array('success' => false);
 
-		return Response::json($dato);	
+		return Response::json($dato);
 	}
 
 	public function postRegistrarpago(){
@@ -69,44 +69,44 @@ class MembresiasController extends BaseController {
 			'id' => 'required|integer|exists:elementos',
 			'cantidad' => 'required|numeric'
 			);
-		
+
 		$validation = Validator::make(Input::all(), $rules);
-		if($validation->fails())
-		{		
-		  $dato = array('success' => false,'errormessage' => '<i class="fa fa-exclamation-triangle fa-lg"></i>Ocurrio un error');
+		if($validation -> fails())
+		{
+			$dato = array('success' => false,'errormessage' => '<i class="fa fa-exclamation-triangle fa-lg"></i>Ocurrio un error');
 			return Response::json($dato);
 		}
 
 		$id = Input::get('id');
 		$cantidad = Input::get('cantidad');
 
-		$pagos = Pago::where('elemento_id','=',$id)->where('fecha','like',date("Y").'%')->first();
+		$pagos = Pago::where('elemento_id','=',$id) -> where('fecha','like',date("Y").'%') -> first();
 		if(is_null($pagos)){
-			
-			$matricula = Elemento::find($id)->matricula;
-			
+
+			$matricula = Elemento::find($id) -> matricula;
+
 			if(is_null($matricula)){
 				$matricula = new Matricula;
-					$matricula->elemento_id = $id;
-					$matricula->matricula = '002579';
-				$matricula->save();
+					$matricula -> elemento_id = $id;
+					$matricula -> matricula = '002579';
+				$matricula -> save();
 			}
 				$pago = new Pago;
-					$pago->elemento_id = $id;
-					$pago->concepto = 'matricula';
-					$pago->fecha = date("Y-m-d");
-					$pago->cantidad = $cantidad;
-				$pago->save();
+					$pago -> elemento_id = $id;
+					$pago -> concepto = 'matricula';
+					$pago -> fecha = date("Y-m-d");
+					$pago -> cantidad = $cantidad;
+				$pago -> save();
 
 				$dato = array(
 					'success' => true,
-					'matricula' => '<strong>'.$matricula->matricula.'</strong>',
+					'matricula' => '<strong>'.$matricula -> matricula.'</strong>',
 					'message' => 'El pago se a registrado exitosamente numero de Matricula: '
-					);	
+					);
 		}
 		else
-			$dato = array('success' => false,'errormessage' => 'El pago ya se fue registrado el <strong>'.date("d/m/Y",strtotime($pagos->fecha)).'</strong>');
-		
+			$dato = array('success' => false,'errormessage' => 'El pago ya se fue registrado el <strong>'.date("d/m/Y",strtotime($pagos -> fecha)).'</strong>');
+
 		return Response::json($dato);
 	}
 
@@ -114,33 +114,33 @@ class MembresiasController extends BaseController {
 		$rules = array(
 			'id' => 'required|integer|exists:elementos'
 			);
-		
+
 		$validation = Validator::make(Input::all(), $rules);
-		if($validation->fails())
-		{		
-		  return Redirect::back()->with('status', 'fail_create');
+		if($validation -> fails())
+		{
+			return Redirect::back() -> with('status', 'fail_create');
 		}
 
 		$id = Input::get('id');
 
 		$elemento = Elemento::find($id);
-		$hacienda = Cargo::find(1)->elementos()->where('fecha_fin','=',null)->first();
+		$hacienda = Cargo::find(1) -> elementos() -> where('fecha_fin','=',null) -> first();
 
 		if(!is_null($elemento)){
 			$datos = array(
-				'name' => $elemento->persona->nombre.' '.
-						  $elemento->persona->apellidopaterno.' '.
-						  $elemento->persona->apellidomaterno,
-				'grado' => $elemento->grados()->orderBy('fecha','desc')->first()->nombre,
-				'reclutamiento' => $elemento->reclutamiento,
-				'fecha' => date('d/m/Y',strtotime($elemento->fechaingreso)),
+				'name' => $elemento -> persona -> nombre.' '.
+							$elemento -> persona -> apellidopaterno.' '.
+							$elemento -> persona -> apellidomaterno,
+				'grado' => $elemento -> grados() -> orderBy('fecha','desc') -> first() -> nombre,
+				'reclutamiento' => $elemento -> reclutamiento,
+				'fecha' => date('d/m/Y',strtotime($elemento -> fechaingreso)),
 
-				'hacienda' => $hacienda->persona->nombre.' '.
-							  $hacienda->persona->apellidopaterno.' '.
-							  $hacienda->persona->apellidomaterno,
-				'gradohacienda' => $hacienda->grados()->orderBy('fecha','desc')->first()->nombre
+				'hacienda' => $hacienda -> persona -> nombre.' '.
+								$hacienda -> persona -> apellidopaterno.' '.
+								$hacienda -> persona -> apellidomaterno,
+				'gradohacienda' => $hacienda -> grados() -> orderBy('fecha','desc') -> first() -> nombre
 				);
-			return View::make('pagos/recibomembrecia')-> with('datos',$datos);
+			return View::make('pagos/recibomembrecia') ->  with('datos',$datos);
 		}
 		else
 		return View::make('pagos/recibomembrecia');

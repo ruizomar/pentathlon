@@ -18,6 +18,6 @@ class Elemento extends Eloquent{
 		return $this->belongsToMany('Cargo','cargosobtenido')->withPivot('fecha_inicio','fecha_fin');
 	}
 	public function subsonacompania(){
-		return $this->belongsTo('Subsonacompania');
+		return $this->belongsTo('Companiasysubzona');
 	}
 }

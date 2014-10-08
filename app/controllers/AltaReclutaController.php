@@ -52,7 +52,8 @@ class AltaReclutaController extends BaseController {
 		if (Input::get('reclutwitter') != "") {
 			AltaReclutaController::agregarTwitter($personaElemento->id,Input::get('reclutwitter'));
 		}
-	///////////////////////////////////////////////////Elemento
+		AltaReclutaController::registrarAscenso($elemento->id);
+	///////////////////////////////////////////////////Tutor
 		$personaTutor = Persona::create(array(
 			'nombre' => Input::get('contactonombre'),
 			'apellidopaterno' => Input::get('contactopaterno'),
@@ -71,7 +72,7 @@ class AltaReclutaController extends BaseController {
 		if (Input::get('contactotwitter') != "") {
 			AltaReclutaController::agregarTwitter($personaTutor->id,Input::get('contactotwitter'));
 		}
-	///////////////////////////////////////////////////Tutor
+	///////////////////////////////////////////////////Relacion elemento-tutor
 		AltaReclutaController::agregarTutor($personaTutor->id,$elemento->id,Input::get('contactorelacion'));
 		return Redirect::to('recluta/lista');
 	}
@@ -106,6 +107,14 @@ class AltaReclutaController extends BaseController {
 		$tutor -> elemento_id = $elemento_id;
 		$tutor -> relacion = $relacion;
 		$tutor -> save();
+	}
+	public function registrarAscenso($id)
+	{
+		$ascenso = new Ascenso;
+		$ascenso -> grado_id = 1;
+		$ascenso -> elemento_id = $id;
+		$ascenso -> fecha = date('Y-m-d');
+		$ascenso -> save();
 	}
 
 	public function lista()

@@ -323,7 +323,7 @@ $(document).ready(function() {
 	<script>
 		Modernizr.load({
 			test: Modernizr.inputtypes.date,
-			nope: "js/jquery-ui.custom.js",
+			nope: "../js/jquery-ui.custom.js",
 			callback: function() {
 				$("input[type=date]").datepicker();
 			}
