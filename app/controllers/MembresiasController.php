@@ -80,7 +80,9 @@ class MembresiasController extends BaseController {
 		$id = Input::get('id');
 		$cantidad = Input::get('cantidad');
 
-		$pagos = Pago::where('elemento_id','=',$id)->where('fecha','like',date("Y").'%')->first();
+		$pagos = Pago::where('elemento_id','=',$id,'and')
+				->where('fecha','like',date("Y").'%','and')
+				->where('concepto','=','Matricula')->first();
 		if(is_null($pagos)){
 			
 			$matricula = Elemento::find($id)->matricula;
@@ -93,7 +95,7 @@ class MembresiasController extends BaseController {
 			}
 				$pago = new Pago;
 					$pago->elemento_id = $id;
-					$pago->concepto = 'matricula';
+					$pago->concepto = 'Matricula';
 					$pago->fecha = date("Y-m-d");
 					$pago->cantidad = $cantidad;
 				$pago->save();

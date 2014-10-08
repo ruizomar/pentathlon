@@ -192,8 +192,8 @@ $('[name=estatus]').change(function() {
     $('#nueva').modal('hide');
     $tipe = $('#tipo').val();
     $('#malert').html('<h2 class=""><i class="fa fa-exclamation-triangle fa-lg text-danger"></i>  Esta operacion dara de baja a los elementos inscritos en esta '+$tipe+'.</h2>');
-    }
     $('#confirmar').modal('show');
+    }
 });
 $('#bconfirmar').click(function(){
     $('#nueva').modal('show');
