@@ -41,9 +41,33 @@ class CompaniasController extends BaseController{
 			$compania->tipo = $tipo;
 			$compania->estatus = $estatus;
 			$compania->save();
+			if ($compania->estatus == 'Inactiva');
+				CompaniasController::bajaElementos($compania->id);
 			}
 		
-		return Redirect::back()->with('status', 'ok_create');
+		//return Redirect::back()->with('status', 'ok_create');
 	}
 
+	public function bajaElementos($id){
+
+		$elementos = Elemento::where('companiasysubzona_id','=',$id)->get();
+		foreach ($elementos as $elemento) {
+			$estatus = $elemento->status()->where('fin','=',null,'and')
+								->where('tipo','=','Alta')->first();
+			if (!is_null($estatus)) {
+				$estatus->fin = date("Y-m-d");
+				$estatus->save();
+				$statu = new Statu(array(
+					'tipo' => 'Inactivo',
+					'inicio' => date("Y-m-d"),
+					'descripcion' => 'Su compañia esta Inactiva'));
+				$status = $elemento->status()->save($statu);
+			}
+			
+		}
+	}
+
+	public function bajaInstructor($is){
+		
+	}
 }

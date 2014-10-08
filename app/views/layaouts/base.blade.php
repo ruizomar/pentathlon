@@ -20,7 +20,7 @@
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
               <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand" href="admin"><img src="imgs/pdmu.png" alt=""> PDMU</a>
+            <a class="navbar-brand" href="admin"><img src="/imgs/pdmu.png" alt=""> PDMU</a>
           </div>
           <div class="hidden-xs">
                   <ul class="nav navbar-nav navbar-right">

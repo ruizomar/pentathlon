@@ -6,6 +6,37 @@ $(document).ready(function() {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
+<<<<<<< HEAD
+=======
+            nombre: {
+                validators: {
+                    notEmpty: {
+                    },
+                    regexp: {
+                        regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+                        message: 'Por favor verifica el campo'
+                    }
+                }
+            },
+            paterno: {
+                validators: {
+                    notEmpty: { },
+                    regexp: {
+                        regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+                        message: 'Por favor verifica el campo'
+                    }
+                }
+            },
+            materno: {
+                validators: {
+                    regexp: {
+                        regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/
+                        ,
+                        message: 'Por favor verifica el campo'
+                    }
+                }
+            },
+>>>>>>> origin/master
         }
     })
     .on('success.form.bv', function(e) {

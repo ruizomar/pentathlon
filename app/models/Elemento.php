@@ -19,5 +19,4 @@ class Elemento extends Eloquent{
 	}
 	public function subsonacompania(){
 		return $this->belongsTo('Companiasysubzona');
-	}
 }
