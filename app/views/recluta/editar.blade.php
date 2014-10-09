@@ -37,17 +37,63 @@
         <table id="telemento"class="table">
           <thead>
             <tr>
-              <th>id</th>
-              <th>Nombre(s)</th>
-              <th>Apellido paterno</th>
-              <th>Apellido materno</th>
-              <th>Fecha de nacimiento</th>
-              <th>Numero de Matrícula</th>
-              <th>Cantidad</th>
+
+                <th>id</th>
+                <th>Nombre(s)</th>
+                <th>Apellido paterno</th>
+                <th>Apellido materno</th>
+                <th>Fecha de nacimiento</th>
+                <th>Numero de Matrícula</th>
+                <th>estatura</th>
+                <th>peso</th>
+                <th>ocupacion</th>
+                <th>estadocivil</th>
+                <th>fechanacimiento</th>
+                <th>escolaridad</th>
+                <th>escuela</th>
+                <th>fechaingreso</th>
+                <th>lugarnacimiento</th>
+                <th>curp</th>
+                <th>calle</th>
+                <th>colonia</th>
+                <th>cp</th>
+                <th>municipio</th>
+                <th>estado</th>
+                <th>reclutamiento</th>
+                <th>email</th>
+                <th>alergias</th>
+                <th>adiccion</th>
+                <th>tipoarma_id</th>
+                <th>tipocuerpo_id</th>
+                <th>companiasysubzona_id</th>
+                <th>Cantidad</th>
             </tr>
           </thead>
               <tbody>
                 <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
                   <td></td>
                   <td></td>
                   <td></td>
