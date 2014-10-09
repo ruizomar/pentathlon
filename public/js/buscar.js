@@ -109,12 +109,12 @@ $(document).ready(function() {
             $.post($form.attr('action'), $form.serialize(), function(json) {
                 if (json.success) {
                     $('#message').html(json.message+json.matricula);
-                    $('.alert').removeClass('hidden alert-danger');
-                    $('.alert').addClass('alert-success');
+                    $('#pagoerror').removeClass('hidden alert-danger');
+                    $('#pagoerror').addClass('alert-success');
                 } else {
                     $('#message').html(json.errormessage);
-                    $('.alert').removeClass('hidden alert-success');
-                    $('.alert').addClass('alert-danger');
+                    $('#pagoerror').removeClass('hidden alert-success');
+                    $('#pagoerror').addClass('alert-danger');
                 }
                 $('.spin-modal').addClass('hidden');
                 $('#pagar').data('bootstrapValidator').resetField('cantidad', true)

@@ -78,7 +78,7 @@
         </div>
         <div class="modal-body">
 
-            <div class=" hidden alert alert-danger" role="alert">
+            <div id='pagoerror'class=" hidden alert alert-danger" role="alert">
               <label id="message">
             </label>
             </div>

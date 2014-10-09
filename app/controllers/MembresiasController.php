@@ -42,7 +42,7 @@ class MembresiasController extends BaseController {
 					'name' => $elemento->persona->nombre,
 					'paterno' => $elemento->persona->apellidopaterno,
 					'materno' => $elemento->persona->apellidomaterno,
-					'fecha'	=> date('d/m/Y',strtotime($elemento->fechanacimiento)),
+					'fecha'	=> $elemento->fechanacimiento,
 					'matricula'	=> $nummatricula,
 				);
 		}

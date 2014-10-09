@@ -110,11 +110,12 @@ class AltaReclutaController extends BaseController {
 	}
 	public function registrarAscenso($id)
 	{
-		$ascenso = new Ascenso;
-		$ascenso -> grado_id = 1;
-		$ascenso -> elemento_id = $id;
-		$ascenso -> fecha = date('Y-m-d');
-		$ascenso -> save();
+		$elemento = Elemento::find($id);
+		$elemento->grados()->attach(1, array('fecha' => date('Y-m-d')));
+		$status = $elemento->status()->save(new Statu(array(
+					'tipo' => 'Activo',
+					'inicio' => date("Y-m-d"),
+					'descripcion' => 'Nuevo elemento')));
 	}
 
 	public function lista()

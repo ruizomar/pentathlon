@@ -26,18 +26,6 @@
             </div>
         </div>
     </form>
-    <form id="buscarconmatricula" role="form" method="POST">
-        <div class="col-md-12">
-            <h3>Búsqueda por matricula</h3>
-            <div class="col-md-3 form-group">
-                {{ Form::label('matricula', 'Nombre (s)',array('class' => 'control-label')) }}
-                {{ Form::text('matricula', null, array('placeholder' => 'introduce nombre','class' => 'form-control')) }}
-            </div>
-            <div class="col-md-2">
-                {{ Form::submit('Buscar', array('placeholder' => '','class' => 'btn btn-primary'))}}
-            </div>
-        </div>
-    </form>
     <!--44444444444444444444444444444444444444444444444444444444 -->
     <div id="error" class="col-md-12 hidden" style="margin-top:10px;">
         <p class="alert alert-danger"><i class="fa fa-exclamation-triangle fa-lg"></i> No se encontro al Elemento

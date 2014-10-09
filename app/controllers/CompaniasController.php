@@ -55,11 +55,12 @@ class CompaniasController extends BaseController{
 		foreach ($elementos as $elemento) {
 			$estatus = $elemento->status()->orderBy('inicio','desc')->first();
 			if ($estatus->tipo == 'Activo') {
-				$statu = new Statu(array(
+				$status = $elemento->status()->save(new Statu(
+					array(
 					'tipo' => 'Inactivo',
 					'inicio' => date("Y-m-d"),
-					'descripcion' => 'Su compañia esta Inactiva'));
-				$status = $elemento->status()->save($statu);
+					'descripcion' => 'Su compañia esta Inactiva'))
+				);
 			}
 		}
 	}
