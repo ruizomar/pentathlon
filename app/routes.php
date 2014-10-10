@@ -34,3 +34,4 @@ Route::get('recluta/lista','AltaReclutaController@lista');
 
 Route::controller('pagos', 'MembresiasController');
 Route::controller('companias','CompaniasController');
+Route::controller('asistencias','AsistenciasController');

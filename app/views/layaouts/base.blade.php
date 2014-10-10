@@ -47,10 +47,10 @@
 <div class="navbar-collapse collapse">
   <div id="main-menu">
       <ul class="nav nav-tabs ">
-          <li class="active"><a href="index.html"><i class="fa fa-tachometer"></i> <span>Dashboard</span></a></li>
-          <li ><a href="#" data-toggle="modal" data-target="#myModal"><i class="fa icon-plus"></i> <span>Nuevo</span></a></li>
-          <li ><a href="#" ><i class="icon-cogs"></i> <span>Components</span></a></li>
-          <li ><a href="#"><i class="icon-magic"></i> <span>Pricing</span></a></li>
+          <li class="active"><a href="#"><i class="fa fa-tachometer"></i> <span>Dashboard</span></a></li>
+          <li ><a href="/pagos"><i class="fa fa-money"></i> <span>Pagos</span></a></li>
+          <li ><a href="/companias" ><i class="fa fa-map-marker"></i> <span>Companias</span></a></li>
+          <li ><a href="/asistencias/index/7"><i class="fa fa-calendar"></i> <span>Asistencias</span></a></li>
           <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-cog"></i> Settings <b class="caret"></b></a>
               <ul class="dropdown-menu">

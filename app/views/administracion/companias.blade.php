@@ -137,6 +137,7 @@
 <script type="text/javascript" src="js/tables/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="js/tables/jquery.dataTables.bootstrap.js"></script>
 <script src="js/bootstrapValidator.js" type="text/javascript"></script>
+<script src="js/es_ES.js" type="text/javascript"></script>
 <script type="text/javascript">
     $('#companias').dataTable( {
         "language": {
@@ -209,6 +210,8 @@ $('#bnueva').click(function(){
         $('[name=nombre]').val("");
         $("tbody").find('tr').removeClass('danger') .find('button').attr('disabled',false);
     });
+$('#main-menu').find('li').removeClass('active');
+$('#main-menu ul li:nth-child(3)').addClass('active');
 function editar(btn){
 	$(btn).closest("tbody").find('tr').removeClass('danger').find('button').attr('disabled',false);
 	$(btn).attr('disabled',true).closest("tr").addClass('danger');

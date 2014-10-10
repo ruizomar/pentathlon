@@ -67,7 +67,7 @@ class CompaniasController extends BaseController{
 
 	public function bajaInstructor($compania){
 		$instructores = Cargo::find(6)->elementos()->where('fecha_fin','=',null,'and')
-						->where('Companiasysubzona_id','=',1)->get();
+						->where('Companiasysubzona_id','=',$compania)->get();
 		 
 		foreach ($instructores as $instructor) {
 				$instructor->pivot->fecha_fin = date("Y-m-d");

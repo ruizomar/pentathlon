@@ -121,8 +121,9 @@ $(document).ready(function() {
 
     }, 'json');
     });
-
 });
+$('#main-menu').find('li').removeClass('active');
+$('#main-menu ul li:nth-child(2)').addClass('active');
     function llenartabla(a) {
         $('#Elementos').modal('hide');
         var $row = $(a).closest("tr");
