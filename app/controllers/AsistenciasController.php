@@ -5,15 +5,12 @@ class AsistenciasController extends BaseController{
 
 		$conf = Elemento::find($id)->cargos()->where('fecha_fin','=',null,'and')
 											->where('cargo_id','=','6')->first();
-		if(!is_null($conf)){									
+		if(!is_null($conf)){
+											
 		$instructorid = $id;
-
 		$compania = Elemento::find($id)->companiasysubzona;
 
 		$elementos = $compania->elementos()->where('id','<>',$instructorid)->get();
-		/*$elementos = Elemento::all()->status()->where('tipo','=','Acivo','and')
-								->where('id','<>',$instructorid)
-								->where('companiasysubzona_id','=',$compania->id)*/
 		$elementoss = array();
 		foreach ($elementos as $elemento) {
 			$estatus = $elemento->status()->orderBy('inicio','desc')->first();

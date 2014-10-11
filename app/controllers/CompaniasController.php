@@ -37,10 +37,10 @@ class CompaniasController extends BaseController{
 					return Redirect::back()->with('status', 'fail_create');
 			if(is_null($compania))
 				$compania = Companiasysubzona::find($id);
-			$compania->nombre = $nombre;
-			$compania->tipo = $tipo;
-			$compania->estatus = $estatus;
-			$compania->save();
+			$compania->update(array(
+				'nombre' 	=> $nombre,
+				'tipo' 		=> $tipo,
+				'estatus'	=> $estatus));
 			if ($compania->estatus == 'Inactiva'){
 				CompaniasController::bajaElementos($compania->id);
 				CompaniasController::bajainstructor($compania->id);
