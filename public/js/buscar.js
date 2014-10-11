@@ -52,10 +52,18 @@ $(document).ready(function() {
                     $('.table tbody tr td:nth-child(6)').text(json.matricula);
                     $('#elemento').removeClass('hidden');
                     $('#error').addClass('hidden');
+                    $('#activ').addClass('hidden');
                 }
                 else if(json.success == false){
-                   $('#error').removeClass('hidden');
-                   $('#elemento').addClass('hidden');
+                   if (json.ms){
+                        $('#activ').removeClass('hidden');
+                        $('#error').addClass('hidden');
+                    }
+                    else{
+                        $('#activ').addClass('hidden');
+                        $('#error').removeClass('hidden');
+                    }
+                    $('#elemento').addClass('hidden');
                 }
                 else{
                     $( "#elementos tbody" ).html('');
@@ -74,6 +82,7 @@ $(document).ready(function() {
                     };
                     $('#Elementos').modal('show')
                     $('#error').addClass('hidden');
+                    $('#activ').addClass('hidden');
                 }
                 $('.fa-spin').addClass('hidden');
     }, 'json');

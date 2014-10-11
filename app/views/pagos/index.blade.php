@@ -29,6 +29,10 @@
         <p class="alert alert-danger"><i class="fa fa-exclamation-triangle fa-lg"></i> No se encontro al Elemento
         </p>
       </div>
+      <div id="activ" class="col-md-12 hidden" style="margin-top:10px;">
+        <p class="alert alert-warning"><i class="fa fa-exclamation-triangle fa-lg"></i> El elemento esta inactivo
+        </p>
+      </div>
       <i class="fa fa-spinner fa-2x fa-spin hidden spin-form"></i>
       <div id="elemento" class="col-md-12 tabla hidden">
         <h2 style="">Elemento</h2>

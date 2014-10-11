@@ -30,6 +30,13 @@
 		<table id='elementos'class="table table-bordered table-hover table-first-column-number data-table display full">
 			<thead>
 				<tr>
+                    <th>
+                    <div class="form-group"> 
+                        <input type="date" name="fecha" class="form-control input-sm"/>
+                        <input type="text" class="hidden"name="instructor" value="{{ $id }}">
+                        <button type="submit" class="btn btn-success btn-sm boton">Guardar</button>
+                    </div>
+                    </th>
 					<th>Matricula <i class="fa fa-sort-desc"></i></th>
 					<th>Nombre <i class="fa fa-sort-desc"></i></th>
                     @if(isset($fechas))
@@ -37,13 +44,7 @@
 					       <th>{{ $fecha->fecha }}</th>
                         @endforeach
                     @endif
-                    <th>
-                    <div class="form-group"> 
-                        <input type="date" name="fecha" class="form-control input-sm"/>
-                        <input type="text" class="hidden"name="instructor" value="{{ $fecha->elemento_id }}">
-                        <button type="submit" class="btn btn-success btn-sm boton">Guardar</button>
-                    </div>
-                    </th>
+                    
 				</tr>
 			</thead>
 			<tbody>
@@ -51,24 +52,25 @@
                     @foreach($elementos as $elemento)
                         @if ($elemento->status()->orderBy('inicio','desc')->first()->tipo == 'Activo') 
                             <tr>
-                            <td>002579</td>
-                            <td>{{ $elemento->persona->nombre }} {{ $elemento->persona->apellidopaterno }} {{ $elemento->persona->apellidomaterno }}</td>
-                            <?php $asistencias = $elemento->asistencias()
-                                                    ->orderBy('fecha','asc')
-                                                    ->get();
-                            ?>
-                            @if(count($asistencias) > 0)
-                                @foreach($elemento->asistencias()->orderBy('fecha','asc')->get() as $asistencia)
-                                    <td>{{ $asistencia->tipo }}</td>
-                                @endforeach
                                 <td>
-                                    <select name="{{ $elemento->persona->id }}" class="form-control">
+                                    <select name="{{ $elemento->id }}" class="form-control">
                                         <option value="0">Falta</option>
                                         <option value="1">Asistencia</option>
                                         <option value="2">Permiso</option>
                                     </select>  
-                                </td>
-                            @endif    
+                                </td>      
+                            <td>002579</td>
+                            <td>{{ $elemento->persona->nombre }} {{ $elemento->persona->apellidopaterno }} {{ $elemento->persona->apellidomaterno }}</td>
+                            <?php $asistencias = $elemento->asistencias()
+                                                    ->orderBy('fecha','asc')
+                                                    ->take(4)->get();
+                            ?>
+                            @if(count($asistencias) > 0)
+                                @foreach($asistencias as $asistencia)
+                                    <td>{{ $asistencia->tipo }}</td>
+                                @endforeach
+                            @endif
+
                             </tr>
                         @endif  
                     @endforeach 
@@ -98,6 +100,17 @@
 <script type="text/javascript" src="/js/tables/jquery.dataTables.bootstrap.js"></script>
 <script src="/js/bootstrapValidator.js" type="text/javascript"></script>
 <script src="/js/es_ES.js" type="text/javascript"></script>
+<script src="/js/jquery-ui.custom.js"></script>
+<script src="/js/modernizr.js"></script>
+<script>
+    Modernizr.load({
+        test: Modernizr.inputtypes.date,
+        nope: "/js/jquery-ui.custom.js",
+        callback: function() {
+            $("input[type=date]").datepicker();
+        }
+    });
+</script>
 <script type="text/javascript">
     $('#elementos').dataTable( {
         "paging": false,

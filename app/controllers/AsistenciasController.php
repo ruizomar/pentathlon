@@ -7,19 +7,32 @@ class AsistenciasController extends BaseController{
 											->where('cargo_id','=','6')->first();
 		if(!is_null($conf)){									
 		$instructorid = $id;
-		$compania = Elemento::find($instructorid)->companiasysubzona;
+
+		$compania = Elemento::find($id)->companiasysubzona;
+
 		$elementos = $compania->elementos()->where('id','<>',$instructorid)->get();
-		$fechas = Elemento::find($instructorid)->asistencias()->orderBy('fecha','asc')->get();
+		/*$elementos = Elemento::all()->status()->where('tipo','=','Acivo','and')
+								->where('id','<>',$instructorid)
+								->where('companiasysubzona_id','=',$compania->id)*/
+		$elementoss = array();
+		foreach ($elementos as $elemento) {
+			$estatus = $elemento->status()->orderBy('inicio','desc')->first();
+			if ($estatus->tipo == 'Activo') {
+				$elementoss[] = $elemento;
+			}
+		}
+		$fechas = Elemento::find($instructorid)->asistencias()
+					->orderBy('fecha','desc')->take(4)->get();
 		
 		return View::make('administracion/asistencias')
-						->with('elementos',$elementos)
+						->with('elementos',$elementoss)
 						->with('compania',$compania)
-						->with('fechas',$fechas);
+						->with('fechas',$fechas)
+						->with('id',$id);
 		}
 		else
-			echo "error";
+			echo "No eres instructor lastimanente";
 	}
-
 	public function postNueva(){
 
 		$fecha = Input::get('fecha');
@@ -33,18 +46,14 @@ class AsistenciasController extends BaseController{
 
 		foreach (Input::all() as $key => $value) {
 				if(is_numeric($key)){
-					$asistencia = Elemento::find($key)->asistencias()
-					->save(new Asistencia(array(
-							'companiasysubzona_id' => $compania,
-							'fecha' => $fecha,
-							'tipo' => $value))
-						);
+					$asistencia = Asistencia::create(array(
+						'elemento_id' => $key,
+						'companiasysubzona_id' => $compania,
+						'fecha' => $fecha,
+						'tipo' => $value));
 				}
 		}
 		return Redirect::back();
-	}
-	public function getIns($id){
-		echo $id;
 	}
 
 }	

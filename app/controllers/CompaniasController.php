@@ -41,10 +41,11 @@ class CompaniasController extends BaseController{
 			$compania->tipo = $tipo;
 			$compania->estatus = $estatus;
 			$compania->save();
-			if ($compania->estatus == 'Inactiva');
+			if ($compania->estatus == 'Inactiva'){
 				CompaniasController::bajaElementos($compania->id);
 				CompaniasController::bajainstructor($compania->id);
 			}
+		}
 		
 		return Redirect::back()->with('status', 'ok_create');
 	}

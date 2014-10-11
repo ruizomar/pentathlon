@@ -32,6 +32,7 @@ class MembresiasController extends BaseController {
 
 		if(count($elemento) == 1){
 			$elemento = $elemento->first();
+			if ($elemento->status()->orderBy('inicio','desc')->first()->tipo == 'Activo') {
 			$matricula = $elemento->matricula;
 				$nummatricula = "";
 				if(!is_null($matricula))
@@ -45,22 +46,27 @@ class MembresiasController extends BaseController {
 					'fecha'	=> $elemento->fechanacimiento,
 					'matricula'	=> $nummatricula,
 				);
+			}
+			else
+				$dato = array('success' => false,'ms' => true);
 		}
 		else if(count($elemento) > 1){
 			$dato = array();
 			foreach ($elemento as $elemento) {
-				$dato[] = array(
-					'id' => $elemento->id,
-					'nombre' => $elemento->persona->nombre,
-					'paterno' => $elemento->persona->apellidopaterno,
-					'materno' => $elemento->persona->apellidomaterno,
-					'fecha' => $elemento->fechanacimiento,
-					'matricula' => $elemento->matricula,
-					);
+				if ($elemento->status()->orderBy('inicio','desc')->first()->tipo == 'Activo') {
+					$dato[] = array(
+						'id' => $elemento->id,
+						'nombre' => $elemento->persona->nombre,
+						'paterno' => $elemento->persona->apellidopaterno,
+						'materno' => $elemento->persona->apellidomaterno,
+						'fecha' => $elemento->fechanacimiento,
+						'matricula' => $elemento->matricula,
+						);
+				}
 			}
 		}
 		else
-		$dato = array('success' => false);
+		$dato = array('success' => false,'ms' => false);
 
 		return Response::json($dato);
 	}
