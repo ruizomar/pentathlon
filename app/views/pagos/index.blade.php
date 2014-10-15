@@ -36,38 +36,47 @@
       <i class="fa fa-spinner fa-2x fa-spin hidden spin-form"></i>
       <div id="elemento" class="col-md-12 tabla hidden">
         <h2 style="">Elemento</h2>
-        <table id="telemento"class="table">
-          <thead>
-            <tr>
-              <th>id</th>
-              <th>Nombre(s)</th>
-              <th>Apellido paterno</th>
-              <th>Apellido materno</th>
-              <th>Fecha de nacimiento</th>
-              <th>Numero de Matrícula</th>
-              <th>Cantidad</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>
-                {{ Form::open(array('url' => 'pagos/registrarpago','role' => 'form','id' => 'pagar','class' => 'form-inline')) }}
+        <div class="col-md-9">
+          <table id="telemento"class="table">
+            <thead>
+              <tr>
+                <th>id</th>
+                <th>Nombre(s)</th>
+                <th>Apellido paterno</th>
+                <th>Apellido materno</th>
+                <th>Fecha de nacimiento</th>
+                <th>Numero de Matrícula</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-3 well">
+          {{ Form::open(array('url' => 'pagos/registrarpago','role' => 'form','id' => 'pagar')) }}
                 <div class="form-group">
-                {{ Form::text('cantidad', null, array('class' => 'form-control','placeholder' => 'Cantidad')) }}
-                {{ Form::text('id', null, array('class' => 'hidden form-control')) }}
+                  {{ Form::label('cantidad', 'Cantidad',array('class' => 'control-label')) }}
+                  {{ Form::text('cantidad', null, array('class' => 'form-control','placeholder' => 'Cantidad')) }}
                 </div>
+                <div class="form-group">
+                  {{ Form::label('concepto', 'Concepto',array('class' => 'control-label')) }}
+                  {{ Form::select('concepto', array('' => 'Concepto','Matricula' => 'Matrícula'),null,array('placeholder' => 'Concepto','class' => 'form-control')) }}
+                </div>
+                {{ Form::text('id', null, array('class' => 'hidden form-control')) }}
+                <div class="form-group">
                 {{ Form::button('Registrar pago',array('class' => 'pagar btn btn-success','type' => 'submit','id' => 'bpagar')) }}
+                </div>
                 {{form::close()}}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+
+        </div>
       </div>
   <!-- Modal -->
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -139,9 +148,9 @@
 @section('scripts')
 <style type="text/css">
 .cantidad{
-    right: 0 !important;
-    top: 0 !important;
+    right: -27px !important;
 }
+
 </style>
 <script src="js/bootstrapValidator.js" type="text/javascript"></script>
 <script src="js/es_ES.js" type="text/javascript"></script>

@@ -103,6 +103,12 @@ $(document).ready(function() {
                         message: 'Por favor introduce una cantidad'
                     }
                 }
+            },
+            concepto: {
+                validators: {
+                    notEmpty: {
+                    }
+                }
             }
         }
     })
@@ -126,8 +132,8 @@ $(document).ready(function() {
                     $('#pagoerror').addClass('alert-danger');
                 }
                 $('.spin-modal').addClass('hidden');
-                $('#pagar').data('bootstrapValidator').resetField('cantidad', true)
-
+                $('#pagar').data('bootstrapValidator').resetField('cantidad', true);
+                $('#pagar').data('bootstrapValidator').resetField('concepto', true);
     }, 'json');
     });
 });

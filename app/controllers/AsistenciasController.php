@@ -53,4 +53,23 @@ class AsistenciasController extends BaseController{
 		return Redirect::back();
 	}
 
+	public function getReporte(){
+		$companias = Companiasysubzona::all();
+		return View::make('reportes/asistencias')->with('companias',$companias);
+	}
+	public function postCompania(){
+
+		$id = Input::get('id');
+		$data = array();
+		$fechas = DB::table('asistencias')->select('fecha')->distinct()
+		->where('companiasysubzona_id','=',$id)->orderby('fecha','desc')->get();
+		$data[] = $fechas;
+		$asistencias = array();
+		foreach ($fechas as $fecha) {
+			$asistencias[] = Asistencia::where('fecha','=',$fecha->fecha,'and')
+			->where('companiasysubzona_id','=',$id,'and')->where('tipo','=',1)->count();
+		}
+		$data[] = $asistencias;
+		return Response::json($data);
+	}
 }	

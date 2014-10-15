@@ -87,7 +87,22 @@ class MembresiasController extends BaseController {
 
 		$id = Input::get('id');
 		$cantidad = Input::get('cantidad');
-
+		////////////////////////////
+		if (Input::get('concepto') != 'Matricula') {
+			$pago = new Pago;
+					$pago->elemento_id = $id;
+					$pago->concepto = Input::get('concepto') ;
+					$pago->fecha = date("Y-m-d");
+					$pago->cantidad = $cantidad;
+				$pago->save();
+				$dato = array(
+					'success' => true,
+					'matricula' => '',
+					'message' => 'El pago se a registrado exitosamente'
+					);
+		return Response::json($dato);
+		}
+		////////////////////////////
 		$pagos = Pago::where('elemento_id','=',$id,'and')
 				->where('fecha','like',date("Y").'%','and')
 				->where('concepto','=','Matricula')->first();
