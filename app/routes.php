@@ -32,6 +32,8 @@ Route::get('recluta/otro','EditaReclutaController@otro');
 Route::post('recluta/buscar','EditaReclutaController@buscar');
 Route::get('recluta/lista','AltaReclutaController@lista');
 
+Route::post('buscar','BuscarController@buscar');
 Route::controller('pagos', 'MembresiasController');
 Route::controller('companias','CompaniasController');
 Route::controller('asistencias','AsistenciasController');
+Route::controller('condecoraciones','CondecoracionesController');

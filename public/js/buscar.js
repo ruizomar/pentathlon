@@ -131,6 +131,7 @@ $(document).ready(function() {
                     $('#pagoerror').removeClass('hidden alert-success');
                     $('#pagoerror').addClass('alert-danger');
                 }
+                $('#pag').val(json.pago);
                 $('.spin-modal').addClass('hidden');
                 $('#pagar').data('bootstrapValidator').resetField('cantidad', true);
                 $('#pagar').data('bootstrapValidator').resetField('concepto', true);

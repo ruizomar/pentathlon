@@ -12,7 +12,7 @@
     <div class="col-md-2" style="margin-top:20px;">
         <button type="button" class="btn btn-success btn-lg" id="bnueva"><i class="fa fa-plus fa-lg"></i> Nueva</button>
     </div>   
-    <div class="message col-md-6 col-md-offset-3" style="">
+    <div class="message col-md-6 col-md-offset-3">
         @if($status == 'fail_create')
         <div id="error" style="margin-top:10px;">
             <p class="alert alert-danger"><i class="fa fa-exclamation-triangle fa-lg"></i> Ocurrio un error 

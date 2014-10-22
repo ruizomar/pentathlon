@@ -9,8 +9,7 @@
     {{  HTML::style('font-awesome/css/font-awesome.css');  }}
     {{  HTML::style('css/theme.css');  }}
 
-    {{  HTML::script('js/jquery-1.11.1.js'); }}
-    {{  HTML::script('js/bootstrap.js'); }}
+    @yield('head')
   </head>
   <body>
 <!-- navbar -->
@@ -20,7 +19,7 @@
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
               <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand" href="admin"><img src="/imgs/pdmu.png" alt=""> PDMU</a>
+            <a class="navbar-brand" href="/"><img src="{{ asset('imgs/pdmu.png') }}" alt=""> PDMU</a>
           </div>
           <div class="hidden-xs">
                   <ul class="nav navbar-nav navbar-right">
@@ -47,7 +46,7 @@
 <div class="navbar-collapse collapse">
   <div id="main-menu">
       <ul class="nav nav-tabs ">
-          <li class="active"><a href="#"><i class="fa fa-tachometer"></i> <span>Dashboard</span></a></li>
+        <li class="active"><a href="#"><i class="fa fa-tachometer"></i> <span>Dashboard</span></a></li>
           <li ><a href="/pagos"><i class="fa fa-money"></i> <span>Pagos</span></a></li>
           <li ><a href="/companias" ><i class="fa fa-map-marker"></i> <span>Companias</span></a></li>
           <li ><a href="/asistencias/index/7"><i class="fa fa-calendar"></i> <span>Asistencias</span></a></li>
@@ -102,5 +101,9 @@
       </footer>
     </div>
   </body>
+
+  {{  HTML::script('js/jquery-1.11.1.js'); }}
+  {{  HTML::script('js/bootstrap.js'); }}
+  
   @yield('scripts')
 </html>

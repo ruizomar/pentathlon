@@ -68,7 +68,7 @@
                 </div>
                 <div class="form-group">
                   {{ Form::label('concepto', 'Concepto',array('class' => 'control-label')) }}
-                  {{ Form::select('concepto', array('' => 'Concepto','Matricula' => 'Matrícula'),null,array('placeholder' => 'Concepto','class' => 'form-control')) }}
+                  {{ Form::select('concepto', array('' => 'Concepto','Matricula' => 'Matrícula','Credencial' => 'Credencial'),null,array('class' => 'form-control')) }}
                 </div>
                 {{ Form::text('id', null, array('class' => 'hidden form-control')) }}
                 <div class="form-group">
@@ -99,7 +99,7 @@
         </div>
         <div class="modal-footer">
           {{ Form::open(array('url' => 'pagos/recibo','role' => 'form','id' => 'recibo','class' => 'form-inline')) }}
-              {{ Form::text('id', null, array('class' => 'hidden form-control')) }}
+              {{ Form::text('id', null, array('id' => 'pag','class' => 'hidden form-control')) }}
             <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
             {{ Form::button('Imprimir recibo',array('class' => 'btn btn-success','type' => 'submit','id' => 'imprimir')) }}
           {{form::close()}}
