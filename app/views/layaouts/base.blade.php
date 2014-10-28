@@ -8,8 +8,8 @@
     {{  HTML::style('css/bootstrap-theme.min.css');  }}
     {{  HTML::style('font-awesome/css/font-awesome.css');  }}
     {{  HTML::style('css/theme.css');  }}
-  {{  HTML::script('js/jquery-1.11.1.js'); }}
-  {{  HTML::script('js/bootstrap.js'); }}
+    {{  HTML::script('js/jquery-1.11.1.js'); }}
+    {{  HTML::script('js/bootstrap.js'); }}
     @yield('head')
   </head>
   <body>

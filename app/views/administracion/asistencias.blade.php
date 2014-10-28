@@ -134,18 +134,7 @@
 {{  HTML::script('js/tables/jquery.dataTables.bootstrap.js'); }}
 {{  HTML::script('js/bootstrapValidator.js'); }}
 {{  HTML::script('js/es_ES.js'); }}
-{{  HTML::script('js/jquery-ui.custom.js'); }}
-{{  HTML::script('js/modernizr.js'); }}
 
-<script>
-    Modernizr.load({
-        test: Modernizr.inputtypes.date,
-        nope: "/js/jquery-ui.custom.js",
-        callback: function() {
-            $("input[type=date]").datepicker();
-        }
-    });
-</script>
 <script type="text/javascript">
     $('#elementos').dataTable( {
         "paging": false,
