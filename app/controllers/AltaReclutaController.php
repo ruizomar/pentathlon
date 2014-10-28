@@ -3,7 +3,28 @@ class AltaReclutaController extends BaseController {
 
 	public function get_nuevo()
 	{
-		return View::make('recluta.alta');
+		$armas = Tipoarma::all();
+		$armasArr = array();
+		foreach($armas as $arma)
+		{
+			$armasArr[$arma->id] = $arma->nombre;
+		}
+
+		$cuerpos = Tipocuerpo::all();
+		$cuerposArr = array();
+		foreach($cuerpos as $cuerpo)
+		{
+			$cuerposArr[$cuerpo->id] = $cuerpo->nombre;
+		}
+
+		$companiasysubzonas = Companiasysubzona::where('status','=','activa')->get();
+		$companiasysubzonasArr = array();
+		foreach($companiasysubzonas as $compayzona)
+		{
+			$companiasysubzonasArr[$compayzona->id] = $compayzona->nombre;
+		}
+
+		return View::make('recluta.alta')->with('armas',$armasArr)->with('cuerpos',$cuerposArr)->with('companiasysubzonas',$companiasysubzonasArr);
 	}
 
 	public function post_nuevo()
@@ -33,18 +54,19 @@ class AltaReclutaController extends BaseController {
 			'municipio' => Input::get('municipio'),
 			'estado' => Input::get('estado'),
 			'reclutamiento' => 33,
-			'email' => Input::get('email'),
 			'alergias' => Input::get('alergia'),
 			'adiccion' => Input::get('vicios'),
-			'tipoarma_id' =>Input::get('arma'),
-			'tipocuerpo_id' =>Input::get('cuerpo'),
-			'companiasysubzona_id' =>Input::get('compania')
+			'tipoarma_id' => Input::get('arma'),
+			'tipocuerpo_id' => Input::get('cuerpo'),
+			'companiasysubzona_id' => Input::get('compania'),
+			'tiposangre' => Input::get('tiposangre'),
+			'estado' => Input::get('estado'),
 		));
 		if (Input::get('reclutelefonofijo') != "") {
-			AltaReclutaController::agregarTelefono($personaElemento->id,Input::get('reclutelefonofijo'));
+			AltaReclutaController::agregarTelefono($personaElemento->id,Input::get('reclutelefonofijo'),'fijo');
 		}
 		if (Input::get('reclutelefonomovil') != "") {
-			AltaReclutaController::agregarTelefono($personaElemento->id,Input::get('reclutelefonomovil'));
+			AltaReclutaController::agregarTelefono($personaElemento->id,Input::get('reclutelefonomovil'),'movil');
 		}
 		if (Input::get('reclufacebook') != "") {
 			AltaReclutaController::agregarFacebook($personaElemento->id,Input::get('reclufacebook'));
@@ -52,7 +74,27 @@ class AltaReclutaController extends BaseController {
 		if (Input::get('reclutwitter') != "") {
 			AltaReclutaController::agregarTwitter($personaElemento->id,Input::get('reclutwitter'));
 		}
+		if (Input::get('recluemail') != "") {
+			AltaReclutaController::agregarEmail($personaElemento->id,Input::get('recluemail'));
+		}
 		AltaReclutaController::registrarAscenso($elemento->id);
+
+		if (Input::file("fotoperfil") != "") {
+			$file = Input::file("fotoperfil")->move("imgs",$elemento->id.'.'.Input::file('fotoperfil')->guessClientExtension());
+			$documento = new Documento;
+			$documento -> elemento_id = $elemento->id;
+			$documento -> ruta = 'imgs/fotos/'.$elemento->id.'.'.Input::file('fotoperfil')->guessClientExtension();
+			$documento -> tipo = 'fotoperfil';
+			$documento -> save();
+		}
+		else{
+			$documento = new Documento;
+			$documento -> elemento_id = $elemento->id;
+			$documento -> ruta = 'imgs/fotos/default.png';
+			$documento -> tipo = 'fotoperfil';
+			$documento -> save();
+		}
+
 	///////////////////////////////////////////////////Tutor
 		$personaTutor = Persona::create(array(
 			'nombre' => Input::get('contactonombre'),
@@ -61,10 +103,10 @@ class AltaReclutaController extends BaseController {
 			'sexo' => Input::get('contactosexo')
 		));
 		if (Input::get('contactotelefonofijo') != "") {
-			AltaReclutaController::agregarTelefono($personaTutor->id,Input::get('contactotelefonofijo'));
+			AltaReclutaController::agregarTelefono($personaTutor->id,Input::get('contactotelefonofijo'),'fijo');
 		}
 		if (Input::get('contactotelefonomovil') != "") {
-			AltaReclutaController::agregarTelefono($personaTutor->id,Input::get('contactotelefonomovil'));
+			AltaReclutaController::agregarTelefono($personaTutor->id,Input::get('contactotelefonomovil'),'movil');
 		}
 		if (Input::get('contactofacebook') != "") {
 			AltaReclutaController::agregarFacebook($personaTutor->id,Input::get('contactofacebook'));
@@ -72,15 +114,23 @@ class AltaReclutaController extends BaseController {
 		if (Input::get('contactotwitter') != "") {
 			AltaReclutaController::agregarTwitter($personaTutor->id,Input::get('contactotwitter'));
 		}
+		if (Input::get('contactoemail') != "") {
+			AltaReclutaController::agregarEmail($personaTutor->id,Input::get('contactoemail'));
+		}
 	///////////////////////////////////////////////////Relacion elemento-tutor
 		AltaReclutaController::agregarTutor($personaTutor->id,$elemento->id,Input::get('contactorelacion'));
-		return Redirect::to('recluta/lista');
+
+		$persona = Persona::find($personaElemento -> id);
+		$fotoperfil = $elemento -> documentos() -> where('tipo','=','fotoperfil') -> first() -> ruta;
+		return View::make('recluta.lista')->with('persona',$persona)->with('fotoperfil',$fotoperfil)->with('elemento',$elemento);
+
 	}
-	public function agregarTelefono($id,$tel)
+	public function agregarTelefono($id,$tel,$tipo)
 	{
 		$telefono = new Telefono;
 		$telefono -> persona_id = $id;
-		$telefono -> telefono = Input::get('reclutelefonofijo');
+		$telefono -> telefono = $tel;
+		$telefono -> tipo = $tipo;
 		$telefono -> save();
 	}
 
@@ -118,9 +168,11 @@ class AltaReclutaController extends BaseController {
 					'descripcion' => 'Nuevo elemento')));
 	}
 
-	public function lista()
+	public function agregarEmail($persona_id,$correo)
 	{
-		$personas = Persona::all();
-		return View::make('recluta.lista')->with('personas',$personas);
+		$email = new Email;
+		$email -> persona_id = $persona_id;
+		$email -> email = $correo;
+		$email -> save();
 	}
 }

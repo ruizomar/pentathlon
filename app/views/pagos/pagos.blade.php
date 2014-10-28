@@ -10,6 +10,9 @@
     }
 </style>
 @endsection
+@section('h2')
+Pagos
+@endsection
 @section('elemento')
     <div class="col-md-8 col-md-offset-2 well">
         <div class="row" style='margin-bottom:15px;'>

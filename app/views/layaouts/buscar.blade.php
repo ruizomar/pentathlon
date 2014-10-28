@@ -4,7 +4,7 @@
 
     {{ Form::open(array('url' => 'buscar','role' => 'form','id' => 'fbuscar')) }}
         <div class="col-md-12">
-            <h2>Pago de membresia</h2>
+            <h2>@yield('h2')</h2>
             <div class="col-sm-3 form-group">
               {{ Form::label('nombre', 'Nombre (s)',array('class' => 'control-label')) }}
               {{ Form::text('nombre', null, array('placeholder' => 'introduce nombre','class' => 'form-control','autofocus')) }}

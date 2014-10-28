@@ -6,4 +6,8 @@ class Persona extends Eloquent {
     {
         return $this->hasOne('Elemento');
     }
+    public function telefonos()
+    {
+        return $this->hasMany('Telefono');
+    }
 }

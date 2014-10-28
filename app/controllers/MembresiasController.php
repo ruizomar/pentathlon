@@ -16,7 +16,9 @@ class MembresiasController extends BaseController {
 		$dato = array(
 			'nombre'	=> $elemento->persona->nombre.' '.$elemento->persona->apellidopaterno.' '.$elemento->persona->apellidomaterno,
 			'fecha'		=> $elemento->fechanacimiento,
-			'matricula' => $nummatricula);
+			'matricula' => $nummatricula,
+			'foto'		=> $elemento->documentos()->where('tipo','=','fotoperfil')->first()->ruta
+			);
 			return Response::json($dato);
 	}
 
@@ -72,7 +74,7 @@ class MembresiasController extends BaseController {
 				$pago->save();
 				$dato = array(
 					'success' 	=> true,
-					'matricula' => '<strong>'.$matricula->matricula.'</strong>',
+					'matricula' => '<strong>'.$matricula->id.'</strong>',
 					'message' 	=> 'El pago se a registrado exitosamente numero de Matricula: ',
 					'pago' 		=> $pago->id
 					);

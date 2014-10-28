@@ -68,7 +68,7 @@
 
           <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Reports" href="reports.html"><i class="fa fa-bar-chart-o"></i> <span class="caption">Reportes</span></a></li>
 
-          <li class=" "><a rel="tooltip" data-placement="right" data-original-title="UI Features" href="components.html"><i class="icon-archive"></i> <span class="caption">Paquetes</span></a></li>
+          <li class=" "><a rel="tooltip" data-placement="right" data-original-title="UI Features" href="<?=URL::to('condecoraciones'); ?>"><i class="fa fa-shield"></i> <span class="caption">Condecoraciones</span></a></li>
 
           <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Pricing" href="pricing.html"><i class="icon-money"></i> <span class="caption">Precios</span></a></li>
 

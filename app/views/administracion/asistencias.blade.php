@@ -54,23 +54,34 @@
                             <tr>
                                 <td>
                                     <select name="{{ $elemento->id }}" class="form-control">
-                                        <option value="0">Falta</option>
                                         <option value="1">Asistencia</option>
+                                        <option value="0">Falta</option>
                                         <option value="2">Permiso</option>
-                                    </select>  
+                                    </select> 
                                 </td>      
-                            <td>002579</td>
+                            <td>
+                                @if(is_null($elemento->matricula))
+                                    Sin matricula
+                                @else
+                                    {{  $elemento->matricula->id }}
+                                @endif    
+                            </td>
                             <td>{{ $elemento->persona->nombre }} {{ $elemento->persona->apellidopaterno }} {{ $elemento->persona->apellidomaterno }}</td>
                             <?php $asistencias = $elemento->asistencias()
-                                                    ->orderBy('fecha','asc')
+                                                    ->orderBy('fecha','desc')
                                                     ->take(4)->get();
                             ?>
                             @if(count($asistencias) > 0)
                                 @foreach($asistencias as $asistencia)
                                     <td>{{ $asistencia->tipo }}</td>
                                 @endforeach
+                            <?php   $i = count($asistencias);   ?> 
+                            @else
+                            <?php  $i=0 ?>
                             @endif
-
+                                @for ($i; $i < count($fechas); $i++)
+                                    <td> - </td>
+                                @endfor
                             </tr>
                         @endif  
                     @endforeach 
@@ -86,6 +97,27 @@
 <!------------------------form ----------------------------!-->  
 	</div>
 </div>
+<!-- Modal -->
+  <div class="modal fade" id="Elemento" tabindex="-1" role="dialog" aria-labelledby="Elemento" aria-hidden="true">
+    <div class="modal-dialog modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="Elemento">
+            <i class="fa fa-eye"></i> Inasistencia prolongada
+          </h4>
+        </div>
+        <div class="modal-body">
+
+          
+
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Modal --> 
 @endsection
 @section('scripts')
 <style type="text/css">
@@ -151,5 +183,31 @@ $(document).ready(function() {
     $('#main-menu').find('li').removeClass('active');
     $('#main-menu ul li:nth-child(4)').addClass('active');
 });
+</script>
+<script type="text/javascript" charset="utf-8">
+    $( "select" ).change(function () {
+        if($(this).val() == 0 && $(this).closest("tr").find("td:nth-child(4)").text() == 0 && $(this).closest("tr").find("td:nth-child(5)").text() == 0 && $(this).closest("tr").find("td:nth-child(6)").text() == 0)
+            message($(this).attr('name'))
+  });
+function message(id){
+    $.post('/asistencias/elemento', 'id='+id, function(json) {
+            $('.modal-body').html('');
+            $('.modal-body').append('<h2>Elemento:</h2>');
+            $('.modal-body').append('<label><strong>'+json.elemento.nombre+' '+json.elemento.apellidopaterno+' '+json.elemento.apellidomaterno+'</strong></label>');
+            $(json.telefonosElemento).each(function() {
+                $('.modal-body').append('<p>'+this.tipo+': '+this.telefono+'</p>');
+            });
+            if (json.correoElemento)
+                $('.modal-body').append('<p>Email: '+json.correoElemento+'</p>');
+            $('.modal-body').append('<h2>'+json.relacion+':</h2>');
+            $('.modal-body').append('<label><strong>'+json.tutor.nombre+' '+json.tutor.apellidopaterno+' '+json.tutor.apellidomaterno+'</strong></label>');
+            $(json.telefonosTutor).each(function() {
+                $('.modal-body').append('<p>'+this.tipo+': '+this.telefono+'</p>');
+            });
+            if (json.correotutor)
+                $('.modal-body').append('<p>Email: '+json.correotutor+'</p>');
+        }, 'json');
+    $('#Elemento').modal('show');
+}    
 </script>
 @endsection

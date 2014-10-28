@@ -28,7 +28,7 @@ class CompaniasController extends BaseController{
 			$compania = new Companiasysubzona;
 				$compania->nombre = $nombre;
 				$compania->tipo = $tipo;
-				$compania->estatus = $estatus;
+				$compania->status = $estatus;
 			$compania->save();
 		}
 		else{
@@ -40,8 +40,8 @@ class CompaniasController extends BaseController{
 			$compania->update(array(
 				'nombre' 	=> $nombre,
 				'tipo' 		=> $tipo,
-				'estatus'	=> $estatus));
-			if ($compania->estatus == 'Inactiva'){
+				'status'	=> $estatus));
+			if ($compania->status == 'Inactiva'){
 				CompaniasController::bajaElementos($compania->id);
 				CompaniasController::bajainstructor($compania->id);
 			}

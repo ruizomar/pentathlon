@@ -16,7 +16,7 @@ class Elemento extends Eloquent{
 		return $this->belongsToMany('Grado','ascensos')->withPivot('fecha');
 	}
 	public function cargos(){
-		return $this->belongsToMany('Cargo','cargosobtenido')->withPivot('fecha_inicio','fecha_fin');
+		return $this->belongsToMany('Cargo')->withPivot('fecha_inicio','fecha_fin');
 	}
 	public function companiasysubzona(){
 		return $this->belongsTo('Companiasysubzona');
@@ -26,5 +26,11 @@ class Elemento extends Eloquent{
 	}
 	public function asistencias(){
 		return $this->hasMany('Asistencia');
+	}
+	public function reconocimientos(){
+		return $this->hasMany('Reconocimiento');
+	}
+	public function documentos(){
+		return $this->hasMany('Documento');
 	}
 }

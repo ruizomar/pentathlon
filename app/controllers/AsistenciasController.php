@@ -72,4 +72,28 @@ class AsistenciasController extends BaseController{
 		$data[] = $asistencias;
 		return Response::json($data);
 	}
+	public function postElemento(){
+		$elemento = Elemento::find(Input::get('id'))->persona;
+		$tutor = Tutor::where('elemento_id','=',Input::get('id'))->first();
+		$data = array();
+		$data['elemento'] 	= $elemento;
+		$data['tutor'] 		= $tutor->persona;
+		$data['relacion'] 	= $tutor->relacion;	
+		$telefonosElemento 	= array();
+		$telefonosTutor 	= array();
+		if(count($elemento->telefonos()) > 0)
+			foreach ($elemento->telefonos()->get() as $telefono) {
+				$telefonosElemento[] = $telefono;
+			}
+		if(count($tutor->persona->telefonos()) > 0)
+			foreach ($tutor->persona->telefonos()->get() as $telefono) {
+				$telefonosTutor[] = $telefono;
+			}	
+		$data['telefonosElemento']	= $telefonosElemento;
+		$data['telefonosTutor'] 	= $telefonosTutor;
+		$data['correoElemento']		= $elemento->email;
+		$data['correoTutor']		= $tutor->persona->email;
+
+		return Response::json($data);	
+	}
 }	

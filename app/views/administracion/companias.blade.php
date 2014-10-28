@@ -43,7 +43,7 @@
 				<td>{{ $compania->id }}</td>
 				<td>{{ $compania->nombre }}</td>
 				<td>{{ $compania->tipo }}</td>
-				<td>{{ $compania->estatus }}</td>
+				<td>{{ $compania->status }}</td>
 				<td>
 					<button type="button" onclick="editar(this)" class="btn btn-info select btn-xs">Editar</button></td>
 				</tr>  

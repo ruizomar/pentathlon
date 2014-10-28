@@ -1,117 +1,104 @@
-@extends('layaouts.base')
+@extends('layaouts.buscar')
 
 @section('titulo')
-  Condecoraciones | PDMU
+  Condecoraciones PDMU
 @endsection
-@section('contenido')
-<div class="row">
-    <div class="col-md-12">
-        <h2>Registro de Condecoraciones</h2>
-    </div>
-    <div class="col-md-12">
-        {{ Form::open(array('url' => 'pagos/buscar','role' => 'form','id' => 'fbuscar')) }}
-            <div class="col-sm-3 form-group">
-              {{ Form::label('nombre', 'Nombre (s)',array('class' => 'control-label')) }}
-              {{ Form::text('nombre', null, array('placeholder' => 'introduce nombre','class' => 'form-control')) }}
-            </div>
-            <div class="col-sm-3 form-group">
-              {{ Form::label('paterno', 'Apellido paterno',array('class' => 'control-label')) }}
-              {{ Form::text('paterno', null, array('placeholder' => 'introduce apellido paterno','class' => 'form-control')) }}
-            </div>
-            <div class="col-sm-3 form-group">
-              {{ Form::label('materno', 'Apellido materno',array('class' => 'control-label')) }}
-              {{ Form::text('materno', null, array('placeholder' => 'introduce apellido materno','class' => 'form-control')) }}
-            </div>
-            <div class="col-sm-1">
-              {{ Form::button('<i class="fa fa-search fa-lg"></i> Buscar',array('class' => 'btn btn-primary','id' => 'buscar','type' => 'submit')) }}
-            </div>
-      {{ Form::close() }}
-    </div>
-    <div id="error" class="col-md-12 hidden" style="margin-top:10px;">
-        <p class="alert alert-danger"><i class="fa fa-exclamation-triangle fa-lg"></i> No se encontro al Elemento
-        </p>
-    </div>
-    <div id="activ" class="col-md-12 hidden" style="margin-top:10px;">
-        <p class="alert alert-warning"><i class="fa fa-exclamation-triangle fa-lg"></i> El elemento esta inactivo
-        </p>
-    </div>
-    <i class="fa fa-spinner fa-2x fa-spin hidden spin-form"></i>
-<!-- Modal -->
-<div class="modal fade bs-example-modal-lg" id="Elementos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title" id="Elementos">
-            <i class="fa fa-eye"></i> Elementos
-          </h4>
-        </div>
-        <div class="modal-body">
-
-          <table id="elementos" class="table">
-            <thead>
-              <tr>
-                <th>id</th>
-                <th>Nombre(s)</th>
-                <th>Apellido paterno</th>
-                <th>Apellido materno</th>
-                <th>Fecha de nacimiento</th>
-                <th>Matrícula</th>
-                <th>seleccionar</th>
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
-          </table>
-
-        </div>
-        <div class="modal-footer">
-        </div>
-      </div>
-    </div>
-</div>
-<!-- End Modal -->
-</div>
-@endsection
-@section('scripts')
+@section('head')
 <style type="text/css">
-.fech,.bv-no-label{
-    margin-right: 65px !important;
-}
-.boton{
-    margin-left: 10px !important;
-}
+    .cantidad{
+        top: 0 !important;
+    }
+    .cheked{
+        opacity: .4;
+    }
 </style>
-<script type="text/javascript" src="/js/tables/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="/js/tables/jquery.dataTables.bootstrap.js"></script>
-<script src="/js/bootstrapValidator.js" type="text/javascript"></script>
-<script src="/js/es_ES.js" type="text/javascript"></script>
-<script src="/js/jquery-ui.custom.js"></script>
-<script src="/js/modernizr.js"></script>
-<script src="js/buscar.js" type="text/javascript"></script>
-<script>
-    Modernizr.load({
-        test: Modernizr.inputtypes.date,
-        nope: "/js/jquery-ui.custom.js",
-        callback: function() {
-            $("input[type=date]").datepicker();
-        }
+@endsection
+@section('h2')
+Condecoraciones
+@endsection
+@section('elemento')
+    <div class="col-md-8 col-md-offset-2 well">
+        <div class="row" style='margin-bottom:15px;'>
+            <div class="col-md-2">
+                <img src="" class="img-circle img-responsive img-thumbnail" id='foto' alt="Responsive image">
+            </div>
+            <div class="col-md-5" id='datos'>
+                <label id='lnombre'></label>
+                <label id='lmatricula'></label>
+                <label id='lfecha'></label>
+            </div>
+            <div class="col-md-5">
+                <div id='insignias'>
+                    
+                </div>
+                <button class='btn btn-info btn-xs' onClick='formulario()'><i class="fa fa-plus"></i> agregar</button>
+            </div>
+        </div>
+        {{ Form::open(array('url' => 'condecoraciones/agregar','role' => 'form','id' => 'agregar','class' => 'hidden')) }}
+            <div class="form-group col-md-2 pull-right">
+            {{ Form::button('Guardar',array('class' => 'btn btn-success btn-sm','type' => 'submit','id' => 'bpagar')) }}
+            </div>
+            {{ Form::text('id', null, array('class' => 'hidden form-control')) }}
+        {{form::close()}}
+    </div>
+@endsection
+@section('scripts2')
+    <script type="text/javascript">
+    var elemento;
+        $('#main-menu').find('li').removeClass('active');
+        $('#sidebar-nav').find('li').removeClass('active');
+        $('#sidebar-nav ul li:nth-child(3)').addClass('active');
+    function encontrado(id){
+        elemento=id;
+        $('.fa-spinner').removeClass('hidden');
+        $('#agregar').addClass('hidden');
+        $('#elemento').addClass('hidden');
+            $.post('condecoraciones/elemento', 'id='+id, function(json) {
+                $('#lnombre').html('<strong>Nombre:</strong> '+json.persona.nombre);
+                $('#lmatricula').html('<strong>Matricula:</strong> '+json.persona.matricula);
+                $('#lfecha').html('<strong>Fecha de nacimiento:</strong> '+json.persona.fecha);
+                $('#foto').attr('src',json.persona.foto);
+                $('#insignias').html("");
+                if(json.success == false)
+                    $('#insignias').append('<h2>Sin condecoraciones asignadas</h2>');
+                $(json.condecoraciones).each(function() {
+                    $('#insignias').append('<label><img src="imgs/pdmu.png" class="img-circle img-responsive img-thumbnail" alt="Responsive image"><small>'+this.nombre+'</small></label>');
+                    $('#insignias').append('<label><small>Fecha: '+this.fecha+'</small></label>');
+                  });
+                $('[name=id]').val(id);
+                
+                $('.fa-spinner').addClass('hidden');
+                $('#elemento').removeClass('hidden');
+        }, 'json');
+    }
+    function formulario(){
+        $('.fa-spinner').removeClass('hidden');
+        $.post('condecoraciones/nueva', 'id='+elemento, function(json) {
+            $('.check').remove();
+            if(json.success == false)
+                $('#insignias').append('<h2>No se pueden agregar condecoraciones</h2>');
+            else{
+                for (var i = 0; i < json.length; i++) {
+                    $('#agregar').append('<label class="check"><img src="imgs/pdmu.png" class="img-circle img-responsive img-thumbnail cheked" alt="Responsive image"><input class="hidden" type="checkbox" onchange="check(this)" name="'+json[i]+'">Condecoracion por '+json[i]+' años</label>');
+                };
+                $('#agregar').removeClass('hidden');
+            }
+            $('.fa-spinner').addClass('hidden');
+        }, 'json');        
+    }
+    function check(ck){
+        if($(ck).is(":checked")) {
+            $(ck).closest("label").find('img').removeClass('cheked');
+         }else{
+             $(ck).closest("label").find('img').addClass('cheked');
+         }
+    }
+    $( "#agregar" ).submit(function( event ) {
+        event.preventDefault();
+      $.post('condecoraciones/agregar', $( "#agregar" ).serialize(), function(json) {
+            if(json.success == true)
+                encontrado($('[name = id]').val())
+        }, 'json');
     });
-</script>
-<script type="text/javascript">
-    $('#elementos').dataTable( {
-        "paging": false,
-        "info":false,
-        "language": {
-            "lengthMenu": "Subzonas por página _MENU_",
-            "zeroRecords": "No se encontro",
-            "info": "Pagina _PAGE_ de _PAGES_",
-            "infoEmpty": "No records available",
-            "infoFiltered": "(Ver _MAX_ total records)",
-            'search': 'Buscar: ',
-        }
-} );
-</script>
-<script type="text/javascript">
-</script>
+    </script>
 @endsection
