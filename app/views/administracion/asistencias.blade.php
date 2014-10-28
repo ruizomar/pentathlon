@@ -3,6 +3,16 @@
 @section('titulo')
   Asistencias | PDMU
 @endsection
+@section('head')
+<style type="text/css">
+.fech,.bv-no-label{
+    margin-right: 65px !important;
+}
+.boton{
+    margin-left: 10px !important;
+}
+</style>
+@endsection
 @section('contenido')
 <?php $status=Session::get('status'); ?>
 <div class="row">
@@ -26,7 +36,7 @@
     </div> 
 	<div class="col-md-12 table-responsive">
 <!------------------------form ----------------------------!-->        
-    <form action="/asistencias/nueva" method="POST" accept-charset="utf-8" id="asis">
+    <form action="<?php echo URL::to('asistencias/nueva'); ?>" method="POST" accept-charset="utf-8" id="asis">
 		<table id='elementos'class="table table-bordered table-hover table-first-column-number data-table display full">
 			<thead>
 				<tr>
@@ -120,20 +130,13 @@
   <!-- End Modal --> 
 @endsection
 @section('scripts')
-<style type="text/css">
-.fech,.bv-no-label{
-    margin-right: 65px !important;
-}
-.boton{
-    margin-left: 10px !important;
-}
-</style>
-<script type="text/javascript" src="/js/tables/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="/js/tables/jquery.dataTables.bootstrap.js"></script>
-<script src="/js/bootstrapValidator.js" type="text/javascript"></script>
-<script src="/js/es_ES.js" type="text/javascript"></script>
-<script src="/js/jquery-ui.custom.js"></script>
-<script src="/js/modernizr.js"></script>
+{{  HTML::script('js/tables/jquery.dataTables.min.js'); }}
+{{  HTML::script('js/tables/jquery.dataTables.bootstrap.js'); }}
+{{  HTML::script('js/bootstrapValidator.js'); }}
+{{  HTML::script('js/es_ES.js'); }}
+{{  HTML::script('js/jquery-ui.custom.js'); }}
+{{  HTML::script('js/modernizr.js'); }}
+
 <script>
     Modernizr.load({
         test: Modernizr.inputtypes.date,
@@ -190,7 +193,7 @@ $(document).ready(function() {
             message($(this).attr('name'))
   });
 function message(id){
-    $.post('/asistencias/elemento', 'id='+id, function(json) {
+    $.post("<?php echo URL::to('asistencias/elemento'); ?>", 'id='+id, function(json) {
             $('.modal-body').html('');
             $('.modal-body').append('<h2>Elemento:</h2>');
             $('.modal-body').append('<label><strong>'+json.elemento.nombre+' '+json.elemento.apellidopaterno+' '+json.elemento.apellidomaterno+'</strong></label>');

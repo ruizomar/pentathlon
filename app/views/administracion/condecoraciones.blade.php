@@ -28,7 +28,7 @@ Condecoraciones
                 <label id='lfecha'></label>
             </div>
             <div class="col-md-5">
-                <div id='insignias'>
+                <div id='insignias' class='text-center'>
                     
                 </div>
                 <button class='btn btn-info btn-xs' onClick='formulario()'><i class="fa fa-plus"></i> agregar</button>
@@ -53,14 +53,14 @@ Condecoraciones
         $('.fa-spinner').removeClass('hidden');
         $('#agregar').addClass('hidden');
         $('#elemento').addClass('hidden');
-            $.post('condecoraciones/elemento', 'id='+id, function(json) {
+            $.post("<?php echo URL::to('condecoraciones/elemento'); ?>", 'id='+id, function(json) {
                 $('#lnombre').html('<strong>Nombre:</strong> '+json.persona.nombre);
                 $('#lmatricula').html('<strong>Matricula:</strong> '+json.persona.matricula);
                 $('#lfecha').html('<strong>Fecha de nacimiento:</strong> '+json.persona.fecha);
                 $('#foto').attr('src',json.persona.foto);
-                $('#insignias').html("");
+                $('#insignias').html('');
                 if(json.success == false)
-                    $('#insignias').append('<h2>Sin condecoraciones asignadas</h2>');
+                    $('#insignias').append('<label><img src="imgs/condecoraciones/badge.png" class="img-circle img-responsive " alt="Responsive image"></label><h2>Sin condecoraciones asignadas</h2>');
                 $(json.condecoraciones).each(function() {
                     $('#insignias').append('<label><img src="imgs/pdmu.png" class="img-circle img-responsive img-thumbnail" alt="Responsive image"><small>'+this.nombre+'</small></label>');
                     $('#insignias').append('<label><small>Fecha: '+this.fecha+'</small></label>');
@@ -73,7 +73,7 @@ Condecoraciones
     }
     function formulario(){
         $('.fa-spinner').removeClass('hidden');
-        $.post('condecoraciones/nueva', 'id='+elemento, function(json) {
+        $.post("<?php echo URL::to('condecoraciones/nueva'); ?>", 'id='+elemento, function(json) {
             $('.check').remove();
             if(json.success == false)
                 $('#insignias').append('<h2>No se pueden agregar condecoraciones</h2>');
@@ -95,7 +95,7 @@ Condecoraciones
     }
     $( "#agregar" ).submit(function( event ) {
         event.preventDefault();
-      $.post('condecoraciones/agregar', $( "#agregar" ).serialize(), function(json) {
+      $.post("<?php echo URL::to('condecoraciones/agregar'); ?>", $( "#agregar" ).serialize(), function(json) {
             if(json.success == true)
                 encontrado($('[name = id]').val())
         }, 'json');

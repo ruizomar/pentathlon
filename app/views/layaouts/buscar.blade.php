@@ -71,8 +71,9 @@
   <!-- End Modal --> 
 @endsection
 @section('scripts')
-<script src="js/bootstrapValidator.js" type="text/javascript"></script>
-<script src="js/es_ES.js" type="text/javascript"></script>
+{{  HTML::script('js/bootstrapValidator.js'); }}
+{{  HTML::script('js/es_ES.js'); }}
+
 <script type="text/javascript">
 $(document).ready(function() {
    $('#fbuscar').bootstrapValidator({

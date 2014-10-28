@@ -47,9 +47,9 @@
   <div id="main-menu">
       <ul class="nav nav-tabs ">
         <li class="active"><a href="#"><i class="fa fa-tachometer"></i> <span>Dashboard</span></a></li>
-          <li ><a href="/pagos"><i class="fa fa-money"></i> <span>Pagos</span></a></li>
-          <li ><a href="/companias" ><i class="fa fa-map-marker"></i> <span>Companias</span></a></li>
-          <li ><a href="/asistencias/index/7"><i class="fa fa-calendar"></i> <span>Asistencias</span></a></li>
+          <li ><a href="<?=URL::to('pagos'); ?>"><i class="fa fa-money"></i> <span>Pagos</span></a></li>
+          <li ><a href="<?=URL::to('companias'); ?>" ><i class="fa fa-map-marker"></i> <span>Companias</span></a></li>
+          <li ><a href="<?=URL::to('asistencias/index/1'); ?>"><i class="fa fa-calendar"></i> <span>Asistencias</span></a></li>
           <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-cog"></i> Settings <b class="caret"></b></a>
               <ul class="dropdown-menu">
