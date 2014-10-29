@@ -36,7 +36,7 @@
     </div> 
 	<div class="col-md-12 table-responsive">
 <!------------------------form ----------------------------!-->        
-    <form action="<?php echo URL::to('asistencias/nueva'); ?>" method="POST" accept-charset="utf-8" id="asis">
+    <form action="{{URL::to('asistencias/nueva')}}" method="POST" accept-charset="utf-8" id="asis">
 		<table id='elementos'class="table table-bordered table-hover table-first-column-number data-table display full">
 			<thead>
 				<tr>

@@ -154,9 +154,9 @@
 						{{ Form::label('lugnac', 'Lugar nacimiento') }}
 						{{ Form::text('lugnac', null, array('class' => 'form-control mayuscula')) }}
 					</div>
-					<div class="col-md-4 form-group">
+					<div id="idcurp" class="col-md-4 form-group">
 						{{ Form::label('curp', 'CURP') }}
-						{{ Form::text('curp', null, array('class' => 'form-control mayuscula')) }}
+						{{ Form::text('curp', null, array('id' => 'curp','class' => 'form-control mayuscula')) }}
 					</div>
 					<div class="col-md-4 form-group">
 						{{ Form::label('email', 'e-mail') }}
@@ -334,13 +334,33 @@
 					</div>
 				</div>
 				<div class="col-md-12">
-					{{ Form::button('<i class="fa fa-floppy-o"></i> Guardar',array('class' => 'btn-sm pull-right btn btn-info btn-lg','type' => 'submit')) }}
+					{{ Form::button('<i class="fa fa-floppy-o"></i> Guardar',array('id' => 'btnenviar','class' => 'btn-sm pull-right btn btn-info btn-lg','type' => 'submit')) }}
 				</div>
 			</div>
 		</div>
 	{{Form::close()}}
 @endsection
 @section('scripts')
+	<script>
+	$( "#curp" ).focusout(function() {
+		var curp = $(this).val();
+		$.post('curp',{curp:curp}, function(json) {
+			if (!json.success) {
+				console.log(json);
+				$('#curperror').removeClass('hidden');
+				$('#idcurp').addClass('has-error');
+				$('[name=curp]').val('');
+				$('#formularioalta').bootstrapValidator('revalidateField','curp');
+				$('[name=curp]').focus();
+				$('[name=curp]').closest('div').find('small').html(curp+' ya está registrada');
+
+			}
+		}, 'json');
+	})
+	</script>
+	<script>
+		//$('#curp').popover();
+	</script>
 	<script>
 		$("#filefoto").fileinput({
 			showUpload: false,

@@ -134,7 +134,7 @@ class EditaReclutaController extends BaseController {
 			Telefono::where('persona_id', '=', Input::get('persona_id'))->where('tipo','=','movil')->delete();
 		}
 		/////////////////////////////
-		Persona::find(48) -> update(array(
+		Persona::find(100) -> update(array(
 			'nombre' => Input::get('contactonombre'),
 			'apellidopaterno' => Input::get('contactopaterno'),
 			'apellidomaterno' => Input::get('contactomaterno'),

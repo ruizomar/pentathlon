@@ -33,4 +33,13 @@ class Elemento extends Eloquent{
 	public function documentos(){
 		return $this->hasMany('Documento');
 	}
+    public function tipoarma(){
+		return $this->belongsTo('Tipoarma');
+    }
+    public function tipocuerpo(){
+		return $this->belongsTo('Tipocuerpo');
+    }
+    public function tutor(){
+		return $this->hasOne('Tutor');
+    }
 }

@@ -1,7 +1,7 @@
 <?php
-class Telefono extends Eloquent {
+class Twitter extends Eloquent {
 	public $timestamps = false;
-	protected $fillable = array('persona_id','telefono','tipo');
+	protected $fillable = array('persona_id','usuario');
     public function persona()
     {
         return $this->belongsTo('Persona');

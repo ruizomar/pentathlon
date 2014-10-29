@@ -12,7 +12,7 @@
 @section('contenido')
 	<div class="bg-success col-md-offset-2 col-md-8">
 		<div class="col-md-6">
-			<img src="{{  asset($fotoperfil) }}" alt="Responsive image" class="img-responsive img-thumbnail">
+			<img src="{{ asset($fotoperfil) }}" alt="Responsive image" class="img-responsive img-thumbnail">
 		</div>
 		<div class="col-md-6">
 			</p>
