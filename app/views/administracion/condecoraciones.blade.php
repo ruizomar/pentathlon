@@ -8,25 +8,24 @@
     .new{
         position: relative;
     }
-    .fa-sun-o{
+    .fa-certificate{
         position: absolute;
-        left:9px;
-        top:-5px;
+        left:149px;
+        top:-9px;
         color: #FFCC00;
     }
     .fa-circle{
         position: absolute;
-        left:14px;
+        left:149px;
         top:-5px;
         color: #4CD964;
         opacity: .85;
     }
     .fa-check{
         position: absolute;
-        left:31px;
-        top:15px;
+        left:166px;
+        top:16px;
         color: #f5f5f5;
-        opacity: 1;
     }
 </style>
 @endsection
@@ -40,9 +39,9 @@ Condecoraciones
                 <img src="" class="img-circle img-responsive img-thumbnail" id='foto' alt="Responsive image">
             </div>
             <div class="col-md-5" id='datos'>
-                <label id='lnombre'></label>
-                <label id='lmatricula'></label>
-                <label id='lfecha'></label>
+                <p id='lnombre'></p>
+                <p id='lmatricula'></p>
+                <p id='lfecha'></p>
             </div>
             <div class="col-md-5">
                 <div class="text-center">
@@ -51,11 +50,11 @@ Condecoraciones
                 <button class='btn btn-info btn-sm pull-right' onClick='formulario()'><i class="fa fa-plus"></i> agregar</button>
             </div>
         </div>
-        <div id='insignias' class='row'>
+        <div id='insignias' class='row text-center'>
         </div>
         <div class="row">
             {{ Form::open(array('url' => 'condecoraciones/agregar','role' => 'form','id' => 'agregar','class' => 'hidden')) }}
-                <div id="checks"></div>
+                <div id="checks" class='text-center'></div>
                 <div class="form-group col-md-2 pull-right">
                 {{ Form::button('Guardar',array('class' => 'btn btn-success btn-sm','type' => 'submit','id' => 'bpagar')) }}
                 </div>
@@ -84,7 +83,7 @@ Condecoraciones
                 if(json.success == false)
                     $('#insignias').append('<h2>Sin condecoraciones asignadas</h2>');
                 $(json.condecoraciones).each(function() {
-                    $('#insignias').append('<div class="col-md-6"><label><img src="{{ asset("imgs/condecoraciones/badge.png") }}" class="img-circle img-responsive img-thumbnail" alt="Responsive image"> '+this.nombre+'<br><small>'+this.fecha+'</small></label></div>');
+                    $('#insignias').append('<div class="col-md-6"><label><img src="{{ asset("imgs/condecoraciones") }}/'+this.nombre.match(/\d+/)+'.png" class="img-circle img-responsive" alt="Responsive image"></label><p>'+this.nombre+'<br><small>'+this.fecha+'</small></p></div>');
                   });
                 $('[name=id]').val(id);
                 
@@ -102,7 +101,7 @@ Condecoraciones
             else{
                 var html='';
                 for (var i = 0; i < json.length; i++) {
-                    html +='<div class="col-md-6"><label class="check"><i class="fa fa-sun-o fa-5x"></i><img src="{{ asset("imgs/condecoraciones/badge.png") }}" class="img-circle img-responsive img-thumbnail new" alt="Responsive image"><input class="hidden" type="checkbox" onchange="check(this)" name="'+json[i]+'"> Condecoracion por '+json[i]+' años</label></div>';
+                    html +='<div class="col-md-6"><label><i class="fa fa-certificate fa-5x"></i><img src="{{ asset("imgs/condecoraciones") }}/'+json[i]+'.png" class="img-circle img-responsive new" alt="Responsive image"><input class="hidden" type="checkbox" onchange="check(this)" name="'+json[i]+'"></label><p>Condecoracion por '+json[i]+' años</p></div>';
                 };
                 $('#checks').html(html);
                 $('#agregar').removeClass('hidden');
@@ -113,12 +112,12 @@ Condecoraciones
     }
     function check(ck){
         if($(ck).is(":checked")) {
-            $(ck).closest("label").find('.fa-sun-o').remove();
+            $(ck).closest("label").find('.fa-certificate').remove();
             $(ck).closest("label").append('<i class="fa fa-circle fa-5x"></i><i class="fa fa-check fa-2x"></i>');
             $(ck).closest("label").find('img').attr('style','opacity:0');
          }else{
              $(ck).closest("label").find('i').remove();
-             $(ck).closest("label").prepend('<i class="fa fa-sun-o fa-5x"></i>');
+             $(ck).closest("label").prepend('<i class="fa fa-certificate fa-5x"></i>');
              $(ck).closest("label").find('img').attr('style','opacity:1');
          }
     }

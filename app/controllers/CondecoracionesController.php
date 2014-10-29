@@ -43,7 +43,6 @@ class CondecoracionesController extends BaseController{
 				$d1 = date_create(date('Y-m-d',strtotime ( '+'.$tiempo.' day' , strtotime( $estatu->inicio) )));		
 		}
 		$tiempo = (int)($tiempo/365);
-		$tiempo = 15;
 		$conde = array();
 		for ($i=5; $i < 100; $i=$i+5) {
 			$condecoraciones = Elemento::find(Input::get('id'))->reconocimientos()
