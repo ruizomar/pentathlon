@@ -34,8 +34,8 @@
         </div>
         <span style="color:#FFF">@include('includes.footer') </span>
     </div>
-    <?php echo HTML::script('js/jquery.js'); ?>
-    <?php echo HTML::script('js/jquery-ui.js'); ?>
-    <?php echo HTML::script('js/login.js'); ?>
+     {{  HTML::script('js/jquery.js');     }} 
+     {{  HTML::script('js/jquery-ui.js');  }} 
+     {{  HTML::script('js/login.js');      }}
 </body>
 </html>
