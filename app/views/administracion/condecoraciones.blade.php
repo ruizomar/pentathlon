@@ -8,24 +8,110 @@
     .new{
         position: relative;
     }
-    .fa-certificate{
-        position: absolute;
-        left:149px;
-        top:-9px;
-        color: #FFCC00;
+    @media screen and (max-device-width: 767px) and (orientation : portrait){
+        .fa-certificate{
+            position: absolute;
+            left: 25.5%;
+            top:-9px;
+            color: #FFCC00;
+        }
+        .fa-circle{
+            position: absolute;
+            left:26%;
+            top:-9px;
+            color: #4CD964;
+            opacity: .85;
+        }
+        .fa-check{
+            position: absolute;
+            left:40.5%;
+            top:11px;
+            color: #f5f5f5;
+        }
     }
-    .fa-circle{
-        position: absolute;
-        left:149px;
-        top:-5px;
-        color: #4CD964;
-        opacity: .85;
+    @media screen and (max-device-width: 767px) and (orientation : landscape){
+        .fa-certificate{
+            position: absolute;
+            left: 37.5%;
+            top:-9px;
+            color: #FFCC00;
+        }
+        .fa-circle{
+            position: absolute;
+            left:37.5%;
+            top:-9px;
+            color: #4CD964;
+            opacity: .85;
+        }
+        .fa-check{
+            position: absolute;
+            left:44.5%;
+            top:11px;
+            color: #f5f5f5;
+        }
     }
-    .fa-check{
-        position: absolute;
-        left:166px;
-        top:16px;
-        color: #f5f5f5;
+    @media screen and (min-device-width : 768px) and (orientation : landscape){
+        .fa-certificate{
+            position: absolute;
+            left: 40%;
+            top:-9px;
+            color: #FFCC00;
+        }
+        .fa-circle{
+            position: absolute;
+            left: 40%;
+            top:-5px;
+            color: #4CD964;
+            opacity: .85;
+        }
+        .fa-check{
+            position: absolute;
+            left: 45.5%;
+            top:16px;
+            color: #f5f5f5;
+        }
+    }
+    @media screen and (min-device-width : 768px) and (orientation : portrait){
+        .fa-certificate{
+            position: absolute;
+            left: 36%;
+            top:-9px;
+            color: #ffcc00;
+        }
+        .fa-circle{
+            position: absolute;
+            left:36%;
+            top:-5px;
+            color: #4CD964;
+            opacity: .85;
+        }
+        .fa-check{
+            position: absolute;
+            left:44.5%;
+            top:16px;
+            color: #f5f5f5;
+        }
+    }
+    @media screen and (min-device-width: 1200px) {
+        .fa-certificate{
+            position: absolute;
+            left: 41.5%;
+            top:-9px;
+            color: #FFCC00;
+        }
+        .fa-circle{
+            position: absolute;
+            left:149px;
+            top:-5px;
+            color: #4CD964;
+            opacity: .85;
+        }
+        .fa-check{
+            position: absolute;
+            left:166px;
+            top:16px;
+            color: #f5f5f5;
+        }
     }
 </style>
 @endsection
@@ -33,17 +119,17 @@
 Condecoraciones
 @endsection
 @section('elemento')
-    <div class="col-md-8 col-md-offset-2 well">
+    <div class="col-sm-8 col-sm-offset-2 well">
         <div class="row" style='margin-bottom:15px;'>
-            <div class="col-md-2">
+            <div class="col-sm-2 col-xs-5">
                 <img src="" class="img-circle img-responsive img-thumbnail" id='foto' alt="Responsive image">
             </div>
-            <div class="col-md-5" id='datos'>
+            <div class="col-sm-6" id='datos'>
                 <p id='lnombre'></p>
                 <p id='lmatricula'></p>
                 <p id='lfecha'></p>
             </div>
-            <div class="col-md-5">
+            <div class="col-sm-4">
                 <div class="text-center">
                     <label><img src="{{ asset('imgs/condecoraciones/badge.png') }}" class="img-circle img-responsive " alt="Responsive image"></label>
                 </div>
@@ -55,7 +141,7 @@ Condecoraciones
         <div class="row">
             {{ Form::open(array('url' => 'condecoraciones/agregar','role' => 'form','id' => 'agregar','class' => 'hidden')) }}
                 <div id="checks" class='text-center'></div>
-                <div class="form-group col-md-2 pull-right">
+                <div class="form-group col-sm-2 pull-right">
                 {{ Form::button('Guardar',array('class' => 'btn btn-success btn-sm','type' => 'submit','id' => 'bpagar')) }}
                 </div>
                 {{ Form::text('id', null, array('class' => 'hidden form-control')) }}
@@ -83,7 +169,7 @@ Condecoraciones
                 if(json.success == false)
                     $('#insignias').append('<h2>Sin condecoraciones asignadas</h2>');
                 $(json.condecoraciones).each(function() {
-                    $('#insignias').append('<div class="col-md-6"><label><img src="{{ asset("imgs/condecoraciones") }}/'+this.nombre.match(/\d+/)+'.png" class="img-circle img-responsive" alt="Responsive image"></label><p>'+this.nombre+'<br><small>'+this.fecha+'</small></p></div>');
+                    $('#insignias').append('<div class="col-sm-6 col-xs-6"><label><img src="{{ asset("imgs/condecoraciones") }}/'+this.nombre.match(/\d+/)+'.png" class="img-circle img-responsive" alt="Responsive image"></label><p>'+this.nombre+'<br><small>'+this.fecha+'</small></p></div>');
                   });
                 $('[name=id]').val(id);
                 
@@ -101,7 +187,7 @@ Condecoraciones
             else{
                 var html='';
                 for (var i = 0; i < json.length; i++) {
-                    html +='<div class="col-md-6"><label><i class="fa fa-certificate fa-5x"></i><img src="{{ asset("imgs/condecoraciones") }}/'+json[i]+'.png" class="img-circle img-responsive new" alt="Responsive image"><input class="hidden" type="checkbox" onchange="check(this)" name="'+json[i]+'"></label><p>Condecoracion por '+json[i]+' años</p></div>';
+                    html +='<div class="col-sm-6 col-xs-6"><label><i class="fa fa-certificate fa-5x"></i><img src="{{ asset("imgs/condecoraciones") }}/'+json[i]+'.png" class="img-circle img-responsive new" alt="Responsive image"><input class="hidden" type="checkbox" onchange="check(this)" name="'+json[i]+'"></label><p>Condecoracion por '+json[i]+' años</p></div>';
                 };
                 $('#checks').html(html);
                 $('#agregar').removeClass('hidden');
