@@ -33,9 +33,11 @@ Route::get('recluta/editar','EditaReclutaController@editar');
 Route::post('recluta/buscar','EditaReclutaController@buscar');
 Route::post('recluta/update','EditaReclutaController@update');
 
-Route::get('cargos/editar','AsignaCargosController@editar');
+/*Route::get('cargos/editar','AsignaCargosController@editar');
 Route::post('cargos/buscar','AsignaCargosController@buscar');
-Route::post('cargos/update','AsignaCargosController@update');
+Route::post('cargos/update','AsignaCargosController@update');*/
+
+Route::controller('cargos', 'AsignaCargosController');
 
 Route::post('buscar','BuscarController@buscar');
 Route::controller('pagos', 'MembresiasController');
