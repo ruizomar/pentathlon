@@ -21,10 +21,12 @@
 	}
 	</style>
 	{{  HTML::style('css/sweet-alert.css');  }}
+	{{  HTML::script('js/jspdf.js'); }}
+
 @endsection
 @section('elemento')
 	{{ Form::open(array('id' => 'formulariocargos','url'=>'cargos/update','files'=>true)) }}
-		<div id="contenedor" class="col-md-offset-2 col-md-8 form-group">
+		<!-- <div id="contenedor" class="col-md-offset-2 col-md-8 form-group">
 			<i class="pull-left fa fa-paperclip fa-5x"></i>
 			<div class="col-md-3" id="fotoperfil">
 			</div>
@@ -50,8 +52,13 @@
 				</div>
 			</div>
 			{{ Form::button('<i class="fa fa-floppy-o"></i> Guardar',array('id' =>'btnupdate','class' => 'pull-right btn btn-info')) }}
-		</div>
+		</div> -->
 	{{Form::close()}}
+	<div class = 'wrap_all'>
+		<div id = 'wrap_odd'> <div id = ''>asdmalmkla</div> </div>
+		<div id = 'wrap_even'> <div id = ''>asknaksnd</div> </div>
+	</div>
+	<button id="cmd">generate PDF</button>
 @stop
 @section('scripts2')
 	{{  HTML::script('js/sweet-alert.min.js'); }}
@@ -97,7 +104,12 @@
 									swal('!Hecho!', 'Se ha guardado el cargo', 'success');
 								}
 								else {
-									swal('Cancelado','No se ha guardado ningun cambio', 'error');
+									swal({
+										title:'Cancelado',
+										text:'No se ha guardado ningun cambio',
+										type: 'error',
+										timer: 1000
+									});
 								}
 							});
 					};
@@ -107,5 +119,25 @@
 		function capitalise(string) {
 			return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 		}
+	</script>
+	<script>
+	var doc = new jsPDF();
+
+	    var specialElementHandlers = {
+	      '.wrap_all': function(element, renderer){
+	       return false;
+	    }
+	    };
+
+
+	    $('#cmd').click(function(){
+	    	console.log('jaja');
+	      var html=$(".wrap_all").html();
+	         doc.fromHTML(html,200,200, {
+	            'width': 500,
+	            'elementHandlers': specialElementHandlers
+	         });
+	      doc.save("Test.pdf");
+	    });
 	</script>
 @endsection
