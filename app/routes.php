@@ -37,3 +37,4 @@ Route::controller('pagos', 'MembresiasController');
 Route::controller('companias','CompaniasController');
 Route::controller('asistencias','AsistenciasController');
 Route::controller('condecoraciones','CondecoracionesController');
+Route::controller('eventos','EventosController');

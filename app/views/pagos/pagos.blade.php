@@ -128,7 +128,7 @@ Pagos
         $('#main-menu').find('li').removeClass('active');
         $('#main-menu ul li:nth-child(2)').addClass('active');
     function encontrado(id){
-            $.post('pagos/elemento', 'id='+id, function(json) {
+            $.post('{{ URL::to("pagos/elemento"); }}', 'id='+id, function(json) {
                 $('#lnombre').html('<strong>Nombre:</strong> '+json.nombre);
                 $('#lmatricula').html('<strong>Matricula:</strong> '+json.matricula);
                 $('#lfecha').html('<strong>Fecha de nacimiento:</strong> '+json.fecha);

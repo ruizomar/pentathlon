@@ -3,6 +3,13 @@
 @section('titulo')
   Subzonas|Compañias PDMU
 @endsection
+@section('head')
+<style type="text/css">
+.nombre{
+    top: 20px !important;
+}
+</style>
+@endsection
 @section('contenido')
 <?php $status=Session::get('status'); ?>
 <div class="row">
@@ -129,15 +136,10 @@
 </div>
 @endsection
 @section('scripts')
-<style type="text/css">
-.nombre{
-	top: 20px !important;
-}
-</style>
-<script type="text/javascript" src="js/tables/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="js/tables/jquery.dataTables.bootstrap.js"></script>
-<script src="js/bootstrapValidator.js" type="text/javascript"></script>
-<script src="js/es_ES.js" type="text/javascript"></script>
+{{  HTML::script('js/tables/jquery.dataTables.min.js'); }}
+{{  HTML::script('js/tables/jquery.dataTables.bootstrap.js'); }}
+{{  HTML::script('js/bootstrapValidator.js'); }}
+{{  HTML::script('js/es_ES.js'); }}
 <script type="text/javascript">
     $('#companias').dataTable( {
         "language": {
