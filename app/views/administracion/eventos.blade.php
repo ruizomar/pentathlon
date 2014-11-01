@@ -10,7 +10,39 @@
   .fecha i{
     right: 55px !important;
   }
-</style>
+  .contenedor {
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: #E0F8D8;
+    border: 1px solid #83B373;
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    box-shadow: 5px 5px rgba(211, 207, 207, 1);
+  }
+  .eventos-titulo {
+    color: #ffffff;
+    font-size: 16px;
+    padding: 0 10px;
+    line-height: 60px;
+    height: 60px;
+    margin: 0;
+    background: #83B373;
+    text-align: center;
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+    font-weight: bold;
+  }
+  .prox-eventos {
+    border-bottom: 2px solid #83B373;
+    display: inline-block;
+    padding: 10px;
+    padding-left: 10px;
+    width: 100%;
+    background: #E0F8D8;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+  }
+  </style>
 @endsection
 @section('contenido')
 <?php $status=Session::get('status'); ?>
@@ -18,21 +50,8 @@
     <div class="col-sm-6 col-sm-offset-3 col-xs-7">
         <h1 style="margin-bottom:20px;">Eventos</h1>
     </div>
-    <div class="col-sm-2 col-xs-4" style="margin-top:20px;">
-        <button type="button" class="btn btn-success btn-lg" id="bnueva"><i class="fa fa-plus fa-lg"></i> Nuevo</button>
-    </div>
-</div>   
-  <div class="col-md-2">
-    @if(isset($eventos))
-    <h2>Eventos proximos</h2>
-        @foreach($eventos as $evento)   
-          <h3>{{ $evento->nombre }}</h3>
-          <h4>{{ $evento->fecha }}</h4>
-          <p>{{ $evento->descripcion }}</p>
-        @endforeach
-    @endif      
-  </div> 
-    <div class="message col-md-6 col-md-offset-3">
+</div>
+    <div class="message col-md-6">
         @if($status == 'fail_create')
         <div id="error" style="margin-top:10px;">
             <p class="alert alert-danger"><i class="fa fa-exclamation-triangle fa-lg"></i> Ocurrio un error 
@@ -45,42 +64,56 @@
         </div>
         @endif
     </div>
-  
-	<div class="col-md-8">
-    {{ Form::open(array('url' => 'eventos/nuevoevento','role' => 'form','id' => 'form-nueva','class' => '')) }}
-      <div class="form-group col-sm-6">
-        {{ Form::label('Nombre', 'Nombre',array('class' => 'control-label')) }}
-        {{ Form::text('Nombre', null, array('class' => 'form-control')) }}
-      </div>
-      <div class="form-group col-sm-4 fecha">                            
-        {{ Form::label('Fecha', 'Fecha',array('class' => 'control-label')) }}
-        <div class="input-group date" id="datetimePicker">
-          {{ Form::text('Fecha', null, array('class' => 'form-control','placeholder' => 'YYYY-MM-DD', 'data-date-format' => 'YYYY-MM-DD')) }}
-          <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+    <div class="contenedor col-md-8">
+      {{ Form::open(array('url' => 'eventos/nuevoevento','role' => 'form','id' => 'form-nueva','class' => '')) }}
+        <div class="form-group col-sm-6">
+          {{ Form::label('Nombre', 'Nombre',array('class' => 'control-label')) }}
+          {{ Form::text('Nombre', null, array('class' => 'form-control')) }}
         </div>
-      </div>
-      <div class="form-group col-sm-3">
-        {{ Form::label('Tipo', 'Tipo',array('class' => 'control-label')) }}
-        {{ Form::select('Tipo',$tipos, null, array('class' => 'form-control')) }}
-      </div>
-      <div class="form-group col-sm-4">
-        {{ Form::label('Lugar', 'Lugar',array('class' => 'control-label')) }}
-        {{ Form::text('Lugar', null, array('class' => 'form-control')) }}
-      </div>
-      
-      <div class="form-group col-sm-3">
-        {{ Form::label('Costo', 'Costo',array('class' => 'control-label')) }}
-        {{ Form::text('Costo', null, array('class' => 'form-control')) }}
-      </div>
-      <div class="form-group col-sm-6">
-        {{ Form::label('Descripcion', 'Descripcion',array('class' => 'control-label')) }}
-        {{ Form::textarea('Descripcion', null, array('class' => 'form-control','rows' => '3')) }}
-      </div>
-      <div class="col-sm-2" style='top:25px;'>
-        {{ Form::button('OK', array('class' => 'btn btn-success','id' => 'id','type' => 'submit')) }}
-      </div>
-    {{ Form::close() }}
-	</div>
+        <div class="form-group col-sm-4 fecha">
+          {{ Form::label('Fecha', 'Fecha',array('class' => 'control-label')) }}
+          <div class="input-group date" id="datetimePicker">
+            {{ Form::text('Fecha', null, array('class' => 'form-control','placeholder' => 'YYYY-MM-DD', 'data-date-format' => 'YYYY-MM-DD')) }}
+            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+          </div>
+        </div>
+        <div class="form-group col-sm-3">
+          {{ Form::label('Tipo', 'Tipo',array('class' => 'control-label')) }}
+          {{ Form::select('Tipo',$tipos, null, array('class' => 'form-control')) }}
+        </div>
+        <div class="form-group col-sm-4">
+          {{ Form::label('Lugar', 'Lugar',array('class' => 'control-label')) }}
+          {{ Form::text('Lugar', null, array('class' => 'form-control')) }}
+        </div>
+        
+        <div class="form-group col-sm-3">
+          {{ Form::label('Costo', 'Costo',array('class' => 'control-label')) }}
+          {{ Form::text('Costo', null, array('class' => 'form-control')) }}
+        </div>
+        <div class="form-group col-sm-6">
+          {{ Form::label('Descripcion', 'Descripcion',array('class' => 'control-label')) }}
+          {{ Form::textarea('Descripcion', null, array('class' => 'form-control','rows' => '3')) }}
+        </div>
+        <div class="col-sm-2" style='top:25px;'>
+          {{ Form::button('OK', array('class' => 'btn btn-success','id' => 'id','type' => 'submit')) }}
+        </div>
+      {{ Form::close() }}
+    </div>
+    <div class="pull-right col-md-4">
+      @if(isset($eventos))
+      <h2 class="eventos-titulo">Eventos próximos</h2>
+          @foreach($eventos as $evento)
+            <div class="prox-eventos">
+              <i class="fa fa-clock-o pull-left"></i>
+              <strong>{{$evento -> nombre}}</strong>
+              <label class="label label-info pull-right">{{$tipos[$evento -> tipoevento_id]}}</label>
+              <p><small>Fecha: {{$evento -> fecha }}</small></p>
+              <p>Lugar: {{$evento -> lugar }}</p>
+              <p>{{$evento -> descripcion }}</p>
+            </div>
+          @endforeach
+      @endif
+    </div>
 <!-- Modal -->
   <div class="modal fade" id="nueva" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
@@ -136,10 +169,8 @@
         </div>
 
         <div id="malert" class="modal-body">
-            
             <h2 class=""><i class="fa fa-exclamation-triangle fa-lg text-danger"></i>  Esta operacion dará de baja a los elementos inscritos en esta 
             </h2>
-           
         </div>
 
         <div class="modal-footer">
@@ -150,7 +181,6 @@
     </div>
   </div>
   <!-- End Modal -->  
-
 @endsection
 @section('scripts')
   {{  HTML::script('js/bootstrapValidator.js'); }}

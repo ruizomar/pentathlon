@@ -8,7 +8,7 @@ class EventosController extends BaseController{
 		}
 		return View::make('administracion/eventos')
 			->with('eventos',Evento::where('fecha','>',date('Y-m-d'))
-			->orderBy('fecha','asc')	
+			->orderBy('fecha','asc')
 			->get())->with('tipos',$tipos);
 	}
 
@@ -36,6 +36,7 @@ class EventosController extends BaseController{
 				'nombre' 		=> Input::get('Nombre'),
 				'lugar' 		=> Input::get('Lugar'),
 				'fecha' 		=> Input::get('Fecha'),
+				'descripcion' 		=> Input::get('Descripcion'),
 				'costo' 		=> Input::get('Costo'),
 				'tipoevento_id' => Input::get('Tipo')
 			));
