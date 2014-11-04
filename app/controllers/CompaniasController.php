@@ -8,8 +8,8 @@ class CompaniasController extends BaseController{
 
 	public function postUpdate(){
 		$rules = array(
-			'id' => 'integer',
-			'nombre' => 'required'
+			'id' 		=> 'integer',
+			'nombre' 	=> 'required'
 			);
 		
 		$validation = Validator::make(Input::all(), $rules);
@@ -34,7 +34,7 @@ class CompaniasController extends BaseController{
 		else{
 			if(!is_null($compania))
 				if($compania->id != $id)
-					return Redirect::back()->with('status', 'fail_create');
+					return Redirect::back()->with('status', 'ocupado');
 			if(is_null($compania))
 				$compania = Companiasysubzona::find($id);
 			$compania->update(array(

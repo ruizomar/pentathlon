@@ -51,19 +51,6 @@
         <h1 style="margin-bottom:20px;">Eventos</h1>
     </div>
 </div>
-    <div class="message col-md-6">
-        @if($status == 'fail_create')
-        <div id="error" style="margin-top:10px;">
-            <p class="alert alert-danger"><i class="fa fa-exclamation-triangle fa-lg"></i> Ocurrio un error 
-            </p>
-        </div>
-        @elseif(($status == 'ok_create'))
-        <div id="error" style="margin-top:10px;">
-            <p class="alert alert-success"><i class="fa fa-check-square-o fa-lg"></i> Operacion completada correctamente
-            </p>
-        </div>
-        @endif
-    </div>
     <div class="contenedor col-md-8">
       {{ Form::open(array('url' => 'eventos/nuevoevento','role' => 'form','id' => 'form-nueva','class' => '')) }}
         <div class="form-group col-sm-6">
@@ -83,14 +70,20 @@
         </div>
         <div class="form-group col-sm-4">
           {{ Form::label('Lugar', 'Lugar',array('class' => 'control-label')) }}
-          {{ Form::text('Lugar', null, array('class' => 'form-control')) }}
+          <div class="input-group">
+             <span class="input-group-addon"><i class="fa fa-map-marker fa-fw"></i></span>
+            {{ Form::text('Lugar', null, array('class' => 'form-control')) }}
+          </div>
         </div>
         
         <div class="form-group col-sm-3">
           {{ Form::label('Costo', 'Costo',array('class' => 'control-label')) }}
-          {{ Form::text('Costo', null, array('class' => 'form-control')) }}
+          <div class="input-group">
+             <span class="input-group-addon"><i class="fa fa-usd fa-fw"></i></span>
+            {{ Form::text('Costo', null, array('class' => 'form-control')) }}
+          </div>
         </div>
-        <div class="form-group col-sm-6">
+        <div class="form-group col-sm-7">
           {{ Form::label('Descripcion', 'Descripcion',array('class' => 'control-label')) }}
           {{ Form::textarea('Descripcion', null, array('class' => 'form-control','rows' => '3')) }}
         </div>
@@ -99,88 +92,22 @@
         </div>
       {{ Form::close() }}
     </div>
-    <div class="pull-right col-md-4">
+    <div class="pull-right col-md-4" id="eventos">
       @if(isset($eventos))
       <h2 class="eventos-titulo">Eventos próximos</h2>
           @foreach($eventos as $evento)
             <div class="prox-eventos">
               <i class="fa fa-clock-o pull-left"></i>
-              <strong>{{$evento -> nombre}}</strong>
-              <label class="label label-info pull-right">{{$tipos[$evento -> tipoevento_id]}}</label>
-              <p><small>Fecha: {{$evento -> fecha }}</small></p>
-              <p>Lugar: {{$evento -> lugar }}</p>
-              <p>{{$evento -> descripcion }}</p>
+              <strong>{{ $evento->nombre }}</strong>
+              <label class="label label-info pull-right">{{ $tipos[$evento->tipoevento_id] }}</label>
+              <p><small>Fecha: {{ $evento -> fecha }}</small></p>
+              <p>Lugar: {{ $evento->lugar }}</p>
+              <p>{{ $evento->descripcion }}</p>
+              <p>Costo: ${{ $evento->costo }}</p>
             </div>
-          @endforeach
+          @endforeach    
       @endif
     </div>
-<!-- Modal -->
-  <div class="modal fade" id="nueva" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title" id="companias">
-            <i class="fa fa-pencil-square-o fa-lg"></i> Subzonas/Compañias
-          </h4>
-        </div>
-        {{ Form::open(array('url' => 'companias/update','role' => 'form','id' => 'update','class' => '')) }}
-        <div class="modal-body">
-            <center>
-            <h2 name="name"><i class="fa fa-pencil"></i> Nueva Subzona/Compañia</h2>
-            <i class="fa fa-refresh fa-spin hidden fa-2x"></i>
-            </center>
-            <div class="form-group">
-                {{ Form::text('id', null, array('class' => 'form-control hidden')) }}
-            </div>
-            
-            <div class="form-group">  
-              {{ Form::label('nombre', 'Nombre',array('class' => 'control-label')) }}
-              {{ Form::text('nombre', null, array('placeholder' => 'introduce nombre','class' => 'form-control')) }}
-            </div>
-            <div class="form-group">
-              {{ Form::label('tipo', 'Tipo',array('class' => 'control-label','name' => 'tipo')) }}
-              {{ Form::select('tipo', array('Subzona' => 'Subzona','Compañia' => 'Compañia'),null,array('placeholder' => '','class' => 'form-control')) }}
-            </div>
-            <div class="form-group">
-              {{ Form::label('estatus', 'Estatus',array('class' => 'control-label')) }}
-              {{Form::select('estatus', array('Activa' => 'Activa','Inactiva' => 'Inactiva'),null,array('placeholder' => '','class' => 'form-control')) }}
-            </div>
-
-        </div>
-        <div class="modal-footer">
-            <button id='bcancelar' type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
-            {{ Form::button('<i class="fa fa-floppy-o "></i> Guardar',array('class' => 'btn btn-success','id' => 'guardar','type' => 'submit')) }}
-        </div> 
-        {{ Form::close() }}
-      </div>
-    </div>
-  </div>
-  <!-- End Modal -->
-  <!-- Modal -->
-  <div class="modal fade" id="confirmar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content ">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title" id="companias">
-            <i class="fa fa-exclamation-triangle fa-lg text-danger"></i> Alerta
-          </h4>
-        </div>
-
-        <div id="malert" class="modal-body">
-            <h2 class=""><i class="fa fa-exclamation-triangle fa-lg text-danger"></i>  Esta operacion dará de baja a los elementos inscritos en esta 
-            </h2>
-        </div>
-
-        <div class="modal-footer">
-            <button id='bconfirmar' type="button" class="btn btn-info" data-dismiss="modal">OK</button>
-        </div> 
-
-      </div>
-    </div>
-  </div>
-  <!-- End Modal -->  
 @endsection
 @section('scripts')
   {{  HTML::script('js/bootstrapValidator.js'); }}
@@ -239,8 +166,22 @@
             $('.fa-spin').removeClass('hidden');
             $.post($(this).attr('action'), $(this).serialize(), function(json) {
                   if(json.success == true){
-                      swal(json.message, null, "success");
                       $('#form-nueva').data('bootstrapValidator').resetForm(true);
+                      
+                      swal({
+                        title: json.message,   
+                        text: "",   
+                        type: "success",   
+                        showCancelButton: false,   
+                        confirmButtonColor: "",   
+                        confirmButtonText: "OK",     
+                        closeOnConfirm: false,   
+                        closeOnCancel: false }, 
+                        function(isConfirm){   
+                          if (isConfirm) {     
+                           window.location.reload();
+                          }
+                        });
                   }
                   if(json.success == false){
                       swal('Error', json.errormessage, "error");

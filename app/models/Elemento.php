@@ -33,4 +33,7 @@ class Elemento extends Eloquent{
 	public function documentos(){
 		return $this->hasMany('Documento');
 	}
+	public function eventos(){
+		return $this->hasMany('Evento');
+	}
 }

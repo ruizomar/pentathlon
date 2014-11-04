@@ -4,6 +4,7 @@
   Subzonas|Compañias PDMU
 @endsection
 @section('head')
+{{  HTML::style('css/sweet-alert.css');  }}
 <style type="text/css">
 .nombre{
     top: 20px !important;
@@ -19,17 +20,19 @@
     <div class="col-md-2" style="margin-top:20px;">
         <button type="button" class="btn btn-success btn-lg" id="bnueva"><i class="fa fa-plus fa-lg"></i> Nueva</button>
     </div>   
-    <div class="message col-md-6 col-md-offset-3">
+    <div class="message col-md-6 col-md-offset-3 hidden">
         @if($status == 'fail_create')
-        <div id="error" style="margin-top:10px;">
-            <p class="alert alert-danger"><i class="fa fa-exclamation-triangle fa-lg"></i> Ocurrio un error 
-            </p>
-        </div>
+        <label id="status_title">error</label>
+            <label id="status">error</label>
+            <label id="message">Ocurrio un error</label>
         @elseif(($status == 'ok_create'))
-        <div id="error" style="margin-top:10px;">
-            <p class="alert alert-success"><i class="fa fa-check-square-o fa-lg"></i> Operacion completada correctamente
-            </p>
-        </div>
+        <label id="status_title">Operacion completada correctamente</label>
+            <label id="status">success</label>
+            <label id="message"></label>
+        @elseif(($status == 'ocupado'))
+        <label id="status_title">error</label>
+            <label id="status">error</label>
+            <label id="message">Ya existe una compañia con ese nombre</label>
         @endif
     </div> 
 	<div class="col-md-10 col-md-offset-1">
@@ -140,6 +143,7 @@
 {{  HTML::script('js/tables/jquery.dataTables.bootstrap.js'); }}
 {{  HTML::script('js/bootstrapValidator.js'); }}
 {{  HTML::script('js/es_ES.js'); }}
+{{  HTML::script('js/sweet-alert.min.js'); }}
 <script type="text/javascript">
     $('#companias').dataTable( {
         "language": {
@@ -205,6 +209,11 @@ $('#bconfirmar').click(function(){
 $('#bcancelar').click(function(){
     $("tbody").find('tr').removeClass('danger') .find('button').attr('disabled',false);
 });
+$('#status').change(function(){
+    setTimeout (function () {
+        swal($('#status_title').text(), $('#message').text(), $('#status').text())
+    }, 1000);
+}).change();
 $('#bnueva').click(function(){
         $('#nueva').modal('show');
         $('[name=name]').html('<i class="fa fa-pencil"></i> Nueva Subzona/Compañia');
