@@ -26,7 +26,7 @@
 
 @endsection
 @section('elemento')
-	<div class="col-md-1" style="width:20%">
+	<div class="col-md-1" style="width:auto">
 		<div id="canvas-holder">
 			<canvas id="canvas" width="100%" height="100%"/>
 		</div>
@@ -67,10 +67,6 @@
 	<script>
 		function encontrado (id) {
 			$.post('ascensos/buscar',{id:id}, function(json) {
-				console.log(json.faltas);
-				console.log(json.permisos);
-				console.log(json.asistencias);
-				porcentajeAsistencia(json.fechas,json.tipoAsistencias);
 				$(".fa-spinner").addClass("hidden");
 				$("#elemento").removeClass("hidden");
 				$('[name=id]').val(json.id);
@@ -83,27 +79,37 @@
 					$('label[for=cargo]').text('Cargo: Sin cargo');
 				}
 				$('#fotoperfil').html('<img id="theImg" class="img-responsive img-thumbnail img-circle" src="imgs/fotos/'+json.fotoperfil+'" alt="Responsive image"/>');
+				porcentajeAsistencia(json.faltas,json.permisos,json.asistencias);
 			}, 'json');
 		}
-		function porcentajeAsistencia (fechas,tipos) {
+		function porcentajeAsistencia (faltas,permisos,asistencias) {
 			var doughnutData = [
 					{
-						value: 70,
-						color:"#F7464A",
+						value:asistencias,
+						color:"#4CD964",
 						highlight: "#FF5A5E",
-						label: "Asistencia"
+						label: "Asistencias"
 					},
 					{
-						value: 30,
-						color:"#fff",
+						value:faltas,
+						color:"#FF2D55",
 						highlight: "#000",
 						label: "Faltas"
+					},
+					{
+						value:permisos,
+						color:"#FF9500",
+						highlight: "#000",
+						label: "Permisos"
 					},
 
 				];
 				// window.onload = function(){
 					var ctx = document.getElementById("canvas").getContext("2d");
-					window.myDoughnut = new Chart(ctx).Pie(doughnutData, {responsive : true});
+					window.myDoughnut = new Chart(ctx).Doughnut(doughnutData, {
+						responsive : false,
+						animateRotate : true,
+					});
 				// };
 		}
 	</script>

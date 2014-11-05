@@ -36,10 +36,9 @@ class AsignaAscensosController extends BaseController {
 		}
 		$grado = $elemento ->grados -> last();
 
-		$asistencias = $elemento -> asistencias;
-		$faltas = '1';
-		$permisos = '2';
-		$asistencias = '3';
+		$faltas = ($elemento -> asistencias() -> where('tipo' , '=' , 0) -> get()); //Falta
+		$permisos = ($elemento -> asistencias() -> where('tipo' , '=' , 2) -> get()); //permiso
+		$asistencias = ($elemento -> asistencias() -> where('tipo' , '=' , 1) -> get()); //asistencia
 		$dato = array(
 			'id' => $id,
 			'success' => true,
@@ -51,9 +50,9 @@ class AsignaAscensosController extends BaseController {
 			'grado' => $grado -> nombre,
 			'fechagrado' => $grado -> pivot -> fecha,
 			'companiasysubzonas' => $elemento -> companiasysubzona -> tipo .' '. $elemento ->  companiasysubzona -> nombre,
-			'faltas' => $faltas,
-			'permisos' => $permisos,
-			'asistencias' => $asistencias,
+			'faltas' => count($faltas),
+			'permisos' => count($permisos),
+			'asistencias' => count($asistencias),
 		);
 		// $dave = $elemento -> asistencias -> get() -> where('id','=',1);
 		// $dato = array(
