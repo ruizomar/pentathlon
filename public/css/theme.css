@@ -53,8 +53,8 @@ hr {
 .navbar .navbar-brand,
 .navbar-inverse .navbar-brand:hover,
 .navbar-inverse .navbar-brand:focus {
-  color: #646475;
-  text-shadow: 1px 1px 0px #fff;
+  color: #fff;
+  /*text-shadow: 1px 1px 0px #fff;*/
   font-size: 2em;
   /*For fake logo only, remove if change*/
 
@@ -70,28 +70,30 @@ hr {
 }
 .navbar {
   position: relative;
-  z-index: 20;
+  /*z-index: 20;
   -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
   -moz-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
-  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
-  background: #C7C7CC;
-  padding: .75em;
-  margin: 0px;
-  -webkit-border-radius: 0px;
-  -moz-border-radius: 0px;
-  border-radius: 0px;
-  -moz-background-clip: padding;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);*/
+  /*-webkit-border-radius: 0px;*/
+  /*-moz-border-radius: 0px;*/
+  /*border-radius: 0px;*/
+  /*-moz-background-clip: padding;
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
   border: 0px;
-  border-bottom: 1px solid #9898a7;
+  border-bottom: 1px solid #9898a7;*/
+  border-bottom: 3px solid #fbb03b;
+  background: #326380;
+  padding: .75em;
+  margin: 0px;
 }
+
 .navbar .nav {
   margin: 0em;
 }
 .navbar .nav  > li > a {
-  color: #646475;
-  text-shadow: 1px 1px 0px #fff;
+  color: #fff;
+  /*text-shadow: 1px 1px 0px #fff;*/
 }
 .navbar .nav  > li > a:hover {
   color: #7d7d90;
@@ -168,7 +170,7 @@ hr {
   overflow: hidden;
 }
 #main-menu .nav-tabs  > li.active  > a {
-  background: #007AFF;
+  background: #90C845;
   box-shadow: inset 0px 1px 3px rgba(32, 75, 97, 0.6);
   text-shadow: none;
   color: #fff;

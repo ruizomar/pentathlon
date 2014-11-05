@@ -1,5 +1,5 @@
 <?php
-class AsignaCargosController extends BaseController {
+class AsignaAscensosController extends BaseController {
 
 	public function getIndex()
 	{
@@ -17,7 +17,7 @@ class AsignaCargosController extends BaseController {
 			$companiasysubzonasArr[$compayzona->id] = $compayzona->nombre;
 		}
 
-		return View::make('cargos.asignar')->with('cargos',$cargosArr)->with('companiasysubzonas',$companiasysubzonasArr);
+		return View::make('ascensos.asignar')->with('cargos',$cargosArr)->with('companiasysubzonas',$companiasysubzonasArr);
 	}
 
 	public function postBuscar()
@@ -26,7 +26,6 @@ class AsignaCargosController extends BaseController {
 		$elemento = Elemento::find($id);
 		$fotoperfil ="default.png";
 		$matricula = 'Sin registro';
-		$cargo = false;
 		if(!is_null($elemento -> documentos() -> where('tipo','=','fotoperfil') -> first() ) )
 		{
 			$fotoperfil = $elemento -> documentos() -> where('tipo','=','fotoperfil') -> first() -> ruta;
@@ -35,10 +34,7 @@ class AsignaCargosController extends BaseController {
 		{
 			$matricula = $elemento -> matricula -> matricula;
 		}
-		if(!is_null($elemento -> cargos -> last() ))
-		{
-			$cargo = $elemento -> cargos -> last() -> nombre;
-		}
+		$grado = $elemento ->grados -> last();
 		$dato = array(
 			'id' => $id,
 			'success' => true,
@@ -47,8 +43,8 @@ class AsignaCargosController extends BaseController {
 			'materno' => $elemento -> persona -> apellidomaterno,
 			'fotoperfil' => $fotoperfil,
 			'matricula' => $matricula,
-			'cargo' => $cargo,
-			// 'tipo' => $elemento -> companiasysubzona -> tipo,
+			'grado' => $grado -> nombre,
+			'fechagrado' => $grado -> pivot -> fecha,
 			'companiasysubzonas' => $elemento -> companiasysubzona -> tipo .' '. $elemento ->  companiasysubzona -> nombre,
 		);
 		return ($dato);

@@ -1,6 +1,6 @@
 @extends('layaouts.buscar')
 @section('titulo')
-  Cargos
+  Ascensos
 @endsection
 @section('head')
 	<style>
@@ -22,10 +22,11 @@
 	</style>
 	{{  HTML::style('css/sweet-alert.css');  }}
 	{{  HTML::script('js/jspdf.js'); }}
+	{{  HTML::script('js/chart/Chart.min.js'); }}
 
 @endsection
 @section('elemento')
-	{{ Form::open(array('id' => 'formulariocargos','url'=>'cargos/update','files'=>true)) }}
+	{{ Form::open(array('id' => 'formulariocargos','url'=>'ascensos/update','files'=>true)) }}
 		<div id="contenedor" class="col-md-offset-2 col-md-8 form-group">
 			<i class="pull-left fa fa-paperclip fa-5x"></i>
 			<div class="col-md-3" id="fotoperfil">
@@ -39,38 +40,43 @@
 						{{ Form::label('matricula',null,array('class' => 'pull-right label label-success')) }}
 					</h4>
 					<h4>
-						{{ Form::label(null,'Cargo actual: ',array('class' => 'small')) }}
-						{{ Form::label('cargo',null,array('class' => 'pull-right label label-primary')) }}
+						{{ Form::label(null,'Ubicación actual: ',array('class' => 'small')) }}
+						{{ Form::label('companiasysubzonas',null,array('class' => 'pull-right label label-info')) }}
 					</h4>
 					<h4>
-						{{ Form::label(null,'Ubicación actual: ',array('class' => 'small')) }}
-						{{ Form::label('companiasysubzonas',null,array('class' => 'pull-right label label-default')) }}
+						{{ Form::label(null,'Grado actual: ',array('class' => 'small')) }}
+						{{ Form::label('grado',null,array('class' => 'pull-right label label-danger')) }}
 					</h4>
-				</div>
-				<div class="col-md-5">
-					<h3>Cargo a asignar</h3>
-					{{ Form::select('cargo', $cargos,null,array('class' => 'form-control')) }}
-					<h3>Ubicación</h3>
-					{{ Form::select('companiasysubzona', $companiasysubzonas,null,array('class' => 'form-control')) }}
+					<h4>
+						{{ Form::label(null,'Desde: ',array('class' => 'small')) }}
+						{{ Form::label('fechagrado',null,array('class' => 'pull-right label label-default')) }}
+					</h4>
 				</div>
 			</div>
 			{{ Form::button('<i class="fa fa-floppy-o"></i> Guardar',array('id' =>'btnupdate','class' => 'pull-right btn btn-info')) }}
 		</div>
 	{{Form::close()}}
+	<div style="width:100%">
+		<div class="col-md-12">
+			<canvas id="canvas" height="50" width="600"></canvas>
+		</div>
+	</div>
 @stop
 @section('scripts2')
 	{{  HTML::script('js/sweet-alert.min.js'); }}
 	<script>
 		function encontrado (id) {
-			$.post('cargos/buscar',{id:id}, function(json) {
-				console.log(json);
+			$.post('ascensos/buscar',{id:id}, function(json) {
+				console.log(json.grado);
+				console.log(json.fecha);
 				$(".fa-spinner").addClass("hidden");
 				$("#elemento").removeClass("hidden");
 				$('[name=id]').val(json.id);
 				$('#nombreelemento').text(json.nombre+' '+json.paterno+' '+json.materno);
 				$('label[for=matricula]').text(json.matricula);
-				$('label[for=cargo]').text(json.cargo);
 				$('label[for=companiasysubzonas]').text(json.companiasysubzonas);
+				$('label[for=grado]').text(json.grado);
+				$('label[for=fechagrado]').text(json.fechagrado);
 				if(!json.cargo){
 					$('label[for=cargo]').text('Cargo: Sin cargo');
 				}
@@ -83,7 +89,7 @@
 			$('#btnupdate').on('click', function(e) {
 				e.preventDefault();
 				var str = $( "#formulariocargos" ).serialize();
-				$.post('cargos/update',$("#formulariocargos").serialize(), function(json) {
+				$.post('ascensos/update',$("#formulariocargos").serialize(), function(json) {
 					console.log(json);
 					if (!json.success) {
 						swal({
@@ -119,23 +125,27 @@
 		}
 	</script>
 	<script>
-	var doc = new jsPDF();
-
-	    var specialElementHandlers = {
-	      '.wrap_all': function(element, renderer){
-	       return false;
-	    }
-	    };
-
-
-	    $('#cmd').click(function(){
-	    	console.log('jaja');
-	      var html=$(".wrap_all").html();
-	         doc.fromHTML(html,200,200, {
-	            'width': 500,
-	            'elementHandlers': specialElementHandlers
-	         });
-	      doc.save("Test.pdf");
-	    });
+		var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+		var lineChartData = {
+			labels : ["January","February","March","April","May","June","July"],
+			datasets : [
+				{
+					label: "My Second dataset",
+					fillColor : "rgba(151,187,205,0.2)",
+					strokeColor : "rgba(151,187,205,1)",
+					pointColor : "rgba(151,187,205,1)",
+					pointStrokeColor : "#fff",
+					pointHighlightFill : "#fff",
+					pointHighlightStroke : "rgba(151,187,205,1)",
+					data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
+				}
+			]
+		}
+		window.onload = function(){
+			var ctx = document.getElementById("canvas").getContext("2d");
+			window.myLine = new Chart(ctx).Line(lineChartData, {
+				responsive: true
+			});
+		}
 	</script>
 @endsection
