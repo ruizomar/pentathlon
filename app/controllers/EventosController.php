@@ -40,7 +40,8 @@ class EventosController extends BaseController{
 				'tipoevento_id' => Input::get('Tipo')
 			));
 			$dato = array('success'		=>	true,
-						  'message'		=>	'Evento creado'
+						  'message'		=>	'Evento creado',
+						  'evento'		=>	$evento
 							);
 		}
 		else{
@@ -62,23 +63,4 @@ class EventosController extends BaseController{
 			->get())->with('tipos',$tipos);
 	}
 
-	public function postInscripcion(){
-		$rules = array(
-			'elemento' 	=> 'required|integer|exists:elementos',
-			'evento' 	=> 'required|integer|exists:eventos',
-			);
-
-		$validation = Validator::make(Input::all(), $rules);
-		if($validation->fails()){
-			$dato = array('success'			=>	false,
-					      'errormessage'	=>	'Ocurrio un error');
-			return Response::json($dato);
-		}
-		$elemento = Elemento::find(Input::get("elemento"));
-		$elemento->eventos()->attach(Input::get("evento"));
-
-		$dato = array('success'			=>	true,
-					  'errormessage'	=>	'Elemento Inscrito');
-		return Response::json($dato);
-	}
 }

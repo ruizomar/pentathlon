@@ -34,6 +34,6 @@ class Elemento extends Eloquent{
 		return $this->hasMany('Documento');
 	}
 	public function eventos(){
-		return $this->hasMany('Evento');
+		return $this->belongsToMany('Evento');
 	}
 }

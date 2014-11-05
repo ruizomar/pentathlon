@@ -34,7 +34,14 @@ Pagos
                 </div>
             </div>
             <div class="form-group col-md-4">
-              {{ Form::select('concepto', array('' => 'Concepto','Matricula' => 'Matrícula','Credencial' => 'Credencial'),null,array('class' => 'form-control')) }}
+              <select name="concepto" class='form-control'>
+                  <option value="">Concepto</option>
+                  <option value="Membresia">Membresia</option>
+                  <option value="Credencial">Credencial</option>
+                  @foreach ($eventos as $evento)
+                    <option value="{{ $evento->id }}">{{ $evento->nombre }}</option>
+                  @endforeach  
+              </select>
             </div>
             {{ Form::text('id', null, array('class' => 'hidden form-control')) }}
             <div class="form-group col-md-3">
@@ -75,6 +82,10 @@ Pagos
 @endsection
 @section('scripts2')
     <script type="text/javascript">
+    var eventos = [];
+    @foreach ($eventos as $evento)
+        eventos.push({id:{{$evento->id}}, costo:{{$evento->costo}}});
+    @endforeach 
     $(document).ready(function() {
         $('#pagar').bootstrapValidator({
         feedbackIcons: {
@@ -117,6 +128,7 @@ Pagos
                     $('#message').html(json.errormessage);
                     $('#pagoerror').removeClass('hidden alert-success');
                     $('#pagoerror').addClass('alert-danger');
+                    $('#imprimir').addClass('hidden');
                 }
                 $('#pag').val(json.pago);
                 $('.spin-modal').addClass('hidden');
@@ -138,5 +150,19 @@ Pagos
                 $('#elemento').removeClass('hidden');
         }, 'json');
     }
+    $("[name = concepto]").change(function(){
+        if($.isNumeric($("[name = concepto] option:selected").val())){
+            $("[name = cantidad]").attr("disabled","disabled");
+            $.each(eventos, function( index, evento ) {
+                if(evento.id == $("[name = concepto] option:selected").val()){
+                    $("[name = cantidad]").val(evento.costo);
+                }
+            });
+        }
+        else{
+            $("[name = cantidad]").removeAttr("disabled");
+            $("[name = cantidad]").val("");
+        }
+    });
     </script>
 @endsection

@@ -177,7 +177,7 @@
                         confirmButtonText: "OK",     
                         closeOnConfirm: false,   
                         closeOnCancel: false }, 
-                        function(isConfirm){   
+                        function(isConfirm){
                           if (isConfirm) {     
                            window.location.reload();
                           }

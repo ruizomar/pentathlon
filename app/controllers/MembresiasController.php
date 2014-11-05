@@ -3,7 +3,10 @@
 class MembresiasController extends BaseController {
 
 	public function getIndex(){
-		return View::make('pagos/pagos');
+		return View::make('pagos/pagos')
+			->with('eventos',Evento::where('fecha','>=',date('Y-m-d'))
+			->orderBy('fecha','asc')
+			->get());
 	}
 
 	public function postElemento(){
@@ -25,7 +28,7 @@ class MembresiasController extends BaseController {
 	public function postRegistrarpago(){
 		$rules = array(
 			'id' => 'required|integer|exists:elementos',
-			'cantidad' => 'required|numeric'
+			'cantidad' => 'numeric'
 			);
 
 		$validation = Validator::make(Input::all(), $rules);
@@ -39,13 +42,39 @@ class MembresiasController extends BaseController {
 		$id = Input::get('id');
 		$cantidad = Input::get('cantidad');
 		////////////////////////////
-		if (Input::get('concepto') != 'Matricula') {
+		if (Input::get('concepto') == 'Credencial') {
 			$pago = new Pago;
 					$pago->elemento_id = $id;
 					$pago->concepto = Input::get('concepto') ;
 					$pago->fecha = date("Y-m-d");
 					$pago->cantidad = $cantidad;
 				$pago->save();
+				$dato = array(
+					'success' 	=> true,
+					'matricula' => '',
+					'message' 	=> 'El pago se a registrado exitosamente',
+					'pago' 		=> $pago->id
+					);
+		return Response::json($dato);
+		}
+		if (is_numeric(Input::get('concepto'))) {
+			if(!is_null(Evento::find(Input::get('concepto'))->elementos->first())){
+				$dato = array(
+					'success' 	=> false,
+					'errormessage' 	=> 'El pago ya se registro anteriormente',
+					);
+				return Response::json($dato);
+			}
+			$pago = new Pago;
+					$pago->elemento_id = $id;
+					$pago->concepto = Evento::find(Input::get('concepto'))->nombre;
+					$pago->fecha = date("Y-m-d");
+					$pago->cantidad = Evento::find(Input::get('concepto'))->costo;
+				$pago->save();
+
+		$elemento = Elemento::find($id);
+		$elemento->eventos()->attach(Input::get('concepto'));
+
 				$dato = array(
 					'success' 	=> true,
 					'matricula' => '',
