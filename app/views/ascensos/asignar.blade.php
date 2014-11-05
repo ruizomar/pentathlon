@@ -4,21 +4,21 @@
 @endsection
 @section('head')
 	<style>
-	#contenedor {
-		padding: 10px;
-		margin-bottom: 20px;
-		background-color: #E0F8D8;
-		border: 1px solid #83B373;
-		border-radius: 10px;
-		-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
-		box-shadow: 5px 5px rgba(211, 207, 207, 1);
-	}
-	.fa-paperclip {
-		position: absolute;
-		top: -15px;
-		left: -15px;
-		z-index: 10;
-	}
+		#contenedor {
+			padding: 10px;
+			margin-bottom: 20px;
+			background-color: #E0F8D8;
+			border: 1px solid #83B373;
+			border-radius: 10px;
+			-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+			box-shadow: 5px 5px rgba(211, 207, 207, 1);
+		}
+		.fa-paperclip {
+			position: absolute;
+			top: -15px;
+			left: -15px;
+			z-index: 10;
+		}
 	</style>
 	{{  HTML::style('css/sweet-alert.css');  }}
 	{{  HTML::script('js/jspdf.js'); }}
@@ -26,8 +26,13 @@
 
 @endsection
 @section('elemento')
+	<div class="col-md-1" style="width:20%">
+		<div id="canvas-holder">
+			<canvas id="canvas" width="100%" height="100%"/>
+		</div>
+	</div>
 	{{ Form::open(array('id' => 'formulariocargos','url'=>'ascensos/update','files'=>true)) }}
-		<div id="contenedor" class="col-md-offset-2 col-md-8 form-group">
+		<div id="contenedor" class="col-md-8 form-group">
 			<i class="pull-left fa fa-paperclip fa-5x"></i>
 			<div class="col-md-3" id="fotoperfil">
 			</div>
@@ -56,19 +61,16 @@
 			{{ Form::button('<i class="fa fa-floppy-o"></i> Guardar',array('id' =>'btnupdate','class' => 'pull-right btn btn-info')) }}
 		</div>
 	{{Form::close()}}
-	<div style="width:100%">
-		<div class="col-md-12">
-			<canvas id="canvas" height="50" width="600"></canvas>
-		</div>
-	</div>
 @stop
 @section('scripts2')
 	{{  HTML::script('js/sweet-alert.min.js'); }}
 	<script>
 		function encontrado (id) {
 			$.post('ascensos/buscar',{id:id}, function(json) {
-				console.log(json.grado);
-				console.log(json.fecha);
+				console.log(json.faltas);
+				console.log(json.permisos);
+				console.log(json.asistencias);
+				porcentajeAsistencia(json.fechas,json.tipoAsistencias);
 				$(".fa-spinner").addClass("hidden");
 				$("#elemento").removeClass("hidden");
 				$('[name=id]').val(json.id);
@@ -82,6 +84,27 @@
 				}
 				$('#fotoperfil').html('<img id="theImg" class="img-responsive img-thumbnail img-circle" src="imgs/fotos/'+json.fotoperfil+'" alt="Responsive image"/>');
 			}, 'json');
+		}
+		function porcentajeAsistencia (fechas,tipos) {
+			var doughnutData = [
+					{
+						value: 70,
+						color:"#F7464A",
+						highlight: "#FF5A5E",
+						label: "Asistencia"
+					},
+					{
+						value: 30,
+						color:"#fff",
+						highlight: "#000",
+						label: "Faltas"
+					},
+
+				];
+				// window.onload = function(){
+					var ctx = document.getElementById("canvas").getContext("2d");
+					window.myDoughnut = new Chart(ctx).Pie(doughnutData, {responsive : true});
+				// };
 		}
 	</script>
 	<script>
@@ -122,30 +145,6 @@
 		})();
 		function capitalise(string) {
 			return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-		}
-	</script>
-	<script>
-		var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
-		var lineChartData = {
-			labels : ["January","February","March","April","May","June","July"],
-			datasets : [
-				{
-					label: "My Second dataset",
-					fillColor : "rgba(151,187,205,0.2)",
-					strokeColor : "rgba(151,187,205,1)",
-					pointColor : "rgba(151,187,205,1)",
-					pointStrokeColor : "#fff",
-					pointHighlightFill : "#fff",
-					pointHighlightStroke : "rgba(151,187,205,1)",
-					data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
-				}
-			]
-		}
-		window.onload = function(){
-			var ctx = document.getElementById("canvas").getContext("2d");
-			window.myLine = new Chart(ctx).Line(lineChartData, {
-				responsive: true
-			});
 		}
 	</script>
 @endsection

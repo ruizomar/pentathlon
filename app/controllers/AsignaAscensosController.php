@@ -35,6 +35,11 @@ class AsignaAscensosController extends BaseController {
 			$matricula = $elemento -> matricula -> matricula;
 		}
 		$grado = $elemento ->grados -> last();
+
+		$asistencias = $elemento -> asistencias;
+		$faltas = '1';
+		$permisos = '2';
+		$asistencias = '3';
 		$dato = array(
 			'id' => $id,
 			'success' => true,
@@ -46,7 +51,14 @@ class AsignaAscensosController extends BaseController {
 			'grado' => $grado -> nombre,
 			'fechagrado' => $grado -> pivot -> fecha,
 			'companiasysubzonas' => $elemento -> companiasysubzona -> tipo .' '. $elemento ->  companiasysubzona -> nombre,
+			'faltas' => $faltas,
+			'permisos' => $permisos,
+			'asistencias' => $asistencias,
 		);
+		// $dave = $elemento -> asistencias -> get() -> where('id','=',1);
+		// $dato = array(
+		// 	'dave' => $dave,
+		// );
 		return ($dato);
 	}
 
