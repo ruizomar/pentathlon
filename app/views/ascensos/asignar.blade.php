@@ -17,10 +17,19 @@
 			border-top-right-radius: .1em;
 		}
 
-		.detalles {
+		.asistencias {
 			border-top-width: 3px;
 			border-top-style: solid;
-			border-top-color: #76a7fa;
+			padding: 15px;
+			box-shadow: 0px 1px 1px #aab2bd;
+			border-top-left-radius: .1em;
+			border-top-right-radius: .1em;
+		}
+		.detalles{
+			border-top-width: 3px;
+			border-top-style: solid;
+			left: 12px;
+			right: 12px;
 			padding: 15px;
 			box-shadow: 0px 1px 1px #aab2bd;
 			border-top-left-radius: .1em;
@@ -37,37 +46,66 @@
 	{{  HTML::script('js/chart/raphael-min.js'); }}
 @endsection
 @section('elemento')
-	<div id="graficas" class="detalles col-md-2">
-	</div>
-	{{ Form::open(array('id' => 'formulariocargos','url'=>'ascensos/update','files'=>true)) }}
-		<div class="contenedor col-md-8 form-group">
-			<div class="col-md-3" id="fotoperfil">
-			</div>
-			<div class="col-md-9">
-				<div class="col-md-8">
-					{{ Form::text('id', 'id',array('class' => 'hidden')) }}
-					<h3 id="nombreelemento" name="nombre"></h3>
-					<h4>
-						{{ Form::label(null,'Matricula: ',array('class' => 'small')) }}
-						{{ Form::label('matricula',null,array('class' => 'pull-right label label-success')) }}
-					</h4>
-					<h4>
-						{{ Form::label(null,'Ubicación actual: ',array('class' => 'small')) }}
-						{{ Form::label('companiasysubzonas',null,array('class' => 'pull-right label label-info')) }}
-					</h4>
-					<h4>
-						{{ Form::label(null,'Grado actual: ',array('class' => 'small')) }}
-						{{ Form::label('grado',null,array('class' => 'pull-right label label-danger')) }}
-					</h4>
-					<h4>
-						{{ Form::label(null,'Desde: ',array('class' => 'small')) }}
-						{{ Form::label('fechagrado',null,array('class' => 'pull-right label label-default')) }}
-					</h4>
-				</div>
-			</div>
-			{{ Form::button('<i class="fa fa-floppy-o"></i> Guardar',array('id' =>'btnupdate','class' => 'hidden pull-right btn btn-info')) }}
+	<div class="col-md-12">
+		<div id="graficas" class="asistencias col-md-2" style="border-top-color: #76a7fa;">
 		</div>
-	{{Form::close()}}
+		{{ Form::open(array('id' => 'formulariocargos','class' => 'col-md-7 contenedor','url' => 'ascensos/update','files' => true)) }}
+			<div class="form-group">
+				<div class="col-md-3" id="fotoperfil">
+				</div>
+				<div class="col-md-9">
+					<div class="col-md-8">
+						{{ Form::text('id', 'id',array('class' => 'hidden')) }}
+						<h3 id="nombreelemento" name="nombre"></h3>
+						<h4>
+							{{ Form::label(null,'Matricula: ',array('class' => 'small')) }}
+							{{ Form::label('matricula',null,array('class' => 'pull-right label label-success')) }}
+						</h4>
+						<h4>
+							{{ Form::label(null,'Ubicación: ',array('class' => 'small')) }}
+							{{ Form::label('companiasysubzonas',null,array('class' => 'pull-right label label-info')) }}
+						</h4>
+						<h4>
+							{{ Form::label(null,'Grado actual: ',array('class' => 'small')) }}
+							{{ Form::label('grado',null,array('class' => 'pull-right label label-danger')) }}
+						</h4>
+						<h4>
+							{{ Form::label(null,'Desde: ',array('class' => 'small')) }}
+							{{ Form::label('fechagrado',null,array('class' => 'pull-right label label-default')) }}
+						</h4>
+					</div>
+				</div>
+				{{ Form::button('<i class="fa fa-floppy-o"></i> Guardar',array('id' =>'btnupdate','class' => 'hidden pull-right btn btn-info')) }}
+			</div>
+		{{Form::close()}}
+		<div class="detalles col-md-2" style="left:24px; border-top-color: #53a93f;">
+			<p>
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias porro error nobis adipisci magni esse sed doloremque dolore quisquam corporis! Tenetur quaerat tempore porro quae, atque iusto impedit sequi ipsum.
+			</p>
+		</div>
+	</div>
+	<div class="col-md-12">
+		<div class="hidden col-md-2 detalles" style="border-top-color: #fbcb43;">
+			<p>
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias porro error nobis adipisci magni esse sed doloremque dolore quisquam corporis! Tenetur quaerat tempore porro quae, atque iusto impedit sequi ipsum.
+			</p>
+		</div>
+		<div class="hidden col-md-2 detalles" style="border-top-color: #4dbfd9;">
+			<p>
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias porro error nobis adipisci magni esse sed doloremque dolore quisquam corporis! Tenetur quaerat tempore porro quae, atque iusto impedit sequi ipsum.
+			</p>
+		</div>
+		<div class="hidden col-md-2 detalles" style="border-top-color: #bc5679;">
+			<p>
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias porro error nobis adipisci magni esse sed doloremque dolore quisquam corporis! Tenetur quaerat tempore porro quae, atque iusto impedit sequi ipsum.
+			</p>
+		</div>
+		<div class="hidden col-md-2 detalles" style="border-top-color: #f9b256;">
+			<p>
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias porro error nobis adipisci magni esse sed doloremque dolore quisquam corporis! Tenetur quaerat tempore porro quae, atque iusto impedit sequi ipsum.
+			</p>
+		</div>
+	</div>
 @stop
 @section('scripts2')
 	{{  HTML::script('js/sweet-alert.min.js'); }}
