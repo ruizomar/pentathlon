@@ -4,40 +4,47 @@
 @endsection
 @section('head')
 	<style>
-		#contenedor {
+		.contenedor {
+			background: #fff;
 			padding: 10px;
-			margin-bottom: 20px;
-			background-color: #E0F8D8;
-			border: 1px solid #83B373;
-			border-radius: 10px;
-			-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
-			box-shadow: 5px 5px rgba(211, 207, 207, 1);
+			margin-bottom: 15px;
+			box-shadow: 0px 3px 2px #aab2bd;
+			left: 12px;
+			border-top-width: 3px;
+			border-top-style: solid;
+			border-top-color: #e46f61;
+			border-top-left-radius: .1em;
+			border-top-right-radius: .1em;
 		}
-		.fa-paperclip {
-			position: absolute;
-			top: -15px;
-			left: -15px;
-			z-index: 10;
+
+		.detalles {
+			border-top-width: 3px;
+			border-top-style: solid;
+			border-top-color: #76a7fa;
+			padding: 15px;
+			box-shadow: 0px 1px 1px #aab2bd;
+			border-top-left-radius: .1em;
+			border-top-right-radius: .1em;
+		}
+		#graficas {
+			height: 200px;
+			margin-bottom: 20px;
 		}
 	</style>
 	{{  HTML::style('css/sweet-alert.css');  }}
 	{{  HTML::script('js/jspdf.js'); }}
-	{{  HTML::script('js/chart/Chart.min.js'); }}
-
+	{{  HTML::script('js/chart/morris.min.js'); }}
+	{{  HTML::script('js/chart/raphael-min.js'); }}
 @endsection
 @section('elemento')
-	<div class="col-md-1" style="width:auto">
-		<div id="canvas-holder">
-			<canvas id="canvas" width="100%" height="100%"/>
-		</div>
+	<div id="graficas" class="detalles col-md-2">
 	</div>
 	{{ Form::open(array('id' => 'formulariocargos','url'=>'ascensos/update','files'=>true)) }}
-		<div id="contenedor" class="col-md-8 form-group">
-			<i class="pull-left fa fa-paperclip fa-5x"></i>
+		<div class="contenedor col-md-8 form-group">
 			<div class="col-md-3" id="fotoperfil">
 			</div>
 			<div class="col-md-9">
-				<div class="col-md-7">
+				<div class="col-md-8">
 					{{ Form::text('id', 'id',array('class' => 'hidden')) }}
 					<h3 id="nombreelemento" name="nombre"></h3>
 					<h4>
@@ -58,7 +65,7 @@
 					</h4>
 				</div>
 			</div>
-			{{ Form::button('<i class="fa fa-floppy-o"></i> Guardar',array('id' =>'btnupdate','class' => 'pull-right btn btn-info')) }}
+			{{ Form::button('<i class="fa fa-floppy-o"></i> Guardar',array('id' =>'btnupdate','class' => 'hidden pull-right btn btn-info')) }}
 		</div>
 	{{Form::close()}}
 @stop
@@ -66,6 +73,7 @@
 	{{  HTML::script('js/sweet-alert.min.js'); }}
 	<script>
 		function encontrado (id) {
+			$("#graficas").html('');
 			$.post('ascensos/buscar',{id:id}, function(json) {
 				$(".fa-spinner").addClass("hidden");
 				$("#elemento").removeClass("hidden");
@@ -83,34 +91,24 @@
 			}, 'json');
 		}
 		function porcentajeAsistencia (faltas,permisos,asistencias) {
-			var doughnutData = [
-					{
-						value:asistencias,
-						color:"#4CD964",
-						highlight: "#FF5A5E",
-						label: "Asistencias"
-					},
-					{
-						value:faltas,
-						color:"#FF2D55",
-						highlight: "#000",
-						label: "Faltas"
-					},
-					{
-						value:permisos,
-						color:"#FF9500",
-						highlight: "#000",
-						label: "Permisos"
-					},
-
-				];
-				// window.onload = function(){
-					var ctx = document.getElementById("canvas").getContext("2d");
-					window.myDoughnut = new Chart(ctx).Doughnut(doughnutData, {
-						responsive : false,
-						animateRotate : true,
-					});
-				// };
+			total = faltas + permisos + asistencias;
+			var mo = Morris.Donut({
+				element: 'graficas',
+				data: [
+					{value: faltas, label: 'Faltas', formatted: (faltas/total)*100+'%' },
+					{value: permisos, label: 'Permisos', formatted: (permisos/total)*100+'%' },
+					{value: asistencias, label: 'Asistencias', formatted: (asistencias/total)*100+'%' },
+				],
+				backgroundColor: '#ccc',
+				labelColor: '#060',
+				colors: [
+					'#0BA462',
+					'#39B580',
+					'#67C69D',
+				],
+				resize: true,
+				formatter: function (x, data) { return data.formatted; }
+			});
 		}
 	</script>
 	<script>
