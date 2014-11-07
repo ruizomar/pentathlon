@@ -12,10 +12,11 @@
 -----------------------------------------------------*/
 /*Standard Elements*/
 body {
-  margin: 0px;
+  /* margin: 0px;
   padding: 0px;
   background: #f9f9f9;
-  color: #333;
+  color: #333; */
+  background: #fff url(../imgs/bg_dark.png);
 }
 a:hover {
   text-decoration: none;
@@ -204,7 +205,7 @@ hr {
 }
 .content {
   position: relative;
-  background: #fff;
+  background: #f2f2f2;
   margin-left: 200px;
   border-left: 1px solid #cfcfd6;
   border-bottom: 1px solid #cfcfd6;
@@ -273,6 +274,7 @@ footer a {
   float: left;
   margin: 0em;
   padding-top: 1.5em;
+  background: #fff url(../imgs/bg_dark.png);
 }
 @media (min-width: 1200px) {
   #sidebar-nav {
@@ -291,15 +293,15 @@ footer a {
   margin-bottom: -1px;
 }
 #sidebar-nav .nav-list li.active {
-  background: #f3f3f5;
+  background: #326380;
   border-right: 0px;
-  border-top: 1px solid #cfcfd6;
-  border-bottom: 1px solid #cfcfd6;
+  border-top: 1px solid #fbb03b;
+  border-bottom: 1px solid #fbb03b;
 }
 #sidebar-nav .nav-list li a,
-#sidebar-nav .nav-list li a:hover {
-  color: #585868;
-  text-shadow: 1px 1px 0px #fff;
+#sidebar-nav .nav-list li a {
+  color: #fff;
+  /*text-shadow: 1px 1px 0px #fff;*/
   padding: .5em 2em;
   border: 0px;
   margin: 0px 1px;
@@ -309,7 +311,7 @@ footer a {
   border: 0px;
 }
 #sidebar-nav .nav-list li:hover {
-  background: #e8e8eb;
+  background: #326380;
 }
 /*Buttons*/
 .btn-primary {
@@ -1184,8 +1186,5 @@ label {
   }
   #sidebar-nav .nav  > li > a span {
     display: none;
-  }
-  body {
-    background: #fff;
   }
 }

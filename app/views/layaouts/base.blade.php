@@ -43,7 +43,7 @@
       </div>
   </div>
 <!-- end navbar -->
-<div class="navbar-collapse collapse">
+<!-- <div class="navbar-collapse collapse">
   <div id="main-menu">
       <ul class="nav nav-tabs ">
         <li class="active"><a href="#"><i class="fa fa-tachometer"></i> <span>Dashboard</span></a></li>
@@ -60,7 +60,7 @@
           </li>
       </ul>
   </div>
-</div>
+</div> -->
 <!-- sidenavbar -->
   <div id="sidebar-nav" class="hidden-xs">
       <ul id="dashboard-menu" class="nav nav-list">

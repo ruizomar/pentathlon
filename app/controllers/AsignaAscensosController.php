@@ -34,8 +34,8 @@ class AsignaAscensosController extends BaseController {
 		{
 			$matricula = $elemento -> matricula -> matricula;
 		}
-		$grado = $elemento ->grados -> last();
-
+		$grado = $elemento -> grados -> last();
+		$examenes = $elemento -> examenes() -> where('grado_id','=',$grado -> id) -> get();
 		$faltas = ($elemento -> asistencias() -> where('tipo' , '=' , 0) -> get()); //Falta
 		$permisos = ($elemento -> asistencias() -> where('tipo' , '=' , 2) -> get()); //permiso
 		$asistencias = ($elemento -> asistencias() -> where('tipo' , '=' , 1) -> get()); //asistencia
@@ -53,11 +53,8 @@ class AsignaAscensosController extends BaseController {
 			'faltas' => count($faltas),
 			'permisos' => count($permisos),
 			'asistencias' => count($asistencias),
+			'examenes' => $examenes,
 		);
-		// $dave = $elemento -> asistencias -> get() -> where('id','=',1);
-		// $dato = array(
-		// 	'dave' => $dave,
-		// );
 		return ($dato);
 	}
 

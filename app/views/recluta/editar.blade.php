@@ -49,7 +49,7 @@
     }
 
     .setup-content {
-      background-color: #FFFFFF;
+      background-color: #f2f2f2;
     }
 
     .step .activestep {
@@ -104,7 +104,7 @@
         </div>
         <div class="seleccion" onclick="javascript: resetActive(event, 66, 'step-2');">
           <span class="fa fa-pencil"></span>
-          <p>Datos de elemento</p>
+          <p>Datos</p>
         </div>
         <div class="seleccion" onclick="javascript: resetActive(event, 100, 'step-3');">
           <span class="fa fa-plus-square"></span>
