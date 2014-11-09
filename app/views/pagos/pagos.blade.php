@@ -33,8 +33,8 @@ Pagos
                   <option value="">Concepto</option>
                   <option value="Membresia">Membresia</option>
                   <option value="Credencial">Credencial</option>
-                  <option value="evento">evento</option>
-                  <option value="examen">examen</option>
+                  <option value="Evento">Evento</option>
+                  <option value="Examen">Examen</option>
               </select>
             </div>
             <div class="form-group col-md-4 hidden">
@@ -144,6 +144,8 @@ Pagos
     });
         $('#main-menu').find('li').removeClass('active');
         $('#main-menu ul li:nth-child(2)').addClass('active');
+        $('#sidebar-nav').find('li').removeClass('active');
+        $('#sidebar-nav ul li:nth-child(1)').addClass('active');
     function encontrado(id){
             $.post('{{ URL::to("pagos/elemento"); }}', 'id='+id, function(json) {
                 $('#lnombre').html('<strong>Nombre:</strong> '+json.nombre);
@@ -159,7 +161,7 @@ Pagos
             $("[name = cantidad]").attr("disabled","disabled");
             $.each(conceptos, function( index, concepto ) {
                 if(concepto.id == $("[name = concepto] option:selected").val()){
-                    $("[name = cantidad]").val(concepto.costo);
+                    $("[name = cantidad]").val(concepto.precio);
                 }
             });
     });
@@ -182,10 +184,10 @@ Pagos
             options = "";
             $.each(json, function( index, concepto ) {
                 options += "<option value="+concepto.id+">"+concepto.nombre+"</option>";
-                conceptos.push({id:concepto.id,costo:concepto.costo});
+                conceptos.push({id:concepto.id,precio:concepto.precio});
             });
             $("[name = concepto]").html(options);
-            $("[name = cantidad]").val(conceptos[0].costo);
+            $("[name = cantidad]").val(conceptos[0].precio);
             $("[name = concepto]").closest('div').removeClass('hidden');
             $("[name = cantidad]").attr("disabled","disabled");
             $("#bpagar").removeAttr("disabled");

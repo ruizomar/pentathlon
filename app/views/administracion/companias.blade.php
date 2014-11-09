@@ -226,6 +226,8 @@ $('#nueva').on('hide.bs.modal', function() {
 });
 $('#main-menu').find('li').removeClass('active');
 $('#main-menu ul li:nth-child(3)').addClass('active');
+$('#sidebar-nav').find('li').removeClass('active');
+$('#sidebar-nav ul li:nth-child(2)').addClass('active');
 function editar(btn){
 	$(btn).closest("tbody").find('tr').removeClass('danger').find('button').attr('disabled',false);
 	$(btn).attr('disabled',true).closest("tr").addClass('danger');

@@ -52,7 +52,7 @@
 				<tr>
 				<td>{{ $examen->id }}</td>
 				<td>{{ $examen->nombre }}</td>
-				<td>${{ $examen->costo }}</td>
+				<td>${{ $examen->precio }}</td>
 				<td>{{ $examen->grado->nombre }}</td>
 				<td>
 					<button type="button" onclick="editar(this)" class="btn btn-info select btn-xs">Editar</button> 
@@ -248,8 +248,8 @@ $('#editar').on('hide.bs.modal', function() {
     $('#edit').bootstrapValidator('resetForm', true);
     $("tbody").find('tr').removeClass('danger').find('button').attr('disabled',false);
 });
-$('#main-menu').find('li').removeClass('active');
-$('#main-menu ul li:nth-child(3)').addClass('active');
+$('#sidebar-nav').find('li').removeClass('active');
+$('#sidebar-nav ul li:nth-child(5)').addClass('active');
 function editar(btn){
 	$(btn).closest("tbody").find('tr').removeClass('danger').find('button').attr('disabled',false);
 	$(btn).attr('disabled',true).closest("tr").addClass('danger');

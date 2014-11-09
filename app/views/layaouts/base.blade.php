@@ -43,7 +43,7 @@
           </div>
       </div>
   </div>
-<!-- end navbar -->
+<!-- end navbar --
 <div class="navbar-collapse collapse">
   <div id="main-menu">
       <ul class="nav nav-tabs ">
@@ -62,12 +62,12 @@
       </ul>
   </div>
 </div>
-<!-- sidenavbar -->
+-- sidenavbar -->
   <div id="sidebar-nav" class="hidden-xs">
       <ul id="dashboard-menu" class="nav nav-list">
-          <li class="active "><a rel="tooltip" data-placement="right" data-original-title="Dashboard" href="#"><i class="fa fa-home"></i> <span class="caption">Administración</span></a></li>
+          <li class="active "><a rel="tooltip" data-placement="right" data-original-title="Dashboard" href="{{ URL::to('pagos'); }}"><i class="fa fa-money"></i> <span class="caption">Pagos</span></a></li>
 
-          <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Reports" href="#"><i class="fa fa-bar-chart-o"></i> <span class="caption">Reportes</span></a></li>
+          <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Reports" href="{{ URL::to('companias'); }}"><i class="fa fa-map-marker"></i> <span class="caption">Companias</span></a></li>
 
           <li class=" "><a rel="tooltip" data-placement="right" data-original-title="UI Features" href="{{ URL::to('condecoraciones'); }}"><i class="fa fa-shield"></i> <span class="caption">Condecoraciones</span></a></li>
 
@@ -75,7 +75,7 @@
 
           <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Media" href="{{ URL::to('examenes'); }}"><i class="fa  fa-file-text-o"></i> <span class="caption">Examenes</span></a></li>
 
-          <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Blog" href="#"><i class="icon-envelope"></i> <span class="caption">Mensajes</span></a></li>
+          <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Blog" href="{{ URL::to('asistencias/index/1'); }}"><i class="fa fa-calendar"></i> <span class="caption">Asistencias</span></a></li>
 
           <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Blog Entry" href="#"><i class="icon-print"></i> <span class="caption">Plantillas</span></a></li>
 

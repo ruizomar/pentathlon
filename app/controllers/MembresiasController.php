@@ -41,7 +41,7 @@ class MembresiasController extends BaseController {
 		if (Input::get('tipo') == 'Credencial') {
 			return Response::json(MembresiasController::pago(Input::get('id'),Input::get('cantidad'),Input::get('tipo')));
 		}
-		if (Input::get('tipo') == 'evento') {
+		if (Input::get('tipo') == 'Evento') {
 			if(!is_null(Evento::find(Input::get('concepto'))->elementos()->where('elemento_id','=',Input::get('id'))->first())){
 				$dato = array(
 					'success' 	=> false,
@@ -49,23 +49,23 @@ class MembresiasController extends BaseController {
 					);
 				return Response::json($dato);
 			}
-			$dato = MembresiasController::pago(Input::get('id'),Evento::find(Input::get('concepto'))->costo,Input::get('tipo')." ".Evento::find(Input::get('concepto'))->nombre);
+			$dato = MembresiasController::pago(Input::get('id'),Evento::find(Input::get('concepto'))->precio,Input::get('tipo')." ".Evento::find(Input::get('concepto'))->nombre);
 
 			$elemento = Elemento::find(Input::get('id'));
 			$elemento->eventos()->attach(Input::get('concepto'));
 		
 		return Response::json($dato);
 		}
-		if (Input::get('tipo') == 'examen') {
+		if (Input::get('tipo') == 'Examen') {
 
 			$elemento = Elemento::find(Input::get('id'));
 
 			if(is_null(Elemento::find(Input::get('id'))->examenes()
-				->where('examen_id','=',Input::get('concepto')))){
+				->where('examen_id','=',Input::get('concepto'))->first())){
 
 				$elemento->examenes()->attach(Input::get('concepto'));
 				$dato = MembresiasController::pago(Input::get('id'),
-					Examen::find(Input::get('concepto'))->costo,
+					Examen::find(Input::get('concepto'))->precio,
 					Input::get('tipo')." ".Examen::find(Input::get('concepto'))->nombre);
 			}
 			else if(6 > Elemento::find(Input::get('id'))->examenes()->where('examen_id','=',Input::get('concepto'))->first()->pivot->calificacion
@@ -80,7 +80,7 @@ class MembresiasController extends BaseController {
 						)
 					);
 				$dato = MembresiasController::pago(Input::get('id'),
-						Examen::find(Input::get('concepto'))->costo,
+						Examen::find(Input::get('concepto'))->precio,
 						Input::get('tipo')." ".Examen::find(Input::get('concepto'))->nombre);
 			}
 			else
@@ -103,7 +103,7 @@ class MembresiasController extends BaseController {
 					$matricula->elemento_id = Input::get('id');
 				$matricula->save();
 			}
-				$dato = MembresiasController::pago(Input::get('id'),Input::get('cantidad'),"Membresia");
+				$dato = MembresiasController::pago(Input::get('id'),Input::get('cantidad'),"Membresia ".date("Y"));
 				$dato['matricula'] = '<strong>'.$matricula->id.'</strong>';
 				$dato['message'] = 'El pago se a registrado exitosamente numero de Matricula: ';
 		}
@@ -136,19 +136,26 @@ class MembresiasController extends BaseController {
 							  		$pago->elemento->persona->apellidomaterno,
 				'grado' 		=>  $pago->elemento->grados()->orderBy('fecha','desc')->first()->nombre,
 				'reclutamiento' =>  $pago->elemento->reclutamiento,
+				'matricula'		=>	$pago->elemento->matricula,
 				'fecha' 		=>  date('d/m/Y'),
+				'cantidad'		=>	$pago->cantidad,
 				'zona' 			=> 	$pago->elemento->companiasysubzona->nombre,
 				'hacienda' 		=>  $hacienda->persona->nombre.' '.
 									$hacienda->persona->apellidopaterno.' '.
 									$hacienda->persona->apellidomaterno,
 				'gradohacienda' => 	$hacienda->grados()->orderBy('fecha','desc')->first()->nombre,
 				'folio'			=>	$pago->id,
-				'concepto'		=>  $pago->concepto
+				'concepto'		=>  $pago->concepto,
 				);
-			return View::make('pagos/recibomembrecia')->with('datos',$datos);
+			$html = View::make('pagos/recibomembrecia')->with('datos',$datos);
 		}
 		else
-		return View::make('pagos/recibomembrecia');
+		//return View::make('pagos/recibomembrecia');
+		$html =  View::make('pagos/recibomembrecia'); 
+
+		$pdf = App::make('dompdf');
+		$pdf->loadHTML($html);
+		return $pdf->stream();
 	}
 
 	public function pago($elemento,$cantidad,$concepto){

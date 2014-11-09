@@ -187,8 +187,8 @@ $(document).ready(function() {
     $('#datetimePicker').on('dp.change dp.show', function(e) {
         $('#asis').bootstrapValidator('revalidateField', 'fecha');
     });
-    $('#main-menu').find('li').removeClass('active');
-    $('#main-menu ul li:nth-child(4)').addClass('active');
+    $('#sidebar-nav').find('li').removeClass('active');
+        $('#sidebar-nav ul li:nth-child(6)').addClass('active');
 });
 </script>
 <script type="text/javascript" charset="utf-8">
@@ -202,14 +202,14 @@ function message(id){
             $('.modal-body').append('<h2>Elemento:</h2>');
             $('.modal-body').append('<label><strong>'+json.elemento.nombre+' '+json.elemento.apellidopaterno+' '+json.elemento.apellidomaterno+'</strong></label>');
             $(json.telefonosElemento).each(function() {
-                $('.modal-body').append('<p>'+this.tipo+': '+this.telefono+'</p>');
+                $('.modal-body').append('<p>Telefono '+this.tipo+': '+this.telefono+'</p>');
             });
             if (json.correoElemento)
                 $('.modal-body').append('<p>Email: '+json.correoElemento+'</p>');
             $('.modal-body').append('<h2>'+json.relacion+':</h2>');
             $('.modal-body').append('<label><strong>'+json.tutor.nombre+' '+json.tutor.apellidopaterno+' '+json.tutor.apellidomaterno+'</strong></label>');
             $(json.telefonosTutor).each(function() {
-                $('.modal-body').append('<p>'+this.tipo+': '+this.telefono+'</p>');
+                $('.modal-body').append('<p>Telefono '+this.tipo+': '+this.telefono+'</p>');
             });
             if (json.correotutor)
                 $('.modal-body').append('<p>Email: '+json.correotutor+'</p>');

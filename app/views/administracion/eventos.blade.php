@@ -196,6 +196,8 @@
     });
     $('#main-menu').find('li').removeClass('active');
     $('#main-menu ul li:nth-child(4)').addClass('active');
+    $('#sidebar-nav').find('li').removeClass('active');
+        $('#sidebar-nav ul li:nth-child(4)').addClass('active');
 });
   </script>
 @endsection

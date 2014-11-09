@@ -49,7 +49,7 @@
     }
 
     .setup-content {
-      background-color: #FFFFFF;
+      background-color: #f2f2f2;
     }
 
     .step .activestep {
@@ -65,9 +65,13 @@
       padding-top: 15px;
       font-size: 40px;
     }
+    .fecha i{
+      right: 60px !important;
+  }
   </style>
-  <script src="../js/fileinput.js" type="text/javascript"></script>
-  <link href="../css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
+  {{  HTML::script('js/fileinput.js'); }}
+  {{  HTML::style('css/fileinput.css');  }}
+  {{  HTML::style('css/bootstrap-datetimepicker.min.css');  }}
 @endsection
 @section('contenido')
   <form id="buscarelemento" role="form" method="POST" action="buscar">
@@ -104,7 +108,7 @@
         </div>
         <div class="seleccion" onclick="javascript: resetActive(event, 66, 'step-2');">
           <span class="fa fa-pencil"></span>
-          <p>Datos de elemento</p>
+          <p>Datos</p>
         </div>
         <div class="seleccion" onclick="javascript: resetActive(event, 100, 'step-3');">
           <span class="fa fa-plus-square"></span>
@@ -129,9 +133,12 @@
           {{ Form::label('reclusexo', 'Sexo') }}
           {{Form::select('reclusexo', array('Hombre' => 'Hombre','Mujer' => 'Mujer',),null,array('class' => 'form-control')) }}
         </div>
-        <div class="col-md-4 form-group">
+        <div class="col-md-4 form-group fecha">
           {{ Form::label('birthday', 'Fecha nacimiento') }}
-          {{ Form::input('date','birthday', null,array('placeholder' => 'DD/MM/AAAA','class' => 'form-control')) }}
+          <div class="input-group date" id="datetimePicker">
+              {{ Form::text('birthday', null, array('class' => 'form-control', 'placeholder' => 'YYYY-MM-DD', 'data-date-format' => 'YYYY-MM-DD')) }}
+              <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+          </div>
         </div>
         <div class="col-md-5 form-group">
           {{ Form::label('domicilio', 'Calle y número') }}
@@ -311,7 +318,7 @@
       </div>
     </div>
     <div class="col-md-2">
-          {{ Form::image(null,'fotoperfil',array('class' => 'img-responsive img-circle','alt' => 'Responsive image')) }}
+          {{ Form::image(null,'fotoperfil',array('class' => 'img-responsive img-circle','alt' => 'Responsive image','src' => '')) }}
           {{ Form::file('fotoperfil',array('id' => 'filefoto')) }}
     </div>
   </form>
@@ -349,165 +356,175 @@
     </div>
 @endsection
 @section('scripts')
-<!-- Para Bootstrap Validator -->
-<script>
-  $("#filefoto").fileinput({
-    showUpload: false,
-    showCaption: false,
-    showRemove : false,
-    fileType: "any"
-  });
-  $(document).ready(function() {
-    $("#test-upload").fileinput({
-      'showPreview' : true,
-      'allowedFileExtensions' : ['jpg', 'png','gif'],
-      'elErrorContainer': '#errorBlock'
+  <!-- Para Bootstrap Validator -->
+  <script>
+    $("#filefoto").fileinput({
+      showUpload: false,
+      showCaption: false,
+      showRemove : false,
+      fileType: "any"
     });
-    $('#buscarelemento').bootstrapValidator({
-        // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
+    $(document).ready(function() {
+      $('#datetimePicker').datetimepicker({
+            language: 'es',
+            pickTime: false
+        });
+      $("#test-upload").fileinput({
+        'showPreview' : true,
+        'allowedFileExtensions' : ['jpg', 'png','gif'],
+        'elErrorContainer': '#errorBlock'
+      });
+      $('#buscarelemento').bootstrapValidator({
+          // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
+          feedbackIcons: {
+              valid: 'glyphicon glyphicon-ok',
+              invalid: 'glyphicon glyphicon-remove',
+              validating: 'glyphicon glyphicon-refresh'
+          },
+          fields: {
+              nombre: {
+              validators: {
+                      notEmpty: {}
+                  }
+              },
+              paterno: {
+                  validators: {
+                      notEmpty: {}
+                  }
+              }
+          }
+      })
+      $('#elemento').bootstrapValidator({
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
             invalid: 'glyphicon glyphicon-remove',
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
-            nombre: {
+          nombre: {
             validators: {
-                    notEmpty: {}
-                }
-            },
-            paterno: {
-                validators: {
-                    notEmpty: {}
-                }
+              notEmpty: {},
             }
-        }
-    })
-    $('#elemento').bootstrapValidator({
-      feedbackIcons: {
-          valid: 'glyphicon glyphicon-ok',
-          invalid: 'glyphicon glyphicon-remove',
-          validating: 'glyphicon glyphicon-refresh'
-      },
-      fields: {
-        nombre: {
-          validators: {
-            notEmpty: {},
-          }
-        },
-        reclunombre: {
-          validators: {
-            notEmpty: {},
-          }
-        },
-        postal:{
-          validators: {
-            integer: {},
-            stringLength:{
-              min: 5,
-              max: 5,
-              message: 'El Código Postal es de 5 dígitos'
+          },
+          reclunombre: {
+            validators: {
+              notEmpty: {},
             }
-          }
-        },
-        curp:{
-          validators:{
-            stringLength: {
-              min: 18,
-              max:18,
-              message:'La CURP esta formada por 18 caracteres'
-            },
-            notEmpty:{}
-          }
-        },
-        paterno: {
-          validators: {
-            notEmpty: {}
-          }
-        },
-        reclupaterno: {
-          validators: {
-            notEmpty: {}
-          }
-        },
-        email: {
-          validators: {
-            emailAddress: {}
-          }
-        },
-        birthday: {
-          validators: {
-            notEmpty: {},
-          }
-        },
-        telefono: {
-          validators: {
-            notEmpty: {},
-            integer:{
-              message:'introduce solo números para el teléfono'
+          },
+          postal:{
+            validators: {
+              integer: {},
+              stringLength:{
+                min: 5,
+                max: 5,
+                message: 'El Código Postal es de 5 dígitos'
+              }
             }
-          }
-        },
-        estatura:{
-          validators:{
-            notEmpty: {},
-            integer:{},
-            between:{
-              min: 100,
-              max: 300,
-              message: 'Establece una altura mínima a 100 cm'
+          },
+          curp:{
+            validators:{
+              stringLength: {
+                min: 18,
+                max:18,
+                message:'La CURP esta formada por 18 caracteres'
+              },
+              notEmpty:{}
             }
-          }
-        },
-        peso:{
-          validators:{
-            notEmpty:{},
-            integer:{},
-          }
-        },
-        contactonombre:{
-          validators:{
-            notEmpty:{},
-          }
-        },
-        contactopaterno:{
-          validators:{
-            notEmpty:{},
-          }
-        },
-        contactorelacion:{
-          validators:{
-            notEmpty:{},
+          },
+          paterno: {
+            validators: {
+              notEmpty: {}
+            }
+          },
+          reclupaterno: {
+            validators: {
+              notEmpty: {}
+            }
+          },
+          email: {
+            validators: {
+              emailAddress: {}
+            }
+          },
+          birthday: {
+            validators: {
+              notEmpty: {},
+              date: {
+                        format: 'YYYY-MM-DD',
+                    }
+            }
+          },
+          telefono: {
+            validators: {
+              notEmpty: {},
+              integer:{
+                message:'introduce solo números para el teléfono'
+              }
+            }
+          },
+          estatura:{
+            validators:{
+              notEmpty: {},
+              integer:{},
+              between:{
+                min: 100,
+                max: 300,
+                message: 'Establece una altura mínima a 100 cm'
+              }
+            }
+          },
+          peso:{
+            validators:{
+              notEmpty:{},
+              integer:{},
+            }
+          },
+          contactonombre:{
+            validators:{
+              notEmpty:{},
+            }
+          },
+          contactopaterno:{
+            validators:{
+              notEmpty:{},
+            }
+          },
+          contactorelacion:{
+            validators:{
+              notEmpty:{},
+            }
           }
         }
-      }
-    })
-    $('#bnext1').click(function(){
-      $('#parte1').toggle(100);
-      $('#parte2').toggle(200);
+      })
+      $('#bnext1').click(function(){
+        $('#parte1').toggle(100);
+        $('#parte2').toggle(200);
 
-    })
-    $('#bback1').click(function(){
-      $('#parte1').toggle(100);
-      $('#parte2').toggle(200);
+      })
+      $('#bback1').click(function(){
+        $('#parte1').toggle(100);
+        $('#parte2').toggle(200);
 
-    })
-    $('#redes').click(function(){
-      $('#fbtw').toggle(80);
-    })
-    $('#contactoredes').click(function(){
-      $('#contactofbtw').toggle(80);
-    })
-    .find('button[data-toggle]')
-        .on('click', function() {
-            var $target = $($(this).attr('data-toggle'));
-            $target.toggle();
-            if (!$target.is(':visible')) {
-                $('#togglingForm').data('bootstrapValidator').disableSubmitButtons(false);
-            }
-        });
-  });
-</script>
+      })
+      $('#redes').click(function(){
+        $('#fbtw').toggle(80);
+      })
+      $('#contactoredes').click(function(){
+        $('#contactofbtw').toggle(80);
+      })
+      .find('button[data-toggle]')
+          .on('click', function() {
+              var $target = $($(this).attr('data-toggle'));
+              $target.toggle();
+              if (!$target.is(':visible')) {
+                  $('#togglingForm').data('bootstrapValidator').disableSubmitButtons(false);
+              }
+          });
+      $('#datetimePicker').on('dp.change dp.show', function(e) {
+            $('#elemento').bootstrapValidator('revalidateField', 'birthday');
+        });    
+    });
+  </script>
   <script type="text/javascript">
     function resetActive(event, percent, step) {
       //$(".progress-bar").css("width", percent + "%").attr("aria-valuenow", percent);
@@ -544,7 +561,10 @@
       $(id).addClass("activeStepInfo");
     }
   </script>
-<script type="text/javascript" src="../js/bootstrapValidator.js"></script>
-<script type="text/javascript" src="../js/es_ES.js"></script>
-<script src="../js/mio.js" type="text/javascript"></script>
+{{  HTML::script('js/bootstrapValidator.js'); }}
+{{  HTML::script('js/es_ES.js'); }}
+{{  HTML::script('js/mio.js'); }}
+{{  HTML::script('js/moment.js'); }}
+{{  HTML::script('js/bootstrap-datetimepicker.js'); }}
+{{  HTML::script('js/bootstrap-datetimepicker.es.js'); }}
 @endsection

@@ -134,13 +134,59 @@ class EditaReclutaController extends BaseController {
 			Telefono::where('persona_id', '=', Input::get('persona_id'))->where('tipo','=','movil')->delete();
 		}
 		/////////////////////////////
-		Persona::find(48) -> update(array(
+		$tutor = Elemento::where('persona_id','=',Input::get('persona_id')) -> first() -> tutor -> persona;
+		Persona::find($tutor -> id) -> update(array(
 			'nombre' => Input::get('contactonombre'),
 			'apellidopaterno' => Input::get('contactopaterno'),
 			'apellidomaterno' => Input::get('contactomaterno'),
 			'sexo' => Input::get('contactosexo'),
 		));
-		return EditaReclutaController::editar();
+		$data = array(
+			'persona_id' => $tutor -> id,
+		);
+		$facebook = Facebook::firstOrCreate($data)->update(array(
+			'direccion' => Input::get('contactofacebook'),
+		));
+		if (Input::get('contactofacebook') == "") {
+			Facebook::where('persona_id', '=', $tutor -> id)->delete();
+		}
+
+		$twitter = Twitter::firstOrCreate($data)->update(array(
+			'usuario' => Input::get('contactotwitter'),
+		));
+		if (Input::get('contactotwitter') == "") {
+			Twitter::where('persona_id', '=', $tutor -> id)->delete();
+		}
+
+		$email = Email::firstOrCreate($data)->update(array(
+			'email' => Input::get('contactoemail'),
+		));
+		if (Input::get('contactoemail') == "") {
+			Email::where('persona_id', '=', $tutor -> id)->delete();
+		}
+
+		$data = array(
+			'persona_id' => $tutor -> id,
+			'tipo' => 'fijo',
+		);
+		$fijo = Telefono::firstOrCreate($data)->update(array(
+			'telefono' => Input::get('contactotelefonofijo'),
+		));
+		if (Input::get('contactotelefonofijo') == "") {
+			Telefono::where('persona_id', '=', $tutor -> id)->where('tipo','=','fijo')->delete();
+		}
+
+		$data = array(
+			'persona_id' => $tutor -> id,
+			'tipo' => 'movil',
+		);
+		$fijo = Telefono::firstOrCreate($data)->update(array(
+			'telefono' => Input::get('contactotelefonomovil'),
+		));
+		if (Input::get('contactotelefonomovil') == "") {
+			Telefono::where('persona_id', '=', $tutor -> id)->where('tipo','=','movil')->delete();
+		}
+		return Redirect::to('recluta/editar');
 	}
 
 	public function mostrarElemento($elemento)
@@ -258,5 +304,10 @@ class EditaReclutaController extends BaseController {
 			'contactotwitter' => $contactotwitter,
 		);
 		return $dato;
+	}
+
+	public function datos()
+	{
+		
 	}
 }

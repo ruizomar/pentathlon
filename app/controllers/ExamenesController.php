@@ -32,7 +32,7 @@ class ExamenesController extends BaseController{
 			$examen = new Examen;
 				$examen->nombre 	= Input::get('nombre');
 				$examen->grado_id 	= Input::get('grado');
-				$examen->costo 		= Input::get('precio');
+				$examen->precio 	= Input::get('precio');
 			$examen->save();
 
 			return Redirect::back()->with('status', 'ok_create');
@@ -63,7 +63,7 @@ class ExamenesController extends BaseController{
 			$examen->update(array(
 				'nombre' 	=> Input::get('nombre'),
 				'grado_id' 	=> Input::get('grado'),
-				'costo'		=> Input::get('precio')
+				'precio'		=> Input::get('precio')
 				));
 		return Redirect::back()->with('status', 'ok_create');
 	}

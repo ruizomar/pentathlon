@@ -25,12 +25,15 @@ Route::get('/ejemplo', function()
 
 
 Route::get('recluta/alta','AltaReclutaController@get_nuevo');
+Route::post('recluta/curp','AltaReclutaController@errorCurp');
 Route::post('recluta/alta','AltaReclutaController@post_nuevo');
+
 Route::get('recluta/editar','EditaReclutaController@editar');
-Route::get('recluta/prueba','EditaReclutaController@prueba');
-Route::get('recluta/otro','EditaReclutaController@otro');
 Route::post('recluta/buscar','EditaReclutaController@buscar');
-Route::get('recluta/lista','AltaReclutaController@lista');
+Route::post('recluta/update','EditaReclutaController@update');
+
+Route::controller('cargos', 'AsignaCargosController');
+Route::controller('ascensos', 'AsignaAscensosController');
 
 Route::post('buscar','BuscarController@buscar');
 Route::controller('pagos', 'MembresiasController');

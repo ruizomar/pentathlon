@@ -3,7 +3,7 @@
 	Registro
 @endsection
 @section('head')
-	<style>
+<style>
 	.hiddenStepInfo {
 		display: none;
 	}
@@ -68,7 +68,7 @@
 	}
 
 	.setup-content {
-		background-color: #FFFFFF;
+		background-color: #f2f2f2;
 	}
 
 	.step .activestep {
@@ -84,9 +84,13 @@
 		padding-top: 15px;
 		font-size: 40px;
 	}
-	</style>
-	<script src="../js/fileinput.js" type="text/javascript"></script>
-	<link href="../css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
+	.fecha i{
+    	right: 60px !important;
+	}
+</style>
+	{{  HTML::script('js/fileinput.js'); }}
+  	{{  HTML::style('css/fileinput.css');  }}
+  	{{  HTML::style('css/bootstrap-datetimepicker.min.css');  }}
 @endsection
 @section('contenido')
 	{{ Form::open(array('id' => 'formularioalta','url'=>'recluta/alta','files'=>true)) }}
@@ -123,9 +127,12 @@
 						{{ Form::label('reclusexo', 'Sexo') }}
 						{{Form::select('reclusexo', array('Hombre' => 'Hombre','Mujer' => 'Mujer',),null,array('placeholder' => '','class' => 'form-control')) }}
 					</div>
-					<div class="col-md-3 form-group">
+					<div class="col-md-3 form-group fecha">
 						{{ Form::label('birthday', 'Fecha nacimiento') }}
-						{{ Form::input('date','birthday', null,array('class' => 'form-control')) }}
+						<div class="input-group date" id="datetimePicker">
+                            {{ Form::text('birthday', null, array('class' => 'form-control', 'placeholder' => 'YYYY-MM-DD', 'data-date-format' => 'YYYY-MM-DD')) }}
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                        </div>
 					</div>
 					<div class="col-md-4 form-group">
 						{{ Form::label('domicilio', 'Calle y número') }}
@@ -154,9 +161,9 @@
 						{{ Form::label('lugnac', 'Lugar nacimiento') }}
 						{{ Form::text('lugnac', null, array('class' => 'form-control mayuscula')) }}
 					</div>
-					<div class="col-md-4 form-group">
+					<div id="idcurp" class="col-md-4 form-group">
 						{{ Form::label('curp', 'CURP') }}
-						{{ Form::text('curp', null, array('class' => 'form-control mayuscula')) }}
+						{{ Form::text('curp', null, array('id' => 'curp','class' => 'form-control mayuscula')) }}
 					</div>
 					<div class="col-md-4 form-group">
 						{{ Form::label('email', 'e-mail') }}
@@ -334,13 +341,33 @@
 					</div>
 				</div>
 				<div class="col-md-12">
-					{{ Form::button('<i class="fa fa-floppy-o"></i> Guardar',array('class' => 'btn-sm pull-right btn btn-info btn-lg','type' => 'submit')) }}
+					{{ Form::button('<i class="fa fa-floppy-o"></i> Guardar',array('id' => 'btnenviar','class' => 'btn-sm pull-right btn btn-info btn-lg','type' => 'submit')) }}
 				</div>
 			</div>
 		</div>
 	{{Form::close()}}
 @endsection
 @section('scripts')
+	<script>
+	$( "#curp" ).focusout(function() {
+		var curp = $(this).val();
+		$.post('curp',{curp:curp}, function(json) {
+			if (!json.success) {
+				console.log(json);
+				$('#curperror').removeClass('hidden');
+				$('#idcurp').addClass('has-error');
+				$('[name=curp]').val('');
+				$('#formularioalta').bootstrapValidator('revalidateField','curp');
+				$('[name=curp]').focus();
+				$('[name=curp]').closest('div').find('small').html(curp+' ya está registrada');
+
+			}
+		}, 'json');
+	})
+	</script>
+	<script>
+		//$('#curp').popover();
+	</script>
 	<script>
 		$("#filefoto").fileinput({
 			showUpload: false,
@@ -349,6 +376,10 @@
 			fileType: "any"
 		});
 		$(document).ready(function() {
+			$('#datetimePicker').datetimepicker({
+		        language: 'es',
+		        pickTime: false
+		    });
 			$("#test-upload").fileinput({
 				'showPreview' : true,
 				'allowedFileExtensions' : ['jpg', 'png','gif'],
@@ -425,6 +456,9 @@
 		            birthday: {
 		                validators: {
 		                    notEmpty: {},
+		                    date: {
+		                        format: 'YYYY-MM-DD',
+		                    }
 		                }
 		            },
 		            reclutelefonofijo: {
@@ -507,6 +541,9 @@
 			$('.mayuscula').focusout(function() {
 				$(this).val($(this).val().toUpperCase());
 			});
+			$('#datetimePicker').on('dp.change dp.show', function(e) {
+		        $('#formularioalta').bootstrapValidator('revalidateField', 'birthday');
+		    });
 		});
 	</script>
 	<script type="text/javascript">
@@ -545,6 +582,9 @@
 			$(id).addClass("activeStepInfo");
 		}
 	</script>
-	<script type="text/javascript" src="../js/bootstrapValidator.js"></script>
-	<script type="text/javascript" src="../js/es_ES.js"></script>
+{{  HTML::script('js/bootstrapValidator.js'); }}
+{{  HTML::script('js/es_ES.js'); }}
+{{  HTML::script('js/moment.js'); }}
+{{  HTML::script('js/bootstrap-datetimepicker.js'); }}
+{{  HTML::script('js/bootstrap-datetimepicker.es.js'); }}
 @endsection

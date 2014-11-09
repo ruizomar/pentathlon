@@ -39,5 +39,8 @@ class Elemento extends Eloquent{
 	public function examenes(){
 		return $this->belongsToMany('Examen')->withPivot('fecha','calificacion');
 	}
+	public function tutor(){
+		return $this->hasOne('Tutor');
+    }
 
 }
