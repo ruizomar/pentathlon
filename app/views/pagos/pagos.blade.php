@@ -14,40 +14,46 @@
 Pagos
 @endsection
 @section('elemento')
-    <div class="col-md-8 col-md-offset-2 well">
-        <div class="row" style='margin-bottom:15px;'>
-            <div class="col-md-4">
+    <div class="col-sm-8 col-sm-offset-2 well">
+        <div class="row">
+            <div class="col-sm-4">
                 <label id='lnombre'></label>
             </div>
-            <div class="col-md-3">
+            <div class="col-sm-3">
                 <label id='lmatricula'></label>
             </div>
-            <div class="col-md-5">
+            <div class="col-sm-5">
                 <label id='lfecha'></label>
             </div>
         </div>
+        <div class="row" style="margin-top: 10px;">
         {{ Form::open(array('url' => 'pagos/registrarpago','role' => 'form','id' => 'pagar')) }}
+            <div class="form-group col-md-4">
+              <select name="tipo" class='form-control'>
+                  <option value="">Concepto</option>
+                  <option value="Membresia">Membresia</option>
+                  <option value="Credencial">Credencial</option>
+                  <option value="evento">evento</option>
+                  <option value="examen">examen</option>
+              </select>
+            </div>
+            <div class="form-group col-md-4 hidden">
+              <select name="concepto" class='form-control'>
+                  <option value=""></option>
+              </select>
+            </div>
             <div class="form-group col-md-4">
                 <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-usd fa-fw"></i></span>
               {{ Form::text('cantidad', null, array('class' => 'form-control','placeholder' => 'Cantidad')) }}
                 </div>
             </div>
-            <div class="form-group col-md-4">
-              <select name="concepto" class='form-control'>
-                  <option value="">Concepto</option>
-                  <option value="Membresia">Membresia</option>
-                  <option value="Credencial">Credencial</option>
-                  @foreach ($eventos as $evento)
-                    <option value="{{ $evento->id }}">{{ $evento->nombre }}</option>
-                  @endforeach  
-              </select>
-            </div>
             {{ Form::text('id', null, array('class' => 'hidden form-control')) }}
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-3 pull-right">
             {{ Form::button('Registrar pago',array('class' => 'btn btn-success','type' => 'submit','id' => 'bpagar')) }}
             </div>
         {{form::close()}}
+        </div>
     </div>
 <!-- Modal -->
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -56,7 +62,7 @@ Pagos
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
           <h4 class="modal-title" id="myModalLabel">
-            <i class="fa fa-floppy-o"></i> Pago membresia
+            <i class="fa fa-floppy-o"></i> Pagos
             <i class="fa fa-spinner fa-2x fa-spin hidden spin-modal"></i>
           </h4>
         </div>
@@ -82,10 +88,7 @@ Pagos
 @endsection
 @section('scripts2')
     <script type="text/javascript">
-    var eventos = [];
-    @foreach ($eventos as $evento)
-        eventos.push({id:{{$evento->id}}, costo:{{$evento->costo}}});
-    @endforeach 
+    var conceptos = [];
     $(document).ready(function() {
         $('#pagar').bootstrapValidator({
         feedbackIcons: {
@@ -94,6 +97,7 @@ Pagos
             validating: 'glyphicon glyphicon-refresh cantidad'
         },
         fields: {
+            enabled: false,
             cantidad: {
                 validators: {
                     notEmpty: {
@@ -104,7 +108,7 @@ Pagos
                     }
                 }
             },
-            concepto: {
+            tipo: {
                 validators: {
                     notEmpty: {
                     }
@@ -124,6 +128,7 @@ Pagos
                     $('#message').html(json.message+json.matricula);
                     $('#pagoerror').removeClass('hidden alert-danger');
                     $('#pagoerror').addClass('alert-success');
+                    $('#imprimir').removeClass('hidden');
                 } else {
                     $('#message').html(json.errormessage);
                     $('#pagoerror').removeClass('hidden alert-success');
@@ -133,7 +138,7 @@ Pagos
                 $('#pag').val(json.pago);
                 $('.spin-modal').addClass('hidden');
                 $('#pagar').data('bootstrapValidator').resetField('cantidad', true);
-                $('#pagar').data('bootstrapValidator').resetField('concepto', true);
+                $('#pagar').data('bootstrapValidator').resetField('tipo', true);
     }, 'json');
     });
     });
@@ -151,18 +156,40 @@ Pagos
         }, 'json');
     }
     $("[name = concepto]").change(function(){
-        if($.isNumeric($("[name = concepto] option:selected").val())){
             $("[name = cantidad]").attr("disabled","disabled");
-            $.each(eventos, function( index, evento ) {
-                if(evento.id == $("[name = concepto] option:selected").val()){
-                    $("[name = cantidad]").val(evento.costo);
+            $.each(conceptos, function( index, concepto ) {
+                if(concepto.id == $("[name = concepto] option:selected").val()){
+                    $("[name = cantidad]").val(concepto.costo);
                 }
             });
+    });
+    $("[name = tipo]").change(function(){
+        $('#pagar').data('bootstrapValidator').resetField('cantidad', true);
+        if($("[name = tipo] option:selected").val() == "evento"){
+            llenarConcepto("{{ URL::to('eventos/eventos'); }}");
+        }
+        else if($("[name = tipo] option:selected").val() == "examen"){
+            llenarConcepto("{{ URL::to('examenes/examenes'); }}");
         }
         else{
+            $("[name = concepto]").closest('div').addClass('hidden');
             $("[name = cantidad]").removeAttr("disabled");
-            $("[name = cantidad]").val("");
         }
     });
+    function llenarConcepto(url){
+        conceptos = [];
+        $.post(url, $('#pagar').serialize(), function(json) {
+            options = "";
+            $.each(json, function( index, concepto ) {
+                options += "<option value="+concepto.id+">"+concepto.nombre+"</option>";
+                conceptos.push({id:concepto.id,costo:concepto.costo});
+            });
+            $("[name = concepto]").html(options);
+            $("[name = cantidad]").val(conceptos[0].costo);
+            $("[name = concepto]").closest('div').removeClass('hidden');
+            $("[name = cantidad]").attr("disabled","disabled");
+            $("#bpagar").removeAttr("disabled");
+        }, 'json');
+    }
     </script>
 @endsection

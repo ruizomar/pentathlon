@@ -22,7 +22,7 @@
     </div>   
     <div class="message col-md-6 col-md-offset-3 hidden">
         @if($status == 'fail_create')
-        <label id="status_title">error</label>
+        <label id="status_title">Error</label>
             <label id="status">error</label>
             <label id="message">Ocurrio un error</label>
         @elseif(($status == 'ok_create'))
@@ -30,7 +30,7 @@
             <label id="status">success</label>
             <label id="message"></label>
         @elseif(($status == 'ocupado'))
-        <label id="status_title">error</label>
+        <label id="status_title">Error</label>
             <label id="status">error</label>
             <label id="message">Ya existe una compañia con ese nombre</label>
         @endif
@@ -221,6 +221,9 @@ $('#bnueva').click(function(){
         $('[name=nombre]').val("");
         $("tbody").find('tr').removeClass('danger') .find('button').attr('disabled',false);
     });
+$('#nueva').on('hide.bs.modal', function() {
+    $('#update').bootstrapValidator('resetForm', true);
+});
 $('#main-menu').find('li').removeClass('active');
 $('#main-menu ul li:nth-child(3)').addClass('active');
 function editar(btn){

@@ -193,7 +193,7 @@ $(document).ready(function() {
 </script>
 <script type="text/javascript" charset="utf-8">
     $( "select" ).change(function () {
-        if($(this).val() == 0 && $(this).closest("tr").find("td:nth-child(4)").text() == 0 && $(this).closest("tr").find("td:nth-child(5)").text() == 0 && $(this).closest("tr").find("td:nth-child(6)").text() == 0)
+        if($(this).val() == 0 && $(this).closest("tr").find("td:nth-child(4)").text() == 0 && $(this).closest("tr").find("td:nth-child(5)").text() == 0 && $(this).closest("tr").find("td:nth-child(6)").text() == 0 && $(this).closest("tr").find("td").length >= 6)
             message($(this).attr('name'))
   });
 function message(id){

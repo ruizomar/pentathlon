@@ -62,5 +62,11 @@ class EventosController extends BaseController{
 			->orderBy('fecha','asc')
 			->get())->with('tipos',$tipos);
 	}
-
+	public function postEventos(){
+		return Response::json(
+			Evento::where('fecha','>=',date('Y-m-d'))
+			->orderBy('fecha','asc')
+			->get()
+		);
+	}
 }

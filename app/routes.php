@@ -38,3 +38,4 @@ Route::controller('companias','CompaniasController');
 Route::controller('asistencias','AsistenciasController');
 Route::controller('condecoraciones','CondecoracionesController');
 Route::controller('eventos','EventosController');
+Route::controller('examenes','ExamenesController');

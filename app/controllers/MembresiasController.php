@@ -3,10 +3,7 @@
 class MembresiasController extends BaseController {
 
 	public function getIndex(){
-		return View::make('pagos/pagos')
-			->with('eventos',Evento::where('fecha','>=',date('Y-m-d'))
-			->orderBy('fecha','asc')
-			->get());
+		return View::make('pagos/pagos');
 	}
 
 	public function postElemento(){
@@ -27,8 +24,9 @@ class MembresiasController extends BaseController {
 
 	public function postRegistrarpago(){
 		$rules = array(
-			'id' => 'required|integer|exists:elementos',
-			'cantidad' => 'numeric'
+			'id' 		=> 'required|integer|exists:elementos',
+			'cantidad' 	=> 'numeric',
+			'tipo'		=> 'required'
 			);
 
 		$validation = Validator::make(Input::all(), $rules);
@@ -39,79 +37,79 @@ class MembresiasController extends BaseController {
 			return Response::json($dato);
 		}
 
-		$id = Input::get('id');
-		$cantidad = Input::get('cantidad');
 		////////////////////////////
-		if (Input::get('concepto') == 'Credencial') {
-			$pago = new Pago;
-					$pago->elemento_id = $id;
-					$pago->concepto = Input::get('concepto') ;
-					$pago->fecha = date("Y-m-d");
-					$pago->cantidad = $cantidad;
-				$pago->save();
-				$dato = array(
-					'success' 	=> true,
-					'matricula' => '',
-					'message' 	=> 'El pago se a registrado exitosamente',
-					'pago' 		=> $pago->id
-					);
-		return Response::json($dato);
+		if (Input::get('tipo') == 'Credencial') {
+			return Response::json(MembresiasController::pago(Input::get('id'),Input::get('cantidad'),Input::get('tipo')));
 		}
-		if (is_numeric(Input::get('concepto'))) {
-			if(!is_null(Evento::find(Input::get('concepto'))->elementos->first())){
+		if (Input::get('tipo') == 'evento') {
+			if(!is_null(Evento::find(Input::get('concepto'))->elementos()->where('elemento_id','=',Input::get('id'))->first())){
 				$dato = array(
 					'success' 	=> false,
 					'errormessage' 	=> 'El pago ya se registro anteriormente',
 					);
 				return Response::json($dato);
 			}
-			$pago = new Pago;
-					$pago->elemento_id = $id;
-					$pago->concepto = Evento::find(Input::get('concepto'))->nombre;
-					$pago->fecha = date("Y-m-d");
-					$pago->cantidad = Evento::find(Input::get('concepto'))->costo;
-				$pago->save();
+			$dato = MembresiasController::pago(Input::get('id'),Evento::find(Input::get('concepto'))->costo,Input::get('tipo')." ".Evento::find(Input::get('concepto'))->nombre);
 
-		$elemento = Elemento::find($id);
-		$elemento->eventos()->attach(Input::get('concepto'));
+			$elemento = Elemento::find(Input::get('id'));
+			$elemento->eventos()->attach(Input::get('concepto'));
+		
+		return Response::json($dato);
+		}
+		if (Input::get('tipo') == 'examen') {
 
-				$dato = array(
-					'success' 	=> true,
-					'matricula' => '',
-					'message' 	=> 'El pago se a registrado exitosamente',
-					'pago' 		=> $pago->id
+			$elemento = Elemento::find(Input::get('id'));
+
+			if(is_null(Elemento::find(Input::get('id'))->examenes()
+				->where('examen_id','=',Input::get('concepto')))){
+
+				$elemento->examenes()->attach(Input::get('concepto'));
+				$dato = MembresiasController::pago(Input::get('id'),
+					Examen::find(Input::get('concepto'))->costo,
+					Input::get('tipo')." ".Examen::find(Input::get('concepto'))->nombre);
+			}
+			else if(6 > Elemento::find(Input::get('id'))->examenes()->where('examen_id','=',Input::get('concepto'))->first()->pivot->calificacion
+					&& !is_null(Elemento::find(Input::get('id'))->examenes()
+						->where('examen_id','=',Input::get('concepto'))->first()->pivot->calificacion)
+					){
+				$elemento->examenes()->updateExistingPivot(
+					Input::get('concepto'),
+					array(
+						'fecha' 		=> null,
+						'calificacion' 	=> null
+						)
 					);
+				$dato = MembresiasController::pago(Input::get('id'),
+						Examen::find(Input::get('concepto'))->costo,
+						Input::get('tipo')." ".Examen::find(Input::get('concepto'))->nombre);
+			}
+			else
+				$dato = array(
+					'success' 	=> false,
+					'errormessage' 	=> 'El pago ya se registro anteriormente',
+					);
+		
 		return Response::json($dato);
 		}
 		////////////////////////////
-		$pagos = Pago::where('elemento_id','=',$id,'and')
+		$pagos = Pago::where('elemento_id','=',Input::get('id'),'and')
 				->where('fecha','like',date("Y").'%','and')
-				->where('concepto','=','Matricula')->first();
+				->where('concepto','=','Membresia')->first();
 
 		if(is_null($pagos)){
-			$matricula = Elemento::find($id)->matricula;
+			$matricula = Elemento::find(Input::get('id'))->matricula;
 			if(is_null($matricula)){
 				$matricula = new Matricula;
-					$matricula->elemento_id = $id;
+					$matricula->elemento_id = Input::get('id');
 				$matricula->save();
 			}
-				$pago = new Pago;
-					$pago->elemento_id = $id;
-					$pago->concepto = 'Matricula';
-					$pago->fecha = date("Y-m-d");
-					$pago->cantidad = $cantidad;
-				$pago->save();
-				$dato = array(
-					'success' 	=> true,
-					'matricula' => '<strong>'.$matricula->id.'</strong>',
-					'message' 	=> 'El pago se a registrado exitosamente numero de Matricula: ',
-					'pago' 		=> $pago->id
-					);
+				$dato = MembresiasController::pago(Input::get('id'),Input::get('cantidad'),"Membresia");
+				$dato['matricula'] = '<strong>'.$matricula->id.'</strong>';
+				$dato['message'] = 'El pago se a registrado exitosamente numero de Matricula: ';
 		}
 		else
 			$dato = array('success' => false,
-				'errormessage' 		=> 'El pago ya se fue registrado el <strong>'.date("d/m/Y",strtotime($pagos->fecha)).'</strong>',
-				'pago' 				=> $pagos->id
+				'errormessage' 		=> 'El pago ya se fue registrado el <strong>'.date("d/m/Y",strtotime($pagos->fecha)).'</strong>'
 				);
 
 		return Response::json($dato);
@@ -151,5 +149,21 @@ class MembresiasController extends BaseController {
 		}
 		else
 		return View::make('pagos/recibomembrecia');
+	}
+
+	public function pago($elemento,$cantidad,$concepto){
+		$pago = new Pago;
+					$pago->elemento_id = $elemento;
+					$pago->concepto = $concepto;
+					$pago->fecha = date("Y-m-d");
+					$pago->cantidad = $cantidad;
+				$pago->save();
+				$dato = array(
+					'success' 	=> true,
+					'matricula' => '',
+					'message' 	=> 'El pago se a registrado exitosamente',
+					'pago' 		=> $pago->id
+					);
+		return $dato;
 	}
 }

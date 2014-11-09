@@ -73,7 +73,7 @@
 
           <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Pricing" href="{{ URL::to('eventos'); }}"><i class="fa fa-calendar-o"></i> <span class="caption">Eventos</span></a></li>
 
-          <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Media" href="{{ URL::to('users'); }}"><i class="fa icon-group"></i> <span class="caption">Usuarios</span></a></li>
+          <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Media" href="{{ URL::to('examenes'); }}"><i class="fa  fa-file-text-o"></i> <span class="caption">Examenes</span></a></li>
 
           <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Blog" href="#"><i class="icon-envelope"></i> <span class="caption">Mensajes</span></a></li>
 
