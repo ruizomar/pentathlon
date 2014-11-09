@@ -35,10 +35,18 @@ class AsignaAscensosController extends BaseController {
 			$matricula = $elemento -> matricula -> matricula;
 		}
 		$grado = $elemento -> grados -> last();
-		$examenes = $elemento -> examenes() -> where('grado_id','=',$grado -> id) -> get();
-		$faltas = ($elemento -> asistencias() -> where('tipo' , '=' , 0) -> get()); //Falta
-		$permisos = ($elemento -> asistencias() -> where('tipo' , '=' , 2) -> get()); //permiso
-		$asistencias = ($elemento -> asistencias() -> where('tipo' , '=' , 1) -> get()); //asistencia
+		$examenesHechos = $elemento -> examenes() -> where('grado_id','=',$grado -> id) -> get();
+		$totalexamenes = Examen::where('grado_id','=',$grado -> id) -> get();
+		$examenesNoHechos = $totalexamenes;
+		$i = 0;
+		foreach ($examenesNoHechos as $examen) {
+			foreach ($examenesHechos as $hecho) {
+				if ($examen -> id == $hecho -> id) {
+					unset($examenesNoHechos[$i]);
+				}
+			}
+			$i++;
+		}
 		$dato = array(
 			'id' => $id,
 			'success' => true,
@@ -50,72 +58,16 @@ class AsignaAscensosController extends BaseController {
 			'grado' => $grado -> nombre,
 			'fechagrado' => $grado -> pivot -> fecha,
 			'companiasysubzonas' => $elemento -> companiasysubzona -> tipo .' '. $elemento ->  companiasysubzona -> nombre,
-			'faltas' => count($faltas),
-			'permisos' => count($permisos),
-			'asistencias' => count($asistencias),
-			'examenes' => $examenes,
+			'faltas' => count($elemento -> asistencias() -> where('tipo' , '=' , 0) -> get()),
+			'permisos' => count($elemento -> asistencias() -> where('tipo' , '=' , 2) -> get()),
+			'asistencias' => count($elemento -> asistencias() -> where('tipo' , '=' , 1) -> get()),
+			'examenes' => $elemento -> examenes() -> where('grado_id','=',$grado -> id) -> get(),
+			'reconocimientos' => $elemento -> reconocimientos,
+			'pagos' => 'Ya pago',
+			'examenesNoHechos' => $examenesNoHechos,
 		);
 		return ($dato);
 	}
 
-	public function postUpdate()
-	{
-		// $nombre = $_REQUEST['cargo'];
-		$id = Input::get('id');
-		$elemento = Elemento::find($id);
-		$cargo = Input::get('cargo');
-		$companiasysubzona = Input::get('companiasysubzona');
-		// $elemento -> cargos() -> detach(array('cargo_id' => 1));
-
-		// $q = $elemento -> cargos() -> select('elemento_id') -> get();
-/*
-		$q = $elemento -> cargos() -> where('cargo_id','=',2) -> get();
-		$dato = array(
-			'success' => false,
-			'id' => '12',
-			);*/
-		$q = Cargo::find($cargo) -> elementos() -> orderBy('fecha_fin','asc') -> first();
-
-		if(count($q) == 0)
-		{
-			$datos = array(
-				'success' => true,
-				'cuando' => 1,
-				);
-		}
-		else
-		{
-			$lugar = $q -> companiasysubzona_id;
-			if ($lugar == $companiasysubzona)
-			{
-				//falta comprobar si tiene fecha fin o está activo
-				$datos = array(
-					'success' => false,
-					'nombre' => $q -> persona -> nombre,
-					'paterno' => $q -> persona -> apellidopaterno,
-					'materno' => $q -> persona -> apellidomaterno,
-					);
-			}
-			else
-			{
-				$datos = array(
-					'success' => true,
-					'cuando' => 2,
-					);
-			}
-		}
-
-		return Response::json($datos);
-	}
-
-	public function registrarAscenso($id)
-	{
-		$elemento = Elemento::find($id);
-		$elemento->grados()->attach(1, array('fecha' => date('Y-m-d')));
-		$status = $elemento->status()->save(new Statu(array(
-					'tipo' => 'Activo',
-					'inicio' => date("Y-m-d"),
-					'descripcion' => 'Nuevo elemento')));
-	}
 
 }

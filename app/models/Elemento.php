@@ -45,4 +45,7 @@ class Elemento extends Eloquent{
     public function examenes(){
 		return $this->belongsToMany('Examen')->withPivot('fecha','calificacion');
     }
+    public function eventos(){
+		return $this->belongsToMany('Evento');
+    }
 }
