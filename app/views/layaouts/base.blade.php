@@ -65,7 +65,7 @@
 -- sidenavbar -->
   <div id="sidebar-nav" class="hidden-xs">
       <ul id="dashboard-menu" class="nav nav-list">
-          <li class="active "><a rel="tooltip" data-placement="right" data-original-title="Dashboard" href="{{ URL::to('pagos'); }}"><i class="fa fa-money"></i> <span class="caption">Pagos</span></a></li>
+          <li><a rel="tooltip" data-placement="right" data-original-title="Dashboard" href="{{ URL::to('pagos'); }}"><i class="fa fa-money"></i> <span class="caption">Pagos</span></a></li>
 
           <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Reports" href="{{ URL::to('companias'); }}"><i class="fa fa-map-marker"></i> <span class="caption">Companias</span></a></li>
 
@@ -77,13 +77,13 @@
 
           <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Blog" href="{{ URL::to('asistencias/index/1'); }}"><i class="fa fa-calendar"></i> <span class="caption">Asistencias</span></a></li>
 
-          <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Blog Entry" href="#"><i class="icon-print"></i> <span class="caption">Plantillas</span></a></li>
+          <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Blog Entry" href="{{ URL::to('recluta/alta'); }}"><i class="fa fa-plus"></i> <span class="caption">Altas</span></a></li>
 
-          <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Help" href="#"><i class="icon-question-sign"></i> <span class="caption">Ayuda</span></a></li>
+          <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Help" href="{{ URL::to('recluta/editar'); }}"><i class="fa fa-pencil"></i> <span class="caption">Editar</span></a></li>
 
-          <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Faq" href="#"><i class="icon-ban-circle"></i> <span class="caption">Vacío</span></a></li>
+          <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Faq" href="{{ URL::to('cargos'); }}"><i class="fa fa-magic"></i> <span class="caption">Cargos</span></a></li>
 
-          <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Calendar" href="#"><i class="icon-ban-circle"></i> <span class="caption">Vacío</span></a></li>
+          <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Calendar" href="{{ URL::to('ascensos'); }}"><i class="fa fa-line-chart"></i> <span class="caption">Ascensos</span></a></li>
 
           <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Forms" href="#"><i class="icon-ban-circle"></i> <span class="caption">Vacío</span></a></li>
 
