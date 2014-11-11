@@ -97,14 +97,14 @@ class AltaReclutaController extends BaseController {
 			$file = Input::file("fotoperfil")->move("imgs/fotos/",$elemento->id.'.'.Input::file('fotoperfil')->guessClientExtension());
 			$documento = new Documento;
 			$documento -> elemento_id = $elemento->id;
-			$documento -> ruta = $elemento->id.'.'.Input::file('fotoperfil')->guessClientExtension();
+			$documento -> ruta = 'imgs/fotos/'.$elemento->id.'.'.Input::file('fotoperfil')->guessClientExtension();
 			$documento -> tipo = 'fotoperfil';
 			$documento -> save();
 		}
 		else{
 			$documento = new Documento;
 			$documento -> elemento_id = $elemento->id;
-			$documento -> ruta = 'default.png';
+			$documento -> ruta = 'imgs/fotos/default.png';
 			$documento -> tipo = 'fotoperfil';
 			$documento -> save();
 		}

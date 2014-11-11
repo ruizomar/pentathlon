@@ -4,14 +4,18 @@
 @endsection
 @section('head')
 	<style>
-	#contenedor {
+	.contenedor {
+		background: #fff;
 		padding: 10px;
-		margin-bottom: 20px;
-		background-color: #E0F8D8;
-		border: 1px solid #83B373;
-		border-radius: 10px;
-		-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
-		box-shadow: 5px 5px rgba(211, 207, 207, 1);
+		margin-bottom: 15px;
+		box-shadow: 0px 3px 2px #aab2bd;
+		-moz-box-shadow: 0px 3px 2px #aab2bd;
+		-webkit-box-shadow: 0px 3px 2px #aab2bd;
+		left: 12px;
+		border-top-width: 5px;
+		border-top-style: solid;
+		border-top-left-radius: .1em;
+		border-top-right-radius: .1em;
 	}
 	.fa-paperclip {
 		position: absolute;
@@ -26,7 +30,7 @@
 @endsection
 @section('elemento')
 	{{ Form::open(array('id' => 'formulariocargos','url'=>'cargos/update','files'=>true)) }}
-		<div id="contenedor" class="col-md-offset-2 col-md-8 form-group">
+		<div class="contenedor col-md-offset-2 col-md-8 form-group">
 			<i class="pull-left fa fa-paperclip fa-5x"></i>
 			<div class="col-md-3" id="fotoperfil">
 			</div>
@@ -36,15 +40,23 @@
 					<h3 id="nombreelemento" name="nombre"></h3>
 					<h4>
 						{{ Form::label(null,'Matricula: ',array('class' => 'small')) }}
-						{{ Form::label('matricula',null,array('class' => 'pull-right label label-success')) }}
+						<ul>
+							<li>
+								{{ Form::label('matricula',null,array('class' => 'label label-default')) }}
+							</li>
+						</ul>
 					</h4>
 					<h4>
 						{{ Form::label(null,'Cargo actual: ',array('class' => 'small')) }}
-						{{ Form::label('cargo',null,array('class' => 'pull-right label label-primary')) }}
+						<ul id="cargos"></ul>
 					</h4>
 					<h4>
 						{{ Form::label(null,'Ubicación actual: ',array('class' => 'small')) }}
-						{{ Form::label('companiasysubzonas',null,array('class' => 'pull-right label label-default')) }}
+						<ul>
+							<li>
+								{{ Form::label('companiasysubzonas',null,array('class' => 'label label-default')) }}
+							</li>
+						</ul>
 					</h4>
 				</div>
 				<div class="col-md-5">
@@ -63,17 +75,16 @@
 	<script>
 		function encontrado (id) {
 			$.post('cargos/buscar',{id:id}, function(json) {
-				console.log(json);
+				$('#cargos').html('');
 				$(".fa-spinner").addClass("hidden");
 				$("#elemento").removeClass("hidden");
 				$('[name=id]').val(json.id);
 				$('#nombreelemento').text(json.nombre+' '+json.paterno+' '+json.materno);
 				$('label[for=matricula]').text(json.matricula);
-				$('label[for=cargo]').text(json.cargo);
+				$.each(json.cargo,function(index,value){
+					$('#cargos').append('<li><label class="label label-success">'+value+'</label></li>');
+				});
 				$('label[for=companiasysubzonas]').text(json.companiasysubzonas);
-				if(!json.cargo){
-					$('label[for=cargo]').text('Cargo: Sin cargo');
-				}
 				$('#fotoperfil').html('<img id="theImg" class="img-responsive img-thumbnail img-circle" src="imgs/fotos/'+json.fotoperfil+'" alt="Responsive image"/>');
 			}, 'json');
 		}
@@ -82,8 +93,7 @@
 		(function(){
 			$('#btnupdate').on('click', function(e) {
 				e.preventDefault();
-				var str = $( "#formulariocargos" ).serialize();
-				$.post('cargos/update',$("#formulariocargos").serialize(), function(json) {
+				$.post('cargos/confirma',$("#formulariocargos").serialize(), function(json) {
 					console.log(json);
 					if (!json.success) {
 						swal({
@@ -99,7 +109,7 @@
 							},
 							function(isConfirm){
 								if (isConfirm){
-									swal('!Hecho!', 'Se ha guardado el cargo', 'success');
+									insertar();
 								}
 								else {
 									swal({
@@ -110,32 +120,27 @@
 									});
 								}
 							});
+					}
+					else if (json.success) {
+						insertar();
 					};
 				}, 'json');
 			});
 		})();
+		function insertar () {
+			$.post('cargos/update',$("#formulariocargos").serialize(), function(json) {
+				// console.log(json);
+				if(json.success){
+					$('#cargos').html('');
+					$.each(json.cargo,function(index,value){
+						$('#cargos').append('<li><label class="label label-success">'+value+'</label></li>');
+					});
+					swal('!Hecho!', 'Se ha guardado el cargo', 'success');
+				}
+			}, 'json');
+		}
 		function capitalise(string) {
 			return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 		}
-	</script>
-	<script>
-	var doc = new jsPDF();
-
-	    var specialElementHandlers = {
-	      '.wrap_all': function(element, renderer){
-	       return false;
-	    }
-	    };
-
-
-	    $('#cmd').click(function(){
-	    	console.log('jaja');
-	      var html=$(".wrap_all").html();
-	         doc.fromHTML(html,200,200, {
-	            'width': 500,
-	            'elementHandlers': specialElementHandlers
-	         });
-	      doc.save("Test.pdf");
-	    });
 	</script>
 @endsection

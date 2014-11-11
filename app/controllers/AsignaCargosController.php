@@ -26,7 +26,6 @@ class AsignaCargosController extends BaseController {
 		$elemento = Elemento::find($id);
 		$fotoperfil ="default.png";
 		$matricula = 'Sin registro';
-		$cargo = false;
 		if(!is_null($elemento -> documentos() -> where('tipo','=','fotoperfil') -> first() ) )
 		{
 			$fotoperfil = $elemento -> documentos() -> where('tipo','=','fotoperfil') -> first() -> ruta;
@@ -35,9 +34,12 @@ class AsignaCargosController extends BaseController {
 		{
 			$matricula = $elemento -> matricula -> matricula;
 		}
-		if(!is_null($elemento -> cargos -> last() ))
-		{
-			$cargo = $elemento -> cargos -> last() -> nombre;
+		$cargos = $elemento -> cargos;
+		$cargo = array();
+		foreach ($cargos as $carge) {
+			if (is_null($carge -> pivot -> fecha_fin)) {
+				$cargo[] = $carge -> nombre;
+			}
 		}
 		$dato = array(
 			'id' => $id,
@@ -48,43 +50,31 @@ class AsignaCargosController extends BaseController {
 			'fotoperfil' => $fotoperfil,
 			'matricula' => $matricula,
 			'cargo' => $cargo,
-			// 'tipo' => $elemento -> companiasysubzona -> tipo,
 			'companiasysubzonas' => $elemento -> companiasysubzona -> tipo .' '. $elemento ->  companiasysubzona -> nombre,
 		);
 		return ($dato);
 	}
 
-	public function postUpdate()
+	public function postConfirma()
 	{
-		// $nombre = $_REQUEST['cargo'];
 		$id = Input::get('id');
 		$elemento = Elemento::find($id);
 		$cargo = Input::get('cargo');
 		$companiasysubzona = Input::get('companiasysubzona');
-		// $elemento -> cargos() -> detach(array('cargo_id' => 1));
-
-		// $q = $elemento -> cargos() -> select('elemento_id') -> get();
-/*
-		$q = $elemento -> cargos() -> where('cargo_id','=',2) -> get();
-		$dato = array(
-			'success' => false,
-			'id' => '12',
-			);*/
-		$q = Cargo::find($cargo) -> elementos() -> orderBy('fecha_fin','asc') -> first();
+		$q = Cargo::find($cargo) -> elementos() -> where('companiasysubzona_id','=',$companiasysubzona) -> first();
 
 		if(count($q) == 0)
 		{
 			$datos = array(
+				'nombre' => 'jaja',
 				'success' => true,
 				'cuando' => 1,
 				);
 		}
 		else
 		{
-			$lugar = $q -> companiasysubzona_id;
-			if ($lugar == $companiasysubzona)
+			if (is_null($q -> pivot -> fecha_fin))
 			{
-				//falta comprobar si tiene fecha fin o está activo
 				$datos = array(
 					'success' => false,
 					'nombre' => $q -> persona -> nombre,
@@ -95,23 +85,46 @@ class AsignaCargosController extends BaseController {
 			else
 			{
 				$datos = array(
+					'nombre' => 'jeje',
 					'success' => true,
 					'cuando' => 2,
 					);
 			}
 		}
-
 		return Response::json($datos);
 	}
 
-	public function registrarAscenso($id)
+	public function postUpdate()
 	{
+		$id = Input::get('id');
 		$elemento = Elemento::find($id);
-		$elemento->grados()->attach(1, array('fecha' => date('Y-m-d')));
-		$status = $elemento->status()->save(new Statu(array(
-					'tipo' => 'Activo',
-					'inicio' => date("Y-m-d"),
-					'descripcion' => 'Nuevo elemento')));
+		$cargo = Input::get('cargo');
+		$companiasysubzona = Input::get('companiasysubzona');
+		$q = Cargo::find($cargo) -> elementos() -> where('companiasysubzona_id','=',$companiasysubzona) -> first();
+
+		if(count($q) == 0)
+		{
+			// $elemento->cargos()->attach($cargo, array( 'fecha_inicio' => date('Y-m-d') ) );
+			$cuando = 1;
+		}
+		else
+		{
+			$cuando = 2;
+		}
+		$carg = array();
+		$cargos = $elemento -> cargos;
+		foreach ($cargos as $carge) {
+			if (is_null($carge -> pivot -> fecha_fin)) {
+				$carg[] = $carge -> nombre;
+			}
+		}
+		$datos = array(
+			'success' => true,
+			'cuando' => $cuando,
+			'cargo' => $carg,
+		);
+
+		return Response::json($datos);
 	}
 
 }
