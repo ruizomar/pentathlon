@@ -41,7 +41,7 @@
 					<h4>
 						{{ Form::label(null,'Matricula: ',array('class' => 'small')) }}
 						<ul>
-							<li>
+							<li style="list-style-type: none; margin-left: -40px;">
 								{{ Form::label('matricula',null,array('class' => 'label label-default')) }}
 							</li>
 						</ul>
@@ -53,7 +53,7 @@
 					<h4>
 						{{ Form::label(null,'Ubicación actual: ',array('class' => 'small')) }}
 						<ul>
-							<li>
+							<li style="list-style-type: none; margin-left: -40px;">
 								{{ Form::label('companiasysubzonas',null,array('class' => 'label label-default')) }}
 							</li>
 						</ul>
@@ -82,7 +82,8 @@
 				$('#nombreelemento').text(json.nombre+' '+json.paterno+' '+json.materno);
 				$('label[for=matricula]').text(json.matricula);
 				$.each(json.cargo,function(index,value){
-					$('#cargos').append('<li><label class="label label-success">'+value+'</label></li>');
+					// console.log(value);
+					$('#cargos').append('<li style="list-style-type: none; margin-left: -40px; margin-top:5px;"><label class="label label-success">'+value.nombre+' en '+value.companiasysubzona+' </label></li>');
 				});
 				$('label[for=companiasysubzonas]').text(json.companiasysubzonas);
 				$('#fotoperfil').html('<img id="theImg" class="img-responsive img-thumbnail img-circle" src="imgs/fotos/'+json.fotoperfil+'" alt="Responsive image"/>');
@@ -94,7 +95,7 @@
 			$('#btnupdate').on('click', function(e) {
 				e.preventDefault();
 				$.post('cargos/confirma',$("#formulariocargos").serialize(), function(json) {
-					console.log(json);
+					// console.log(json);
 					if (!json.success) {
 						swal({
 								title: '¿Estás seguro?',
@@ -129,11 +130,11 @@
 		})();
 		function insertar () {
 			$.post('cargos/update',$("#formulariocargos").serialize(), function(json) {
-				// console.log(json);
+				console.log(json);
 				if(json.success){
 					$('#cargos').html('');
 					$.each(json.cargo,function(index,value){
-						$('#cargos').append('<li><label class="label label-success">'+value+'</label></li>');
+						$('#cargos').append('<li style="list-style-type: none; margin-left: -40px; margin-top:5px;"><label class="label label-success">'+value.nombre+' en '+value.companiasysubzona+' </label></li>');
 					});
 					swal('!Hecho!', 'Se ha guardado el cargo', 'success');
 				}

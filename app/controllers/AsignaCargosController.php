@@ -38,7 +38,10 @@ class AsignaCargosController extends BaseController {
 		$cargo = array();
 		foreach ($cargos as $carge) {
 			if (is_null($carge -> pivot -> fecha_fin)) {
-				$cargo[] = $carge -> nombre;
+				$cargo[] = array(
+					'nombre' => $carge -> nombre,
+					'companiasysubzona' => Companiasysubzona::find($carge -> pivot -> companiasysubzona_id) -> nombre,
+					);
 			}
 		}
 		$dato = array(
@@ -57,41 +60,29 @@ class AsignaCargosController extends BaseController {
 
 	public function postConfirma()
 	{
-		$id = Input::get('id');
-		$elemento = Elemento::find($id);
 		$cargo = Input::get('cargo');
 		$companiasysubzona = Input::get('companiasysubzona');
-		$q = Cargo::find($cargo) -> elementos() -> where('companiasysubzona_id','=',$companiasysubzona) -> first();
-
+		$elementos = Cargo::find($cargo) -> elementos() -> get();
+		$q = array();
+		foreach ($elementos as $elem) {
+			if ($elem -> pivot -> companiasysubzona_id == $companiasysubzona){
+				if(is_null($elem -> pivot -> fecha_fin)){
+					$q = array(
+						'success' => false,
+						'nombre' => $elem -> persona -> nombre,
+						'paterno' => $elem -> persona -> apellidopaterno,
+						'materno' => $elem -> persona -> apellidomaterno,
+						);
+				}
+			}
+		}
 		if(count($q) == 0)
 		{
-			$datos = array(
-				'nombre' => 'jaja',
+			$q = array(
 				'success' => true,
-				'cuando' => 1,
 				);
 		}
-		else
-		{
-			if (is_null($q -> pivot -> fecha_fin))
-			{
-				$datos = array(
-					'success' => false,
-					'nombre' => $q -> persona -> nombre,
-					'paterno' => $q -> persona -> apellidopaterno,
-					'materno' => $q -> persona -> apellidomaterno,
-					);
-			}
-			else
-			{
-				$datos = array(
-					'nombre' => 'jeje',
-					'success' => true,
-					'cuando' => 2,
-					);
-			}
-		}
-		return Response::json($datos);
+		return Response::json($q);
 	}
 
 	public function postUpdate()
@@ -100,30 +91,41 @@ class AsignaCargosController extends BaseController {
 		$elemento = Elemento::find($id);
 		$cargo = Input::get('cargo');
 		$companiasysubzona = Input::get('companiasysubzona');
-		$q = Cargo::find($cargo) -> elementos() -> where('companiasysubzona_id','=',$companiasysubzona) -> first();
-
-		if(count($q) == 0)
-		{
-			// $elemento->cargos()->attach($cargo, array( 'fecha_inicio' => date('Y-m-d') ) );
-			$cuando = 1;
-		}
-		else
-		{
-			$cuando = 2;
-		}
-		$carg = array();
-		$cargos = $elemento -> cargos;
-		foreach ($cargos as $carge) {
-			if (is_null($carge -> pivot -> fecha_fin)) {
-				$carg[] = $carge -> nombre;
+		$elementos = Cargo::find($cargo) -> elementos() -> get();
+		$q = array();
+		foreach ($elementos as $elem) {
+			if ($elem -> pivot -> companiasysubzona_id == $companiasysubzona){
+				if(is_null($elem -> pivot -> fecha_fin)){
+					$q = array(
+						'id' => $elem,
+					);
+					$elem -> cargos() -> updateExistingPivot($cargo, array( 'fecha_fin' => date('Y-m-d')) );
+					$elemento -> cargos() -> attach($cargo, array( 'fecha_inicio' => date('Y-m-d'),'companiasysubzona_id' => $companiasysubzona ) );
+					$cuando = 2;
+					// User::find(1)->roles()->updateExistingPivot($roleId, $attributes);
+				}
 			}
 		}
-		$datos = array(
-			'success' => true,
-			'cuando' => $cuando,
-			'cargo' => $carg,
-		);
-
+		if(count($q) == 0)
+		{
+			$cuando = 1;
+			$elemento -> cargos() -> attach($cargo, array( 'fecha_inicio' => date('Y-m-d'),'companiasysubzona_id' => $companiasysubzona ) );
+		}
+		$carg = array();
+			$cargos = $elemento -> cargos;
+			foreach ($cargos as $carge) {
+				if (is_null($carge -> pivot -> fecha_fin)) {
+					$carg[] = array(
+						'nombre' => $carge -> nombre,
+						'companiasysubzona' => Companiasysubzona::find($carge -> pivot -> companiasysubzona_id) -> nombre,
+						);
+				}
+			}
+			$datos = array(
+				'success' => true,
+				'cuando' => $cuando,
+				'cargo' => $carg,
+			);
 		return Response::json($datos);
 	}
 
