@@ -56,7 +56,7 @@
 <!------------------------form ----------------------------!-->
         <div class='col-sm-12 barra'>
             <ul class="">
-                <li class=""><a href="#1" data-toggle="tab" onClick="asd()">Recluta</a></li>
+                <li><a href="#1" data-toggle="tab">Recluta</a></li>
                 <li><a href="#2" data-toggle="tab">Cadete de infanteria</a></li>
                 <li><a href="#3" data-toggle="tab">Cadete 1a</a></li>
                 <li><a href="#4" data-toggle="tab">Cabo</a></li>
@@ -125,7 +125,7 @@
                                                 <td>{{$elemento->matricula->id}}</td>
                                             @endif
                                             <td>{{$elemento->persona->nombre}} {{$elemento->persona->apellidopaterno}} {{$elemento->persona->apellidomaterno}}</td>   
-                                           <td><input type="text" name="{{$elemento->id}}" value="No a pagado" class="form-control" disabled></td>
+                                           <td><input type="text" name="{{$elemento->id}}" value="No entero" class="form-control" disabled></td>
                                     </tr>
                                 @endif
                             @endforeach
@@ -152,6 +152,7 @@
 {{  HTML::script('js/sweet-alert.min.js'); }}
 <script type="text/javascript">
 $(document).ready(function() {
+    asd();
     $('.datetimePicker').datetimepicker({
         language: 'es',
         pickTime: false

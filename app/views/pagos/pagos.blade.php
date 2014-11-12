@@ -1,7 +1,7 @@
 @extends('layaouts.buscar')
 
 @section('titulo')
-  pagos2 PDMU
+  Enteros PDMU
 @endsection
 @section('head')
 <style type="text/css">
@@ -11,7 +11,7 @@
 </style>
 @endsection
 @section('h2')
-Pagos
+Enteros
 @endsection
 @section('elemento')
     <div class="col-sm-8 col-sm-offset-2 well">
@@ -45,12 +45,12 @@ Pagos
             <div class="form-group col-md-4">
                 <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-usd fa-fw"></i></span>
-              {{ Form::text('cantidad', null, array('class' => 'form-control','placeholder' => 'Cantidad')) }}
+              {{ Form::text('cantidad', null, array('class' => 'form-control','placeholder' => 'Entero')) }}
                 </div>
             </div>
             {{ Form::text('id', null, array('class' => 'hidden form-control')) }}
             <div class="form-group col-md-3 pull-right">
-            {{ Form::button('Registrar pago',array('class' => 'btn btn-success','type' => 'submit','id' => 'bpagar')) }}
+            {{ Form::button('Registrar entero',array('class' => 'btn btn-success','type' => 'submit','id' => 'bpagar')) }}
             </div>
         {{form::close()}}
         </div>
@@ -62,7 +62,7 @@ Pagos
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
           <h4 class="modal-title" id="myModalLabel">
-            <i class="fa fa-floppy-o"></i> Pagos
+            <i class="fa fa-floppy-o"></i> Enteros
             <i class="fa fa-spinner fa-2x fa-spin hidden spin-modal"></i>
           </h4>
         </div>

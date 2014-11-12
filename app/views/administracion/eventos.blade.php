@@ -77,7 +77,7 @@
         </div>
         
         <div class="form-group col-sm-3">
-          {{ Form::label('Precio', 'Precio',array('class' => 'control-label')) }}
+          {{ Form::label('Precio', 'Entero',array('class' => 'control-label')) }}
           <div class="input-group">
              <span class="input-group-addon"><i class="fa fa-usd fa-fw"></i></span>
             {{ Form::text('Precio', null, array('class' => 'form-control')) }}
@@ -103,7 +103,7 @@
               <p><small>Fecha: {{ $evento -> fecha }}</small></p>
               <p>Lugar: {{ $evento->lugar }}</p>
               <p>{{ $evento->descripcion }}</p>
-              <p>Precio: ${{ $evento->precio }}</p>
+              <p>Entero: ${{ $evento->precio }}</p>
             </div>
           @endforeach    
       @endif

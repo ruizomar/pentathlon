@@ -45,7 +45,7 @@ class MembresiasController extends BaseController {
 			if(!is_null(Evento::find(Input::get('concepto'))->elementos()->where('elemento_id','=',Input::get('id'))->first())){
 				$dato = array(
 					'success' 	=> false,
-					'errormessage' 	=> 'El pago ya se registro anteriormente',
+					'errormessage' 	=> 'El entero ya se registro anteriormente',
 					);
 				return Response::json($dato);
 			}
@@ -86,7 +86,7 @@ class MembresiasController extends BaseController {
 			else
 				$dato = array(
 					'success' 	=> false,
-					'errormessage' 	=> 'El pago ya se registro anteriormente',
+					'errormessage' 	=> 'El entero ya se registro anteriormente',
 					);
 		
 		return Response::json($dato);
@@ -105,11 +105,11 @@ class MembresiasController extends BaseController {
 			}
 				$dato = MembresiasController::pago(Input::get('id'),Input::get('cantidad'),"Membresia ".date("Y"));
 				$dato['matricula'] = '<strong>'.$matricula->id.'</strong>';
-				$dato['message'] = 'El pago se a registrado exitosamente numero de Matricula: ';
+				$dato['message'] = 'El entero se a registrado exitosamente numero de Matricula: ';
 		}
 		else
 			$dato = array('success' => false,
-				'errormessage' 		=> 'El pago ya se fue registrado el <strong>'.date("d/m/Y",strtotime($pagos->fecha)).'</strong>'
+				'errormessage' 		=> 'El entero ya se fue registrado el <strong>'.date("d/m/Y",strtotime($pagos->fecha)).'</strong>'
 				);
 
 		return Response::json($dato);
@@ -168,7 +168,7 @@ class MembresiasController extends BaseController {
 				$dato = array(
 					'success' 	=> true,
 					'matricula' => '',
-					'message' 	=> 'El pago se a registrado exitosamente',
+					'message' 	=> 'El entero se a registrado exitosamente',
 					'pago' 		=> $pago->id
 					);
 		return $dato;
