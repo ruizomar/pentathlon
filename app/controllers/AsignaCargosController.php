@@ -38,9 +38,13 @@ class AsignaCargosController extends BaseController {
 		$cargo = array();
 		foreach ($cargos as $carge) {
 			if (is_null($carge -> pivot -> fecha_fin)) {
+				$pivote = Companiasysubzona::find($carge -> pivot -> companiasysubzona_id);
 				$cargo[] = array(
 					'nombre' => $carge -> nombre,
-					'companiasysubzona' => Companiasysubzona::find($carge -> pivot -> companiasysubzona_id) -> nombre,
+					'companiasysubzona' => $pivote -> nombre,
+					'companiasysubzona_id' => $pivote -> id,
+					'cargo_id' => $carge -> id,
+					'persona_id' => $id,
 					);
 			}
 		}
@@ -96,37 +100,50 @@ class AsignaCargosController extends BaseController {
 		foreach ($elementos as $elem) {
 			if ($elem -> pivot -> companiasysubzona_id == $companiasysubzona){
 				if(is_null($elem -> pivot -> fecha_fin)){
-					$q = array(
-						'id' => $elem,
-					);
+					$q = array('id' => $elem,);
 					$elem -> cargos() -> updateExistingPivot($cargo, array( 'fecha_fin' => date('Y-m-d')) );
 					$elemento -> cargos() -> attach($cargo, array( 'fecha_inicio' => date('Y-m-d'),'companiasysubzona_id' => $companiasysubzona ) );
-					$cuando = 2;
-					// User::find(1)->roles()->updateExistingPivot($roleId, $attributes);
 				}
 			}
 		}
 		if(count($q) == 0)
 		{
-			$cuando = 1;
 			$elemento -> cargos() -> attach($cargo, array( 'fecha_inicio' => date('Y-m-d'),'companiasysubzona_id' => $companiasysubzona ) );
 		}
 		$carg = array();
 			$cargos = $elemento -> cargos;
 			foreach ($cargos as $carge) {
 				if (is_null($carge -> pivot -> fecha_fin)) {
+					$pivote = Companiasysubzona::find($carge -> pivot -> companiasysubzona_id);
 					$carg[] = array(
 						'nombre' => $carge -> nombre,
-						'companiasysubzona' => Companiasysubzona::find($carge -> pivot -> companiasysubzona_id) -> nombre,
+						'companiasysubzona' => $pivote -> nombre,
+						'companiasysubzona_id' => $pivote -> id,
+						'cargo_id' => $carge -> id,
+						'persona_id' => $id,
 						);
 				}
 			}
 			$datos = array(
 				'success' => true,
-				'cuando' => $cuando,
 				'cargo' => $carg,
 			);
 		return Response::json($datos);
+	}
+
+	public function postEliminar()
+	{
+		$id = Input::get('personaid');
+		$cargo = Input::get('cargoid');
+		$lugar = Input::get('companiasysubzonaid');
+		DB::table('cargo_elemento')
+			-> where('cargo_id','=',$cargo)
+			-> where('elemento_id','=',$id)
+			-> where('companiasysubzona_id','=',$lugar)
+			-> update(array(
+				'fecha_fin' => date('Y-m-d'),
+			));
+		return Response::json(true);
 	}
 
 }

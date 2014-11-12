@@ -4,25 +4,31 @@
 @endsection
 @section('head')
 	<style>
-	.contenedor {
-		background: #fff;
-		padding: 10px;
-		margin-bottom: 15px;
-		box-shadow: 0px 3px 2px #aab2bd;
-		-moz-box-shadow: 0px 3px 2px #aab2bd;
-		-webkit-box-shadow: 0px 3px 2px #aab2bd;
-		left: 12px;
-		border-top-width: 5px;
-		border-top-style: solid;
-		border-top-left-radius: .1em;
-		border-top-right-radius: .1em;
-	}
-	.fa-paperclip {
-		position: absolute;
-		top: -15px;
-		left: -15px;
-		z-index: 10;
-	}
+		.contenedor {
+			background: #fff;
+			padding: 10px;
+			margin-bottom: 15px;
+			box-shadow: 0px 3px 2px #aab2bd;
+			-moz-box-shadow: 0px 3px 2px #aab2bd;
+			-webkit-box-shadow: 0px 3px 2px #aab2bd;
+			left: 12px;
+			border-top-width: 5px;
+			border-top-style: solid;
+			border-top-left-radius: .1em;
+			border-top-right-radius: .1em;
+		}
+		.fa-paperclip {
+			position: absolute;
+			top: -15px;
+			left: -15px;
+			z-index: 10;
+		}
+
+		.closes{
+			margin-right: 5px;
+			color: white;
+			cursor:pointer; cursor: hand;
+		}
 	</style>
 	{{  HTML::style('css/sweet-alert.css');  }}
 	{{  HTML::script('js/jspdf.js'); }}
@@ -42,7 +48,7 @@
 						{{ Form::label(null,'Matricula: ',array('class' => 'small')) }}
 						<ul>
 							<li style="list-style-type: none; margin-left: -40px;">
-								{{ Form::label('matricula',null,array('class' => 'label label-default')) }}
+							{{ Form::label('matricula',null,array('class' => 'label label-default')) }}
 							</li>
 						</ul>
 					</h4>
@@ -76,18 +82,40 @@
 		function encontrado (id) {
 			$.post('cargos/buscar',{id:id}, function(json) {
 				$('#cargos').html('');
-				$(".fa-spinner").addClass("hidden");
-				$("#elemento").removeClass("hidden");
+				$('.fa-spinner').addClass('hidden');
+				$('#elemento').removeClass('hidden');
 				$('[name=id]').val(json.id);
 				$('#nombreelemento').text(json.nombre+' '+json.paterno+' '+json.materno);
 				$('label[for=matricula]').text(json.matricula);
+				i = 0;
 				$.each(json.cargo,function(index,value){
-					// console.log(value);
-					$('#cargos').append('<li style="list-style-type: none; margin-left: -40px; margin-top:5px;"><label class="label label-success">'+value.nombre+' en '+value.companiasysubzona+' </label></li>');
+					$('#cargos').append('<form id="listacargos'+i+'"><li style="list-style-type: none; margin-left: -40px; margin-top:5px;"><label class="cargolabel'+i+' label label-success"><a class="closes" data-dismiss="alert2" onclick="eliminar('+i+')"><i class="fa fa-times"></i></a>'+value.nombre+' en '+value.companiasysubzona+'</label><input class="hidden" value="'+value.persona_id+'" name="personaid" type="text"><input class="hidden" value="'+value.cargo_id+'" name="cargoid" type="text"><input class="hidden" value="'+value.companiasysubzona_id+'" name="companiasysubzonaid" type="text"></li></form>');
+					i++;
 				});
 				$('label[for=companiasysubzonas]').text(json.companiasysubzonas);
 				$('#fotoperfil').html('<img id="theImg" class="img-responsive img-thumbnail img-circle" src="imgs/fotos/'+json.fotoperfil+'" alt="Responsive image"/>');
 			}, 'json');
+		}
+	</script>
+	<script>
+		function eliminar(e) {
+			swal({
+				title: '¿Estás seguro?',
+				text: 'Se eliminará del cargo a este elemento',
+				type: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#DD6B55',
+				confirmButtonText: 'Yes, delete it!',
+				closeOnConfirm: false,
+			},
+			function(){
+				$.post('cargos/eliminar',$('#listacargos'+e+'').serialize(), function(json) {
+					if(json){
+						swal('¡Hecho!', 'Se ha eliminado el cargo', 'success');
+						$('.cargolabel'+e+'').addClass('hidden');
+					}
+				}, 'json');
+			});
 		}
 	</script>
 	<script>
@@ -130,11 +158,13 @@
 		})();
 		function insertar () {
 			$.post('cargos/update',$("#formulariocargos").serialize(), function(json) {
-				console.log(json);
+				// console.log(json);
 				if(json.success){
 					$('#cargos').html('');
+					i = 0;
 					$.each(json.cargo,function(index,value){
-						$('#cargos').append('<li style="list-style-type: none; margin-left: -40px; margin-top:5px;"><label class="label label-success">'+value.nombre+' en '+value.companiasysubzona+' </label></li>');
+						$('#cargos').append('<form id="listacargos'+i+'"><li style="list-style-type: none; margin-left: -40px; margin-top:5px;"><label class="cargolabel'+i+' label label-success"><a class="closes" data-dismiss="alert2" onclick="eliminar('+i+')"><i class="fa fa-times"></i></a>'+value.nombre+' en '+value.companiasysubzona+'</label><input class="hidden" value="'+value.persona_id+'" name="personaid" type="text"><input class="hidden" value="'+value.cargo_id+'" name="cargoid" type="text"><input class="hidden" value="'+value.companiasysubzona_id+'" name="companiasysubzonaid" type="text"></li></form>');
+						i++;
 					});
 					swal('!Hecho!', 'Se ha guardado el cargo', 'success');
 				}
