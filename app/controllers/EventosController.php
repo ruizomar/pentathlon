@@ -18,7 +18,7 @@ class EventosController extends BaseController{
 			'Fecha' 	=> 'required',
 			'Tipo' 		=> 'required',
 			'Lugar' 	=> 'required',
-			'Costo' 	=> 'required|integer'
+			'Precio' 	=> 'required|integer'
 			);
 
 		$validation = Validator::make(Input::all(), $rules);
@@ -36,7 +36,7 @@ class EventosController extends BaseController{
 				'lugar' 		=> Input::get('Lugar'),
 				'fecha' 		=> Input::get('Fecha'),
 				'descripcion' 	=> Input::get('Descripcion'),
-				'costo' 		=> Input::get('Costo'),
+				'precio' 		=> Input::get('Precio'),
 				'tipoevento_id' => Input::get('Tipo')
 			));
 			$dato = array('success'		=>	true,

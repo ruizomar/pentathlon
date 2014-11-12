@@ -70,7 +70,7 @@ class ExamenesController extends BaseController{
 
 	public function getCalificaciones($id){
 		$conf = Elemento::find($id)->cargos()->where('fecha_fin','=',null,'and')
-											->where('cargo_id','=','6')->first();
+											->where('cargo_id','=','11')->first();
 		if(!is_null($conf)){
 											
 		$instructorid = $id;
@@ -84,9 +84,30 @@ class ExamenesController extends BaseController{
 				$elementoss[] = $elemento;
 			}
 		}
-		$fechas = Elemento::find($instructorid)->asistencias()
-					->orderBy('fecha','desc')->take(4)->get();
-		
+		/////////////////////
+		$examenesxd = array();
+		foreach (Grado::all() as $grado){
+			$examenesxd[$grado->nombre] = array();
+                foreach ($grado->examenes()->get() as $examen){
+                    $examenesxd[$grado->nombre][$examen->nombre] = array();
+                    foreach($elementoss as $elemento){
+                        $ele = $examen->elementos()->where('id','=',$elemento->id)->first();
+ 
+                            if(!is_null($ele)){
+                            	$examenesxd[$grado->nombre][$examen->nombre] [$ele->id]= array();
+                                $examenesxd[$grado->nombre][$examen->nombre][$ele->id]['nombre'] = $ele->persona->nombre;
+                            	$examenesxd[$grado->nombre][$examen->nombre][$ele->id]['calificacion'] = $ele->pivot->calificacion;
+                            }
+                            else if(is_null($ele) && $examen->grado_id == $elemento->grados()->orderBy('fecha','desc')->first()->id){
+                            	$examenesxd[$grado->nombre][$examen->nombre] [$elemento->id]= array();
+                                $examenesxd[$grado->nombre][$examen->nombre][$elemento->id]['nombre'] = $elemento->persona->nombre;
+                            	$examenesxd[$grado->nombre][$examen->nombre][$elemento->id]['calificacion'] = 'No a pagado';
+                            	}
+                    }
+                }
+        }
+
+		///////////////////
 		return View::make('examenes/calificaciones')
 						->with('elementos',$elementoss)
 						->with('compania',$compania)
@@ -94,5 +115,39 @@ class ExamenesController extends BaseController{
 		}
 		else
 			echo "No eres instructor lastimanente";
+	}
+	public function postAsignar(){
+		$rules = array(
+			'examen' 	=>	'integer|required|exists:examens,id',
+			'fecha' 	=>	'required',
+			);
+		
+		$validation = Validator::make(Input::all(), $rules);
+		if($validation->fails())
+		{		
+		  $dato = array(
+					'success' 	=> false,
+					'errormessage' 	=> 'El pago ya se registro anteriormente',
+					);
+		
+		return Response::json($dato);
+		}
+
+		foreach (Input::all() as $key => $value) {
+				if(is_numeric($key)){
+					$elemento = Elemento::find($key);
+					$elemento->examenes()->updateExistingPivot(
+						Input::get('examen'),
+						array(
+							'fecha' 		=> Input::get('fecha'),
+							'calificacion' 	=> $value
+							)
+						);
+				}
+		}
+
+		$dato = array('success' 	=> true,);
+		
+		return Response::json($dato);
 	}
 }

@@ -128,13 +128,14 @@
 				$('[name=id]').val(json.id);
 				$('#nombreelemento').text(json.nombre+' '+json.paterno+' '+json.materno);
 				$('label[for=matricula]').text(json.matricula);
+				console.log(json.matricula)
 				$('label[for=companiasysubzonas]').text(json.companiasysubzonas);
 				$('label[for=grado]').text(json.grado);
 				$('label[for=fechagrado]').text(json.fechagrado);
 				if(!json.cargo){
 					$('label[for=cargo]').text('Cargo: Sin cargo');
 				}
-				$('#fotoperfil').html('<img id="theImg" class="img-responsive img-thumbnail img-circle" src="imgs/fotos/'+json.fotoperfil+'" alt="Responsive image"/>');
+				$('#fotoperfil').html('<img id="theImg" class="img-responsive img-thumbnail img-circle" src="'+json.fotoperfil+'" alt="Responsive image"/>');
 				porcentajeAsistencia(json.faltas,json.permisos,json.asistencias);
 				examenesVista(json.examenes,json.examenesNoHechos);
 				reconocimientosVista(json.reconocimientos);

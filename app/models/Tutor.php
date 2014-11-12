@@ -1,7 +1,8 @@
 <?php
 class Tutor extends Eloquent {
-	protected $table = 'tutores';
-	public $timestamps = false;
+    protected $table = 'tutores';
+    protected $fillable = array('persona_id','elemento_id','relacion');
+    public $timestamps = false;
 
     public function persona()
     {

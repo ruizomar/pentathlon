@@ -27,6 +27,20 @@ class AltaReclutaController extends BaseController {
 		return View::make('recluta.alta')->with('armas',$armasArr)->with('cuerpos',$cuerposArr)->with('companiasysubzonas',$companiasysubzonasArr);
 	}
 
+	public function errorCurp()
+	{
+		$curp = $_POST['curp'];
+		if(Elemento::where('curp','=',$curp)->count()){
+			$dato = array('success' => false,
+				);
+		}
+		else{
+			$dato = array('success' => true,
+				);
+		}
+		return ($dato);
+	}
+
 	public function post_nuevo()
 	{
 	///////////////////////////////////////////////////Elemento
@@ -80,7 +94,7 @@ class AltaReclutaController extends BaseController {
 		AltaReclutaController::registrarAscenso($elemento->id);
 
 		if (Input::file("fotoperfil") != "") {
-			$file = Input::file("fotoperfil")->move("imgs",$elemento->id.'.'.Input::file('fotoperfil')->guessClientExtension());
+			$file = Input::file("fotoperfil")->move("imgs/fotos/",$elemento->id.'.'.Input::file('fotoperfil')->guessClientExtension());
 			$documento = new Documento;
 			$documento -> elemento_id = $elemento->id;
 			$documento -> ruta = 'imgs/fotos/'.$elemento->id.'.'.Input::file('fotoperfil')->guessClientExtension();
@@ -122,7 +136,7 @@ class AltaReclutaController extends BaseController {
 
 		$persona = Persona::find($personaElemento -> id);
 		$fotoperfil = $elemento -> documentos() -> where('tipo','=','fotoperfil') -> first() -> ruta;
-		return View::make('recluta.lista')->with('persona',$persona)->with('fotoperfil',$fotoperfil)->with('elemento',$elemento);
+		return View::make('recluta.lista')->with('persona',$persona)->with('fotoperfil','imgs/fotos/'.$fotoperfil)->with('elemento',$elemento);
 
 	}
 	public function agregarTelefono($id,$tel,$tipo)

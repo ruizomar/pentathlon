@@ -167,10 +167,10 @@ Pagos
     });
     $("[name = tipo]").change(function(){
         $('#pagar').data('bootstrapValidator').resetField('cantidad', true);
-        if($("[name = tipo] option:selected").val() == "evento"){
+        if($("[name = tipo] option:selected").val() == "Evento"){
             llenarConcepto("{{ URL::to('eventos/eventos'); }}");
         }
-        else if($("[name = tipo] option:selected").val() == "examen"){
+        else if($("[name = tipo] option:selected").val() == "Examen"){
             llenarConcepto("{{ URL::to('examenes/examenes'); }}");
         }
         else{

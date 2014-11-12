@@ -21,15 +21,22 @@
         font-size: 17px;
         margin:5px;
     }
+    .up{
+        top: 0 !important;
+    }
+    .fecha i{
+        right: 55px !important;
+    }
 </style>
 {{  HTML::style('css/bootstrap-datetimepicker.min.css');  }}
+{{  HTML::style('css/sweet-alert.css');  }}
 @endsection
 @section('contenido')
 <?php $status=Session::get('status'); ?>
 <div class="row">
     <div class="col-md-10 col-md-offset-1">
         @if(isset($compania))
-        <h1 style="margin-bottom:20px;">Registro de calificaciones {{ $compania->tipo }} {{$compania->nombre }}  <i class="fa fa-refresh fa-spin hidden"></i></h1>
+        <h1 style="margin-bottom:20px;">Registro de calificaciones {{ $compania->tipo }} {{$compania->nombre }}</h1>
         @endif
     </div>
     <div class="message col-md-6 col-md-offset-3" style="">
@@ -49,168 +56,132 @@
 <!------------------------form ----------------------------!-->
         <div class='col-sm-12 barra'>
             <ul class="">
-                <li class=""><a href="#Recluta" data-toggle="tab" onClick="asd()">Recluta</a></li>
-                <li class="divider"></li>
-                <li><a href="#cabo" data-toggle="tab">Cabo</a></li>
+                <li class=""><a href="#1" data-toggle="tab" onClick="asd()">Recluta</a></li>
+                <li><a href="#2" data-toggle="tab">Cadete de infanteria</a></li>
+                <li><a href="#3" data-toggle="tab">Cadete 1a</a></li>
+                <li><a href="#4" data-toggle="tab">Cabo</a></li>
+                <li><a href="#5" data-toggle="tab">Sargento 2</a></li>
+                <li><a href="#6" data-toggle="tab">Sargento 1</a></li>
+                <li><a href="#7" data-toggle="tab">Sub Oficial</a></li>
+                <li><a href="#8" data-toggle="tab">3 Oficial</a></li>
+                <li><a href="#9" data-toggle="tab">2 Oficial</a></li>
+                <li><a href="#10" data-toggle="tab">1 Oficial</a></li>
+                <li><a href="#11" data-toggle="tab">3 Comandante</a></li>
+                <li><a href="#12" data-toggle="tab">2 Comandante</a></li>
+                <li><a href="#13" data-toggle="tab">1 Comandante</a></li>
             </ul>
         </div>
-        <div class="tab-content col-sm-12">
-                @if(isset($elementos))
-                    @foreach (Grado::all() as $grado)
-                    <div class="tab-pane" id="{{$grado->nombre}}">
-                        <div class="titulo">
-                            <label>{{$grado->nombre}}</label>
+        <div class="tab-content col-md-12">
+            @foreach(Grado::all() as $grado)
+                <div class="tab-pane" id="{{$grado->id}}">
+                    <div class="titulo">
+                        <h3>{{$grado->nombre}}</h3>
+                    </div>
+                @foreach ($grado->examenes()->get() as $examen)
+                    <div class="examen col-sm-7">
+                        <h2>Examen {{$examen->nombre}}</h2>
+                        {{ Form::open(array('url' => 'examenes/','role' => 'form','id' => 'id','class' => 'id')) }}
+                        <input type="text" name="examen" class="hidden" value="{{$examen->id}}">
+                        <div class="form-group col-md-5 fecha">
+                            <div class="input-group date datetimePicker">
+                                <input type="text" class="form-control" name="fecha" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD" data-bv-date="true" data-bv-date-format="YYYY-MM-DD" data-bv-notempty/>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                            </div>
                         </div>
-                        @foreach($grado->examenes()->get() as $examen)
-                        <div class="examen col-sm-7">
-                            <h2>
-                            Examen {{$examen->nombre}}
-                            </h2>
+                        <div class="col-sm-1"><i class="fa fa-refresh fa-spin fa-3x hidden"></i></div>
                             <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>id</th>
-                                        <th>Matricula</th>
-                                        <th>Nombre</th>
-                                        <th>Calificacion</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                <input type="text" name="examen" value="{{$examen->id}}">
-                            @foreach($elementos as $elemento)
-                            <?php $att = $examen->elementos()->where('elemento_id','=',$elemento->id)->first();
-                            ?>
-                            @foreach (Grado::find($elemento->grados()->orderBy('fecha','desc')->first()->id)->examenes()->get() as $examenn)
-                                @foreach ($examen->elementos()->where('Calificacion','=',null)->where('id','!=',1)->get() as $elemental)
-                                {{$elemental->persona->nombre}}
-                                    @endforeach
-                            @endforeach
-                                @if(!is_null($att))
-                                    @if($att->pivot->calificacion == null)
-                                    <tr>
-                                        <td>{{$elemento->id}}</td>
-                                        <td>{{$elemento->matricula->id}}</td>
-                                        <td>{{$elemento->persona->nombre}}</td>
-                                        <td>
-                                            <input type="text" name="{{$elemento->id}}" placeholder="Calificacion" class="form-control">
-                                        </td>
-                                    </tr>
-                                    @else
-                                    <tr>
-                                        <td>{{$elemento->id}}</td>
-                                        <td>{{$elemento->matricula->id}}</td>
-                                        <td>{{$elemento->persona->nombre}}</td>
-                                        <td>
-                                            {{$att->pivot->calificacion}}
-                                        </td>
-                                    </tr>
-                                   @endif 
-                                @elseif(is_null($att) && $elemento->grados()->orderBy('fecha','desc')->first()->id == $grado->id)
+                            <thead>
                                 <tr>
-                                    <td>{{$elemento->id}}</td>
-                                    <td>{{$elemento->matricula->id}}</td>
-                                    <td>{{$elemento->persona->nombre}}</td>
-                                    <td>
-                                        El elemento no a pagado
-                                    </td>
+                                    <th>Matricula</th>
+                                    <th>Nombre</th>
+                                    <th>Calificacion</th>
                                 </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($elementos as $elemento)
+                                <?php
+                                    $ele = $examen->elementos()
+                                    ->where('id','=',$elemento->id)->first();
+                                ?>
+                                @if(!is_null($ele))
+                                    <tr>
+                                        @if(is_null($ele->matricula))
+                                            <td>Sin Matricula</td>
+                                        @else    
+                                            <td>{{$elemento->matricula->id}}</td>
+                                        @endif
+                                        <td>{{$ele->persona->nombre}} {{$ele->persona->apellidopaterno}} {{$ele->persona->apellidomaterno}}</td>
+                                        @if($ele->pivot->calificacion == null)
+                                            <td><div class="form-group"><input type="text" name="{{$elemento->id}}" placeholder="Calificacion" class="form-control"  data-bv-notempty min="0" max="100"></div></td>
+                                        @else
+                                            <td><input type="text" name="{{$elemento->id}}" value="{{$ele->pivot->calificacion}}" class="form-control" disabled></td>
+                                        @endif
+                                    </tr>    
+                                @elseif(is_null($ele) && $examen->grado_id == $elemento->grados()->orderBy('fecha','desc')->first()->id)
+                                    <tr>
+                                            @if(is_null($elemento->matricula))
+                                                <td>Sin Matricula</td>
+                                            @else    
+                                                <td>{{$elemento->matricula->id}}</td>
+                                            @endif
+                                            <td>{{$elemento->persona->nombre}} {{$elemento->persona->apellidopaterno}} {{$elemento->persona->apellidomaterno}}</td>   
+                                           <td><input type="text" name="{{$elemento->id}}" value="No a pagado" class="form-control" disabled></td>
+                                    </tr>
                                 @endif
                             @endforeach
                             </tbody>
                             </table>
-                            <button type="button" class="btn btn-info">Guardar</button>
-                        </div>
-                        @endforeach
-                        </div>
-                    @endforeach 
-                @else
-                    <div class="alert alert-danger fade in">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <strong>Error</strong>Todavia no hay Compañias registradas.
+                        <button type="submit" class="btn btn-info pull-right">Guardar</button>
+                        {{ Form::close() }}
                     </div>
-                @endif
-        </div>
-        <div class="col-md-12">
-             @foreach($elementos as $elemento)
-                @foreach (Grado::find($elemento->grados()->orderBy('fecha','desc')->first()->id)->examenes()->get() as $examenn)
-                    <?php
-                    $ele = $examenn->elementos()->where('id','=',$elemento->id)->first();
-                    ?>
-                    {{$examenn->nombre}}
-                    <p>
-                    @if(!is_null($ele))
-                        {{$ele->persona->nombre}} {{$ele->pivot->calificacion}}
-                    @elseif(is_null($ele))
-                        No a pagado {{$elemento->persona->nombre}}
-                    @endif
-                    </p>
                 @endforeach
+                </div>
             @endforeach
         </div>
 <!------------------------form ----------------------------!-->  
 	</div>
 </div>
-<!-- Modal -->
-  <div class="modal fade" id="Elemento" tabindex="-1" role="dialog" aria-labelledby="Elemento" aria-hidden="true">
-    <div class="modal-dialog modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title" id="Elemento">
-            <i class="fa fa-eye"></i> Inasistencia prolongada
-          </h4>
-        </div>
-        <div class="modal-body">
 
-          
-
-        </div>
-        <div class="modal-footer">
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- End Modal --> 
 @endsection
 @section('scripts')
-{{  HTML::script('js/tables/jquery.dataTables.min.js'); }}
-{{  HTML::script('js/tables/jquery.dataTables.bootstrap.js'); }}
 {{  HTML::script('js/bootstrapValidator.js'); }}
 {{  HTML::script('js/es_ES.js'); }}
 {{  HTML::script('js/moment.js'); }}
 {{  HTML::script('js/bootstrap-datetimepicker.js'); }}
 {{  HTML::script('js/bootstrap-datetimepicker.es.js'); }}
+{{  HTML::script('js/sweet-alert.min.js'); }}
 <script type="text/javascript">
 $(document).ready(function() {
-    $('#datetimePicker').datetimepicker({
+    $('.datetimePicker').datetimepicker({
         language: 'es',
         pickTime: false
     });
 
-    $('#asis').bootstrapValidator({
+    $('.id').bootstrapValidator({
         feedbackIcons: {
-            valid: 'glyphicon glyphicon-ok fecha',
-            invalid: 'glyphicon glyphicon-remove fecha',
-            validating: 'glyphicon glyphicon-refresh fecha'
-        },
-        fields: {
-            fecha: {
-                validators: {
-                    notEmpty: {
-                    },
-                    date: {
-                        format: 'YYYY-MM-DD',
-                    }
-                }
-            }
+            valid: 'glyphicon glyphicon-ok up',
+            invalid: 'glyphicon glyphicon-remove up',
+            validating: 'glyphicon glyphicon-refresh up'
         }
     })
     .on('success.form.bv', function(e) {
-            $('.fa-spin').removeClass('hidden');
+        e.preventDefault();
+        formulario = $(this);
+        formulario.closest('div').find('.fa-spin').removeClass('hidden');
+        $.post('{{ URL::to("examenes/asignar"); }}', $(this).serialize(), function(json) {
+                if(json.success){
+                    formulario.data('bootstrapValidator').resetForm();
+                    formulario.find('input').attr('disabled','disabled');
+                    formulario.closest('div').find('button').attr('disabled','disabled');
+                    swal('Operacion completada correctamente', null, 'success')
+                }
+                else
+                    swal('Error', 'Ocurrio un error', 'error')
+                formulario.closest('div').find('.fa-spin').addClass('hidden');
+        }, 'json');
     });
-
-    $('#datetimePicker').on('dp.change dp.show', function(e) {
-        $('#asis').bootstrapValidator('revalidateField', 'fecha');
+    $('.datetimePicker').on('dp.change dp.show', function(e) {
+        $(this).closest('form').bootstrapValidator('revalidateField', 'fecha');
     });
     $('#main-menu').find('li').removeClass('active');
     $('#main-menu ul li:nth-child(4)').addClass('active');
@@ -219,30 +190,15 @@ $(document).ready(function() {
 <script type="text/javascript" charset="utf-8">
 function asd(){
     $('.tab-content').find('tbody').each(function( index ) {
-     
         if( $( this ).find('td').length == 0)
             $( this ).closest('div').html('');
     });
+    $('.tab-content').find('tbody').each(function( index ) {
+        if( $( this ).find('input:enabled').length == 0){
+            $( this ).closest('div').find('button').attr('disabled','disabled');
+            $( this ).closest('div').find('input').attr('disabled','disabled');
+        }
+    });
 }
-function message(id){
-    $.post("{{ URL::to('asistencias/elemento'); }}", 'id='+id, function(json) {
-            $('.modal-body').html('');
-            $('.modal-body').append('<h2>Elemento:</h2>');
-            $('.modal-body').append('<label><strong>'+json.elemento.nombre+' '+json.elemento.apellidopaterno+' '+json.elemento.apellidomaterno+'</strong></label>');
-            $(json.telefonosElemento).each(function() {
-                $('.modal-body').append('<p>'+this.tipo+': '+this.telefono+'</p>');
-            });
-            if (json.correoElemento)
-                $('.modal-body').append('<p>Email: '+json.correoElemento+'</p>');
-            $('.modal-body').append('<h2>'+json.relacion+':</h2>');
-            $('.modal-body').append('<label><strong>'+json.tutor.nombre+' '+json.tutor.apellidopaterno+' '+json.tutor.apellidomaterno+'</strong></label>');
-            $(json.telefonosTutor).each(function() {
-                $('.modal-body').append('<p>'+this.tipo+': '+this.telefono+'</p>');
-            });
-            if (json.correotutor)
-                $('.modal-body').append('<p>Email: '+json.correotutor+'</p>');
-        }, 'json');
-    $('#Elemento').modal('show');
-}    
 </script>
 @endsection

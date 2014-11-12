@@ -77,10 +77,10 @@
         </div>
         
         <div class="form-group col-sm-3">
-          {{ Form::label('Costo', 'Costo',array('class' => 'control-label')) }}
+          {{ Form::label('Precio', 'Precio',array('class' => 'control-label')) }}
           <div class="input-group">
              <span class="input-group-addon"><i class="fa fa-usd fa-fw"></i></span>
-            {{ Form::text('Costo', null, array('class' => 'form-control')) }}
+            {{ Form::text('Precio', null, array('class' => 'form-control')) }}
           </div>
         </div>
         <div class="form-group col-sm-7">
@@ -103,7 +103,7 @@
               <p><small>Fecha: {{ $evento -> fecha }}</small></p>
               <p>Lugar: {{ $evento->lugar }}</p>
               <p>{{ $evento->descripcion }}</p>
-              <p>Costo: ${{ $evento->costo }}</p>
+              <p>Precio: ${{ $evento->precio }}</p>
             </div>
           @endforeach    
       @endif
@@ -151,7 +151,7 @@
                     }
                 }
             },
-            Costo: {
+            Precio: {
                 validators: {
                     integer: {
                     },

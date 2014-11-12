@@ -94,7 +94,7 @@ class MembresiasController extends BaseController {
 		////////////////////////////
 		$pagos = Pago::where('elemento_id','=',Input::get('id'),'and')
 				->where('fecha','like',date("Y").'%','and')
-				->where('concepto','=','Membresia')->first();
+				->where('concepto','like','Membresia%')->first();
 
 		if(is_null($pagos)){
 			$matricula = Elemento::find(Input::get('id'))->matricula;

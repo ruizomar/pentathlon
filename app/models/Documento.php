@@ -1,7 +1,9 @@
 <?php
 class Documento extends Eloquent {
 	public $timestamps = false;
-    public function elemento(){
+	protected $fillable = array('elemento_id','ruta','tipo');
+    public function persona()
+    {
         return $this->belongsTo('Elemento');
     }
 }

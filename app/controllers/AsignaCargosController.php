@@ -33,7 +33,7 @@ class AsignaCargosController extends BaseController {
 		}
 		if(!is_null($elemento -> matricula ))
 		{
-			$matricula = $elemento -> matricula -> matricula;
+			$matricula = $elemento -> matricula -> id;
 		}
 		if(!is_null($elemento -> cargos -> last() ))
 		{
