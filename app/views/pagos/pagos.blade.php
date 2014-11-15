@@ -14,17 +14,16 @@
 Enteros
 @endsection
 @section('elemento')
-    <div class="col-sm-8 col-sm-offset-2 well">
-        <div class="row">
-            <div class="col-sm-4">
-                <label id='lnombre'></label>
-            </div>
-            <div class="col-sm-3">
-                <label id='lmatricula'></label>
-            </div>
-            <div class="col-sm-5">
-                <label id='lfecha'></label>
-            </div>
+    <div class="col-sm-7 col-sm-offset-2 contenedor">
+        <div class="col-sm-3" style="margin-top: 20px;">
+            <img id="fotoperfil" class="img-responsive img-thumbnail img-circle" alt="Responsive image"/>
+        </div>
+        <div class="col-sm-8 col-sm-offset-1">
+                <h2 id='lnombre'></h2>
+                <p id='lmatricula'></p>
+                <p id='lfecha'></p>
+                <p id='lgrado'></p>
+                <p id='ladscripcion'></p>
         </div>
         <div class="row" style="margin-top: 10px;">
         {{ Form::open(array('url' => 'pagos/registrarpago','role' => 'form','id' => 'pagar')) }}
@@ -139,6 +138,8 @@ Enteros
                 $('.spin-modal').addClass('hidden');
                 $('#pagar').data('bootstrapValidator').resetField('cantidad', true);
                 $('#pagar').data('bootstrapValidator').resetField('tipo', true);
+                $('[name = concepto]').html('');
+                $("[name = concepto]").closest('div').addClass('hidden');
     }, 'json');
     });
     });
@@ -148,11 +149,14 @@ Enteros
         $('#sidebar-nav ul li:nth-child(1)').addClass('active');
     function encontrado(id){
             $.post('{{ URL::to("pagos/elemento"); }}', 'id='+id, function(json) {
-                $('#lnombre').html('<strong>Nombre:</strong> '+json.nombre);
+                $('#lnombre').html('<strong>'+json.nombre+'</strong>');
                 $('#lmatricula').html('<strong>Matricula:</strong> '+json.matricula);
                 $('#lfecha').html('<strong>Fecha de nacimiento:</strong> '+json.fecha);
                 $('[name=id]').val(id);
-                
+                $('#fotoperfil').attr('src',json.foto);
+                $('#lgrado').html('<strong>Grado:</strong> '+json.grado);
+                $('#ladscripcion').html('<strong>Adscripcion:</strong> '+json.compania);
+
                 $('.fa-spinner').addClass('hidden');
                 $('#elemento').removeClass('hidden');
         }, 'json');

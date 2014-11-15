@@ -211,6 +211,19 @@ hr {
   border-bottom: 1px solid #cfcfd6;
   padding: 0px 15px;
 }
+.contenedor {
+      background: #fff;
+      padding: 10px;
+      margin-bottom: 15px;
+      box-shadow: 0px 3px 2px #aab2bd;
+      -moz-box-shadow: 0px 3px 2px #aab2bd;
+      -webkit-box-shadow: 0px 3px 2px #aab2bd;
+      left: 12px;
+      border-top-width: 5px;
+      border-top-style: solid;
+      border-top-left-radius: .1em;
+      border-top-right-radius: .1em;
+    }
 .content .actionbar.btn-toolbar {
   font-size: 1em;
   padding: 1em 1.5em;

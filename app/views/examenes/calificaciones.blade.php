@@ -8,19 +8,6 @@
     .grado{
         background-color: #5B8DB8;
     }
-    .titulo{
-        background-color: #ddd;
-    }
-    .barra ul li{
-        position: relative;
-        float: left;
-        list-style: none;
-    }
-    .barra ul li a{
-        font-weight: bold;
-        font-size: 17px;
-        margin:5px;
-    }
     .up{
         top: 0 !important;
     }
@@ -51,38 +38,29 @@
             </p>
         </div>
         @endif
-    </div> 
-	<div class="col-md-12">
-<!------------------------form ----------------------------!-->
-        <div class='col-sm-12 barra'>
-            <ul class="">
-                <li><a href="#1" data-toggle="tab">Recluta</a></li>
-                <li><a href="#2" data-toggle="tab">Cadete de infanteria</a></li>
-                <li><a href="#3" data-toggle="tab">Cadete 1a</a></li>
-                <li><a href="#4" data-toggle="tab">Cabo</a></li>
-                <li><a href="#5" data-toggle="tab">Sargento 2</a></li>
-                <li><a href="#6" data-toggle="tab">Sargento 1</a></li>
-                <li><a href="#7" data-toggle="tab">Sub Oficial</a></li>
-                <li><a href="#8" data-toggle="tab">3 Oficial</a></li>
-                <li><a href="#9" data-toggle="tab">2 Oficial</a></li>
-                <li><a href="#10" data-toggle="tab">1 Oficial</a></li>
-                <li><a href="#11" data-toggle="tab">3 Comandante</a></li>
-                <li><a href="#12" data-toggle="tab">2 Comandante</a></li>
-                <li><a href="#13" data-toggle="tab">1 Comandante</a></li>
-            </ul>
-        </div>
-        <div class="tab-content col-md-12">
-            @foreach(Grado::all() as $grado)
+    </div>
+</div>
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#1" data-toggle="tab">Recluta</a></li>
+        <li><a href="#2" data-toggle="tab">Cadete de infanteria</a></li>
+        <li><a href="#3" data-toggle="tab">Cadete 1a</a></li>
+        <li><a href="#4" data-toggle="tab">Cabo</a></li>
+        <li><a href="#5" data-toggle="tab">Sargento 2</a></li>
+        <li><a href="#6" data-toggle="tab">Sargento 1</a></li>
+        <li><a href="#7" data-toggle="tab">Sub Oficial</a></li>
+        <li><a href="#8" data-toggle="tab">3 Oficial</a></li>
+        <li><a href="#9" data-toggle="tab">2 Oficial</a></li>
+        <li><a href="#10" data-toggle="tab">1 Oficial</a></li>
+      </ul>
+        <div class="tab-content col-sm-12" style="border-radius: 0 !important;border: 1px solid #dddddd !important;border-top-color: white !important;">
+            @foreach(Grado::where('id','<',11)->get() as $grado)
                 <div class="tab-pane" id="{{$grado->id}}">
-                    <div class="titulo">
-                        <h3>{{$grado->nombre}}</h3>
-                    </div>
                 @foreach ($grado->examenes()->get() as $examen)
-                    <div class="examen col-sm-7">
+                    <div class="examen col-md-7 row">
                         <h2>Examen {{$examen->nombre}}</h2>
                         {{ Form::open(array('url' => 'examenes/','role' => 'form','id' => 'id','class' => 'id')) }}
                         <input type="text" name="examen" class="hidden" value="{{$examen->id}}">
-                        <div class="form-group col-md-5 fecha">
+                        <div class="form-group col-sm-5 fecha pull-right">
                             <div class="input-group date datetimePicker">
                                 <input type="text" class="form-control" name="fecha" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD" data-bv-date="true" data-bv-date-format="YYYY-MM-DD" data-bv-notempty/>
                                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -90,46 +68,46 @@
                         </div>
                         <div class="col-sm-1"><i class="fa fa-refresh fa-spin fa-3x hidden"></i></div>
                             <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Matricula</th>
-                                    <th>Nombre</th>
-                                    <th>Calificacion</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($elementos as $elemento)
-                                <?php
-                                    $ele = $examen->elementos()
-                                    ->where('id','=',$elemento->id)->first();
-                                ?>
-                                @if(!is_null($ele))
+                                <thead>
                                     <tr>
-                                        @if(is_null($ele->matricula))
-                                            <td>Sin Matricula</td>
-                                        @else    
-                                            <td>{{$elemento->matricula->id}}</td>
-                                        @endif
-                                        <td>{{$ele->persona->nombre}} {{$ele->persona->apellidopaterno}} {{$ele->persona->apellidomaterno}}</td>
-                                        @if($ele->pivot->calificacion == null)
-                                            <td><div class="form-group"><input type="text" name="{{$elemento->id}}" placeholder="Calificacion" class="form-control"  data-bv-notempty min="0" max="100"></div></td>
-                                        @else
-                                            <td><input type="text" name="{{$elemento->id}}" value="{{$ele->pivot->calificacion}}" class="form-control" disabled></td>
-                                        @endif
-                                    </tr>    
-                                @elseif(is_null($ele) && $examen->grado_id == $elemento->grados()->orderBy('fecha','desc')->first()->id)
-                                    <tr>
-                                            @if(is_null($elemento->matricula))
-                                                <td>Sin Matricula</td>
-                                            @else    
-                                                <td>{{$elemento->matricula->id}}</td>
-                                            @endif
-                                            <td>{{$elemento->persona->nombre}} {{$elemento->persona->apellidopaterno}} {{$elemento->persona->apellidomaterno}}</td>   
-                                           <td><input type="text" name="{{$elemento->id}}" value="No entero" class="form-control" disabled></td>
+                                        <th>Matricula</th>
+                                        <th>Nombre</th>
+                                        <th>Calificacion</th>
                                     </tr>
-                                @endif
-                            @endforeach
-                            </tbody>
+                                </thead>
+                                <tbody>
+                                    @foreach($elementos as $elemento)
+                                        <?php
+                                            $ele = $examen->elementos()
+                                            ->where('id','=',$elemento->id)->first();
+                                        ?>
+                                        @if(!is_null($ele))
+                                            <tr>
+                                                @if(is_null($ele->matricula))
+                                                    <td>Sin Matricula</td>
+                                                @else    
+                                                    <td>{{$elemento->matricula->id}}</td>
+                                                @endif
+                                                <td>{{$ele->persona->nombre}} {{$ele->persona->apellidopaterno}} {{$ele->persona->apellidomaterno}}</td>
+                                                @if($ele->pivot->calificacion == null)
+                                                    <td><div class="form-group"><input type="text" name="{{$elemento->id}}" placeholder="Calificacion" class="form-control"  data-bv-notempty min="0" max="100"></div></td>
+                                                @else
+                                                    <td><input type="text" name="{{$elemento->id}}" value="{{$ele->pivot->calificacion}}" class="form-control" disabled></td>
+                                                @endif
+                                            </tr>    
+                                        @elseif(is_null($ele) && $examen->grado_id == $elemento->grados()->orderBy('fecha','desc')->first()->id)
+                                            <tr>
+                                                    @if(is_null($elemento->matricula))
+                                                        <td>Sin Matricula</td>
+                                                    @else    
+                                                        <td>{{$elemento->matricula->id}}</td>
+                                                    @endif
+                                                    <td>{{$elemento->persona->nombre}} {{$elemento->persona->apellidopaterno}} {{$elemento->persona->apellidomaterno}}</td>   
+                                                   <td><input type="text" name="{{$elemento->id}}" value="No entero" class="form-control" disabled></td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
+                                </tbody>
                             </table>
                         <button type="submit" class="btn btn-info pull-right">Guardar</button>
                         {{ Form::close() }}
@@ -138,9 +116,8 @@
                 </div>
             @endforeach
         </div>
-<!------------------------form ----------------------------!-->  
-	</div>
-</div>
+
+
 
 @endsection
 @section('scripts')
@@ -186,6 +163,7 @@ $(document).ready(function() {
     });
     $('#main-menu').find('li').removeClass('active');
     $('#main-menu ul li:nth-child(4)').addClass('active');
+    $('#1').addClass('active');
 });
 </script>
 <script type="text/javascript" charset="utf-8">

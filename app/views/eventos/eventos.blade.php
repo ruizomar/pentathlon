@@ -10,37 +10,17 @@
   .fecha i{
     right: 55px !important;
   }
-  .contenedor {
-    padding: 10px;
-    margin-bottom: 20px;
-    background-color: #E0F8D8;
-    border: 1px solid #83B373;
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
-    box-shadow: 5px 5px rgba(211, 207, 207, 1);
-  }
   .eventos-titulo {
     color: #ffffff;
     font-size: 16px;
     padding: 0 10px;
     line-height: 60px;
-    height: 60px;
     margin: 0;
-    background: #83B373;
+    background: #326380;
     text-align: center;
     border-top-right-radius: 4px;
     border-top-left-radius: 4px;
     font-weight: bold;
-  }
-  .prox-eventos {
-    border-bottom: 2px solid #83B373;
-    display: inline-block;
-    padding: 10px;
-    padding-left: 10px;
-    width: 100%;
-    background: #E0F8D8;
-    border-bottom-right-radius: 4px;
-    border-bottom-left-radius: 4px;
   }
   </style>
 @endsection
@@ -48,11 +28,12 @@
 <?php $status=Session::get('status'); ?>
 <div class="row">
     <div class="col-sm-6 col-sm-offset-3 col-xs-7">
-        <h1 style="margin-bottom:20px;">Eventos</h1>
+        <h1 style="margin-bottom:20px;">Eventos <i class="fa fa-refresh fa-spin hidden"></i></h1>
     </div>
 </div>
     <div class="contenedor col-md-8">
       {{ Form::open(array('url' => 'eventos/nuevoevento','role' => 'form','id' => 'form-nueva','class' => '')) }}
+      {{ Form::text('id', null, array('class' => 'hidden')) }}
         <div class="form-group col-sm-6">
           {{ Form::label('Nombre', 'Nombre',array('class' => 'control-label')) }}
           {{ Form::text('Nombre', null, array('class' => 'form-control')) }}
@@ -87,8 +68,14 @@
           {{ Form::label('Descripcion', 'Descripcion',array('class' => 'control-label')) }}
           {{ Form::textarea('Descripcion', null, array('class' => 'form-control','rows' => '3')) }}
         </div>
-        <div class="col-sm-2" style='top:25px;'>
-          {{ Form::button('OK', array('class' => 'btn btn-success','id' => 'id','type' => 'submit')) }}
+        <div class="col-sm-3" style='top:25px;'>
+          {{ Form::button('OK', array('class' => 'btn btn-success','id' => 'ok','type' => 'submit')) }}
+        </div>
+        <div class="col-sm-3 hidden update" style='top:25px;'>
+          <button type="button" class="btn btn-success" onClick="$('#form-nueva').data('bootstrapValidator').validate();">Update</button>
+        </div>
+        <div class="col-sm-3 hidden update" style='top:30px;'>
+          <button type="button" class="btn btn-warning" onClick="cancel()">Cancelar</button>
         </div>
       {{ Form::close() }}
     </div>
@@ -96,10 +83,11 @@
       @if(isset($eventos))
       <h2 class="eventos-titulo">Eventos próximos</h2>
           @foreach($eventos as $evento)
-            <div class="prox-eventos">
+            <div class="contenedor" style="border-top-style:none !important;">
               <i class="fa fa-clock-o pull-left"></i>
               <strong>{{ $evento->nombre }}</strong>
-              <label class="label label-info pull-right">{{ $tipos[$evento->tipoevento_id] }}</label>
+              <i class="fa fa-pencil fa-lg pull-right" style="cursor:pointer;" onClick="update('{{ $evento->id }}')"></i>
+              <label class="label label-info pull-right">{{ $tipos[$evento->tipoevento_id] }} </label>
               <p><small>Fecha: {{ $evento -> fecha }}</small></p>
               <p>Lugar: {{ $evento->lugar }}</p>
               <p>{{ $evento->descripcion }}</p>
@@ -163,32 +151,13 @@
     })
     .on('success.form.bv', function(e) {
       e.preventDefault();
-            $('.fa-spin').removeClass('hidden');
-            $.post($(this).attr('action'), $(this).serialize(), function(json) {
-                  if(json.success == true){
-                      $('#form-nueva').data('bootstrapValidator').resetForm(true);
-                      
-                      swal({
-                        title: json.message,   
-                        text: "",   
-                        type: "success",   
-                        showCancelButton: false,   
-                        confirmButtonColor: "",   
-                        confirmButtonText: "OK",     
-                        closeOnConfirm: false,   
-                        closeOnCancel: false }, 
-                        function(isConfirm){
-                          if (isConfirm) {     
-                           window.location.reload();
-                          }
-                        });
-                  }
-                  if(json.success == false){
-                      swal('Error', json.errormessage, "error");
-                      $('[name = Nombre]').val('');
-                      $('#form-nueva').data('bootstrapValidator').resetForm();
-                  }
-              }, 'json');
+        $('.fa-spin').removeClass('hidden');
+        if($('[name = id]').val() == ''){
+          save('{{ URL::to("eventos/nuevoevento"); }}');
+        }
+        if($('[name = id]').val() != ''){
+          save('{{ URL::to("eventos/update"); }}');
+        }  
     });
 
     $('#datetimePicker').on('dp.change dp.show', function(e) {
@@ -197,7 +166,63 @@
     $('#main-menu').find('li').removeClass('active');
     $('#main-menu ul li:nth-child(4)').addClass('active');
     $('#sidebar-nav').find('li').removeClass('active');
-        $('#sidebar-nav ul li:nth-child(4)').addClass('active');
+    $('#sidebar-nav ul li:nth-child(4)').addClass('active');
 });
+  </script>
+  <script type="text/javascript">
+  function update(id){
+    $('.fa-spin').removeClass('hidden');
+    $.post('{{ URL::to("eventos/evento"); }}', "id="+id, function(json) {
+      if(json.success == false)
+        swal('Error', json.errormessage, "error");
+      else{
+        $('[name = id]').val(json.id);
+        $('[name = Nombre]').val(json.nombre);
+        $('[name = Fecha]').val(json.fecha);
+        $('[name = Lugar]').val(json.lugar);
+        $('[name = Precio]').val(json.precio);
+        $('[name = Descripcion]').val(json.descripcion);
+        $('[name = Tipo] option[value='+json.tipoevento_id+']').attr('selected', true);
+        
+        $('.update').removeClass('hidden');
+        $('#ok').addClass('hidden');
+        $('.fa-spin').addClass('hidden');
+      }
+    }, 'json');
+  }
+  function cancel(){
+    $('#form-nueva').data('bootstrapValidator').resetForm(true);
+    $('[name = id]').val('');
+    $('#ok').removeClass('hidden');
+    $('.update').addClass('hidden');
+  }
+  function save(url){
+    $.post(url, $('#form-nueva').serialize(), function(json) {
+                if(json.success == true){
+                    $('#form-nueva').data('bootstrapValidator').resetForm(true);
+                    
+                    swal({
+                      title: json.message,   
+                      text: "",   
+                      type: "success",   
+                      showCancelButton: false,   
+                      confirmButtonColor: "",   
+                      confirmButtonText: "OK",     
+                      closeOnConfirm: false,   
+                      closeOnCancel: false }, 
+                      function(isConfirm){
+                        if (isConfirm) {     
+                         window.location.reload();
+                        }
+                      });
+                }
+                if(json.success == false){
+                    swal('Error', json.errormessage, "error");
+                    $('[name = Nombre]').val('');
+                    $('#form-nueva').data('bootstrapValidator').resetForm();
+                }
+            }, 'json');
+  $('.fa-spin').addClass('hidden');
+  }
   </script>
 @endsection

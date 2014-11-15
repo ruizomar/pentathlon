@@ -17,7 +17,7 @@
   <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
           <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
               <i class="fa fa-bars"></i>
             </button>
             <a class="navbar-brand" href=""><img src="{{ asset('imgs/pdmu.png') }}" alt=""> PDMU</a>
@@ -65,7 +65,7 @@
 -- sidenavbar -->
   <div id="sidebar-nav" class="hidden-xs">
       <ul id="dashboard-menu" class="nav nav-list">
-          <li><a rel="tooltip" data-placement="right" data-original-title="Dashboard" href="{{ URL::to('pagos'); }}"><i class="fa fa-money"></i> <span class="caption">Pagos</span></a></li>
+          <li><a rel="tooltip" data-placement="right" data-original-title="Dashboard" href="{{ URL::to('pagos'); }}"><i class="fa fa-money"></i> <span class="caption">Enteros</span></a></li>
 
           <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Reports" href="{{ URL::to('companias'); }}"><i class="fa fa-map-marker"></i> <span class="caption">Companias</span></a></li>
 

@@ -17,7 +17,9 @@ class MembresiasController extends BaseController {
 			'nombre'	=> $elemento->persona->nombre.' '.$elemento->persona->apellidopaterno.' '.$elemento->persona->apellidomaterno,
 			'fecha'		=> $elemento->fechanacimiento,
 			'matricula' => $nummatricula,
-			'foto'		=> $elemento->documentos()->where('tipo','=','fotoperfil')->first()->ruta
+			'foto'		=> $elemento->documentos()->where('tipo','=','fotoperfil')->first()->ruta,
+			'grado'		=> $elemento->grados()->orderBy('fecha','desc')->first()->nombre,
+			'compania'	=> $elemento->companiasysubzona->tipo." ".$elemento->companiasysubzona->nombre
 			);
 			return Response::json($dato);
 	}

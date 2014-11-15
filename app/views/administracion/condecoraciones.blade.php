@@ -119,7 +119,7 @@
 Condecoraciones
 @endsection
 @section('elemento')
-    <div class="col-sm-8 col-sm-offset-2 well">
+    <div class="col-sm-8 col-sm-offset-2 contenedor">
         <div class="row" style='margin-bottom:15px;'>
             <div class="col-sm-2 col-xs-5">
                 <img src="" class="img-circle img-responsive img-thumbnail" id='foto' alt="Responsive image">
