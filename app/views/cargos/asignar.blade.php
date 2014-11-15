@@ -89,33 +89,12 @@
 				$('label[for=matricula]').text(json.matricula);
 				i = 0;
 				$.each(json.cargo,function(index,value){
-					$('#cargos').append('<form id="listacargos'+i+'"><li style="list-style-type: none; margin-left: -40px; margin-top:5px;"><label class="cargolabel'+i+' label label-success"><a class="closes" data-dismiss="alert2" onclick="eliminar('+i+')"><i class="fa fa-times"></i></a>'+value.nombre+' en '+value.companiasysubzona+'</label><input class="hidden" value="'+value.persona_id+'" name="personaid" type="text"><input class="hidden" value="'+value.cargo_id+'" name="cargoid" type="text"><input class="hidden" value="'+value.companiasysubzona_id+'" name="companiasysubzonaid" type="text"></li></form>');
+					$('#cargos').append('<li class="cargolabel'+i+'" style="list-style-type: none; margin-left: -40px; margin-top:5px;"><label class="label label-success"><a class="closes" data-dismiss="alert2" onclick="eliminar('+id+','+value.companiasysubzona_id+','+value.cargo_id+','+i+')"><i class="fa fa-times"></i></a>'+value.nombre+' en '+value.companiasysubzona+'</label></li>');
 					i++;
 				});
 				$('label[for=companiasysubzonas]').text(json.companiasysubzonas);
 				$('#fotoperfil').html('<img id="theImg" class="img-responsive img-thumbnail img-circle" src="imgs/fotos/'+json.fotoperfil+'" alt="Responsive image"/>');
 			}, 'json');
-		}
-	</script>
-	<script>
-		function eliminar(e) {
-			swal({
-				title: '¿Estás seguro?',
-				text: 'Se eliminará del cargo a este elemento',
-				type: 'warning',
-				showCancelButton: true,
-				confirmButtonColor: '#DD6B55',
-				confirmButtonText: 'Yes, delete it!',
-				closeOnConfirm: false,
-			},
-			function(){
-				$.post('cargos/eliminar',$('#listacargos'+e+'').serialize(), function(json) {
-					if(json){
-						swal('¡Hecho!', 'Se ha eliminado el cargo', 'success');
-						$('.cargolabel'+e+'').addClass('hidden');
-					}
-				}, 'json');
-			});
 		}
 	</script>
 	<script>
@@ -163,7 +142,7 @@
 					$('#cargos').html('');
 					i = 0;
 					$.each(json.cargo,function(index,value){
-						$('#cargos').append('<form id="listacargos'+i+'"><li style="list-style-type: none; margin-left: -40px; margin-top:5px;"><label class="cargolabel'+i+' label label-success"><a class="closes" data-dismiss="alert2" onclick="eliminar('+i+')"><i class="fa fa-times"></i></a>'+value.nombre+' en '+value.companiasysubzona+'</label><input class="hidden" value="'+value.persona_id+'" name="personaid" type="text"><input class="hidden" value="'+value.cargo_id+'" name="cargoid" type="text"><input class="hidden" value="'+value.companiasysubzona_id+'" name="companiasysubzonaid" type="text"></li></form>');
+						$('#cargos').append('<li class="cargolabel'+i+'" style="list-style-type: none; margin-left: -40px; margin-top:5px;"><label class="label label-success"><a class="closes" data-dismiss="alert2" onclick="eliminar('+value.elemento_id+','+value.companiasysubzona_id+','+value.cargo_id+','+i+')"><i class="fa fa-times"></i></a>'+value.nombre+' en '+value.companiasysubzona+'</label></li>');
 						i++;
 					});
 					swal('!Hecho!', 'Se ha guardado el cargo', 'success');
@@ -172,6 +151,28 @@
 		}
 		function capitalise(string) {
 			return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+		}
+	</script>
+	<script>
+		function eliminar(id,compania,cargo,clase) {
+			swal({
+				title: '¿Estás seguro?',
+				text: 'Se eliminará del cargo a este elemento',
+				type: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#DD6B55',
+				cancelButtonText: 'Cancelar',
+				confirmButtonText: 'Quitar el cargo',
+				closeOnConfirm: false,
+			},
+			function(){
+				$.post('cargos/eliminar',{id:id,compania:compania,cargo:cargo}, function(json) {
+					if(json){
+						swal('¡Hecho!', 'Se ha eliminado el cargo', 'success');
+						$('.cargolabel'+clase).remove();
+					}
+				}, 'json');
+			});
 		}
 	</script>
 @endsection

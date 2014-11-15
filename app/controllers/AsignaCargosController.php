@@ -44,7 +44,7 @@ class AsignaCargosController extends BaseController {
 					'companiasysubzona' => $pivote -> nombre,
 					'companiasysubzona_id' => $pivote -> id,
 					'cargo_id' => $carge -> id,
-					'persona_id' => $id,
+					'elemento_id' => $id,
 					);
 			}
 		}
@@ -111,31 +111,31 @@ class AsignaCargosController extends BaseController {
 			$elemento -> cargos() -> attach($cargo, array( 'fecha_inicio' => date('Y-m-d'),'companiasysubzona_id' => $companiasysubzona ) );
 		}
 		$carg = array();
-			$cargos = $elemento -> cargos;
-			foreach ($cargos as $carge) {
-				if (is_null($carge -> pivot -> fecha_fin)) {
-					$pivote = Companiasysubzona::find($carge -> pivot -> companiasysubzona_id);
-					$carg[] = array(
-						'nombre' => $carge -> nombre,
-						'companiasysubzona' => $pivote -> nombre,
-						'companiasysubzona_id' => $pivote -> id,
-						'cargo_id' => $carge -> id,
-						'persona_id' => $id,
-						);
-				}
+		$cargos = $elemento -> cargos;
+		foreach ($cargos as $carge) {
+			if (is_null($carge -> pivot -> fecha_fin)) {
+				$pivote = Companiasysubzona::find($carge -> pivot -> companiasysubzona_id);
+				$carg[] = array(
+					'nombre' => $carge -> nombre,
+					'companiasysubzona' => $pivote -> nombre,
+					'companiasysubzona_id' => $pivote -> id,
+					'cargo_id' => $carge -> id,
+					'elemento_id' => $id,
+					);
 			}
-			$datos = array(
-				'success' => true,
-				'cargo' => $carg,
-			);
+		}
+		$datos = array(
+			'success' => true,
+			'cargo' => $carg,
+		);
 		return Response::json($datos);
 	}
 
 	public function postEliminar()
 	{
-		$id = Input::get('personaid');
-		$cargo = Input::get('cargoid');
-		$lugar = Input::get('companiasysubzonaid');
+		$id = $_POST['id'];
+		$cargo = $_POST['cargo'];
+		$lugar = $_POST['compania'];
 		DB::table('cargo_elemento')
 			-> where('cargo_id','=',$cargo)
 			-> where('elemento_id','=',$id)
@@ -143,6 +143,11 @@ class AsignaCargosController extends BaseController {
 			-> update(array(
 				'fecha_fin' => date('Y-m-d'),
 			));
+		$datos = array(
+			'id' => $id,
+			'cargo' => $cargo,
+			'lugar' => $lugar,
+		);
 		return Response::json(true);
 	}
 
