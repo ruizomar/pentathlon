@@ -109,8 +109,8 @@
 			<div id="reconocimientos"></div>
 		</div>
 		<div class="requisitos col-md-3" style="left:12px;">
-			<h4 class="titulo text-center">Pagos</h4>
-			<div id="reconocimientos"></div>
+			<h4 class="titulo text-center">Enteros</h4>
+			<div id="pagos"></div>
 		</div>
 	</div>
 @stop
@@ -166,23 +166,24 @@
 		function examenesVista (hechos,noHechos) {
 			// console.log(hechos);
 			$.each(hechos,function(index, val){
-				$('#calificaciones').append('<div class="listado"><h2>'+val.nombre+'</h2><p><small>'+val.pivot.fecha+'</small><label class="pull-right label label-success calificacion">'+val.pivot.calificacion+'</label></p></div>');
 				if (val.pivot.calificacion < 6) {
-					$('.calificacion').addClass('label-danger');
-					$('.calificacion').removeClass('label-success');
+					$('#calificaciones').append('<div class="listado"><h2>'+val.nombre+'</h2><p><small>'+val.pivot.fecha+'</small><label class="pull-right label label-danger calificacion">'+val.pivot.calificacion+'</label></p></div>');
 					$('.calificaciones').addClass('error');
-				};
+				}
+				else {
+					$('#calificaciones').append('<div class="listado"><h2>'+val.nombre+'</h2><p><small>'+val.pivot.fecha+'</small><label class="pull-right label label-success calificacion">'+val.pivot.calificacion+'</label></p></div>');
+				}
 			});
 			// console.log(noHechos);
 			$.each(noHechos,function(index, val){
-				$('#calificaciones').append('<div class="listado"><h2>'+val.nombre+'</h2><p><small>Sin fecha</small><label class="pull-right label label-danger calificacion">NO</label></p></div>');
+				$('#calificaciones').append('<div class="listado"><h2>'+val.nombre+'</h2><p><small>Sin fecha</small><label class="pull-right label label-danger calificacion">NA</label></p></div>');
 				$('.calificaciones').addClass('error');
 			});
 		}
 		function reconocimientosVista (data) {
 			// console.log(data);
 			$.each(data,function(index, val){
-				$('#reconocimientos').append('<div class="listado"><h2>'+val.nombre+'</strong><p><small>'+val.fecha+'</small></p></div>');
+				$('#reconocimientos').append('<div class="listado"><h2><i class="fa fa-star-o"></i> '+val.nombre+'</strong><p><small>'+val.fecha+'</small></p></div>');
 			});
 		}
 	</script>

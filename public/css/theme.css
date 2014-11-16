@@ -1157,10 +1157,9 @@ label {
 .navbar-inverse .navbar-toggle:focus,
 .navbar-inverse .navbar-toggle:active {
   color: #333;
-  color: #4d4d5a;
+  color: #fff;
   background: none;
-  text-shadow: 0px 1px 0px #fff;
-  border: 1px solid #aaa;
+  border: 1px solid #fff;
   -webkit-box-shadow: 0px 1px 0px #ffffff;
   -moz-box-shadow: 0px 1px 0px #ffffff;
   box-shadow: 0px 1px 0px #ffffff;
