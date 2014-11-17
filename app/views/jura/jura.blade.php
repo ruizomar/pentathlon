@@ -13,16 +13,19 @@
 @section('contenido')
 	<div class="container col-md-12 form-horizontal">
 		<div class="col-md-4" style="margin-top:1em;">
-			{{ Form::select('lugar',$lugares,null,array('class' => 'form-control col-md-2')) }}
+			{{ Form::select('lugar',$lugares,null,array('id' => 'lugares','class' => 'form-control col-md-2')) }}
 		</div>
 		<div class="col-md-2" style="margin-top:1em;">
 			{{ Form::button('<i class="pull-left fa fa-list"></i>Consultar',array('id' => 'listar','class' => 'form-control col-md-2 btn btn-info')) }}
 		</div>
 		<div class="col-md-offset-4 col-md-2" style="margin-top:1em;">
-			{{ Form::button('<i class="pull-left fa fa-flag"></i>Guardar',array('id' => 'jurar','class' => 'form-control btn btn-success')) }}
+			{{ Form::button('<i class="pull-left fa fa-flag"></i>Guardar',array('id' => 'jurar','class' => 'hidden form-control btn btn-success')) }}
+		</div>
+		<div class="cargando col-md-12" style="margin-top:10em; display:none;">
+			<p class="text-center"><i class="fa fa-3x fa-cog fa-spin"></i></p>
 		</div>
 		<div class="col-md-12" style="margin-top:1em;">
-			<table id="telementos" class="col-md-12 display" cellspacing="0" width="100%">
+			<table id="telementos" class="hidden col-md-12 display" cellspacing="0" width="100%">
 				<thead>
 					<tr>
 						<th>Nombre</th>
@@ -41,10 +44,13 @@
 	</div>
 @stop
 @section('scripts')
+	{{  HTML::script('js/sweet-alert.min.js')}}
 	<script>
-		(function(){
-			$('#listar').on('click', function(e) {
+		$('#listar').on('click', function(e) {
+				// $('.cargando').fadeIn(1);
+				$('#elementobody').html('');
 				id = $( "[name=lugar]" ).val();
+				// $('.cargando').delay(300).fadeOut(1);
 				$.post('jura/llenartabla',{id:id}, function(json) {
 					$.each(json,function(index,elementos){
 						$('#elementobody').append('<tr>'+
@@ -55,7 +61,7 @@
 							'<td class="hidden">'+elementos.elemento_id+'</td>'+
 							'<td class="hidden">'+elementos.persona_id+'</td></tr>');
 					});
-					tabla = $('#telementos').dataTable( {
+					tabla = $('#telementos').DataTable( {
 						"language": {
 							"sProcessing":     "Procesando...",
 							"sLengthMenu":     "Mostrar _MENU_ registros",
@@ -82,7 +88,51 @@
 						},
 					} );
 				}, 'json');
-			});
-		})();
+				$('#listar').prop( "disabled",true);
+				$('#jurar').removeClass('hidden');
+				$('#telementos').removeClass('hidden');
+		});
+		$('#lugares').change(function(){
+			if (typeof tabla !== 'undefined') {
+				tabla.destroy();
+				$('#elementobody').html('');
+				$('#telementos').addClass('hidden');
+				$('#listar').prop( "disabled",false);
+				$('#jurar').addClass('hidden');
+			}
+		})
+	</script>
+	<script>
+		$('#jurar').on('click', function(e) {
+			swal({
+					title: '¿Estás seguro?',
+					text: 'Se agregará Jura de Bandera a los Elementos seleccionados',
+					type: 'warning',
+					showCancelButton: true,
+					confirmButtonColor: '#AEDEF4',
+					confirmButtonText: 'Si',
+					cancelButtonText: 'No, regresar a revisar',
+					closeOnConfirm: false,
+					closeOnCancel: false
+				},
+				function(isConfirm){
+					if (isConfirm){
+						jurarBandera();
+					}
+					else {
+						swal({
+							title:'Cancelado',
+							text:'No se ha guardado ningun cambio',
+							type: 'error',
+							timer: 1000
+						});
+					}
+				});
+			$.post('jura/llenartabla',{id:id}, function(json) {
+			}, 'json');
+		});
+		function jurarBandera () {
+			swal('!Hecho!', 'Se han guardado los cambios', 'success');
+		}
 	</script>
 @endsection

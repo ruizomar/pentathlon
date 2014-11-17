@@ -31,8 +31,6 @@
 		}
 	</style>
 	{{  HTML::style('css/sweet-alert.css');  }}
-	{{  HTML::script('js/jspdf.js'); }}
-
 @endsection
 @section('elemento')
 	{{ Form::open(array('id' => 'formulariocargos','url'=>'cargos/update','files'=>true)) }}
@@ -77,7 +75,7 @@
 	{{Form::close()}}
 @stop
 @section('scripts2')
-	{{  HTML::script('js/sweet-alert.min.js'); }}
+	{{  HTML::script('js/sweet-alert.min.js')}}
 	<script>
 		function encontrado (id) {
 			$.post('cargos/buscar',{id:id}, function(json) {
