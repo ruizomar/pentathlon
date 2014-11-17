@@ -20,7 +20,7 @@
 			{{ Form::button('<i class="pull-left fa fa-list"></i>Consultar',array('id' => 'listar','class' => 'form-control col-md-2 btn btn-info')) }}
 		</div>
 		<div class="col-md-offset-4 col-md-2" style="margin-top:1em;">
-			{{ Form::button('<i class="pull-left fa fa-flag"></i>Guardar',array('id' => 'jurar','class' => 'hidden form-control btn btn-success')) }}
+			{{ Form::button('<i class="fa fa-trash"></i>  Eliminar',array('id' => 'eliminar','class' => 'hidden pull-right btn btn-danger btn-xs')) }}
 		</div>
 		<div class="cargando col-md-12" style="margin-top:10em; display:none;">
 			<p class="text-center"><i class="fa fa-3x fa-cog fa-spin"></i></p>
@@ -42,62 +42,82 @@
 				</tbody>
 			</table>
 		</div>
+		<div class="col-md-12" style="margin-top:1em;">
+			{{ Form::button('<i class="fa fa-flag"></i> Jurar',array('id' => 'jurar','class' => 'pull-right col-md-1 hidden btn btn-success')) }}
+		</div>
 	</div>
 @stop
 @section('scripts')
 	{{  HTML::script('js/sweet-alert.min.js')}}
 	<script>
 		$('#listar').on('click', function(e) {
-				$('#elementobody').html('');
-				id = $( "[name=lugar]" ).val();
-				$.post('jura/llenartabla',{id:id}, function(json) {
-					$.each(json,function(index,elementos){
-						$('#elementobody').append('<tr>'+
-							'<td>'+elementos.nombre+'</td>'+
-							'<td>'+elementos.paterno+'</td>'+
-							'<td>'+elementos.materno+'</td>'+
-							'<td>'+elementos.matricula+'</td>'+
-							'<td class="hidden">'+elementos.elemento_id+'</td>'+
-							'<td class="hidden">'+elementos.persona_id+'</td></tr>');
-					});
-					tabla = $('#telementos').DataTable( {
-						"language": {
-							"sProcessing":     "Procesando...",
-							"sLengthMenu":     "Mostrar _MENU_ registros",
-							"sZeroRecords":    "No se encontraron resultados",
-							"sEmptyTable":     "Ningún dato disponible en esta tabla",
-							"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-							"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-							"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-							"sInfoPostFix":    "",
-							"sSearch":         "Buscar:",
-							"sUrl":            "",
-							"sInfoThousands":  ",",
-							"sLoadingRecords": "Cargando...",
-							"oPaginate": {
-								"sFirst":    "Primero",
-								"sLast":     "Último",
-								"sNext":     "Siguiente",
-								"sPrevious": "Anterior"
-							},
-							"oAria": {
-								"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-								"sSortDescending": ": Activar para ordenar la columna de manera descendente"
-							}
+			$('#elementobody').html('');
+			id = $( "[name=lugar]" ).val();
+			$.post('jura/llenartabla',{id:id}, function(json) {
+				$.each(json,function(index,elementos){
+					$('#elementobody').append('<tr>'+
+						'<td>'+elementos.nombre+'</td>'+
+						'<td>'+elementos.paterno+'</td>'+
+						'<td>'+elementos.materno+'</td>'+
+						'<td>'+elementos.matricula+'</td>'+
+						'<td class="hidden">'+elementos.elemento_id+'</td>'+
+						'<td class="hidden">'+elementos.persona_id+'</td></tr>');
+				});
+				tabla = $('#telementos').DataTable( {
+					"language": {
+						"sProcessing":     "Procesando...",
+						"sLengthMenu":     "Mostrar _MENU_ registros",
+						"sZeroRecords":    "No se encontraron resultados",
+						"sEmptyTable":     "Ningún dato disponible en esta tabla",
+						"sInfo":           "Mostrando un total de _TOTAL_ registros",
+						"sInfoEmpty":      "Mostrando un total de 0 registros",
+						"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+						"sInfoPostFix":    "",
+						"sSearch":         "Buscar:",
+						"sUrl":            "",
+						"sInfoThousands":  ",",
+						"sLoadingRecords": "Cargando...",
+						"oPaginate": {
+							"sFirst":    "Primero",
+							"sLast":     "Último",
+							"sNext":     "Siguiente",
+							"sPrevious": "Anterior"
 						},
-					} );
-				}, 'json');
-				$('#listar').prop( "disabled",true);
-				$('#jurar').removeClass('hidden');
-				$('#telementos').removeClass('hidden');
+						"oAria": {
+							"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+							"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+						}
+					},
+					paging: false,
+				});
+			}, 'json');
+			$('#listar').prop( "disabled",true);
+			$('#jurar').removeClass('hidden');
+			$('#telementos').removeClass('hidden');
+		});
+		$('#telementos tbody').on( 'click', 'tr', function () {
+			if ( $(this).hasClass('selected') ) {
+				$(this).removeClass('selected');
+				$('#eliminar').addClass('hidden');
+			}
+			else {
+				tabla.$('tr.selected').removeClass('selected');
+				$(this).addClass('selected');
+				$('#eliminar').removeClass('hidden');
+			}
+		});
+		$('#eliminar').click( function () {
+			tabla.row('.selected').remove().draw( false );
 		});
 		$('#lugares').change(function(){
 			if (typeof tabla !== 'undefined') {
+				console.log('dddd');
 				tabla.destroy();
 				$('#elementobody').html('');
 				$('#telementos').addClass('hidden');
 				$('#listar').prop( "disabled",false);
 				$('#jurar').addClass('hidden');
+				$('#eliminar').addClass('hidden');
 			}
 		})
 	</script>
@@ -132,8 +152,6 @@
 			id = $('#telementos').val();
 			$.post('jura/jurar',{id:id}, function(json) {
 				var data = $('#telementos').tableToJSON();
-				// var data = tabla.$('td').serialize();
-				// var data = $(tabla).serialize();
 				console.log(data);
 			}, 'json');
 			swal('!Hecho!', 'Se han guardado los cambios', 'success');
