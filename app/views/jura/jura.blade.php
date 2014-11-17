@@ -6,7 +6,8 @@
 	<style>
 	</style>
 	{{  HTML::style('css/sweet-alert.css');  }}
-	{{  HTML::script('js/tables/jquery.dataTables.min.js'); }}
+	{{  HTML::script('js/tables/jquery.dataTables.min.js')}}
+	{{  HTML::script('js/tables/jquery.tabletojson.min.js')}}
 	<!-- {{  HTML::script('css/jquery.dataTables.css'); }} -->
 	<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.4/css/jquery.dataTables.css">
 @endsection
@@ -47,10 +48,8 @@
 	{{  HTML::script('js/sweet-alert.min.js')}}
 	<script>
 		$('#listar').on('click', function(e) {
-				// $('.cargando').fadeIn(1);
 				$('#elementobody').html('');
 				id = $( "[name=lugar]" ).val();
-				// $('.cargando').delay(300).fadeOut(1);
 				$.post('jura/llenartabla',{id:id}, function(json) {
 					$.each(json,function(index,elementos){
 						$('#elementobody').append('<tr>'+
@@ -128,10 +127,15 @@
 						});
 					}
 				});
-			$.post('jura/llenartabla',{id:id}, function(json) {
-			}, 'json');
 		});
 		function jurarBandera () {
+			id = $('#telementos').val();
+			$.post('jura/jurar',{id:id}, function(json) {
+				var data = $('#telementos').tableToJSON();
+				// var data = tabla.$('td').serialize();
+				// var data = $(tabla).serialize();
+				console.log(data);
+			}, 'json');
 			swal('!Hecho!', 'Se han guardado los cambios', 'success');
 		}
 	</script>

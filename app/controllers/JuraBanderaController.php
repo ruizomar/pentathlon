@@ -56,4 +56,9 @@ class JuraBanderaController extends BaseController {
 		return Response::json($elementosArr);
 	}
 
+	public function postJurar()
+	{
+		$lugar_id = $_POST['id'];
+		return Response::json($lugar_id);
+	}
 }
