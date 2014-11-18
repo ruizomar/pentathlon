@@ -177,7 +177,7 @@ class AltaReclutaController extends BaseController {
 		$elemento = Elemento::find($id);
 		$elemento->grados()->attach(1, array('fecha' => date('Y-m-d')));
 		$status = $elemento->status()->save(new Statu(array(
-					'tipo' => 'Activo',
+					'tipo' => 'Nuevo',
 					'inicio' => date("Y-m-d"),
 					'descripcion' => 'Nuevo elemento')));
 	}

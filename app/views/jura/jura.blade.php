@@ -20,7 +20,7 @@
 			{{ Form::button('<i class="pull-left fa fa-list"></i>Consultar',array('id' => 'listar','class' => 'form-control col-md-2 btn btn-info')) }}
 		</div>
 		<div class="col-md-offset-4 col-md-2" style="margin-top:1em;">
-			{{ Form::button('<i class="fa fa-trash"></i>  Eliminar',array('id' => 'eliminar','class' => 'hidden pull-right btn btn-danger btn-xs')) }}
+			{{ Form::button('<i class="fa fa-trash"></i>  Eliminar',array('id' => 'eliminar','class' => 'hidden disabled pull-right btn btn-danger btn-xs')) }}
 		</div>
 		<div class="cargando col-md-12" style="margin-top:10em; display:none;">
 			<p class="text-center"><i class="fa fa-3x fa-cog fa-spin"></i></p>
@@ -51,6 +51,7 @@
 	{{  HTML::script('js/sweet-alert.min.js')}}
 	<script>
 		$('#listar').on('click', function(e) {
+			$('#eliminar').removeClass('hidden');
 			$('#elementobody').html('');
 			id = $( "[name=lugar]" ).val();
 			$.post('jura/llenartabla',{id:id}, function(json) {
@@ -89,6 +90,7 @@
 						}
 					},
 					paging: false,
+					searching: false,
 				});
 			}, 'json');
 			$('#listar').prop( "disabled",true);
@@ -98,25 +100,26 @@
 		$('#telementos tbody').on( 'click', 'tr', function () {
 			if ( $(this).hasClass('selected') ) {
 				$(this).removeClass('selected');
-				$('#eliminar').addClass('hidden');
+				$('#eliminar').addClass('disabled');
 			}
 			else {
 				tabla.$('tr.selected').removeClass('selected');
 				$(this).addClass('selected');
-				$('#eliminar').removeClass('hidden');
+				$('#eliminar').removeClass('disabled');
 			}
 		});
 		$('#eliminar').click( function () {
 			tabla.row('.selected').remove().draw( false );
+			$('#eliminar').addClass('disabled');
 		});
 		$('#lugares').change(function(){
 			if (typeof tabla !== 'undefined') {
-				console.log('dddd');
 				tabla.destroy();
 				$('#elementobody').html('');
 				$('#telementos').addClass('hidden');
 				$('#listar').prop( "disabled",false);
 				$('#jurar').addClass('hidden');
+				$('#eliminar').addClass('disabled');
 				$('#eliminar').addClass('hidden');
 			}
 		})
@@ -149,10 +152,16 @@
 				});
 		});
 		function jurarBandera () {
-			id = $('#telementos').val();
-			$.post('jura/jurar',{id:id}, function(json) {
-				var data = $('#telementos').tableToJSON();
-				console.log(data);
+			// var JSONObj = new Object();
+			var data = $('#telementos').tableToJSON({
+				onlyColumns:[4,5],
+			});
+			// console.log(JSONObj);
+			// $.each(data,function(index,ele){
+				// console.log(ele);
+			// });
+			$.post('jura/jurar',{data:data}, function(json) {
+				console.log(json);
 			}, 'json');
 			swal('!Hecho!', 'Se han guardado los cambios', 'success');
 		}
