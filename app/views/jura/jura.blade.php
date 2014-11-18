@@ -154,7 +154,7 @@
 		function jurarBandera () {
 			// var JSONObj = new Object();
 			var data = $('#telementos').tableToJSON({
-				onlyColumns:[4,5],
+				onlyColumns:[4],
 			});
 			// console.log(JSONObj);
 			// $.each(data,function(index,ele){

@@ -22,7 +22,7 @@ class JuraBanderaController extends BaseController {
 		foreach ($elementos as $elemento) {
 			$activo = $elemento -> status -> last() -> tipo;
 			$matricula = $elemento -> matricula;
-			if($activo == 'nuevo' && !is_null($matricula)){
+			if($activo == 'Nuevo' && !is_null($matricula)){
 				$personaElemento = $elemento -> persona;
 				$elementosArr[] = array(
 					'nombre' => $personaElemento -> nombre,
