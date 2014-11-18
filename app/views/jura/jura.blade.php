@@ -89,6 +89,11 @@
 							"sSortDescending": ": Activar para ordenar la columna de manera descendente"
 						}
 					},
+					aLengthMenu: [
+						[-1],
+						["All"]
+					],
+					iDisplayLength: -1,
 					paging: false,
 					searching: false,
 				});
@@ -127,29 +132,29 @@
 	<script>
 		$('#jurar').on('click', function(e) {
 			swal({
-					title: '¿Estás seguro?',
-					text: 'Se agregará Jura de Bandera a los Elementos seleccionados',
-					type: 'warning',
-					showCancelButton: true,
-					confirmButtonColor: '#AEDEF4',
-					confirmButtonText: 'Si',
-					cancelButtonText: 'No, regresar a revisar',
-					closeOnConfirm: false,
-					closeOnCancel: false
-				},
-				function(isConfirm){
-					if (isConfirm){
-						jurarBandera();
-					}
-					else {
-						swal({
-							title:'Cancelado',
-							text:'No se ha guardado ningun cambio',
-							type: 'error',
-							timer: 1000
-						});
-					}
-				});
+				title: '¿Estás seguro?',
+				text: 'Se agregará Jura de Bandera a los Elementos seleccionados',
+				type: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#AEDEF4',
+				confirmButtonText: 'Si',
+				cancelButtonText: 'No, regresar a revisar',
+				closeOnConfirm: false,
+				closeOnCancel: false
+			},
+			function(isConfirm){
+				if (isConfirm){
+					jurarBandera();
+				}
+				else {
+					swal({
+						title:'Cancelado',
+						text:'No se ha guardado ningun cambio',
+						type: 'error',
+						timer: 1000
+					});
+				}
+			});
 		});
 		function jurarBandera () {
 			var data = $('#telementos').tableToJSON({
