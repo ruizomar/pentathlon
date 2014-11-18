@@ -4,102 +4,105 @@
 @endsection
 @section('head')
 	<style>
-	.hiddenStepInfo {
-		display: none;
-	}
+		.hiddenStepInfo {
+			display: none;
+		}
 
-	.activeStepInfo {
-		display: block !important;
-	}
+		.activeStepInfo {
+			display: block !important;
+		}
 
-	.setup-content {
-		margin-top: 10px;
-	}
+		.setup-content {
+			margin-top: 10px;
+		}
 
-	.progress {
-		position: relative;
-		height: 5px;
-		margin-top: 10px;
-	}
+		.progress {
+			position: relative;
+			height: 5px;
+			margin-top: 10px;
+		}
 
-	.progress > .progress-type {
-		padding: 3px 30px 2px 10px;
-		color: rgb(255, 255, 255);
-		background-color: rgba(25, 25, 25, 0.2);
-	}
+		.progress > .progress-type {
+			padding: 3px 30px 2px 10px;
+			color: rgb(255, 255, 255);
+			background-color: rgba(25, 25, 25, 0.2);
+		}
 
-	.progress > .progress-completed {
-		position: absolute;
-		right: 0px;
-		font-weight: 800;
-		padding: 3px 10px 2px;
-	}
+		.progress > .progress-completed {
+			position: absolute;
+			right: 0px;
+			font-weight: 800;
+			padding: 3px 10px 2px;
+		}
 
-	.step {
-		text-align: center;
-	}
+		.step {
+			text-align: center;
+		}
 
-	.step .seleccion {
-		background-color: #fff;
-		border: 1px solid #C0C0C0;
-		border-radius: 5px 5px 5px 5px;
-		margin-top: 10px;
-	}
+		.step .seleccion {
+			background-color: #fff;
+			border: 1px solid #C0C0C0;
+			border-radius: 5px 5px 5px 5px;
+			margin-top: 10px;
+		}
 
-	.step .seleccion:last-child {
-		border: 1px solid #C0C0C0;
-		border-radius: 5px 5px 5px 5px;
-		margin-top: 10px;
-	}
+		.step .seleccion:last-child {
+			border: 1px solid #C0C0C0;
+			border-radius: 5px 5px 5px 5px;
+			margin-top: 10px;
+		}
 
-	.step .seleccion:first-child {
-		border-radius: 5px 5px 5px 5px;
-		margin-top: 10px;
-	}
+		.step .seleccion:first-child {
+			border-radius: 5px 5px 5px 5px;
+			margin-top: 10px;
+		}
 
-	.step .seleccion:last-child {
-		border-radius: 5px 5px 5px 5px;
-		margin-top: 10px;
-	}
+		.step .seleccion:last-child {
+			border-radius: 5px 5px 5px 5px;
+			margin-top: 10px;
+		}
 
-	.step .seleccion:hover {
-		color: #F58723;
-		cursor: pointer;
-	}
+		.step .seleccion:hover {
+			color: #F58723;
+			cursor: pointer;
+		}
 
-	.setup-content {
-		background-color: #f2f2f2;
-	}
+		.setup-content {
+			background-color: #f2f2f2;
+		}
 
-	.step .activestep {
-		color: #F58723;
-		border-left: 2px solid #5CB85C !important;
-		border-right: 2px solid #5CB85C !important;
-		border-top: 2px solid #5CB85C !important;
-		border-bottom: 2px solid #5CB85C !important;
-		vertical-align: central;
-	}
+		.step .activestep {
+			color: #F58723;
+			border-left: 2px solid #5CB85C !important;
+			border-right: 2px solid #5CB85C !important;
+			border-top: 2px solid #5CB85C !important;
+			border-bottom: 2px solid #5CB85C !important;
+			vertical-align: central;
+		}
 
-	.step .fa {
-		padding-top: 15px;
-		font-size: 40px;
-	}
+		.step .fa {
+			padding-top: 15px;
+			font-size: 40px;
+		}
 	</style>
+	{{  HTML::script('css/tour/bootstrap-tour.min.css')}}
+	{{  HTML::script('js/tour/bootstrap-tour.min.js')}}
 	<script src="../js/fileinput.js" type="text/javascript"></script>
 	<link href="../css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
 @endsection
 @section('contenido')
+	{{ Form::button('<i class="fa fa-question"></i>',array('id' => 'tour','class' => 'pull-right btn btn-warning btn-xs')) }}
 	{{ Form::open(array('id' => 'formularioalta','url'=>'recluta/alta','files'=>true)) }}
 		<div class="col-md-2 step">
-			<div id="div1" class="seleccion activestep" onclick="javascript: resetActive(event, 33, 'step-1');">
+			<div id="div1" class="tour-1 seleccion activestep" onclick="javascript: resetActive(event, 33, 'step-1');">
 				<span class="fa fa-user"></span>
 				<p>Básicos</p>
 			</div>
-			<div class="seleccion" onclick="javascript: resetActive(event, 66, 'step-2');">
+			<div class="tour-2 seleccion" onclick="javascript: resetActive(event, 66, 'step-2');">
 				<span class="fa fa-pencil"></span>
 				<p>Datos de elemento</p>
 			</div>
-			<div class="seleccion" onclick="javascript: resetActive(event, 100, 'step-3');">
+			<div class="tour-3 seleccion" onclick="javascript: resetActive(event, 100, 'step-3');">
 				<span class="fa fa-plus-square"></span>
 				<p>Contacto/Tutor</p>
 			</div>
@@ -342,24 +345,56 @@
 @endsection
 @section('scripts')
 	<script>
-	$( "#curp" ).focusout(function() {
-		var curp = $(this).val();
-		$.post('curp',{curp:curp}, function(json) {
-			if (!json.success) {
-				console.log(json);
-				$('#curperror').removeClass('hidden');
-				$('#idcurp').addClass('has-error');
-				$('[name=curp]').val('');
-				$('#formularioalta').bootstrapValidator('revalidateField','curp');
-				$('[name=curp]').focus();
-				$('[name=curp]').closest('div').find('small').html(curp+' ya está registrada');
+		$( "#curp" ).focusout(function() {
+			var curp = $(this).val();
+			$.post('curp',{curp:curp}, function(json) {
+				if (!json.success) {
+					// console.log(json);
+					// $('#curperror').removeClass('hidden');
+					$('#idcurp').addClass('has-error');
+					$('[name=curp]').val('');
+					$('#formularioalta').bootstrapValidator('revalidateField','curp');
+					$('[name=curp]').focus();
+					$('[name=curp]').closest('div').find('small').html(curp+' ya está registrada');
 
-			}
-		}, 'json');
-	})
+				}
+			}, 'json');
+		})
 	</script>
 	<script>
-		//$('#curp').popover();
+	</script>
+	<script>
+		$('#tour').on('click', function(e) {
+			console.log('asdasd');
+			// Instance the tour
+			var tour = new Tour({
+				steps: [
+					{
+						element: ".tour-1",
+						title: "Datos básicos del elementos",
+						content: "Ingresa la información del elemento",
+					},
+					{
+						element: ".tour-2",
+						title: "Datos del elemento",
+						content: "Dá click aquí para mostrar el formulario",
+					},
+					{
+						element: ".tour-3",
+						title: "Datos de contacto",
+						content: "Dá click aquí para mostrar el formulario",
+					},
+				],
+				backdrop: true,
+				storage: false,
+			});
+
+			// Initialize the tour
+			tour.init();
+
+			// Start the tour
+			tour.start();
+		});
 	</script>
 	<script>
 		$("#filefoto").fileinput({
