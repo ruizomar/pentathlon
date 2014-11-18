@@ -103,14 +103,10 @@
 			$('#telementos').removeClass('hidden');
 		});
 		$('#telementos tbody').on( 'click', 'tr', function () {
-			if ( $(this).hasClass('selected') ) {
-				$(this).removeClass('selected');
+			$(this).toggleClass('selected');
+			$('#eliminar').removeClass('disabled');
+			if(tabla.rows('.selected').data().length == 0){
 				$('#eliminar').addClass('disabled');
-			}
-			else {
-				tabla.$('tr.selected').removeClass('selected');
-				$(this).addClass('selected');
-				$('#eliminar').removeClass('disabled');
 			}
 		});
 		$('#eliminar').click( function () {
