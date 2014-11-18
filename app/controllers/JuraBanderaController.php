@@ -9,7 +9,6 @@ class JuraBanderaController extends BaseController {
 		{
 			$companiasysubzonasArr[$compayzona->id] = $compayzona->tipo.' '.ucwords(strtolower($compayzona->nombre));
 		}
-		$lugar = Companiasysubzona::find(1);
 		return View::make('jura.jura') -> with('lugares',$companiasysubzonasArr);
 	}
 
@@ -39,8 +38,16 @@ class JuraBanderaController extends BaseController {
 
 	public function postJurar()
 	{
-		$rr = Grado::all();
-		$datos = $_POST['data'];
-		return Response::json($datos[0]["elemento_id"]);
+		$elementos = $_POST['data'];
+		foreach ($elementos as $elemento) {
+			$id = $elemento['elemento_id'];
+			$element = Elemento::find($id);
+			// $element->grados()->attach(1, array('fecha' => date('Y-m-d')));
+			$status = $element -> status() -> save(new Statu(array(
+				'tipo' => 'Activo',
+				'inicio' => date("Y-m-d"),
+				'descripcion' => 'Jura de Bandera')));
+		}
+		return Response::json(true);
 	}
 }
