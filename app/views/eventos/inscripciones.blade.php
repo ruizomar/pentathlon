@@ -17,7 +17,7 @@
     text-align: center;
     border-top-right-radius: 4px;
     border-top-left-radius: 4px;
-    font-weight: bold;
+    font-weight: bold; 
   }
   </style>
 @endsection
@@ -56,16 +56,16 @@
         </div>
       {{ Form::close() }}
     </div>
-    <div class="col-sm-5 contenedor">
+    <div class="col-sm-5 contenedor" style="min-height:610px;">
       <h2>No inscritos</h2>
       <div id="dnoinscritos"></div>
     </div>
-    <div class="col-sm-1" style="top:20px;">
+    <div class="col-sm-1" style="top:20px; margin-bottom:60px;">
       <button id="agregar" type="button" class="btn btn-info" style="margin-top:20px;">Agregar</button>
       <i class="fa fa-refresh fa-spin fa-4x hidden"></i>
       <button id="remover" type="button" class="btn btn-warning" style="margin-top:20px;">Remover</button>
     </div>
-    <div class="col-sm-5 contenedor">
+    <div class="col-sm-5 contenedor" style="min-height:610px;">
       <h2>Inscritos</h2>
       <div id="dinscritos"></div>
     </div>
@@ -92,6 +92,7 @@
             selects += '<option value="'+evento.id+'">'+evento.nombre+'</option>';
           }
         });
+          $('[name = id]').val("");
           $('[name = Lugar]').val("");
           $('[name = Fecha]').val("");
           $('[name = Descripcion]').val("");
@@ -169,30 +170,30 @@
           swal('Error', json.errormessage, "error");
       }
         $('#noinscritos, #inscritos').find('tbody').find('tr').on( 'click', function () {
-          $(this).toggleClass('active');
+          $(this).toggleClass('success');
         } );
         $('.fa-spin').addClass('hidden');
     }, 'json');
   });
 $('#agregar').click(function(){
-  if($('#noinscritos').DataTable().rows('.active').data().length == 0){
+  if($('#noinscritos').DataTable().rows('.success').data().length == 0){
     swal('Error', "Ningun elemento seleccionado", "error");
   }
   else{
     var elementos = '';
-    $('#noinscritos').DataTable().rows('.active').data().each(function( row ) {
+    $('#noinscritos').DataTable().rows('.success').data().each(function( row ) {
       elementos += row[0]+"=on&";
     });
     evento_elemento("{{ URL::to('eventos/inscribir'); }}",elementos);
   }
 });
 $('#remover').click(function(){
-  if($('#inscritos').DataTable().rows('.active').data().length == 0){
+  if($('#inscritos').DataTable().rows('.success').data().length == 0){
     swal('Error', "Ningun elemento seleccionado", "error");
   }
   else{
     var elementos = '';
-    $('#inscritos').DataTable().rows('.active').data().each(function( row ) {
+    $('#inscritos').DataTable().rows('.success').data().each(function( row ) {
       elementos += row[0]+"=on&";
     });
     evento_elemento("{{ URL::to('eventos/desinscribir'); }}",elementos);

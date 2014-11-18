@@ -54,7 +54,8 @@ class EventosController extends BaseController{
 
 	public function postEventos(){
 		return Response::json(
-			Evento::where('fecha','>=',date('Y-m-d'))
+			Evento::where('fecha','>=',date('Y-m-d'),'and')
+			->where('precio','>',0)
 			->orderBy('fecha','asc')
 			->get()
 		);
@@ -120,7 +121,8 @@ class EventosController extends BaseController{
 			$tipos[$tipo->id] = $tipo->nombre;
 		}
 		return View::make('eventos/inscripciones')
-			->with('eventos',Evento::where('fecha','>',date('Y-m-d'))
+			->with('eventos',Evento::where('fecha','>',date('Y-m-d'),'and')
+				->where('precio','=',0)
 				->orderBy('fecha','asc')
 				->get())
 			->with('tipos',$tipos);

@@ -27,7 +27,7 @@ class BuscarController extends BaseController{
 
 		if(count($elemento) == 1){
 			$elemento = $elemento->first();
-			if ($elemento->status()->orderBy('inicio','desc')->first()->tipo == 'Activo') {
+			if ($elemento->status()->orderBy('inicio','desc')->first()->tipo == 'Activo' || $elemento->status()->orderBy('inicio','desc')->first()->tipo == 'Nuevo') {
 				$dato = array(
 					'success' => true,
 					'id' => $elemento->id
