@@ -85,10 +85,10 @@
 			font-size: 40px;
 		}
 	</style>
-	{{  HTML::script('css/tour/bootstrap-tour.min.css')}}
+	{{  HTML::script('js/fileinput.js')}}
 	{{  HTML::script('js/tour/bootstrap-tour.min.js')}}
-	<script src="../js/fileinput.js" type="text/javascript"></script>
-	<link href="../css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
+	{{  HTML::style('css/tour/bootstrap-tour.min.css')}}
+	{{  HTML::style('css/fileinput.css')}}
 @endsection
 @section('contenido')
 	{{ Form::button('<i class="fa fa-question"></i>',array('id' => 'tour','class' => 'pull-right btn btn-warning btn-xs')) }}
@@ -349,24 +349,17 @@
 			var curp = $(this).val();
 			$.post('curp',{curp:curp}, function(json) {
 				if (!json.success) {
-					// console.log(json);
-					// $('#curperror').removeClass('hidden');
 					$('#idcurp').addClass('has-error');
 					$('[name=curp]').val('');
 					$('#formularioalta').bootstrapValidator('revalidateField','curp');
 					$('[name=curp]').focus();
 					$('[name=curp]').closest('div').find('small').html(curp+' ya está registrada');
-
 				}
 			}, 'json');
 		})
 	</script>
 	<script>
-	</script>
-	<script>
 		$('#tour').on('click', function(e) {
-			console.log('asdasd');
-			// Instance the tour
 			var tour = new Tour({
 				steps: [
 					{
@@ -388,11 +381,7 @@
 				backdrop: true,
 				storage: false,
 			});
-
-			// Initialize the tour
 			tour.init();
-
-			// Start the tour
 			tour.start();
 		});
 	</script>
@@ -566,9 +555,6 @@
 	</script>
 	<script type="text/javascript">
 		function resetActive(event, percent, step) {
-			//$(".progress-bar").css("width", percent + "%").attr("aria-valuenow", percent);
-			//$(".progress-completed").text(percent + "%");
-
 			$("div").each(function () {
 			if ($(this).hasClass("activestep")) {
 			$(this).removeClass("activestep");

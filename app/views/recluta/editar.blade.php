@@ -66,11 +66,14 @@
       font-size: 40px;
     }
   </style>
-  <script src="../js/fileinput.js" type="text/javascript"></script>
-  <link href="../css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
+  {{  HTML::script('js/fileinput.js')}}
+  {{  HTML::script('js/tour/bootstrap-tour.min.js')}}
+  {{  HTML::style('css/tour/bootstrap-tour.min.css')}}
+  {{  HTML::style('css/fileinput.css')}}
 @endsection
 @section('contenido')
   <form id="buscarelemento" role="form" method="POST" action="buscar">
+    {{ Form::button('<i class="fa fa-question"></i>',array('id' => 'tour','class' => 'pull-right btn btn-warning btn-xs')) }}
     <div class="col-md-10">
       <div class="col-md-3 form-group">
         {{ Form::label('nombre', 'Nombre (s)',array('class' => 'control-label')) }}
@@ -98,15 +101,15 @@
     <div id="elemento" class="col-mds-12 tabla hidden">
     <div class="col-md-10">
       <div class="col-md-2 step">
-        <div id="div1" class="seleccion activestep" onclick="javascript: resetActive(event, 33, 'step-1');">
+        <div id="div1" class="tour-1 seleccion activestep" onclick="javascript: resetActive(event, 33, 'step-1');">
           <span class="fa fa-user"></span>
           <p>Básicos</p>
         </div>
-        <div class="seleccion" onclick="javascript: resetActive(event, 66, 'step-2');">
+        <div class="tour-2 seleccion" onclick="javascript: resetActive(event, 66, 'step-2');">
           <span class="fa fa-pencil"></span>
           <p>Datos</p>
         </div>
-        <div class="seleccion" onclick="javascript: resetActive(event, 100, 'step-3');">
+        <div class="tour-3 seleccion" onclick="javascript: resetActive(event, 100, 'step-3');">
           <span class="fa fa-plus-square"></span>
           <p>Contacto/Tutor</p>
         </div>
@@ -311,7 +314,7 @@
       </div>
     </div>
     <div class="col-md-2">
-          {{ Form::image(null,'fotoperfil',array('class' => 'img-responsive img-circle','alt' => 'Responsive image')) }}
+          {{ Form::image('imgs/fotos/default.png','fotoperfil',array('class' => 'img-responsive img-circle','alt' => 'Responsive image')) }}
           {{ Form::file('fotoperfil',array('id' => 'filefoto')) }}
     </div>
   </form>
@@ -499,20 +502,17 @@
         $('#contactofbtw').toggle(80);
       })
       .find('button[data-toggle]')
-          .on('click', function() {
-              var $target = $($(this).attr('data-toggle'));
-              $target.toggle();
-              if (!$target.is(':visible')) {
-                  $('#togglingForm').data('bootstrapValidator').disableSubmitButtons(false);
-              }
-          });
+      .on('click', function() {
+          var $target = $($(this).attr('data-toggle'));
+          $target.toggle();
+          if (!$target.is(':visible')) {
+              $('#togglingForm').data('bootstrapValidator').disableSubmitButtons(false);
+          }
+      });
     });
   </script>
   <script type="text/javascript">
     function resetActive(event, percent, step) {
-      //$(".progress-bar").css("width", percent + "%").attr("aria-valuenow", percent);
-      //$(".progress-completed").text(percent + "%");
-
       $("div").each(function () {
       if ($(this).hasClass("activestep")) {
       $(this).removeClass("activestep");
@@ -543,6 +543,33 @@
       var id = "#" + step;
       $(id).addClass("activeStepInfo");
     }
+  </script>
+  <script>
+    $('#tour').on('click', function(e) {
+      var tour = new Tour({
+        steps: [
+          {
+            element: '.tour-1',
+            title: 'Datos básicos del elementos',
+            content: 'Ingresa la información del elemento',
+          },
+          {
+            element: '.tour-2',
+            title: 'Datos del elemento',
+            content: 'Dá click aquí para mostrar el formulario',
+          },
+          {
+            element: '.tour-3',
+            title: 'Datos de contacto',
+            content: 'Dá click aquí para mostrar el formulario',
+          },
+        ],
+        backdrop: true,
+        storage: false,
+      });
+      tour.init();
+      tour.start();
+    });
   </script>
 <script type="text/javascript" src="../js/bootstrapValidator.js"></script>
 <script type="text/javascript" src="../js/es_ES.js"></script>

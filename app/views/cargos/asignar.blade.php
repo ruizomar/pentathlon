@@ -30,16 +30,19 @@
 			cursor:pointer; cursor: hand;
 		}
 	</style>
-	{{  HTML::style('css/sweet-alert.css');  }}
+	{{  HTML::script('js/tour/bootstrap-tour.min.js')}}
+	{{  HTML::style('css/tour/bootstrap-tour.min.css')}}
+	{{  HTML::style('css/sweet-alert.css')}}
 @endsection
 @section('elemento')
+	{{ Form::button('<i class="fa fa-question"></i>',array('id' => 'tour','class' => 'pull-right btn btn-warning btn-xs', 'style' => 'margin-top:-90px')) }}
 	{{ Form::open(array('id' => 'formulariocargos','url'=>'cargos/update','files'=>true)) }}
 		<div class="contenedor col-md-offset-2 col-md-8 form-group">
 			<i class="pull-left fa fa-paperclip fa-5x"></i>
 			<div class="col-md-3" id="fotoperfil">
 			</div>
 			<div class="col-md-9">
-				<div class="col-md-7">
+				<div class="col-md-7 tour-1">
 					{{ Form::text('id', 'id',array('class' => 'hidden')) }}
 					<h3 id="nombreelemento" name="nombre"></h3>
 					<h4>
@@ -52,7 +55,7 @@
 					</h4>
 					<h4>
 						{{ Form::label(null,'Cargo actual: ',array('class' => 'small')) }}
-						<ul id="cargos"></ul>
+						<ul id="cargos" class="tour-3"></ul>
 					</h4>
 					<h4>
 						{{ Form::label(null,'Ubicación actual: ',array('class' => 'small')) }}
@@ -63,7 +66,7 @@
 						</ul>
 					</h4>
 				</div>
-				<div class="col-md-5">
+				<div class="col-md-5 tour-2">
 					<h3>Cargo a asignar</h3>
 					{{ Form::select('cargo', $cargos,null,array('class' => 'form-control')) }}
 					<h3>Ubicación</h3>
@@ -172,5 +175,35 @@
 				}, 'json');
 			});
 		}
+	</script>
+	<script>
+	  $('#tour').on('click', function(e) {
+	    var tour = new Tour({
+	      steps: [
+	        {
+	          element: '.tour-1',
+	          title: 'Detalles del elemento',
+	          content: 'Se muestra información del elemento',
+	          placement :'bottom',
+	        },
+	        {
+	          element: '.tour-2',
+	          title: 'Cargo',
+	          content: 'Elige el cargo y el lugar que se le asignará a este elemento',
+	          placement: 'left',
+	        },
+	        {
+	          element: '.tour-3',
+	          title: 'Elimina el cargo',
+	          content: 'Dá click en la X para remover el cargo del elemento',
+	          placement: 'left',
+	        },
+	      ],
+	      backdrop: false,
+	      storage: false,
+	    });
+	    tour.init();
+	    tour.start();
+	  });
 	</script>
 @endsection
