@@ -70,6 +70,8 @@
   {{  HTML::script('js/tour/bootstrap-tour.min.js')}}
   {{  HTML::style('css/tour/bootstrap-tour.min.css')}}
   {{  HTML::style('css/fileinput.css')}}
+  {{  HTML::script('js/tables/jquery.dataTables.min.js')}}
+  {{  HTML::style('css/jquery.dataTables.css')}}
 @endsection
 @section('contenido')
   <form id="buscarelemento" role="form" method="POST" action="buscar">
@@ -88,13 +90,30 @@
         {{ Form::text('materno', null, array('class' => 'form-control')) }}
       </div>
       <div class="col-md-2">
-        {{ Form::submit('Buscar', array('placeholder' => '','class' => 'btn btn-primary')) }}
+        {{ Form::submit('Buscar', array('id' => 'busqueda','class' => 'btn btn-primary')) }}
       </div>
     </div>
   </form>
   <div id="error" class="col-md-12 hidden" style="margin-top:10px;">
-      <p class="alert alert-danger"><i class="fa fa-exclamation-triangle fa-lg"></i> No se encontró al Elemento
-      </p>
+      <p class="alert alert-danger"><i class="fa fa-exclamation-triangle fa-lg"></i> No se encontró al elemento<strong><a id="buscarmas" style="color:#a94442;" class="pull-right" href="#">¿Usar otro método de búsqueda?</a></strong></p>
+  </div>
+  <div id="extendida" class="col-md-12 hidden">
+    <div id="listalugares" class="col-md-4">
+      {{ Form::select('lugar',array(null),null,array('id' => 'lugares','class' => 'form-control col-md-2')) }}
+    </div>
+    <table id="telementos" class="hidden col-md-12 table table-hover" cellspacing="0" width="100%">
+      <thead>
+        <tr class="tour-3">
+          <th class="tour-5">Nombre</th>
+          <th class="tour-6">Paterno</th>
+          <th class="tour-7">Materno</th>
+          <th class="tour-8">Matricula</th>
+          <th class="hidden">elemento_id</th>
+        </tr>
+      </thead>
+      <tbody id="elementobody">
+      </tbody>
+    </table>
   </div>
   <i class="fa fa-spinner fa-2x fa-spin hidden spin-form"></i>
   <form id="buscarelemento" role="form" method="POST" action="update">
@@ -570,6 +589,44 @@
       tour.init();
       tour.start();
     });
+  </script>
+  <script>
+    $('#buscarmas').on('click', function(e) {
+      $('#extendida').removeClass('hidden');
+      $.post('lugares',null, function(json) {
+        // console.log(json);
+        $('#lugares').html('');
+        $.each(json,function(index,lugar){
+          $('#lugares').append('<option value="'+lugar.id+'">'+lugar.nombre+'</option>');
+        });
+      }, 'json');
+    });
+  </script>
+  <script>
+    $('#lugares').change(function(){
+      $('#extendida').removeClass('hidden');
+      id = $('#lugares').val();
+      $('#telementos').removeClass('hidden');
+      $('#elementobody').html('');
+      lele = 'lele';
+      $.post('extendidos',{id:id}, function(json) {
+        $.each(json,function(index,elementos){
+          $('#elementobody').append('<tr class="info" onclick="eliminar(\''+elementos.nombre+'\', \''+elementos.paterno+'\', \''+elementos.materno+'\')">'+
+            '<td>'+elementos.nombre+'</td>'+
+            '<td>'+elementos.paterno+'</td>'+
+            '<td>'+elementos.materno+'</td>'+
+            '<td>'+elementos.matricula+'</td></tr>');
+        });
+      }, 'json');
+    });
+    function eliminar(nombre,paterno,materno) {
+      $('[name=nombre]').val(nombre);
+      $('[name=paterno]').val(paterno);
+      $('[name=materno]').val(materno);
+      $('#busqueda').removeAttr("disabled").trigger("click");
+      $('#telementos').addClass('hidden');
+      $('#extendida').addClass('hidden');
+    };
   </script>
 <script type="text/javascript" src="../js/bootstrapValidator.js"></script>
 <script type="text/javascript" src="../js/es_ES.js"></script>

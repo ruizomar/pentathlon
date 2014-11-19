@@ -32,6 +32,8 @@ Route::post('recluta/alta','AltaReclutaController@post_nuevo');
 Route::get('recluta/editar','EditaReclutaController@editar');
 Route::post('recluta/buscar','EditaReclutaController@buscar');
 Route::post('recluta/update','EditaReclutaController@update');
+Route::post('recluta/lugares','EditaReclutaController@lugares');
+Route::post('recluta/extendidos','EditaReclutaController@extendidos');
 
 /*Route::get('cargos/editar','AsignaCargosController@editar');
 Route::post('cargos/buscar','AsignaCargosController@buscar');

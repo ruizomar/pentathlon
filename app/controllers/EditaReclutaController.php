@@ -306,8 +306,38 @@ class EditaReclutaController extends BaseController {
 		return $dato;
 	}
 
-	public function datos()
+	public function lugares()
 	{
-		
+		$companiasysubzonas = Companiasysubzona::all();
+		$companiasysubzonasArr = array();
+		foreach($companiasysubzonas as $compayzona)
+		{
+			$companiasysubzonasArr[$compayzona->id] = array(
+				'id' => $compayzona->id,
+				'nombre' => $compayzona->tipo.' '.ucwords(strtolower($compayzona->nombre))
+				);
+		}
+		return Response::json($companiasysubzonasArr);
+	}
+	public function extendidos()
+	{
+		$lugar_id = $_POST['id'];
+		$lugar = Companiasysubzona::find($lugar_id);
+		$elementos = $lugar -> elementos() -> get();
+		$elementosArr = array();
+		foreach ($elementos as $elemento) {
+			$activo = $elemento -> status -> last() -> tipo;
+			$matricula = $elemento -> matricula;
+			if($activo == 'Nuevo' && !is_null($matricula)){
+				$personaElemento = $elemento -> persona;
+				$elementosArr[] = array(
+					'nombre' => $personaElemento -> nombre,
+					'paterno' => $personaElemento -> apellidopaterno,
+					'materno' => $personaElemento -> apellidomaterno,
+					'matricula' => $matricula -> matricula,
+				);
+			}
+		}
+		return Response::json($elementosArr);
 	}
 }

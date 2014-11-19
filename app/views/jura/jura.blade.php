@@ -65,7 +65,6 @@
 						'<td>'+elementos.materno+'</td>'+
 						'<td>'+elementos.matricula+'</td>'+
 						'<td class="hidden">'+elementos.elemento_id+'</td>'+
-						'<td class="hidden">'+elementos.persona_id+'</td></tr>');
 				});
 				tabla = $('#telementos').DataTable( {
 					"language": {
@@ -126,7 +125,7 @@
 				$('#eliminar').addClass('disabled');
 				$('#eliminar').addClass('hidden');
 			}
-		})
+		});
 	</script>
 	<script>
 		$('#jurar').on('click', function(e) {
