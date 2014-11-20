@@ -49,3 +49,8 @@ Route::controller('pagos', 'MembresiasController');
 Route::controller('companias','CompaniasController');
 Route::controller('asistencias','AsistenciasController');
 Route::controller('condecoraciones','CondecoracionesController');
+
+Route::get('/22',function()
+{
+	return View::make('login.login');
+});
