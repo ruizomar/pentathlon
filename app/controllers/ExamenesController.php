@@ -1,5 +1,14 @@
 <?php 
 class ExamenesController extends BaseController{
+	public function __construct()
+    {
+        $this->beforeFilter('auth');
+        $this->beforeFilter(function(){
+		    if (Role::where('nombre','=','militar')->first()->id != Auth::user()->role_id)
+		    	 if(Role::where('nombre','=','tecnica')->first()->id != Auth::user()->role_id)
+    	 		return "No eres de Seccion Tecnica";
+        });
+    }
 	public function getIndex(){
 		$grados = array();
 		foreach (Grado::all() as $grado) {

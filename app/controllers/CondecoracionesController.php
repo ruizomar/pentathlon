@@ -1,6 +1,10 @@
 <?php 
 class CondecoracionesController extends BaseController{
-
+	public function __construct()
+    {
+        $this->beforeFilter('auth');
+        $this->beforeFilter('tecnica');
+    }
 	public function getIndex(){
 		return View::make('administracion/condecoraciones');
 	}

@@ -1,6 +1,10 @@
 <?php 
 class CompaniasController extends BaseController{
-
+	public function __construct()
+    {
+        $this->beforeFilter('auth');
+        $this->beforeFilter('militar');
+    }
 	public function getIndex(){
 		$companias = Companiasysubzona::all();
 		return View::make('administracion/companias')->with('companias',$companias);

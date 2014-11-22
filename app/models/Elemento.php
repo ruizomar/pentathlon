@@ -42,5 +42,8 @@ class Elemento extends Eloquent{
 	public function tutor(){
 		return $this->hasOne('Tutor');
     }
-
+    public function user()
+    {
+        return $this->hasOne('User');
+    }
 }

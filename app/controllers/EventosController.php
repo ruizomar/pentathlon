@@ -1,6 +1,10 @@
 <?php 
 class EventosController extends BaseController{
-
+	public function __construct()
+    {
+        $this->beforeFilter('auth');
+        //$this->beforeFilter('tecnica', array('except' => 'postEventos'));
+    }
 	public function getIndex(){
 		$tipos = array();
 		foreach (Tipoevento::all() as $tipo) {

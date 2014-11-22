@@ -27,6 +27,9 @@
 
                       <li id="fat-menu" class="dropdown">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            @if(Auth::id())
+                              {{ Auth::user()->username }}
+                            @endif  
                               <i class="fa fa-user"></i>
                               <i class="fa fa-caret-down"></i>
                           </a>
@@ -36,7 +39,7 @@
                               <li class="divider"></li>
                               <li><a class="visible-phone" href="#">Settings</a></li>
                               <li class="divider"></li>
-                              <li><a href="#"><i class="fa fa-sign-out"></i> Logout</a></li>
+                              <li><a href="{{ URL::to('logout'); }}"><i class="fa fa-sign-out"></i> Logout</a></li>
                           </ul>
                       </li>
                   </ul>
@@ -65,26 +68,30 @@
 -- sidenavbar -->
   <div id="sidebar-nav" class="hidden-xs">
       <ul id="dashboard-menu" class="nav nav-list">
+        @if(Role::where('nombre','=','hacienda')->first()->id == Auth::user()->role_id)
           <li><a rel="tooltip" data-placement="right" data-original-title="Dashboard" href="{{ URL::to('pagos'); }}"><i class="fa fa-money"></i> <span class="caption">Enteros</span></a></li>
-
+        @endif  
+        @if(Cargo::find(3)->elementos()->where('fecha_fin','=',null)->first()->id == Auth::user()->elemento_id)
           <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Reports" href="{{ URL::to('companias'); }}"><i class="fa fa-map-marker"></i> <span class="caption">Companias</span></a></li>
-
+        @endif
+        @if(Cargo::find(2)->elementos()->where('fecha_fin','=',null)->first()->id == Auth::user()->elemento_id)
           <li class=" "><a rel="tooltip" data-placement="right" data-original-title="UI Features" href="{{ URL::to('condecoraciones'); }}"><i class="fa fa-shield"></i> <span class="caption">Condecoraciones</span></a></li>
-
+        @endif
+        @if(Cargo::find(2)->elementos()->where('fecha_fin','=',null)->first()->id == Auth::user()->elemento_id)
           <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Pricing" href="{{ URL::to('eventos'); }}"><i class="fa fa-calendar-o"></i> <span class="caption">Eventos</span></a></li>
-
+        @endif
           <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Media" href="{{ URL::to('examenes'); }}"><i class="fa  fa-file-text-o"></i> <span class="caption">Examenes</span></a></li>
 
-          <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Blog" href="{{ URL::to('asistencias/index/1'); }}"><i class="fa fa-calendar"></i> <span class="caption">Asistencias</span></a></li>
+          <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Blog" href="{{ URL::to('asistencias'); }}"><i class="fa fa-calendar"></i> <span class="caption">Asistencias</span></a></li>
 
           <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Blog Entry" href="{{ URL::to('recluta/alta'); }}"><i class="fa fa-plus"></i> <span class="caption">Altas</span></a></li>
 
           <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Help" href="{{ URL::to('recluta/editar'); }}"><i class="fa fa-pencil"></i> <span class="caption">Editar</span></a></li>
 
           <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Faq" href="{{ URL::to('cargos'); }}"><i class="fa fa-magic"></i> <span class="caption">Cargos</span></a></li>
-
+        @if(Cargo::find(2)->elementos()->where('fecha_fin','=',null)->first()->id == Auth::user()->elemento_id)
           <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Calendar" href="{{ URL::to('ascensos'); }}"><i class="fa fa-line-chart"></i> <span class="caption">Ascensos</span></a></li>
-
+        @endif
           <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Forms" href="#"><i class="icon-ban-circle"></i> <span class="caption">Vacío</span></a></li>
 
           <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Tables" href="#"><i class="icon-ban-circle"></i> <span class="caption">Vacío</span></a></li>

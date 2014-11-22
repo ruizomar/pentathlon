@@ -1,7 +1,11 @@
 <?php
 
 class MembresiasController extends BaseController {
-
+	public function __construct()
+    {
+        $this->beforeFilter('auth');
+        $this->beforeFilter('hacienda');
+    }
 	public function getIndex(){
 		return View::make('pagos/pagos');
 	}

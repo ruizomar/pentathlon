@@ -10,4 +10,8 @@ class Persona extends Eloquent {
     {
         return $this->hasMany('Telefono');
     }
+    public function email()
+    {
+        return $this->hasOne('Email');
+    }
 }

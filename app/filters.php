@@ -67,7 +67,7 @@ Route::filter('auth.basic', function()
 
 Route::filter('guest', function()
 {
-	if (Auth::check()) return Redirect::to('/');
+	if (Auth::check()) return Redirect::to('pagos');
 });
 
 /*
@@ -87,4 +87,24 @@ Route::filter('csrf', function()
 	{
 		throw new Illuminate\Session\TokenMismatchException;
 	}
+});
+Route::filter('root',function(){
+    if(Role::where('nombre','=','root')->first()->id != Auth::user()->role_id)
+    	 return "No eres de root";
+});
+Route::filter('hacienda',function(){
+    if(Role::where('nombre','=','hacienda')->first()->id != Auth::user()->role_id)
+    	 return "No eres de Hacienda";
+});
+Route::filter('tecnica',function(){
+    if(Role::where('nombre','=','tecnica')->first()->id != Auth::user()->role_id)
+    	 return "No eres de Seccion Tecnica";
+});
+Route::filter('militar',function(){
+    if (Role::where('nombre','=','militar')->first()->id != Auth::user()->role_id)
+    	 return "No eres de Seccion Militar";
+});
+Route::filter('instructor',function(){
+    if (Role::where('nombre','=','instructor')->first()->id != Auth::user()->role_id)
+    	 return "No eres de Instructor";
 });
