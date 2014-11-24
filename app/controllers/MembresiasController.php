@@ -134,22 +134,32 @@ class MembresiasController extends BaseController {
 
 		$pago = Pago::find(Input::get('id'));
 		$hacienda = Cargo::find(1)->elementos()->where('fecha_fin','=',null)->first();
+		if(is_null($hacienda)){
+			$nombrehacienda		=	"";
+			$gradohacienda		=	"";
+		}
+		else{
+			$nombrehacienda		=	$hacienda->persona->nombre.' '.
+									$hacienda->persona->apellidopaterno.' '.
+									$hacienda->persona->apellidomaterno;
+			$gradohacienda		=	$hacienda->grados()->orderBy('fecha','desc')
+									->first()->nombre;
+		}
 
 		if(!is_null($pago)){
 			$datos = array(
 				'name' 			=>  $pago->elemento->persona->nombre.' '.
 							 		$pago->elemento->persona->apellidopaterno.' '.
 							  		$pago->elemento->persona->apellidomaterno,
-				'grado' 		=>  $pago->elemento->grados()->orderBy('fecha','desc')->first()->nombre,
+				'grado' 		=>  $pago->elemento->grados()->orderBy('fecha','desc')
+									->first()->nombre,
 				'reclutamiento' =>  $pago->elemento->reclutamiento,
 				'matricula'		=>	$pago->elemento->matricula,
 				'fecha' 		=>  date('d/m/Y'),
 				'cantidad'		=>	$pago->cantidad,
 				'zona' 			=> 	$pago->elemento->companiasysubzona->nombre,
-				'hacienda' 		=>  $hacienda->persona->nombre.' '.
-									$hacienda->persona->apellidopaterno.' '.
-									$hacienda->persona->apellidomaterno,
-				'gradohacienda' => 	$hacienda->grados()->orderBy('fecha','desc')->first()->nombre,
+				'hacienda' 		=>  $nombrehacienda,
+				'gradohacienda' => 	$gradohacienda,
 				'folio'			=>	$pago->id,
 				'concepto'		=>  $pago->concepto,
 				);

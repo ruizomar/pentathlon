@@ -14,7 +14,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	*
 	* @var string
 	*/
-	protected $table = 'usuarios';
+	protected $table = 'users';
 
 	/**
 	* The attributes excluded from the model's JSON form.
@@ -25,9 +25,11 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	public function elemento(){
 		return $this->belongsTo('Elemento');
 	}
-	public function rol()
+	public function roles()
     {
-        return $this->belongsTo('Role');
+        return $this->belongsToMany('Role');
     }
-
+    public function reminder(){
+		return $this->hasOne('Reminder');
+	}
 }

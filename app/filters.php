@@ -89,22 +89,30 @@ Route::filter('csrf', function()
 	}
 });
 Route::filter('root',function(){
-    if(Role::where('nombre','=','root')->first()->id != Auth::user()->role_id)
-    	 return "No eres de root";
+    if(is_null(User::find(Auth::id())->roles()->where('id','=',1)->first()))
+    	 return "No eres root";
 });
 Route::filter('hacienda',function(){
-    if(Role::where('nombre','=','hacienda')->first()->id != Auth::user()->role_id)
+    if(is_null(User::find(Auth::id())->roles()->where('id','=',2)->first()))
     	 return "No eres de Hacienda";
 });
 Route::filter('tecnica',function(){
-    if(Role::where('nombre','=','tecnica')->first()->id != Auth::user()->role_id)
+    if(is_null(User::find(Auth::id())->roles()->where('id','=',3)->first()))
     	 return "No eres de Seccion Tecnica";
 });
 Route::filter('militar',function(){
-    if (Role::where('nombre','=','militar')->first()->id != Auth::user()->role_id)
+    if (is_null(User::find(Auth::id())->roles()->where('id','=',4)->first()))
     	 return "No eres de Seccion Militar";
 });
+Route::filter('deportiva',function(){
+    if (is_null(User::find(Auth::id())->roles()->where('id','=',5)->first()))
+    	 return "No eres de Seccion Deporiva";
+});
+Route::filter('oganizacion',function(){
+    if (is_null(User::find(Auth::id())->roles()->where('id','=',6)->first()))
+    	 return "No eres de Seccion Organizacion";
+});
 Route::filter('instructor',function(){
-    if (Role::where('nombre','=','instructor')->first()->id != Auth::user()->role_id)
+    if (is_null(User::find(Auth::id())->roles()->where('id','=',7)->first()))
     	 return "No eres de Instructor";
 });

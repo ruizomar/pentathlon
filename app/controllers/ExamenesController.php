@@ -4,8 +4,8 @@ class ExamenesController extends BaseController{
     {
         $this->beforeFilter('auth');
         $this->beforeFilter(function(){
-		    if (Role::where('nombre','=','militar')->first()->id != Auth::user()->role_id)
-		    	 if(Role::where('nombre','=','tecnica')->first()->id != Auth::user()->role_id)
+		    if(is_null(User::find(Auth::id())->roles()->where('id','=',4)->first()))
+		    	 if(is_null(User::find(Auth::id())->roles()->where('id','=',3)->first()))
     	 		return "No eres de Seccion Tecnica";
         });
     }

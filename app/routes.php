@@ -47,11 +47,9 @@ Route::get('registrar', function()
 {
 
 	$user = new User;
-	$user->role_id = 2;
 	$user->elemento_id = 1;
 	$user->username = "hacienda";
     $user->password = Hash::make('123');
-	// guardamos
 	$user->save();
 	return "El usuario fue agregado.";
 });

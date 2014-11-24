@@ -1,8 +1,8 @@
 <?php
 class Role extends Eloquent {
 	public $timestamps = false;
-    public function user()
+    public function users()
     {
-        return $this->hasOne('User');
+        return $this->belongsToMany('User');
     }
 }

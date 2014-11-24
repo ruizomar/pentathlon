@@ -222,7 +222,9 @@ $('#bnueva').click(function(){
         $("tbody").find('tr').removeClass('danger') .find('button').attr('disabled',false);
     });
 $('#nueva').on('hide.bs.modal', function() {
-    $('#update').bootstrapValidator('resetForm', true);
+    if($('[name=id]').val() == '')
+        $('#update').bootstrapValidator('resetForm', true);
+    $('#update').bootstrapValidator('resetForm');
 });
 $('#main-menu').find('li').removeClass('active');
 $('#main-menu ul li:nth-child(3)').addClass('active');
