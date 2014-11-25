@@ -1,6 +1,6 @@
 @extends('layaouts.base')
 @section('titulo')
-  Ascensos
+  Jura de Bandera
 @endsection
 @section('head')
 	<style>
