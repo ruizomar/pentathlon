@@ -1,6 +1,11 @@
 <?php
 class JuraBanderaController extends BaseController {
 
+	public function __construct()
+    {
+        // $this->beforeFilter('auth');
+    }
+
 	public function getIndex()
 	{
 		$companiasysubzonas = Companiasysubzona::where('status','=','activa')->get();

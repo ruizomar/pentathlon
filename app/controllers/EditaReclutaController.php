@@ -1,6 +1,11 @@
 <?php
 class EditaReclutaController extends BaseController {
 
+	public function __construct()
+    {
+        // $this->beforeFilter('auth');
+    }
+
 	public function editar()
 	{
 		$armas = Tipoarma::all();

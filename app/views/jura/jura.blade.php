@@ -37,7 +37,6 @@
 						<th class="tour-7">Materno</th>
 						<th class="tour-8">Matricula</th>
 						<th class="hidden">elemento_id</th>
-						<th class="hidden">persona_id</th>
 					</tr>
 				</thead>
 
@@ -64,7 +63,7 @@
 						'<td>'+elementos.paterno+'</td>'+
 						'<td>'+elementos.materno+'</td>'+
 						'<td>'+elementos.matricula+'</td>'+
-						'<td class="hidden">'+elementos.elemento_id+'</td>'+
+						'<td class="hidden">'+elementos.elemento_id+'</td>');
 				});
 				tabla = $('#telementos').DataTable( {
 					"language": {

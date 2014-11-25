@@ -1,6 +1,11 @@
 <?php
 class AltaReclutaController extends BaseController {
 
+	public function __construct()
+    {
+        // $this->beforeFilter('auth');
+    }
+
 	public function get_nuevo()
 	{
 		$armas = Tipoarma::all();
