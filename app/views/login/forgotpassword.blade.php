@@ -9,7 +9,7 @@
   <body>
     <div class="main">
       <div class="login-form text-center">
-          <img src="imgs/penta.png" class="img-responsive col-md-6 col-md-offset-3" alt="Responsive image" style="margin-top:1em; margin-bottom:1em;">
+          <img src="{{ asset('imgs/penta.png') }}" class="img-responsive col-md-6 col-md-offset-3" alt="Responsive image" style="margin-top:1em; margin-bottom:1em;">
           {{ Form::open(array('url' => 'forgot','role' => 'form','id' => 'id','class' => 'class')) }}
               <input type="text" class="text" placeholder="Usuario" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'USERNAME';}" name="username" autocomplete="off">
               <?php $status=Session::get('mensaje_error'); ?> 

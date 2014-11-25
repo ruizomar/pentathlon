@@ -9,7 +9,7 @@
   <body>
     <div class="main">
       <div class="login-form text-center">
-          <img src="imgs/penta.png" class="img-responsive col-md-6 col-md-offset-3" alt="Responsive image" style="margin-top:1em; margin-bottom:1em;">
+          <img src="{{ asset('imgs/penta.png') }}" class="img-responsive col-md-6 col-md-offset-3" alt="Responsive image" style="margin-top:1em; margin-bottom:1em;">
           {{ Form::open(array('url' => 'recover','role' => 'form','id' => 'id','class' => 'class')) }}
           <input type="text" name="token" value="{{$token}}" class="hidden">
               <input type="password" class="text" placeholder="Contraseña" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" name="password" autocomplete="off">

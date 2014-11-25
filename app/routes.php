@@ -11,14 +11,12 @@
 |
 */
 
-Route::get('login', array('before' => 'guest', function()
-{
+Route::get('login', array('before' => 'guest', function(){
 	return View::make('login/login');
 }));
 
 
-Route::get('/', array('before' => 'auth', function()
-{
+Route::get('/', array('before' => 'auth', function(){
 	return View::make('layaouts/base');
 }));
 
@@ -42,10 +40,10 @@ Route::controller('asistencias','AsistenciasController');
 Route::controller('condecoraciones','CondecoracionesController');
 Route::controller('eventos','EventosController');
 Route::controller('examenes','ExamenesController');
+Route::controller('arrestos','ArrestosController');
 
 Route::get('registrar', function()
 {
-
 	$user = new User;
 	$user->elemento_id = 1;
 	$user->username = "hacienda";
@@ -60,17 +58,3 @@ Route::get('forgot','RecoverPassword@getForgotpassword');
 Route::post('forgot','RecoverPassword@postForgotpassword');
 Route::get('recover/{token?}','RecoverPassword@getRecover');
 Route::post('recover','RecoverPassword@postRecover');
-
-
-
-
-
-
-
-
-
-Route::get('email',function(){
-	Mail::send('emails.auth.reminder', array('name'=>'omarr'), function($message){
-		$message->to('omar.ruiz.mz@gmail.com','omar ruiz')->subject('test');
-	});
-});
