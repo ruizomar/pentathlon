@@ -15,14 +15,14 @@
 Arrestos
 @endsection
 @section('elemento')
-	<div class="col-sm-6 col-sm-offset-3 contenedor" style="top:20px">
+	<div class="col-sm-8 col-sm-offset-2 contenedor" style="top:20px">
 		{{ Form::open(array('id' => 'form-arresto','class' => '','url' => 'ascensos/update','files' => true)) }}
-				<div class="col-sm-4" id="fotoperfil">
+				<div class="col-sm-3 col-sm-offset-1" id="fotoperfil" style="padding-top:20px">
 				</div>
-				<div class="col-sm-8">
+				<div class="col-sm-7 col-sm-offset-1">
 					<div class="col-sm-12">
-						{{ Form::text('id', 'id',array('class' => 'hidden')) }}
-						<h3 id="nombreelemento" name="nombre"></h3>
+						{{ Form::text('id', 'id',array('class' => '')) }}
+						<h2 id="nombreelemento" name="nombre"></h2>
 						<h4>
 							{{ Form::label(null,'Matricula: ',array('class' => 'small')) }}
 							{{ Form::label('matricula',null,array('class' => 'pull-right label label-default')) }}
@@ -42,23 +42,23 @@ Arrestos
 					</div>
 				</div>
 				<div class="col-sm-12">
-					<div class="form-group col-sm-6 fecha">
+					<div class="form-group col-sm-4 fecha">
 			          {{ Form::label('Fecha', 'Fecha',array('class' => 'control-label')) }}
 			          <div class="input-group date" id="datetimePicker">
 			            {{ Form::text('Fecha', null, array('class' => 'form-control','placeholder' => 'YYYY-MM-DD', 'data-date-format' => 'YYYY-MM-DD')) }}
 			            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 			          </div>
 			        </div>
-					<div class="form-group col-sm-7">
+					<div class="form-group col-sm-5">
 						{{ Form::label('motivo', 'Motivo',array('class' => 'control-label')) }}
 						{{ Form::text('motivo', null, array('class' => 'form-control')) }}
 					</div>
 					<div class="form-group col-sm-7">
-						{{ Form::label('sancion', 'sancion',array('class' => 'control-label')) }}
+						{{ Form::label('sancion', 'Sancion',array('class' => 'control-label')) }}
 						{{ Form::textarea('sancion', null, array('class' => 'form-control','rows' => '3','style' => 'resize:none;')) }}
 					</div>
 				</div>
-				{{ Form::button('<i class="fa fa-floppy-o"></i> Guardar',array('id' =>'btnupdate','class' => 'hidden pull-right btn btn-info')) }}
+				{{ Form::button('<i class="fa fa-gavel fa-lg"></i> Guardar',array('id' =>'btnupdate','class' => 'pull-right btn btn-info','type' => 'submit')) }}
 		{{Form::close()}}
 	</div>
 @stop
@@ -109,12 +109,15 @@ $(document).ready(function() {
     .on('success.form.bv', function(e) {
       e.preventDefault();
         $('.fa-spin').removeClass('hidden');
-        if($('[name = id]').val() == ''){
-          save('{{ URL::to("eventos/nuevoevento"); }}');
-        }
-        if($('[name = id]').val() != ''){
-          save('{{ URL::to("eventos/update"); }}');
-        }  
+          $.post('{{ URL::to("arrestos/nuevo"); }}',$('#form-arresto').serialize(), function(json) {
+				if(json.success){
+					$('.fa-spin').addClass('hidden');
+					swal('Operacion completada correctamente',null, "success");
+				}
+				else{
+					swal('Error',json.errormessage, "error");
+				}
+			}, 'json');
     });
 
     $('#datetimePicker').on('dp.change dp.show', function(e) {
@@ -137,7 +140,7 @@ $(document).ready(function() {
 				if(!json.cargo){
 					$('label[for=cargo]').text('Cargo: Sin cargo');
 				}
-				$('#fotoperfil').html('<img id="theImg" class="img-responsive img-thumbnail img-circle" src="'+json.fotoperfil+'" alt="Responsive image"/>');
+				$('#fotoperfil').html('<img id="theImg" class="img-responsive img-circle" src="'+json.fotoperfil+'" alt="Responsive image"/>');
 			}, 'json');
 		}
 	</script>

@@ -20,7 +20,7 @@ $(document).ready(function() {
                     $('[name=reclunombre]').val(json.name);
                     $('[name=reclupaterno]').val(json.paterno);
                     $('[name=reclumaterno]').val(json.materno);
-                    $('[name=fotoperfil]').attr('src','/'+json.fotoperfil);
+                    $('[name=fotoperfil]').attr('src',"../"+json.fotoperfil);
                     $('[name=reclusexo] option[value='+json.sexo+']').attr('selected', true);
                     $('[name=birthday]').val(json.fechanacimiento);
                     $('[name=domicilio]').val(json.calle);

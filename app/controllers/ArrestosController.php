@@ -22,7 +22,25 @@ class ArrestosController extends BaseController{
 			);
 			return Response::json($dato);
 	}
+	public function postNuevo(){
+		$rules = array(
+			'id' => 'required',
+			'motivo' => 'required',
+			'sancion' => 'required',
+			'Fecha' => 'required'
+			);
 
+		$validation = Validator::make(Input::all(), $rules);
+		if($validation->fails())
+		{
+			$dato = array('success'=>false,
+				'errormessage'=>'Ocurrio un error');
+			return Response::json($dato);
+		}
+		$dato = array('success'=>true,
+				'errormessage'=>'Todo salio bien ');
+			return Response::json($dato);
+	}
 		
 
 }
