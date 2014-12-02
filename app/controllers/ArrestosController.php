@@ -1,16 +1,19 @@
 <?php 
 class ArrestosController extends BaseController{
-
+	public function __construct()
+    {
+        $this->beforeFilter('auth');
+    }
 	public function getIndex(){
 		return View::make('arrestos/arrestos');
 	}
 
 	public function postElemento(){
-		$elemento = Elemento::find(Input::get('id'));
-		$matricula = $elemento->matricula;
-			$nummatricula="";
+		$elemento 		= 	Elemento::find(Input::get('id'));
+		$matricula 		= 	$elemento->matricula;
+		$nummatricula	=	"";
 			if (!is_null($matricula)) {
-				$nummatricula = $matricula->id;
+				$nummatricula 	= 	$matricula->id;
 			}
 		$dato = array(
 			'nombre'	=> $elemento->persona->nombre.' '.$elemento->persona->apellidopaterno.' '.$elemento->persona->apellidomaterno,
@@ -24,10 +27,10 @@ class ArrestosController extends BaseController{
 	}
 	public function postNuevo(){
 		$rules = array(
-			'id' => 'required',
-			'motivo' => 'required',
-			'sancion' => 'required',
-			'Fecha' => 'required'
+			'id' 		=> 	'required',
+			'motivo' 	=> 	'required',
+			'sancion' 	=> 	'required',
+			'Fecha' 	=> 	'required'
 			);
 
 		$validation = Validator::make(Input::all(), $rules);
@@ -37,8 +40,17 @@ class ArrestosController extends BaseController{
 				'errormessage'=>'Ocurrio un error');
 			return Response::json($dato);
 		}
+		$arrestador = Elemento::find(Auth::user()->elemento_id)->matricula->id;
+		$arresto = Arresto::create(array(
+			'arrestado'				=>		Input::get('id'),
+			'fecha'					=>		Input::get('Fecha'),
+			'motivo'				=>		Input::get('motivo'),
+			'matriculaarrestador'	=>		$arrestador,
+			'sancion'				=>		Input::get('sancion')
+		));
 		$dato = array('success'=>true,
-				'errormessage'=>'Todo salio bien ');
+				'errormessage'=>'Todo salio bien ',
+				'asd'=>$arrestador);
 			return Response::json($dato);
 	}
 		

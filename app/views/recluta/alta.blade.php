@@ -544,6 +544,8 @@
 			$('#datetimePicker').on('dp.change dp.show', function(e) {
 		        $('#formularioalta').bootstrapValidator('revalidateField', 'birthday');
 		    });
+		    $('#sidebar-nav').find('li').removeClass('active');
+        	$('#Altas').addClass('active');
 		});
 	</script>
 	<script type="text/javascript">

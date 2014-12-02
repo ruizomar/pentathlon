@@ -117,6 +117,8 @@
 		{{  HTML::script('js/chart/morris.min.js'); }}
 	{{  HTML::script('js/chart/raphael-min.js'); }}
 	<script>
+	$('#sidebar-nav').find('li').removeClass('active');
+	$('#Ascensos').addClass('active');
 		function encontrado (id) {
 			$('#graficaAsistencias').html('');
 			$('#calificaciones').html('');

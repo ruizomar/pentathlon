@@ -152,9 +152,8 @@ Condecoraciones
 @section('scripts2')
     <script type="text/javascript">
     var elemento;
-        $('#main-menu').find('li').removeClass('active');
         $('#sidebar-nav').find('li').removeClass('active');
-        $('#sidebar-nav ul li:nth-child(3)').addClass('active');
+        $('#Condecoraciones').addClass('active');
     function encontrado(id){
         elemento=id;
         $('.fa-spinner').removeClass('hidden');

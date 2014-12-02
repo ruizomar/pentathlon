@@ -21,7 +21,7 @@ Arrestos
 				</div>
 				<div class="col-sm-7 col-sm-offset-1">
 					<div class="col-sm-12">
-						{{ Form::text('id', 'id',array('class' => '')) }}
+						{{ Form::text('id', 'id',array('class' => 'hidden')) }}
 						<h2 id="nombreelemento" name="nombre"></h2>
 						<h4>
 							{{ Form::label(null,'Matricula: ',array('class' => 'small')) }}
@@ -124,6 +124,8 @@ $(document).ready(function() {
         $('#form-arresto').bootstrapValidator('revalidateField', 'Fecha');
     });
 });
+$('#sidebar-nav').find('li').removeClass('active');
+$('#Arrestos').addClass('active');
     function encontrado (id) {
 			$('#graficaAsistencias').html('');
 			$('#calificaciones').html('');

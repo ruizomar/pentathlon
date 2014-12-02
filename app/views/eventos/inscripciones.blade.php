@@ -209,5 +209,7 @@ function evento_elemento(action, elementos){
       $('#form-inscritos').submit();
       }, 'json');
 }
+$('#sidebar-nav').find('li').removeClass('active');
+$('#Eventos').addClass('active');
   </script>
 @endsection

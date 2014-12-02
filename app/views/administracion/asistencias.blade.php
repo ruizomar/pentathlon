@@ -188,7 +188,7 @@ $(document).ready(function() {
         $('#asis').bootstrapValidator('revalidateField', 'fecha');
     });
     $('#sidebar-nav').find('li').removeClass('active');
-        $('#sidebar-nav ul li:nth-child(6)').addClass('active');
+    $('#Asistencias').addClass('active');
 });
 </script>
 <script type="text/javascript" charset="utf-8">

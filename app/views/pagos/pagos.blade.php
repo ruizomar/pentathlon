@@ -143,10 +143,8 @@ Enteros
     }, 'json');
     });
     });
-        $('#main-menu').find('li').removeClass('active');
-        $('#main-menu ul li:nth-child(2)').addClass('active');
-        $('#sidebar-nav').find('li').removeClass('active');
-        $('#sidebar-nav ul li:nth-child(1)').addClass('active');
+$('#sidebar-nav').find('li').removeClass('active');
+$('#Enteros').addClass('active');
     function encontrado(id){
             $.post('{{ URL::to("pagos/elemento"); }}', 'id='+id, function(json) {
                 $('#lnombre').html('<strong>'+json.nombre+'</strong>');
@@ -190,11 +188,15 @@ Enteros
                 options += "<option value="+concepto.id+">"+concepto.nombre+"</option>";
                 conceptos.push({id:concepto.id,precio:concepto.precio});
             });
+            if(options == "")
+                $("#bpagar").attr("disabled","disabled");
+            else{
+                $("[name = cantidad]").val(conceptos[0].precio);
+                $("#bpagar").removeAttr("disabled");
+            }
             $("[name = concepto]").html(options);
-            $("[name = cantidad]").val(conceptos[0].precio);
             $("[name = concepto]").closest('div').removeClass('hidden');
             $("[name = cantidad]").attr("disabled","disabled");
-            $("#bpagar").removeAttr("disabled");
         }, 'json');
     }
     </script>

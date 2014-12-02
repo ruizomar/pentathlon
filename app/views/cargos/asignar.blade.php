@@ -114,5 +114,7 @@
 		function capitalise(string) {
 			return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 		}
+		$('#sidebar-nav').find('li').removeClass('active');
+       	$('#Cargos').addClass('active');
 	</script>
 @endsection

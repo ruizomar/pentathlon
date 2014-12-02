@@ -20,7 +20,7 @@
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
               <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand" href=""><img src="{{ asset('imgs/pdmu.png') }}" alt=""> PDMU</a>
+            <a class="navbar-brand" href="/"><img src="{{ asset('imgs/pdmu.png') }}" alt=""> PDMU</a>
           </div>
           <div class="hidden-xs">
                   <ul class="nav navbar-nav navbar-right">
@@ -69,33 +69,33 @@
   <div id="sidebar-nav" class="hidden-xs">
       <ul id="dashboard-menu" class="nav nav-list">
         @if(!is_null(User::find(Auth::id())->roles()->where('id','=',2)->first()))
-          <li><a rel="tooltip" data-placement="right" data-original-title="Dashboard" href="{{ URL::to('pagos'); }}"><i class="fa fa-money"></i> <span class="caption">Enteros</span></a></li>
+          <li id="Enteros"><a rel="tooltip" data-placement="right" data-original-title="Dashboard" href="{{ URL::to('pagos'); }}"><i class="fa fa-money"></i> <span class="caption">Enteros</span></a></li>
         @endif  
         @if(!is_null(User::find(Auth::id())->roles()->where('id','=',4)->first()))
-          <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Reports" href="{{ URL::to('companias'); }}"><i class="fa fa-map-marker"></i> <span class="caption">Companias</span></a></li>
+          <li id="Companias"><a rel="tooltip" data-placement="right" data-original-title="Reports" href="{{ URL::to('companias'); }}"><i class="fa fa-map-marker"></i> <span class="caption">Companias</span></a></li>
         @endif
         @if(!is_null(User::find(Auth::id())->roles()->where('id','=',3)->first()))
-          <li class=" "><a rel="tooltip" data-placement="right" data-original-title="UI Features" href="{{ URL::to('condecoraciones'); }}"><i class="fa fa-shield"></i> <span class="caption">Condecoraciones</span></a></li>
+          <li id="Condecoraciones"><a rel="tooltip" data-placement="right" data-original-title="UI Features" href="{{ URL::to('condecoraciones'); }}"><i class="fa fa-shield"></i> <span class="caption">Condecoraciones</span></a></li>
         @endif
         @if(!is_null(User::find(Auth::id())->roles()->where('id','=',3)->first()))
-          <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Pricing" href="{{ URL::to('eventos'); }}"><i class="fa fa-calendar-o"></i> <span class="caption">Eventos</span></a></li>
+          <li id="Eventos"><a rel="tooltip" data-placement="right" data-original-title="Pricing" href="{{ URL::to('eventos'); }}"><i class="fa fa-calendar-o"></i> <span class="caption">Eventos</span></a></li>
         @endif
-          <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Media" href="{{ URL::to('examenes'); }}"><i class="fa  fa-file-text-o"></i> <span class="caption">Examenes</span></a></li>
+          <li id="Examenes"><a rel="tooltip" data-placement="right" data-original-title="Media" href="{{ URL::to('examenes'); }}"><i class="fa  fa-file-text-o"></i> <span class="caption">Examenes</span></a></li>
 
-          <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Blog" href="{{ URL::to('asistencias'); }}"><i class="fa fa-calendar"></i> <span class="caption">Asistencias</span></a></li>
+          <li id="Asistencias"><a rel="tooltip" data-placement="right" data-original-title="Blog" href="{{ URL::to('asistencias'); }}"><i class="fa fa-calendar"></i> <span class="caption">Asistencias</span></a></li>
 
-          <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Blog Entry" href="{{ URL::to('recluta/alta'); }}"><i class="fa fa-plus"></i> <span class="caption">Altas</span></a></li>
+          <li id="Altas"><a rel="tooltip" data-placement="right" data-original-title="Blog Entry" href="{{ URL::to('recluta/alta'); }}"><i class="fa fa-plus"></i> <span class="caption">Altas</span></a></li>
 
-          <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Help" href="{{ URL::to('recluta/editar'); }}"><i class="fa fa-pencil"></i> <span class="caption">Editar</span></a></li>
+          <li id="Editar"><a rel="tooltip" data-placement="right" data-original-title="Help" href="{{ URL::to('recluta/editar'); }}"><i class="fa fa-pencil"></i> <span class="caption">Editar</span></a></li>
 
-          <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Faq" href="{{ URL::to('cargos'); }}"><i class="fa fa-magic"></i> <span class="caption">Cargos</span></a></li>
+          <li id="Cargos"><a rel="tooltip" data-placement="right" data-original-title="Faq" href="{{ URL::to('cargos'); }}"><i class="fa fa-magic"></i> <span class="caption">Cargos</span></a></li>
         @if(!is_null(User::find(Auth::id())->roles()->where('id','=',4)->first()))
-          <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Calendar" href="{{ URL::to('ascensos'); }}"><i class="fa fa-line-chart"></i> <span class="caption">Ascensos</span></a></li>
+          <li id="Ascensos"><a rel="tooltip" data-placement="right" data-original-title="Calendar" href="{{ URL::to('ascensos'); }}"><i class="fa fa-line-chart"></i> <span class="caption">Ascensos</span></a></li>
         @endif
-          <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Forms" href="#"><i class="icon-ban-circle"></i> <span class="caption">Vacío</span></a></li>
+          <li id="Arrestos"><a rel="tooltip" data-placement="right" data-original-title="Forms" href="{{ URL::to('arrestos'); }}"><i class="fa fa-gavel"></i> <span class="caption">Arrestos</span></a></li>
 
-          <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Tables" href="#"><i class="icon-ban-circle"></i> <span class="caption">Vacío</span></a></li>
-          <li class=" theme-mobile-hack"><a rel="tooltip" data-placement="right" data-original-title="Mobile" href="#"><i class="icon-ban-circle"></i> <span class="caption">Vacío</span></a></li>
+          <li id="Armas"><a rel="tooltip" data-placement="right" data-original-title="Tables" href="{{ URL::to('armas'); }}"><i class="fa  fa-crosshairs"></i> <span class="caption">Armas</span></a></li>
+          <li id="Cuerpos"><a rel="tooltip" data-placement="right" data-original-title="Mobile" href="{{ URL::to('cuerpos'); }}"><i class="fa fa-child"></i> <span class="caption">Cuerpos</span></a></li>
           <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Icons" href="#"><i class="icon-ban-circle"></i> <span class="caption">Vacío</span></a></li>
       </ul>
   </div>

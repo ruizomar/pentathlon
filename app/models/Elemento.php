@@ -46,4 +46,7 @@ class Elemento extends Eloquent{
     {
         return $this->hasOne('User');
     }
+    public function arrestos(){
+		return $this->hasMany('Arresto', 'arrestado');
+	}
 }

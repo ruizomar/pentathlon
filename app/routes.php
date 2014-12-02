@@ -19,7 +19,11 @@ Route::get('login', array('before' => 'guest', function(){
 Route::get('/', array('before' => 'auth', function(){
 	return View::make('layaouts/base');
 }));
-
+Route::get('asd', function(){
+	$elemento = Elemento::find(2)->arrestos;
+	//$elemento = Arresto::find(2)->elemento;
+	return Response::json($elemento);
+});
 
 
 Route::get('recluta/alta','AltaReclutaController@get_nuevo');
@@ -41,6 +45,8 @@ Route::controller('condecoraciones','CondecoracionesController');
 Route::controller('eventos','EventosController');
 Route::controller('examenes','ExamenesController');
 Route::controller('arrestos','ArrestosController');
+Route::controller('armas','armasController');
+Route::controller('cuerpos','cuerposController');
 
 Route::get('registrar', function()
 {

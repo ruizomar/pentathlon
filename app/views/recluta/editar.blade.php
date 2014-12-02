@@ -524,6 +524,8 @@
             $('#elemento').bootstrapValidator('revalidateField', 'birthday');
         });    
     });
+      $('#sidebar-nav').find('li').removeClass('active');
+      $('#Editar').addClass('active');
   </script>
   <script type="text/javascript">
     function resetActive(event, percent, step) {
