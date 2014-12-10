@@ -72,6 +72,7 @@
   {{  HTML::style('css/fileinput.css')}}
   {{  HTML::script('js/tables/jquery.dataTables.min.js')}}
   {{  HTML::style('css/jquery.dataTables.css')}}
+  {{  HTML::style('css/bootstrap-datetimepicker.min.css');  }}
 @endsection
 @section('contenido')
   <form id="buscarelemento" role="form" method="POST" action="buscar">
@@ -98,8 +99,9 @@
       <p class="alert alert-danger"><i class="fa fa-exclamation-triangle fa-lg"></i> No se encontró al elemento<strong><a id="buscarmas" style="color:#a94442;" class="pull-right" href="#">¿Usar otro método de búsqueda?</a></strong></p>
   </div>
   <div id="extendida" class="col-md-12 hidden">
-    <div id="listalugares" class="col-md-4">
+    <div id="listalugares" class="col-md-offset-4 col-md-4">
       {{ Form::select('lugar',array(null),null,array('id' => 'lugares','class' => 'form-control col-md-2')) }}
+      {{ Form::button('<i class="fa fa-eye"></i> Buscar',array('class' => 'pull-right btn btn-info col-md-4','id' => 'buscarext')) }}
     </div>
     <table id="telementos" class="hidden col-md-12 table table-hover" cellspacing="0" width="100%">
       <thead>
@@ -151,9 +153,12 @@
           {{ Form::label('reclusexo', 'Sexo') }}
           {{Form::select('reclusexo', array('Hombre' => 'Hombre','Mujer' => 'Mujer',),null,array('class' => 'form-control')) }}
         </div>
-        <div class="col-md-4 form-group">
+        <div class="col-md-4 form-group fecha">
           {{ Form::label('birthday', 'Fecha nacimiento') }}
-          {{ Form::input('date','birthday', null,array('placeholder' => 'DD/MM/AAAA','class' => 'form-control')) }}
+          <div class="input-group date" id="datetimePicker">
+              {{ Form::text('birthday', null, array('class' => 'form-control', 'placeholder' => 'YYYY-MM-DD', 'data-date-format' => 'YYYY-MM-DD')) }}
+              <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+          </div>
         </div>
         <div class="col-md-5 form-group">
           {{ Form::label('domicilio', 'Calle y número') }}
@@ -380,6 +385,10 @@
       fileType: "any"
     });
     $(document).ready(function() {
+      $('#datetimePicker').datetimepicker({
+        language: 'es',
+        pickTime: false
+      });
       $("#test-upload").fileinput({
         'showPreview' : true,
         'allowedFileExtensions' : ['jpg', 'png','gif'],
@@ -591,10 +600,11 @@
     });
   </script>
   <script>
-    $('#buscarmas').on('click', function(e) {
+    $('#buscarmas').click( function(e) {
+      e.preventDefault();
       $('#extendida').removeClass('hidden');
-      $.post('lugares',null, function(json) {
-        // console.log(json);
+      $('#error').addClass('hidden');
+      $.get('lugares', function(json) {
         $('#lugares').html('');
         $.each(json,function(index,lugar){
           $('#lugares').append('<option value="'+lugar.id+'">'+lugar.nombre+'</option>');
@@ -603,12 +613,11 @@
     });
   </script>
   <script>
-    $('#lugares').change(function(){
+    $('#buscarext').click(function(){
       $('#extendida').removeClass('hidden');
       id = $('#lugares').val();
       $('#telementos').removeClass('hidden');
       $('#elementobody').html('');
-      lele = 'lele';
       $.post('extendidos',{id:id}, function(json) {
         $.each(json,function(index,elementos){
           $('#elementobody').append('<tr class="info" onclick="eliminar(\''+elementos.nombre+'\', \''+elementos.paterno+'\', \''+elementos.materno+'\')">'+
@@ -628,7 +637,10 @@
       $('#extendida').addClass('hidden');
     };
   </script>
-<script type="text/javascript" src="../js/bootstrapValidator.js"></script>
-<script type="text/javascript" src="../js/es_ES.js"></script>
-<script src="../js/mio.js" type="text/javascript"></script>
+  {{  HTML::script('js/bootstrapValidator.js'); }}
+  {{  HTML::script('js/es_ES.js'); }}
+  {{  HTML::script('js/mio.js'); }}
+  {{  HTML::script('js/moment.js'); }}
+  {{  HTML::script('js/bootstrap-datetimepicker.js'); }}
+  {{  HTML::script('js/bootstrap-datetimepicker.es.js'); }}
 @endsection

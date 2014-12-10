@@ -3,106 +3,93 @@
 	Registro
 @endsection
 @section('head')
-	<style>
-		.hiddenStepInfo {
-			display: none;
-		}
-
-		.activeStepInfo {
-			display: block !important;
-		}
-
-		.setup-content {
-			margin-top: 10px;
-		}
-
-		.progress {
-			position: relative;
-			height: 5px;
-			margin-top: 10px;
-		}
-
-		.progress > .progress-type {
-			padding: 3px 30px 2px 10px;
-			color: rgb(255, 255, 255);
-			background-color: rgba(25, 25, 25, 0.2);
-		}
-
-		.progress > .progress-completed {
-			position: absolute;
-			right: 0px;
-			font-weight: 800;
-			padding: 3px 10px 2px;
-		}
-
-		.step {
-			text-align: center;
-		}
-
-		.step .seleccion {
-			background-color: #fff;
-			border: 1px solid #C0C0C0;
-			border-radius: 5px 5px 5px 5px;
-			margin-top: 10px;
-		}
-
-		.step .seleccion:last-child {
-			border: 1px solid #C0C0C0;
-			border-radius: 5px 5px 5px 5px;
-			margin-top: 10px;
-		}
-
-		.step .seleccion:first-child {
-			border-radius: 5px 5px 5px 5px;
-			margin-top: 10px;
-		}
-
-		.step .seleccion:last-child {
-			border-radius: 5px 5px 5px 5px;
-			margin-top: 10px;
-		}
-
-		.step .seleccion:hover {
-			color: #F58723;
-			cursor: pointer;
-		}
-
-		.setup-content {
-			background-color: #f2f2f2;
-		}
-
-		.step .activestep {
-			color: #F58723;
-			border-left: 2px solid #5CB85C !important;
-			border-right: 2px solid #5CB85C !important;
-			border-top: 2px solid #5CB85C !important;
-			border-bottom: 2px solid #5CB85C !important;
-			vertical-align: central;
-		}
-
-		.step .fa {
-			padding-top: 15px;
-			font-size: 40px;
-		}
-	</style>
-	{{  HTML::script('js/fileinput.js')}}
-	{{  HTML::script('js/tour/bootstrap-tour.min.js')}}
-	{{  HTML::style('css/tour/bootstrap-tour.min.css')}}
-	{{  HTML::style('css/fileinput.css')}}
+<style>
+	.hiddenStepInfo {
+		display: none;
+	}
+	.activeStepInfo {
+		display: block !important;
+	}
+	.setup-content {
+		margin-top: 10px;
+	}
+	.progress {
+		position: relative;
+		height: 5px;
+		margin-top: 10px;
+	}
+	.progress > .progress-type {
+		padding: 3px 30px 2px 10px;
+		color: rgb(255, 255, 255);
+		background-color: rgba(25, 25, 25, 0.2);
+	}
+	.progress > .progress-completed {
+		position: absolute;
+		right: 0px;
+		font-weight: 800;
+		padding: 3px 10px 2px;
+	}
+	.step {
+		text-align: center;
+	}
+	.step .seleccion {
+		background-color: #fff;
+		border: 1px solid #C0C0C0;
+		border-radius: 5px 5px 5px 5px;
+		margin-top: 10px;
+	}
+	.step .seleccion:last-child {
+		border: 1px solid #C0C0C0;
+		border-radius: 5px 5px 5px 5px;
+		margin-top: 10px;
+	}
+	.step .seleccion:first-child {
+		border-radius: 5px 5px 5px 5px;
+		margin-top: 10px;
+	}
+	.step .seleccion:last-child {
+		border-radius: 5px 5px 5px 5px;
+		margin-top: 10px;
+	}
+	.step .seleccion:hover {
+		color: #F58723;
+		cursor: pointer;
+	}
+	.setup-content {
+		background-color: #f2f2f2;
+	}
+	.step .activestep {
+		color: #F58723;
+		border-left: 2px solid #5CB85C !important;
+		border-right: 2px solid #5CB85C !important;
+		border-top: 2px solid #5CB85C !important;
+		border-bottom: 2px solid #5CB85C !important;
+		vertical-align: central;
+	}
+	.step .fa {
+		padding-top: 15px;
+		font-size: 40px;
+	}
+	.fecha i{
+    	right: 60px !important;
+	}
+</style>
+	{{  HTML::script('js/fileinput.js'); }}
+  	{{  HTML::style('css/fileinput.css');  }}
+  	{{  HTML::style('css/bootstrap-datetimepicker.min.css');  }}
 @endsection
 @section('contenido')
-	{{ Form::button('<i class="fa fa-question"></i>',array('id' => 'tour','class' => 'pull-right btn btn-warning btn-xs')) }}
 	{{ Form::open(array('id' => 'formularioalta','url'=>'recluta/alta','files'=>true)) }}
 		<div class="col-md-2 step">
-			<div id="div1" class="tour-1 seleccion activestep" onclick="javascript: resetActive(event, 33, 'step-1');">
+			<div id="div1" class="seleccion activestep" onclick="javascript: resetActive(event, 33, 'step-1');">
 				<span class="fa fa-user"></span>
 				<p>Básicos</p>
 			</div>
-			<div class="tour-2 seleccion" onclick="javascript: resetActive(event, 66, 'step-2');">
+			<div class="seleccion" onclick="javascript: resetActive(event, 66, 'step-2');">
 				<span class="fa fa-pencil"></span>
 				<p>Datos de elemento</p>
 			</div>
-			<div class="tour-3 seleccion" onclick="javascript: resetActive(event, 100, 'step-3');">
+			<div class="seleccion" onclick="javascript: resetActive(event, 100, 'step-3');">
 				<span class="fa fa-plus-square"></span>
 				<p>Contacto/Tutor</p>
 			</div>
@@ -126,9 +113,12 @@
 						{{ Form::label('reclusexo', 'Sexo') }}
 						{{Form::select('reclusexo', array('Hombre' => 'Hombre','Mujer' => 'Mujer',),null,array('placeholder' => '','class' => 'form-control')) }}
 					</div>
-					<div class="col-md-3 form-group">
+					<div class="col-md-3 form-group fecha">
 						{{ Form::label('birthday', 'Fecha nacimiento') }}
-						{{ Form::input('date','birthday', null,array('class' => 'form-control')) }}
+						<div class="input-group date" id="datetimePicker">
+                            {{ Form::text('birthday', null, array('class' => 'form-control', 'placeholder' => 'YYYY-MM-DD', 'data-date-format' => 'YYYY-MM-DD')) }}
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                        </div>
 					</div>
 					<div class="col-md-4 form-group">
 						{{ Form::label('domicilio', 'Calle y número') }}
@@ -345,45 +335,23 @@
 @endsection
 @section('scripts')
 	<script>
-		$( "#curp" ).focusout(function() {
-			var curp = $(this).val();
-			$.post('curp',{curp:curp}, function(json) {
-				if (!json.success) {
-					$('#idcurp').addClass('has-error');
-					$('[name=curp]').val('');
-					$('#formularioalta').bootstrapValidator('revalidateField','curp');
-					$('[name=curp]').focus();
-					$('[name=curp]').closest('div').find('small').html(curp+' ya está registrada');
-				}
-			}, 'json');
-		})
+	$( "#curp" ).focusout(function() {
+		var curp = $(this).val();
+		$.post('curp',{curp:curp}, function(json) {
+			if (!json.success) {
+				console.log(json);
+				$('#curperror').removeClass('hidden');
+				$('#idcurp').addClass('has-error');
+				$('[name=curp]').val('');
+				$('#formularioalta').bootstrapValidator('revalidateField','curp');
+				$('[name=curp]').focus();
+				$('[name=curp]').closest('div').find('small').html(curp+' ya está registrada');
+			}
+		}, 'json');
+	})
 	</script>
 	<script>
-		$('#tour').on('click', function(e) {
-			var tour = new Tour({
-				steps: [
-					{
-						element: ".tour-1",
-						title: "Datos básicos del elementos",
-						content: "Ingresa la información del elemento",
-					},
-					{
-						element: ".tour-2",
-						title: "Datos del elemento",
-						content: "Dá click aquí para mostrar el formulario",
-					},
-					{
-						element: ".tour-3",
-						title: "Datos de contacto",
-						content: "Dá click aquí para mostrar el formulario",
-					},
-				],
-				backdrop: true,
-				storage: false,
-			});
-			tour.init();
-			tour.start();
-		});
+		//$('#curp').popover();
 	</script>
 	<script>
 		$("#filefoto").fileinput({
@@ -393,6 +361,10 @@
 			fileType: "any"
 		});
 		$(document).ready(function() {
+			$('#datetimePicker').datetimepicker({
+		        language: 'es',
+		        pickTime: false
+		    });
 			$("#test-upload").fileinput({
 				'showPreview' : true,
 				'allowedFileExtensions' : ['jpg', 'png','gif'],
@@ -469,6 +441,9 @@
 		            birthday: {
 		                validators: {
 		                    notEmpty: {},
+		                    date: {
+		                        format: 'YYYY-MM-DD',
+		                    }
 		                }
 		            },
 		            reclutelefonofijo: {
@@ -543,35 +518,35 @@
 			$('#contactoredes').click(function(){
 				$('#contactofbtw').toggle(80);
 			})
-
 			$('#recluredes').click(function(){
 				$('#fbtw').toggle(80);
-
 			})
 			$('.mayuscula').focusout(function() {
 				$(this).val($(this).val().toUpperCase());
 			});
+			$('#datetimePicker').on('dp.change dp.show', function(e) {
+		        $('#formularioalta').bootstrapValidator('revalidateField', 'birthday');
+		    });
 		});
 	</script>
 	<script type="text/javascript">
 		function resetActive(event, percent, step) {
+			//$(".progress-bar").css("width", percent + "%").attr("aria-valuenow", percent);
+			//$(".progress-completed").text(percent + "%");
 			$("div").each(function () {
 			if ($(this).hasClass("activestep")) {
 			$(this).removeClass("activestep");
 			}
 			});
-
 			if (event.target.className == "seleccion") {
 			$(event.target).addClass("activestep");
 			}
 			else {
 			$(event.target.parentNode).addClass("activestep");
 			}
-
 			hideSteps();
 			showCurrentStepInfo(step);
 		}
-
 		function hideSteps() {
 			$("div").each(function () {
 			if ($(this).hasClass("activeStepInfo")) {
@@ -580,12 +555,14 @@
 			}
 			});
 		}
-
 		function showCurrentStepInfo(step) {
 			var id = "#" + step;
 			$(id).addClass("activeStepInfo");
 		}
 	</script>
-	<script type="text/javascript" src="../js/bootstrapValidator.js"></script>
-	<script type="text/javascript" src="../js/es_ES.js"></script>
+{{  HTML::script('js/bootstrapValidator.js'); }}
+{{  HTML::script('js/es_ES.js'); }}
+{{  HTML::script('js/moment.js'); }}
+{{  HTML::script('js/bootstrap-datetimepicker.js'); }}
+{{  HTML::script('js/bootstrap-datetimepicker.es.js'); }}
 @endsection

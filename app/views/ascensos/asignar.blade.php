@@ -136,7 +136,7 @@
 				if(!json.cargo){
 					$('label[for=cargo]').text('Cargo: Sin cargo');
 				}
-				$('#fotoperfil').html('<img id="theImg" class="img-responsive img-thumbnail img-circle" src="imgs/fotos/'+json.fotoperfil+'" alt="Responsive image"/>');
+				$('#fotoperfil').html('<img id="theImg" class="img-responsive img-thumbnail img-circle" src="'+json.fotoperfil+'" alt="Responsive image"/>');
 				porcentajeAsistencia(json.faltas,json.permisos,json.asistencias);
 				examenesVista(json.examenes,json.examenesNoHechos);
 				reconocimientosVista(json.reconocimientos);

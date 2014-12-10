@@ -179,6 +179,7 @@ class EditaReclutaController extends BaseController {
 		));
 		if (Input::get('contactotelefonofijo') == "") {
 			Telefono::where('persona_id', '=', $tutor -> id)->where('tipo','=','fijo')->delete();
+			Persona::where(nombre = nombre)
 		}
 
 		$data = array(
@@ -190,6 +191,14 @@ class EditaReclutaController extends BaseController {
 		));
 		if (Input::get('contactotelefonomovil') == "") {
 			Telefono::where('persona_id', '=', $tutor -> id)->where('tipo','=','movil')->delete();
+		}
+		if (Input::file("fotoperfil") != "") {
+			$file = Input::file("fotoperfil")->move("imgs/fotos/",$elemento->id.'.'.Input::file('fotoperfil')->guessClientExtension());
+			$documento = new Documento;
+			$documento -> elemento_id = $elemento->id;
+			$documento -> ruta = 'imgs/fotos/'.$elemento->id.'.'.Input::file('fotoperfil')->guessClientExtension();
+			$documento -> tipo = 'fotoperfil';
+			$documento -> save();
 		}
 		return Redirect::to('recluta/editar');
 	}
@@ -332,16 +341,17 @@ class EditaReclutaController extends BaseController {
 		$elementosArr = array();
 		foreach ($elementos as $elemento) {
 			$activo = $elemento -> status -> last() -> tipo;
-			$matricula = $elemento -> matricula;
-			if($activo == 'Nuevo' && !is_null($matricula)){
-				$personaElemento = $elemento -> persona;
-				$elementosArr[] = array(
-					'nombre' => $personaElemento -> nombre,
-					'paterno' => $personaElemento -> apellidopaterno,
-					'materno' => $personaElemento -> apellidomaterno,
-					'matricula' => $matricula -> matricula,
-				);
+			$matricula = 'Sin asignar';
+			if (!is_null($elemento -> matricula)) {
+				$matricula = $elemento -> matricula -> id;
 			}
+			$personaElemento = $elemento -> persona;
+			$elementosArr[] = array(
+				'nombre' => $personaElemento -> nombre,
+				'paterno' => $personaElemento -> apellidopaterno,
+				'materno' => $personaElemento -> apellidomaterno,
+				'matricula' => $matricula,
+			);
 		}
 		return Response::json($elementosArr);
 	}

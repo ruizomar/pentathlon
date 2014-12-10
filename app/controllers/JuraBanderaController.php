@@ -32,7 +32,7 @@ class JuraBanderaController extends BaseController {
 					'nombre' => $personaElemento -> nombre,
 					'paterno' => $personaElemento -> apellidopaterno,
 					'materno' => $personaElemento -> apellidomaterno,
-					'matricula' => $matricula -> matricula,
+					'matricula' => $matricula -> id,
 					'elemento_id' => $elemento -> id,
 					'persona_id' => $personaElemento -> id,
 				);

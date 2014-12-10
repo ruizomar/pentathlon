@@ -16,7 +16,7 @@ class Elemento extends Eloquent{
 		return $this->belongsToMany('Grado','ascensos')->withPivot('fecha');
 	}
 	public function cargos(){
-		return $this->belongsToMany('Cargo')->withPivot('companiasysubzona_id','fecha_inicio','fecha_fin');
+		return $this->belongsToMany('Cargo')->withPivot('fecha_inicio','fecha_fin');
 	}
 	public function companiasysubzona(){
 		return $this->belongsTo('Companiasysubzona');

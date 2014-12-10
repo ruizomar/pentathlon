@@ -89,12 +89,13 @@
 				$('#nombreelemento').text(json.nombre+' '+json.paterno+' '+json.materno);
 				$('label[for=matricula]').text(json.matricula);
 				i = 0;
+				// console.log(json.cargo);
 				$.each(json.cargo,function(index,value){
-					$('#cargos').append('<li class="cargolabel'+i+'" style="list-style-type: none; margin-left: -40px; margin-top:5px;"><label class="label label-success"><a class="closes" data-dismiss="alert2" onclick="eliminar('+id+','+value.companiasysubzona_id+','+value.cargo_id+','+i+')"><i class="fa fa-times"></i></a>'+value.nombre+' en '+value.companiasysubzona+'</label></li>');
+					$('#cargos').append('<li class="cargolabel'+i+'" style="list-style-type: none; margin-left: -40px; margin-top:5px;"><label class="label label-success"><a class="closes" data-dismiss="alert2" onclick="eliminar('+id+','+value.cargo_id+','+i+')"><i class="fa fa-times"></i></a>'+value.nombre+'</label></li>');
 					i++;
 				});
 				$('label[for=companiasysubzonas]').text(json.companiasysubzonas);
-				$('#fotoperfil').html('<img id="theImg" class="img-responsive img-thumbnail img-circle" src="imgs/fotos/'+json.fotoperfil+'" alt="Responsive image"/>');
+				$('#fotoperfil').html('<img id="theImg" class="img-responsive img-thumbnail img-circle" src="'+json.fotoperfil+'" alt="Responsive image"/>');
 			}, 'json');
 		}
 	</script>
@@ -106,15 +107,15 @@
 					// console.log(json);
 					if (!json.success) {
 						swal({
-								title: '¿Estás seguro?',
-								text: 'Parece que '+capitalise(json.nombre)+' '+capitalise(json.paterno)+' '+capitalise(json.materno)+' tiene ese cargo en el mismo lugar.',
-								type: 'warning',
-								showCancelButton: true,
-								confirmButtonColor: '#AEDEF4',
-								confirmButtonText: 'Si',
-								cancelButtonText: 'No, regresar a revisar',
-								closeOnConfirm: false,
-								closeOnCancel: false
+							title: '¿Estás seguro?',
+							text: 'Parece que '+capitalise(json.nombre)+' '+capitalise(json.paterno)+' '+capitalise(json.materno)+' tiene ese cargo en el mismo lugar.',
+							type: 'warning',
+							showCancelButton: true,
+							confirmButtonColor: '#AEDEF4',
+							confirmButtonText: 'Si',
+							cancelButtonText: 'No, regresar a revisar',
+							closeOnConfirm: false,
+							closeOnCancel: false
 							},
 							function(isConfirm){
 								if (isConfirm){
@@ -137,13 +138,15 @@
 			});
 		})();
 		function insertar () {
+			// console.log('1');
 			$.post('cargos/update',$("#formulariocargos").serialize(), function(json) {
+				// console.log(2);
 				// console.log(json);
 				if(json.success){
 					$('#cargos').html('');
 					i = 0;
 					$.each(json.cargo,function(index,value){
-						$('#cargos').append('<li class="cargolabel'+i+'" style="list-style-type: none; margin-left: -40px; margin-top:5px;"><label class="label label-success"><a class="closes" data-dismiss="alert2" onclick="eliminar('+value.elemento_id+','+value.companiasysubzona_id+','+value.cargo_id+','+i+')"><i class="fa fa-times"></i></a>'+value.nombre+' en '+value.companiasysubzona+'</label></li>');
+						$('#cargos').append('<li class="cargolabel'+i+'" style="list-style-type: none; margin-left: -40px; margin-top:5px;"><label class="label label-success"><a class="closes" data-dismiss="alert2" onclick="eliminar('+value.elemento_id+','+value.cargo_id+','+i+')"><i class="fa fa-times"></i></a>'+value.nombre+'</label></li>');
 						i++;
 					});
 					swal('!Hecho!', 'Se ha guardado el cargo', 'success');
@@ -155,7 +158,7 @@
 		}
 	</script>
 	<script>
-		function eliminar(id,compania,cargo,clase) {
+		function eliminar(id,cargo,clase) {
 			swal({
 				title: '¿Estás seguro?',
 				text: 'Se eliminará del cargo a este elemento',
@@ -167,7 +170,7 @@
 				closeOnConfirm: false,
 			},
 			function(){
-				$.post('cargos/eliminar',{id:id,compania:compania,cargo:cargo}, function(json) {
+				$.post('cargos/eliminar',{id:id,cargo:cargo}, function(json) {
 					if(json){
 						swal('¡Hecho!', 'Se ha eliminado el cargo', 'success');
 						$('.cargolabel'+clase).remove();
