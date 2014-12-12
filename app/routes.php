@@ -47,7 +47,10 @@ Route::controller('examenes','ExamenesController');
 Route::controller('arrestos','ArrestosController');
 Route::controller('armas','armasController');
 Route::controller('cuerpos','cuerposController');
-
+Route::controller('historial','HistorialController');
+Route::get('history',array('before' => 'auth', function(){
+	return View::make('historial/history');
+}));
 Route::get('registrar', function()
 {
 	$user = new User;

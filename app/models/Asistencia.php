@@ -6,5 +6,7 @@ class Asistencia extends Eloquent{
 	public function elemento(){
 		return $this->belongsTo('Elemento');
 	}
-
+	public function companiasysubzona(){
+		return $this->belongsTo('Companiasysubzona');
+	}
 }
