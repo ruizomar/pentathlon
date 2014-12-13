@@ -265,7 +265,7 @@
         <div class="col-md-3 form-group">
           {{ Form::label('compania', 'Compañia - Subzona') }} <br>
           {{Form::select('compania',$companiasysubzonas,null,array('placeholder' => '','class' => 'form-control')) }}
-          {{ Form::label('msginstructor','El elemento tiene un cargo',array('class' => 'label label-danger')) }}
+          {{ Form::label('msginstructor','El elemento es instructor',array('id' => 'msginstructor' ,'class' => 'hidden label label-danger')) }}
         </div>
       </div>
       <div class="col-md-10 row setup-content hiddenStepInfo" id="step-3">
@@ -639,11 +639,16 @@
     };
   </script>
   <script>
-    $('#compania').change(function(){
-      // compania = $('[name=compania]').get();
+    $('#compania').focus(function(){
       compania = $('[name=compania]').val();
-      $.post('cargos',{compania:compania}, function(json) {
+      persona_id = $('[name=persona_id]').val();
+      $.post('cargos',{compania:compania,persona_id:persona_id}, function(json) {
         console.log(json);
+        if (json.success){
+          $('[name=compania]').text('');
+          $('[name=compania]').append('<option value="'+json.companiasysubzona_id+'">'+json.compania+'</option>');
+          $('#msginstructor').removeClass('hidden');
+        }
       }, 'json');
     });
   </script>

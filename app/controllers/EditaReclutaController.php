@@ -358,6 +358,21 @@ class EditaReclutaController extends BaseController {
 	public function cargos()
 	{
 		$compania = $_POST['compania'];
-		return Response::json($compania);
+		$elemento = Persona::find($_POST['persona_id']) -> elemento;
+		$cargos = $elemento -> cargos() -> get();
+		$cargo = array(
+			'success' => false,
+		);
+		foreach ($cargos as $carge) {
+			if (is_null($carge -> pivot -> fecha_fin) && $carge -> pivot -> cargo_id == 11) {
+				$cargo = array(
+					'success' => true,
+					'companiasysubzona_id' => $compania,
+					'compania' => Companiasysubzona::find($compania) -> nombre,
+					'cargo_id' => $carge -> pivot -> cargo_id
+					);
+			}
+		}
+		return Response::json($cargo);
 	}
 }
