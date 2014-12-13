@@ -179,7 +179,7 @@ class EditaReclutaController extends BaseController {
 		));
 		if (Input::get('contactotelefonofijo') == "") {
 			Telefono::where('persona_id', '=', $tutor -> id)->where('tipo','=','fijo')->delete();
-			Persona::where(nombre = nombre)
+			// Persona::where(nombre = nombre)
 		}
 
 		$data = array(
@@ -354,5 +354,10 @@ class EditaReclutaController extends BaseController {
 			);
 		}
 		return Response::json($elementosArr);
+	}
+	public function cargos()
+	{
+		$compania = $_POST['compania'];
+		return Response::json($compania);
 	}
 }

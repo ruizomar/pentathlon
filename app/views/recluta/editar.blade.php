@@ -265,6 +265,7 @@
         <div class="col-md-3 form-group">
           {{ Form::label('compania', 'Compañia - Subzona') }} <br>
           {{Form::select('compania',$companiasysubzonas,null,array('placeholder' => '','class' => 'form-control')) }}
+          {{ Form::label('msginstructor','El elemento tiene un cargo',array('class' => 'label label-danger')) }}
         </div>
       </div>
       <div class="col-md-10 row setup-content hiddenStepInfo" id="step-3">
@@ -636,6 +637,15 @@
       $('#telementos').addClass('hidden');
       $('#extendida').addClass('hidden');
     };
+  </script>
+  <script>
+    $('#compania').change(function(){
+      // compania = $('[name=compania]').get();
+      compania = $('[name=compania]').val();
+      $.post('cargos',{compania:compania}, function(json) {
+        console.log(json);
+      }, 'json');
+    });
   </script>
   {{  HTML::script('js/bootstrapValidator.js'); }}
   {{  HTML::script('js/es_ES.js'); }}

@@ -68,9 +68,12 @@
 				</div>
 				<div class="col-md-5 tour-2">
 					<h3>Cargo a asignar</h3>
-					{{ Form::select('cargo', $cargos,null,array('class' => 'form-control')) }}
-					<h3>Ubicación</h3>
-					{{ Form::select('companiasysubzona', $companiasysubzonas,null,array('class' => 'form-control')) }}
+					{{ Form::select('cargo', $cargos,null,array('id' => 'cargo', 'class' => 'form-control')) }}
+					<div id="ubicacion" class="hidden">
+						<h3>Ubicación</h3>
+						{{ Form::select('companiasysubzona', $companiasysubzonas,null,array('class' => 'form-control')) }}
+						{{ Form::label('msginstructor','El elemento cambiará su ubicación',array('class' => 'label label-danger')) }}
+					</div>
 				</div>
 			</div>
 			{{ Form::button('<i class="fa fa-floppy-o"></i> Guardar',array('id' =>'btnupdate','class' => 'pull-right btn btn-info')) }}
@@ -104,11 +107,11 @@
 			$('#btnupdate').on('click', function(e) {
 				e.preventDefault();
 				$.post('cargos/confirma',$("#formulariocargos").serialize(), function(json) {
-					// console.log(json);
+					console.log(json);
 					if (!json.success) {
 						swal({
 							title: '¿Estás seguro?',
-							text: 'Parece que '+capitalise(json.nombre)+' '+capitalise(json.paterno)+' '+capitalise(json.materno)+' tiene ese cargo en el mismo lugar.',
+							text: 'Parece que '+capitalise(json.nombre)+' '+capitalise(json.paterno)+' '+capitalise(json.materno)+' tiene ese cargo.',
 							type: 'warning',
 							showCancelButton: true,
 							confirmButtonColor: '#AEDEF4',
@@ -141,8 +144,9 @@
 			// console.log('1');
 			$.post('cargos/update',$("#formulariocargos").serialize(), function(json) {
 				// console.log(2);
-				// console.log(json);
+				// console.log(json.ubicacion);
 				if(json.success){
+					$('label[for=companiasysubzonas]').text(json.ubicacion);
 					$('#cargos').html('');
 					i = 0;
 					$.each(json.cargo,function(index,value){
@@ -156,6 +160,16 @@
 		function capitalise(string) {
 			return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 		}
+	</script>
+	<script>
+		$('#cargo').change(function(){
+			if ($('#cargo').val() == 11) {
+				$('#ubicacion').removeClass('hidden');
+			}
+			else {
+				$('#ubicacion').addClass('hidden');
+			}
+		});
 	</script>
 	<script>
 		function eliminar(id,cargo,clase) {
