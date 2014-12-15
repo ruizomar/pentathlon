@@ -154,6 +154,7 @@
                         <th>Cargo</th>
                         <th>Fecha de inicio</th>
                         <th>Fecha de fin</th>
+                        <th>Compañia/subzona</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -161,10 +162,25 @@
                     <tr>
                         <td>{{ $cargo-> nombre}}</td>
                         <td>{{ $cargo->pivot-> fecha_inicio}}</td>
-                        @if($cargo->pivot-> fecha_fin == null)
+                        @if($cargo->pivot->fecha_fin == null)
+                            <td>-</td>
+                        @else
+                            <td>{{ $cargo->pivot-> fecha_fin}}</td>
+                        @endif
+                        @if($cargo->nombre == 'Instructor')
+                            @if($cargo->pivot->fecha_fin == null)
+                                <td>{{$elemento->companiasysubzona->nombre}}</td>
+                            @else
+                            <?php $compania = $elemento->asistencias()->where('fecha','<',$cargo->pivot->fecha_fin)->where('fecha','>',$cargo->pivot->fecha_inicio)->first(); ?>
+                                @if(!is_null($compania))
+                                    <td>{{ $compania->companiasysubzona->nombre }}</td>
+                                @else
+                                    <td>-</td>
+                                @endif    
+                            @endif
+                        @else
                             <td>-</td>
                         @endif
-                        <td>{{ $cargo->pivot-> fecha_fin}}</td>
                     </tr>
                     @endforeach
                 </tbody>
