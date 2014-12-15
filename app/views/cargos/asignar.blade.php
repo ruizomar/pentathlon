@@ -66,7 +66,7 @@
 						</ul>
 					</h4>
 				</div>
-				<div class="col-md-5 tour-2">
+				<div class="cargos col-md-5 tour-2">
 					<h3>Cargo a asignar</h3>
 					{{ Form::select('cargo', $cargos,null,array('id' => 'cargo', 'class' => 'form-control')) }}
 					<div id="ubicacion" class="hidden">
@@ -91,6 +91,13 @@
 				$('[name=id]').val(json.id);
 				$('#nombreelemento').text(json.nombre+' '+json.paterno+' '+json.materno);
 				$('label[for=matricula]').text(json.matricula);
+				if (!json.matricula) {
+					$('label[for=matricula]').text('Sin registro');
+					$('label[for=matricula]').removeClass('label-success');
+					$('label[for=matricula]').addClass('label-danger');
+					$('#btnupdate').addClass('hidden');
+					$('.cargos').html('<h2><label class="label label-default label-warning"><i class="fa fa-exclamation-circle"></i> No puede asignarse cargo</label></h2>');
+				}
 				i = 0;
 				// console.log(json.cargo);
 				$.each(json.cargo,function(index,value){
@@ -107,7 +114,7 @@
 			$('#btnupdate').on('click', function(e) {
 				e.preventDefault();
 				$.post('cargos/confirma',$("#formulariocargos").serialize(), function(json) {
-					console.log(json);
+					// console.log(json);
 					if (!json.success) {
 						swal({
 							title: '¿Estás seguro?',

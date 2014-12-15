@@ -30,7 +30,7 @@ class AsignaCargosController extends BaseController {
 		$id = $_POST['id'];
 		$elemento = Elemento::find($id);
 		$fotoperfil ="default.png";
-		$matricula = 'Sin registro';
+		$matricula = false;
 		if(!is_null($elemento -> documentos() -> where('tipo','=','fotoperfil') -> first() ) )
 		{
 			$fotoperfil = $elemento -> documentos() -> where('tipo','=','fotoperfil') -> first() -> ruta;
