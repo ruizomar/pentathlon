@@ -143,6 +143,7 @@ class AsignaCargosController extends BaseController {
 		DB::table('cargo_elemento')
 			-> where('cargo_id','=',$cargo)
 			-> where('elemento_id','=',$id)
+			-> where('fecha_fin','=',null)
 			-> update(array(
 				'fecha_fin' => date('Y-m-d'),
 			));
