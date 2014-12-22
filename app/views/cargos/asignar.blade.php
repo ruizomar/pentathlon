@@ -192,8 +192,13 @@
 			},
 			function(){
 				$.post('cargos/eliminar',{id:id,cargo:cargo}, function(json) {
-					if(json){
-						swal('¡Hecho!', 'Se ha eliminado el cargo', 'success');
+					if(json.success){
+						console.log(json.message);
+						if (json.message == 0){
+							swal('¡Hecho!', 'Se ha eliminado el cargo', 'success');
+						}
+						else
+							swal('¡Hecho!', 'Se ha eliminado el cargo, y no se ha registrado en su historial por su corta duración en él.', 'success');
 						$('.cargolabel'+clase).remove();
 					}
 				}, 'json');

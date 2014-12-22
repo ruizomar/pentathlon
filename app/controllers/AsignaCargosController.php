@@ -143,15 +143,16 @@ class AsignaCargosController extends BaseController {
 		DB::table('cargo_elemento')
 			-> where('cargo_id','=',$cargo)
 			-> where('elemento_id','=',$id)
-			-> where('fecha_fin','=',null)
+			-> whereNull('fecha_fin')
 			-> update(array(
 				'fecha_fin' => date('Y-m-d'),
 			));
+		$message = DB::delete('DELETE FROM cargo_elemento WHERE fecha_fin = fecha_inicio');
 		$datos = array(
-			'id' => $id,
-			'cargo' => $cargo,
+			'success' => true,
+			'message' => $message,
 		);
-		return Response::json(true);
+		return Response::json($datos);
 	}
 
 }

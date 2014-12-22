@@ -141,7 +141,7 @@ class AltaReclutaController extends BaseController {
 
 		$persona = Persona::find($personaElemento -> id);
 		$fotoperfil = $elemento -> documentos() -> where('tipo','=','fotoperfil') -> first() -> ruta;
-		return View::make('recluta.lista')->with('persona',$persona)->with('fotoperfil','imgs/fotos/'.$fotoperfil)->with('elemento',$elemento);
+		return View::make('recluta.lista')->with('persona',$persona)->with('fotoperfil',$fotoperfil)->with('elemento',$elemento);
 
 	}
 	public function agregarTelefono($id,$tel,$tipo)
