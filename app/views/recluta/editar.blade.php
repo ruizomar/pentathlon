@@ -65,9 +65,6 @@
       padding-top: 15px;
       font-size: 40px;
     }
-    .fecha i{
-      right: 60px !important;
-  }
   </style>
   {{  HTML::script('js/fileinput.js')}}
   {{  HTML::script('js/tour/bootstrap-tour.min.js')}}
@@ -473,9 +470,6 @@
           birthday: {
             validators: {
               notEmpty: {},
-              date: {
-                        format: 'YYYY-MM-DD',
-                    }
             }
           },
           telefono: {
@@ -537,19 +531,14 @@
         $('#contactofbtw').toggle(80);
       })
       .find('button[data-toggle]')
-          .on('click', function() {
-              var $target = $($(this).attr('data-toggle'));
-              $target.toggle();
-              if (!$target.is(':visible')) {
-                  $('#togglingForm').data('bootstrapValidator').disableSubmitButtons(false);
-              }
-          });
-      $('#datetimePicker').on('dp.change dp.show', function(e) {
-            $('#elemento').bootstrapValidator('revalidateField', 'birthday');
-        });    
+      .on('click', function() {
+          var $target = $($(this).attr('data-toggle'));
+          $target.toggle();
+          if (!$target.is(':visible')) {
+              $('#togglingForm').data('bootstrapValidator').disableSubmitButtons(false);
+          }
+      });
     });
-      $('#sidebar-nav').find('li').removeClass('active');
-      $('#Editar').addClass('active');
   </script>
   <script type="text/javascript">
     function resetActive(event, percent, step) {
