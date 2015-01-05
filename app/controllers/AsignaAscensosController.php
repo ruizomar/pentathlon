@@ -37,7 +37,7 @@ class AsignaAscensosController extends BaseController {
 		}
 		if(!is_null($elemento -> matricula ))
 		{
-			$matricula = $elemento -> matricula -> matricula;
+			$matricula = $elemento -> matricula -> id;
 		}
 		$grado = $elemento -> grados -> last();
 		$examenesHechos = $elemento -> examenes() -> where('grado_id','=',$grado -> id) -> get();
