@@ -3,7 +3,7 @@ class AsignaAscensosController extends BaseController {
 
 	public function __construct()
     {
-        // $this->beforeFilter('auth');
+        $this->beforeFilter('auth');
     }
 
 	public function getIndex()
