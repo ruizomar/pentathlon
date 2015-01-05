@@ -69,12 +69,17 @@
       right: 60px !important;
   }
   </style>
-  {{  HTML::script('js/fileinput.js'); }}
-  {{  HTML::style('css/fileinput.css');  }}
+  {{  HTML::script('js/fileinput.js')}}
+  {{  HTML::script('js/tour/bootstrap-tour.min.js')}}
+  {{  HTML::style('css/tour/bootstrap-tour.min.css')}}
+  {{  HTML::style('css/fileinput.css')}}
+  {{  HTML::script('js/tables/jquery.dataTables.min.js')}}
+  {{  HTML::style('css/jquery.dataTables.css')}}
   {{  HTML::style('css/bootstrap-datetimepicker.min.css');  }}
 @endsection
 @section('contenido')
   <form id="buscarelemento" role="form" method="POST" action="buscar">
+    {{ Form::button('<i class="fa fa-question"></i>',array('id' => 'tour','class' => 'pull-right btn btn-warning btn-xs')) }}
     <div class="col-md-10">
       <div class="col-md-3 form-group">
         {{ Form::label('nombre', 'Nombre (s)',array('class' => 'control-label')) }}
@@ -89,28 +94,46 @@
         {{ Form::text('materno', null, array('class' => 'form-control')) }}
       </div>
       <div class="col-md-2">
-        {{ Form::submit('Buscar', array('placeholder' => '','class' => 'btn btn-primary')) }}
+        {{ Form::submit('Buscar', array('id' => 'busqueda','class' => 'btn btn-primary')) }}
       </div>
     </div>
   </form>
   <div id="error" class="col-md-12 hidden" style="margin-top:10px;">
-      <p class="alert alert-danger"><i class="fa fa-exclamation-triangle fa-lg"></i> No se encontró al Elemento
-      </p>
+      <p class="alert alert-danger"><i class="fa fa-exclamation-triangle fa-lg"></i> No se encontró al elemento<strong><a id="buscarmas" style="color:#a94442;" class="pull-right" href="#">¿Usar otro método de búsqueda?</a></strong></p>
+  </div>
+  <div id="extendida" class="col-md-12 hidden">
+    <div id="listalugares" class="col-md-offset-4 col-md-4">
+      {{ Form::select('lugar',array(null),null,array('id' => 'lugares','class' => 'form-control col-md-2')) }}
+      {{ Form::button('<i class="fa fa-eye"></i> Buscar',array('class' => 'pull-right btn btn-info col-md-4','id' => 'buscarext')) }}
+    </div>
+    <table id="telementos" class="hidden col-md-12 table table-hover" cellspacing="0" width="100%">
+      <thead>
+        <tr class="tour-3">
+          <th class="tour-5">Nombre</th>
+          <th class="tour-6">Paterno</th>
+          <th class="tour-7">Materno</th>
+          <th class="tour-8">Matricula</th>
+          <th class="hidden">elemento_id</th>
+        </tr>
+      </thead>
+      <tbody id="elementobody">
+      </tbody>
+    </table>
   </div>
   <i class="fa fa-spinner fa-2x fa-spin hidden spin-form"></i>
   <form id="buscarelemento" role="form" method="POST" action="update">
     <div id="elemento" class="col-mds-12 tabla hidden">
     <div class="col-md-10">
       <div class="col-md-2 step">
-        <div id="div1" class="seleccion activestep" onclick="javascript: resetActive(event, 33, 'step-1');">
+        <div id="div1" class="tour-1 seleccion activestep" onclick="javascript: resetActive(event, 33, 'step-1');">
           <span class="fa fa-user"></span>
           <p>Básicos</p>
         </div>
-        <div class="seleccion" onclick="javascript: resetActive(event, 66, 'step-2');">
+        <div class="tour-2 seleccion" onclick="javascript: resetActive(event, 66, 'step-2');">
           <span class="fa fa-pencil"></span>
           <p>Datos</p>
         </div>
-        <div class="seleccion" onclick="javascript: resetActive(event, 100, 'step-3');">
+        <div class="tour-3 seleccion" onclick="javascript: resetActive(event, 100, 'step-3');">
           <span class="fa fa-plus-square"></span>
           <p>Contacto/Tutor</p>
         </div>
@@ -245,6 +268,7 @@
         <div class="col-md-3 form-group">
           {{ Form::label('compania', 'Compañia - Subzona') }} <br>
           {{Form::select('compania',$companiasysubzonas,null,array('placeholder' => '','class' => 'form-control')) }}
+          {{ Form::label('msginstructor','El elemento es instructor',array('id' => 'msginstructor' ,'class' => 'hidden label label-danger')) }}
         </div>
       </div>
       <div class="col-md-10 row setup-content hiddenStepInfo" id="step-3">
@@ -318,7 +342,7 @@
       </div>
     </div>
     <div class="col-md-2">
-          {{ Form::image(null,'fotoperfil',array('class' => 'img-responsive img-circle','alt' => 'Responsive image','src' => '')) }}
+          {{ Form::image('imgs/fotos/default.png','fotoperfil',array('class' => 'img-responsive img-circle','alt' => 'Responsive image')) }}
           {{ Form::file('fotoperfil',array('id' => 'filefoto')) }}
     </div>
   </form>
@@ -366,9 +390,9 @@
     });
     $(document).ready(function() {
       $('#datetimePicker').datetimepicker({
-            language: 'es',
-            pickTime: false
-        });
+        language: 'es',
+        pickTime: false
+      });
       $("#test-upload").fileinput({
         'showPreview' : true,
         'allowedFileExtensions' : ['jpg', 'png','gif'],
@@ -529,9 +553,6 @@
   </script>
   <script type="text/javascript">
     function resetActive(event, percent, step) {
-      //$(".progress-bar").css("width", percent + "%").attr("aria-valuenow", percent);
-      //$(".progress-completed").text(percent + "%");
-
       $("div").each(function () {
       if ($(this).hasClass("activestep")) {
       $(this).removeClass("activestep");
@@ -563,10 +584,89 @@
       $(id).addClass("activeStepInfo");
     }
   </script>
-{{  HTML::script('js/bootstrapValidator.js'); }}
-{{  HTML::script('js/es_ES.js'); }}
-{{  HTML::script('js/mio.js'); }}
-{{  HTML::script('js/moment.js'); }}
-{{  HTML::script('js/bootstrap-datetimepicker.js'); }}
-{{  HTML::script('js/bootstrap-datetimepicker.es.js'); }}
+  <script>
+    $('#tour').on('click', function(e) {
+      var tour = new Tour({
+        steps: [
+          {
+            element: '.tour-1',
+            title: 'Datos básicos del elementos',
+            content: 'Ingresa la información del elemento',
+          },
+          {
+            element: '.tour-2',
+            title: 'Datos del elemento',
+            content: 'Dá click aquí para mostrar el formulario',
+          },
+          {
+            element: '.tour-3',
+            title: 'Datos de contacto',
+            content: 'Dá click aquí para mostrar el formulario',
+          },
+        ],
+        backdrop: true,
+        storage: false,
+      });
+      tour.init();
+      tour.start();
+    });
+  </script>
+  <script>
+    $('#buscarmas').click( function(e) {
+      e.preventDefault();
+      $('#extendida').removeClass('hidden');
+      $('#error').addClass('hidden');
+      $.get('lugares', function(json) {
+        $('#lugares').html('');
+        $.each(json,function(index,lugar){
+          $('#lugares').append('<option value="'+lugar.id+'">'+lugar.nombre+'</option>');
+        });
+      }, 'json');
+    });
+  </script>
+  <script>
+    $('#buscarext').click(function(){
+      $('#extendida').removeClass('hidden');
+      id = $('#lugares').val();
+      $('#telementos').removeClass('hidden');
+      $('#elementobody').html('');
+      $.post('extendidos',{id:id}, function(json) {
+        $.each(json,function(index,elementos){
+          $('#elementobody').append('<tr class="info" onclick="eliminar(\''+elementos.nombre+'\', \''+elementos.paterno+'\', \''+elementos.materno+'\')">'+
+            '<td>'+elementos.nombre+'</td>'+
+            '<td>'+elementos.paterno+'</td>'+
+            '<td>'+elementos.materno+'</td>'+
+            '<td>'+elementos.matricula+'</td></tr>');
+        });
+      }, 'json');
+    });
+    function eliminar(nombre,paterno,materno) {
+      $('[name=nombre]').val(nombre);
+      $('[name=paterno]').val(paterno);
+      $('[name=materno]').val(materno);
+      $('#busqueda').removeAttr("disabled").trigger("click");
+      $('#telementos').addClass('hidden');
+      $('#extendida').addClass('hidden');
+    };
+  </script>
+  <script>
+    $('#compania').focus(function(){
+      compania = $('[name=compania]').val();
+      persona_id = $('[name=persona_id]').val();
+      $.post('cargos',{compania:compania,persona_id:persona_id}, function(json) {
+        console.log(json);
+        if (json.success){
+          $('[name=compania]').text('');
+          $('[name=compania]').append('<option value="'+json.companiasysubzona_id+'">'+json.compania+'</option>');
+          $('#msginstructor').removeClass('hidden');
+        }
+      }, 'json');
+    });
+  </script>
+  {{  HTML::script('js/bootstrapValidator.js'); }}
+  {{  HTML::script('js/es_ES.js'); }}
+  {{  HTML::script('js/mio.js'); }}
+  {{  HTML::script('js/moment.js'); }}
+  {{  HTML::script('js/bootstrap-datetimepicker.js'); }}
+  {{  HTML::script('js/bootstrap-datetimepicker.es.js'); }}
 @endsection

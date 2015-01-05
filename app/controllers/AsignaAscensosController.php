@@ -1,6 +1,11 @@
 <?php
 class AsignaAscensosController extends BaseController {
 
+	public function __construct()
+    {
+        // $this->beforeFilter('auth');
+    }
+
 	public function getIndex()
 	{
 		$cargos = Cargo::all();
@@ -68,6 +73,4 @@ class AsignaAscensosController extends BaseController {
 		);
 		return ($dato);
 	}
-
-
 }

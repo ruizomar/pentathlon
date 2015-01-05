@@ -60,14 +60,18 @@
 			margin-right: -14px;
 		}
 	</style>
-	{{  HTML::style('css/sweet-alert.css');  }}
-
+	{{  HTML::style('css/sweet-alert.css')}}
+	{{  HTML::style('css/tour/bootstrap-tour.min.css')}}
+	{{  HTML::script('js/tour/bootstrap-tour.min.js')}}
+	{{  HTML::script('js/chart/morris.min.js')}}
+	{{  HTML::script('js/chart/raphael-min.js')}}
 @endsection
 @section('elemento')
+	{{ Form::button('<i class="fa fa-question"></i>',array('id' => 'tour','class' => 'pull-right btn btn-warning btn-xs', 'style' => 'margin-top:-90px')) }}
 	<div class="col-md-12" style="right: 10px;">
-		<div id="graficaAsistencias" class="requisitos col-md-2">
+		<div id="graficaAsistencias" class="tour-3 requisitos col-md-2">
 		</div>
-		{{ Form::open(array('id' => 'formulariocargos','class' => 'col-md-7 contenedor','url' => 'ascensos/update','files' => true)) }}
+		{{ Form::open(array('id' => 'formulariocargos','class' => 'tour-1 col-md-7 contenedor','url' => 'ascensos/update','files' => true)) }}
 			<div class="form-group">
 				<div class="col-md-4" id="fotoperfil">
 				</div>
@@ -85,7 +89,7 @@
 						</h4>
 						<h4>
 							{{ Form::label(null,'Grado actual: ',array('class' => 'small')) }}
-							{{ Form::label('grado',null,array('class' => 'pull-right label label-danger')) }}
+							{{ Form::label('grado',null,array('class' => 'tour-2 pull-right label label-danger')) }}
 						</h4>
 						<h4>
 							{{ Form::label(null,'Desde: ',array('class' => 'small')) }}
@@ -96,29 +100,25 @@
 				{{ Form::button('<i class="fa fa-floppy-o"></i> Guardar',array('id' =>'btnupdate','class' => 'hidden pull-right btn btn-info')) }}
 			</div>
 		{{Form::close()}}
-		<div class="calificaciones requisitos col-md-3" style="left:24px;">
+		<div class="tour-4 tour-5 tour-6 calificaciones requisitos col-md-3" style="left:24px;">
 			<h4 class="titulo text-center">Exámenes</h4>
 			<div id="calificaciones"></div>
 		</div>
 	</div>
 	<div class="col-md-12" style="right: 10px;">
-		<div class="requisitos col-md-3">
+		<div class="tour-7 requisitos col-md-3">
 			<h4 class="titulo text-center">Reconocimientos</h4>
 			<div id="reconocimientos"></div>
 		</div>
-		<div class="requisitos col-md-3" style="left:12px;">
-			<h4 class="titulo text-center">Pagos</h4>
-			<div id="reconocimientos"></div>
+		<div class="tour-8 requisitos col-md-3" style="left:12px;">
+			<h4 class="titulo text-center">Enteros</h4>
+			<div id="pagos"></div>
 		</div>
 	</div>
 @stop
 @section('scripts2')
 	{{  HTML::script('js/sweet-alert.min.js'); }}
-		{{  HTML::script('js/chart/morris.min.js'); }}
-	{{  HTML::script('js/chart/raphael-min.js'); }}
 	<script>
-	$('#sidebar-nav').find('li').removeClass('active');
-	$('#Ascensos').addClass('active');
 		function encontrado (id) {
 			$('#graficaAsistencias').html('');
 			$('#calificaciones').html('');
@@ -130,7 +130,6 @@
 				$('[name=id]').val(json.id);
 				$('#nombreelemento').text(json.nombre+' '+json.paterno+' '+json.materno);
 				$('label[for=matricula]').text(json.matricula);
-				console.log(json.matricula)
 				$('label[for=companiasysubzonas]').text(json.companiasysubzonas);
 				$('label[for=grado]').text(json.grado);
 				$('label[for=fechagrado]').text(json.fechagrado);
@@ -167,25 +166,23 @@
 			};
 		}
 		function examenesVista (hechos,noHechos) {
-			// console.log(hechos);
 			$.each(hechos,function(index, val){
-				$('#calificaciones').append('<div class="listado"><h2>'+val.nombre+'</h2><p><small>'+val.pivot.fecha+'</small><label class="pull-right label label-success calificacion">'+val.pivot.calificacion+'</label></p></div>');
 				if (val.pivot.calificacion < 6) {
-					$('.calificacion').addClass('label-danger');
-					$('.calificacion').removeClass('label-success');
+					$('#calificaciones').append('<div class="listado"><h2>'+val.nombre+'</h2><p><small>'+val.pivot.fecha+'</small><label class="pull-right label label-danger calificacion">'+val.pivot.calificacion+'</label></p></div>');
 					$('.calificaciones').addClass('error');
-				};
+				}
+				else {
+					$('#calificaciones').append('<div class="listado"><h2>'+val.nombre+'</h2><p><small>'+val.pivot.fecha+'</small><label class="pull-right label label-success calificacion">'+val.pivot.calificacion+'</label></p></div>');
+				}
 			});
-			// console.log(noHechos);
 			$.each(noHechos,function(index, val){
-				$('#calificaciones').append('<div class="listado"><h2>'+val.nombre+'</h2><p><small>Sin fecha</small><label class="pull-right label label-danger calificacion">NO</label></p></div>');
+				$('#calificaciones').append('<div class="listado"><h2>'+val.nombre+'</h2><p><small>Sin fecha</small><label class="pull-right label label-danger calificacion">NA</label></p></div>');
 				$('.calificaciones').addClass('error');
 			});
 		}
 		function reconocimientosVista (data) {
-			// console.log(data);
 			$.each(data,function(index, val){
-				$('#reconocimientos').append('<div class="listado"><h2>'+val.nombre+'</strong><p><small>'+val.fecha+'</small></p></div>');
+				$('#reconocimientos').append('<div class="listado"><h2><i class="fa fa-star-o"></i> '+val.nombre+'</strong><p><small>'+val.fecha+'</small></p></div>');
 			});
 		}
 	</script>
@@ -195,7 +192,6 @@
 				e.preventDefault();
 				var str = $( "#formulariocargos" ).serialize();
 				$.post('ascensos/update',$("#formulariocargos").serialize(), function(json) {
-					console.log(json);
 					if (!json.success) {
 						swal({
 								title: '¿Estás seguro?',
@@ -228,5 +224,63 @@
 		function capitalise(string) {
 			return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 		}
+	</script>
+	<script>
+	  $('#tour').on('click', function(e) {
+	    var tour = new Tour({
+	      steps: [
+	        {
+	          element: '.tour-1',
+	          title: 'Detalles',
+	          content: 'Aquí se muestra información del elemento',
+	          placement: 'top',
+	        },
+	        {
+	          element: '.tour-2',
+	          title: 'Cargo',
+	          content: 'Este es el cargo actual del elemento',
+	        },
+	        {
+	          element: '.tour-3',
+	          title: 'Asistencias',
+	          content: 'Esta gráfica representa el porcentaje de asistencias, permisos o faltas registradas del elemento',
+	        },
+	        {
+	          element: '.tour-4',
+	          title: 'Exámenes',
+	          content: 'Se listan los exámenes que ha presentado este elemento',
+	          placement: 'top',
+	        },
+	        {
+	          element: '.tour-5',
+	          title: 'Calificación',
+	          content: 'También se muestra una calificación obtenida',
+	          placement: 'left',
+	        },
+	        {
+	          element: '.tour-6',
+	          title: 'No hechos',
+	          content: 'Al final se listan los exámens que no ha presentado el elemento',
+	          placement:'bottom',
+	        },
+	        {
+	          element: '.tour-7',
+	          title: 'Reconocimientos',
+	          content: 'Aquí se muestran las condecoraciones que ha obtenido',
+	          placement: 'top',
+	        },
+	        {
+	          element: '.tour-8',
+	          title: 'Entero',
+	          content: 'Mensaje de enterado',
+	          placement: 'top',
+	        },
+	      ],
+	      backdrop: false,
+	      storage: false,
+	    });
+	    tour.init();
+	    tour.start();
+	  });
 	</script>
 @endsection

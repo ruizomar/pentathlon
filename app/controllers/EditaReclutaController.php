@@ -1,6 +1,11 @@
 <?php
 class EditaReclutaController extends BaseController {
 
+	public function __construct()
+    {
+        // $this->beforeFilter('auth');
+    }
+
 	public function editar()
 	{
 		$armas = Tipoarma::all();
@@ -174,6 +179,7 @@ class EditaReclutaController extends BaseController {
 		));
 		if (Input::get('contactotelefonofijo') == "") {
 			Telefono::where('persona_id', '=', $tutor -> id)->where('tipo','=','fijo')->delete();
+			// Persona::where(nombre = nombre)
 		}
 
 		$data = array(
@@ -185,6 +191,14 @@ class EditaReclutaController extends BaseController {
 		));
 		if (Input::get('contactotelefonomovil') == "") {
 			Telefono::where('persona_id', '=', $tutor -> id)->where('tipo','=','movil')->delete();
+		}
+		if (Input::file("fotoperfil") != "") {
+			$file = Input::file("fotoperfil")->move("imgs/fotos/",$elemento->id.'.'.Input::file('fotoperfil')->guessClientExtension());
+			$documento = new Documento;
+			$documento -> elemento_id = $elemento->id;
+			$documento -> ruta = 'imgs/fotos/'.$elemento->id.'.'.Input::file('fotoperfil')->guessClientExtension();
+			$documento -> tipo = 'fotoperfil';
+			$documento -> save();
 		}
 		return Redirect::to('recluta/editar');
 	}
@@ -306,8 +320,59 @@ class EditaReclutaController extends BaseController {
 		return $dato;
 	}
 
-	public function datos()
+	public function lugares()
 	{
-		
+		$companiasysubzonas = Companiasysubzona::all();
+		$companiasysubzonasArr = array();
+		foreach($companiasysubzonas as $compayzona)
+		{
+			$companiasysubzonasArr[$compayzona->id] = array(
+				'id' => $compayzona->id,
+				'nombre' => $compayzona->tipo.' '.ucwords(strtolower($compayzona->nombre))
+				);
+		}
+		return Response::json($companiasysubzonasArr);
+	}
+	public function extendidos()
+	{
+		$lugar_id = $_POST['id'];
+		$lugar = Companiasysubzona::find($lugar_id);
+		$elementos = $lugar -> elementos() -> get();
+		$elementosArr = array();
+		foreach ($elementos as $elemento) {
+			$activo = $elemento -> status -> last() -> tipo;
+			$matricula = 'Sin asignar';
+			if (!is_null($elemento -> matricula)) {
+				$matricula = $elemento -> matricula -> id;
+			}
+			$personaElemento = $elemento -> persona;
+			$elementosArr[] = array(
+				'nombre' => $personaElemento -> nombre,
+				'paterno' => $personaElemento -> apellidopaterno,
+				'materno' => $personaElemento -> apellidomaterno,
+				'matricula' => $matricula,
+			);
+		}
+		return Response::json($elementosArr);
+	}
+	public function cargos()
+	{
+		$compania = $_POST['compania'];
+		$elemento = Persona::find($_POST['persona_id']) -> elemento;
+		$cargos = $elemento -> cargos() -> get();
+		$cargo = array(
+			'success' => false,
+		);
+		foreach ($cargos as $carge) {
+			if (is_null($carge -> pivot -> fecha_fin) && $carge -> pivot -> cargo_id == 11) {
+				$cargo = array(
+					'success' => true,
+					'companiasysubzona_id' => $compania,
+					'compania' => Companiasysubzona::find($compania) -> nombre,
+					'cargo_id' => $carge -> pivot -> cargo_id
+					);
+			}
+		}
+		return Response::json($cargo);
 	}
 }

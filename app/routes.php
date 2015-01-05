@@ -25,6 +25,7 @@ Route::get('asd', function(){
 	return Response::json($elemento);
 });
 
+// Route::controller('editar', 'EditaReclutaController');
 
 Route::get('recluta/alta','AltaReclutaController@get_nuevo');
 Route::post('recluta/curp','AltaReclutaController@errorCurp');
@@ -33,15 +34,25 @@ Route::post('recluta/alta','AltaReclutaController@post_nuevo');
 Route::get('recluta/editar','EditaReclutaController@editar');
 Route::post('recluta/buscar','EditaReclutaController@buscar');
 Route::post('recluta/update','EditaReclutaController@update');
+Route::get('recluta/lugares','EditaReclutaController@lugares');
+Route::post('recluta/extendidos','EditaReclutaController@extendidos');
+Route::post('recluta/cargos','EditaReclutaController@cargos');
+
+/*Route::get('cargos/editar','AsignaCargosController@editar');
+Route::post('cargos/buscar','AsignaCargosController@buscar');
+Route::post('cargos/update','AsignaCargosController@update');*/
 
 Route::controller('cargos', 'AsignaCargosController');
 Route::controller('ascensos', 'AsignaAscensosController');
+Route::controller('jura', 'JuraBanderaController');
+
 
 Route::post('buscar','BuscarController@buscar');
 Route::controller('pagos', 'MembresiasController');
 Route::controller('companias','CompaniasController');
 Route::controller('asistencias','AsistenciasController');
 Route::controller('condecoraciones','CondecoracionesController');
+
 Route::controller('eventos','EventosController');
 Route::controller('examenes','ExamenesController');
 Route::controller('arrestos','ArrestosController');
@@ -51,15 +62,6 @@ Route::controller('historial','HistorialController');
 Route::get('history',array('before' => 'auth', function(){
 	return View::make('historial/history');
 }));
-Route::get('registrar', function()
-{
-	$user = new User;
-	$user->elemento_id = 1;
-	$user->username = "hacienda";
-    $user->password = Hash::make('123');
-	$user->save();
-	return "El usuario fue agregado.";
-});
 Route::post('login', 'UserLogin@user');
 Route::get('logout', 'UserLogin@logOut');
 
@@ -67,3 +69,4 @@ Route::get('forgot','RecoverPassword@getForgotpassword');
 Route::post('forgot','RecoverPassword@postForgotpassword');
 Route::get('recover/{token?}','RecoverPassword@getRecover');
 Route::post('recover','RecoverPassword@postRecover');
+

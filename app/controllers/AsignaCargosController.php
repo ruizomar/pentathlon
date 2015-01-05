@@ -1,6 +1,11 @@
 <?php
 class AsignaCargosController extends BaseController {
 
+	public function __construct()
+    {
+        // $this->beforeFilter('auth');
+    }
+
 	public function getIndex()
 	{
 		$cargos = Cargo::all();
@@ -25,8 +30,7 @@ class AsignaCargosController extends BaseController {
 		$id = $_POST['id'];
 		$elemento = Elemento::find($id);
 		$fotoperfil ="default.png";
-		$matricula = 'Sin registro';
-		$cargo = false;
+		$matricula = false;
 		if(!is_null($elemento -> documentos() -> where('tipo','=','fotoperfil') -> first() ) )
 		{
 			$fotoperfil = $elemento -> documentos() -> where('tipo','=','fotoperfil') -> first() -> ruta;
@@ -35,83 +39,120 @@ class AsignaCargosController extends BaseController {
 		{
 			$matricula = $elemento -> matricula -> id;
 		}
-		if(!is_null($elemento -> cargos -> last() ))
-		{
-			$cargo = $elemento -> cargos -> last() -> nombre;
+		$cargos = $elemento -> cargos() -> get();
+		$cargo = array();
+		foreach ($cargos as $carge) {
+			if (is_null($carge -> pivot -> fecha_fin)) {
+				$cargo[] = array(
+					'nombre' => $carge -> nombre,
+					'cargo_id' => $carge -> id,
+					'elemento_id' => $id,
+					);
+			}
 		}
 		$dato = array(
-			'id' => $id,
 			'success' => true,
+			'id' => $id,
 			'nombre' => $elemento -> persona -> nombre,
 			'paterno' => $elemento -> persona -> apellidopaterno,
 			'materno' => $elemento -> persona -> apellidomaterno,
 			'fotoperfil' => $fotoperfil,
 			'matricula' => $matricula,
 			'cargo' => $cargo,
-			// 'tipo' => $elemento -> companiasysubzona -> tipo,
 			'companiasysubzonas' => $elemento -> companiasysubzona -> tipo .' '. $elemento ->  companiasysubzona -> nombre,
 		);
 		return ($dato);
 	}
 
+	public function postConfirma()
+	{
+		$cargo = Input::get('cargo');
+		$elementos = Cargo::find($cargo) -> elementos() -> get();
+		$q = array();
+		foreach ($elementos as $elemento) {
+			if ($elemento -> companiasysubzona_id == Input::get('companiasysubzona')) {
+				if(is_null($elemento -> pivot -> fecha_fin)){
+					$q = array(
+						'success' => false,
+						'nombre' => $elemento -> persona -> nombre,
+						'paterno' => $elemento -> persona -> apellidopaterno,
+						'materno' => $elemento -> persona -> apellidomaterno,
+						);
+				}
+			}
+		}
+		if(count($q) == 0)
+		{
+			$q = array(
+				'success' => true,
+				'tama' => $elementos
+				);
+		}
+		return Response::json($q);
+	}
+
 	public function postUpdate()
 	{
-		// $nombre = $_REQUEST['cargo'];
 		$id = Input::get('id');
 		$elemento = Elemento::find($id);
 		$cargo = Input::get('cargo');
-		$companiasysubzona = Input::get('companiasysubzona');
-		// $elemento -> cargos() -> detach(array('cargo_id' => 1));
-
-		// $q = $elemento -> cargos() -> select('elemento_id') -> get();
-/*
-		$q = $elemento -> cargos() -> where('cargo_id','=',2) -> get();
-		$dato = array(
-			'success' => false,
-			'id' => '12',
-			);*/
-		$q = Cargo::find($cargo) -> elementos() -> orderBy('fecha_fin','asc') -> first();
-
+		if ($cargo == 11) {
+			Elemento::find($id)
+			-> update(array(
+				'companiasysubzona_id' => Input::get('companiasysubzona'),
+			));
+		}
+		$elementos = Cargo::find($cargo) -> elementos() -> get();
+		// $datos = Cargo::find($cargo) -> elementos() -> get();
+		$q = array();
+		foreach ($elementos as $elem) {
+			if(is_null($elem -> pivot -> fecha_fin)){
+				$q = array('id' => $elem,);
+				$elem -> cargos() -> updateExistingPivot($cargo, array( 'fecha_fin' => date('Y-m-d')) );
+				$elemento -> cargos() -> attach($cargo, array( 'fecha_inicio' => date('Y-m-d') ) );
+			}
+		}
 		if(count($q) == 0)
 		{
-			$datos = array(
-				'success' => true,
-				'cuando' => 1,
-				);
+			$elemento -> cargos() -> attach($cargo, array( 'fecha_inicio' => date('Y-m-d') ) );
 		}
-		else
-		{
-			$lugar = $q -> companiasysubzona_id;
-			if ($lugar == $companiasysubzona)
-			{
-				//falta comprobar si tiene fecha fin o está activo
-				$datos = array(
-					'success' => false,
-					'nombre' => $q -> persona -> nombre,
-					'paterno' => $q -> persona -> apellidopaterno,
-					'materno' => $q -> persona -> apellidomaterno,
-					);
-			}
-			else
-			{
-				$datos = array(
-					'success' => true,
-					'cuando' => 2,
+		$carg = array();
+		$cargos = $elemento -> cargos;
+		foreach ($cargos as $carge) {
+			if (is_null($carge -> pivot -> fecha_fin)) {
+				$carg[] = array(
+					'nombre' => $carge -> nombre,
+					'cargo_id' => $carge -> id,
+					'elemento_id' => $id,
 					);
 			}
 		}
-
+		$elemento = Elemento::find($id);
+		$datos = array(
+			'success' => true,
+			'cargo' => $carg,
+			'ubicacion' => $elemento -> companiasysubzona -> tipo .' '. $elemento ->  companiasysubzona -> nombre,
+		);
 		return Response::json($datos);
 	}
 
-	public function registrarAscenso($id)
+	public function postEliminar()
 	{
-		$elemento = Elemento::find($id);
-		$elemento->grados()->attach(1, array('fecha' => date('Y-m-d')));
-		$status = $elemento->status()->save(new Statu(array(
-					'tipo' => 'Activo',
-					'inicio' => date("Y-m-d"),
-					'descripcion' => 'Nuevo elemento')));
+		$id = $_POST['id'];
+		$cargo = $_POST['cargo'];
+		DB::table('cargo_elemento')
+			-> where('cargo_id','=',$cargo)
+			-> where('elemento_id','=',$id)
+			-> whereNull('fecha_fin')
+			-> update(array(
+				'fecha_fin' => date('Y-m-d'),
+			));
+		$message = DB::delete('DELETE FROM cargo_elemento WHERE fecha_fin = fecha_inicio');
+		$datos = array(
+			'success' => true,
+			'message' => $message,
+		);
+		return Response::json($datos);
 	}
 
 }

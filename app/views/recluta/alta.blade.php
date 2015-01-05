@@ -7,70 +7,57 @@
 	.hiddenStepInfo {
 		display: none;
 	}
-
 	.activeStepInfo {
 		display: block !important;
 	}
-
 	.setup-content {
 		margin-top: 10px;
 	}
-
 	.progress {
 		position: relative;
 		height: 5px;
 		margin-top: 10px;
 	}
-
 	.progress > .progress-type {
 		padding: 3px 30px 2px 10px;
 		color: rgb(255, 255, 255);
 		background-color: rgba(25, 25, 25, 0.2);
 	}
-
 	.progress > .progress-completed {
 		position: absolute;
 		right: 0px;
 		font-weight: 800;
 		padding: 3px 10px 2px;
 	}
-
 	.step {
 		text-align: center;
 	}
-
 	.step .seleccion {
 		background-color: #fff;
 		border: 1px solid #C0C0C0;
 		border-radius: 5px 5px 5px 5px;
 		margin-top: 10px;
 	}
-
 	.step .seleccion:last-child {
 		border: 1px solid #C0C0C0;
 		border-radius: 5px 5px 5px 5px;
 		margin-top: 10px;
 	}
-
 	.step .seleccion:first-child {
 		border-radius: 5px 5px 5px 5px;
 		margin-top: 10px;
 	}
-
 	.step .seleccion:last-child {
 		border-radius: 5px 5px 5px 5px;
 		margin-top: 10px;
 	}
-
 	.step .seleccion:hover {
 		color: #F58723;
 		cursor: pointer;
 	}
-
 	.setup-content {
 		background-color: #f2f2f2;
 	}
-
 	.step .activestep {
 		color: #F58723;
 		border-left: 2px solid #5CB85C !important;
@@ -79,7 +66,6 @@
 		border-bottom: 2px solid #5CB85C !important;
 		vertical-align: central;
 	}
-
 	.step .fa {
 		padding-top: 15px;
 		font-size: 40px;
@@ -360,7 +346,6 @@
 				$('#formularioalta').bootstrapValidator('revalidateField','curp');
 				$('[name=curp]').focus();
 				$('[name=curp]').closest('div').find('small').html(curp+' ya está registrada');
-
 			}
 		}, 'json');
 	})
@@ -533,10 +518,8 @@
 			$('#contactoredes').click(function(){
 				$('#contactofbtw').toggle(80);
 			})
-
 			$('#recluredes').click(function(){
 				$('#fbtw').toggle(80);
-
 			})
 			$('.mayuscula').focusout(function() {
 				$(this).val($(this).val().toUpperCase());
@@ -544,32 +527,26 @@
 			$('#datetimePicker').on('dp.change dp.show', function(e) {
 		        $('#formularioalta').bootstrapValidator('revalidateField', 'birthday');
 		    });
-		    $('#sidebar-nav').find('li').removeClass('active');
-        	$('#Altas').addClass('active');
 		});
 	</script>
 	<script type="text/javascript">
 		function resetActive(event, percent, step) {
 			//$(".progress-bar").css("width", percent + "%").attr("aria-valuenow", percent);
 			//$(".progress-completed").text(percent + "%");
-
 			$("div").each(function () {
 			if ($(this).hasClass("activestep")) {
 			$(this).removeClass("activestep");
 			}
 			});
-
 			if (event.target.className == "seleccion") {
 			$(event.target).addClass("activestep");
 			}
 			else {
 			$(event.target.parentNode).addClass("activestep");
 			}
-
 			hideSteps();
 			showCurrentStepInfo(step);
 		}
-
 		function hideSteps() {
 			$("div").each(function () {
 			if ($(this).hasClass("activeStepInfo")) {
@@ -578,7 +555,6 @@
 			}
 			});
 		}
-
 		function showCurrentStepInfo(step) {
 			var id = "#" + step;
 			$(id).addClass("activeStepInfo");

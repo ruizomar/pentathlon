@@ -2,7 +2,7 @@
 class Elemento extends Eloquent{
 	public $timestamps = false;
 	protected $fillable = array('persona_id','estatura','peso','ocupacion','estadocivil','fechanacimiento','escolaridad','escuela','fechaingreso','lugarnacimiento','curp','calle','colonia','cp','municipio','reclutamiento','email','alergias','adiccion','tipoarma_id','tipocuerpo_id','companiasysubzona_id');
-	
+
 	public function persona(){
 		return $this->belongsTo('Persona');
 	}
@@ -33,15 +33,6 @@ class Elemento extends Eloquent{
 	public function documentos(){
 		return $this->hasMany('Documento');
 	}
-	public function eventos(){
-		return $this->belongsToMany('Evento');
-	}
-	public function examenes(){
-		return $this->belongsToMany('Examen')->withPivot('fecha','calificacion');
-	}
-	public function tutor(){
-		return $this->hasOne('Tutor');
-    }
     public function user()
     {
         return $this->hasOne('User');
@@ -49,4 +40,19 @@ class Elemento extends Eloquent{
     public function arrestos(){
 		return $this->hasMany('Arresto', 'arrestado');
 	}
+    public function tipoarma(){
+		return $this->belongsTo('Tipoarma');
+    }
+    public function tipocuerpo(){
+		return $this->belongsTo('Tipocuerpo');
+    }
+    public function tutor(){
+		return $this->hasOne('Tutor');
+    }
+    public function examenes(){
+		return $this->belongsToMany('Examen')->withPivot('fecha','calificacion');
+    }
+    public function eventos(){
+		return $this->belongsToMany('Evento');
+    }
 }
