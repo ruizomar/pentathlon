@@ -65,6 +65,9 @@
       padding-top: 15px;
       font-size: 40px;
     }
+    .fecha i{
+      right: 60px !important;
+  }
   </style>
   {{  HTML::script('js/fileinput.js')}}
   {{  HTML::script('js/tour/bootstrap-tour.min.js')}}
