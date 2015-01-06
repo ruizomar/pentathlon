@@ -11,7 +11,11 @@
             border-top-style: solid;
             padding-right: 20px;
         }
-
+        .informacion{
+            font-size: 15px;
+            /*padding: 2px;*/
+            /*margin-left: 10px;*/
+        }
         .requisitos{
             background: #fff;
             border-top-width: 3px;
@@ -72,8 +76,13 @@
             $('.menu').addClass('hidden');
             $.get('reportes/lugares', function(json) {
               $('#companias').html('');
+              console.log(json[1].numelementos);
               $.each(json,function(index,lugar){
-                $('#companias').append('<div class="contenido col-md-4" onclick="verMas('+lugar.id+')"><h4>'+lugar.nombre+'</h4><br><i class="fa fa-users"> 3</i><label class="label label-default label-success">Activa</label><label class="label label-default label-primary">Compania</label></div>');
+                if(lugar.status == 'Activa'){
+                    $('#companias').append('<div class="contenido col-md-4" onclick="verMas('+lugar.id+')"><h4>'+lugar.nombre+'</h4><br><i class="fa fa-users">'+lugar.numelementos+'</i><br><label class="informacion label label-default label-success">'+lugar.status+'</label><br><label class="informacion label label-default label-primary">'+lugar.tipo+'</label></div>');
+                }else{
+                    $('#companias').append('<div class="contenido col-md-4" onclick="verMas('+lugar.id+')"><h4>'+lugar.nombre+'</h4><br><i class="fa fa-users">'+lugar.numelementos+'</i><br><label class="informacion label label-default label-danger">'+lugar.status+'</label><br><label class="informacion label label-default label-primary">'+lugar.tipo+'</label></div>');
+                }
               });
             }, 'json');
 
