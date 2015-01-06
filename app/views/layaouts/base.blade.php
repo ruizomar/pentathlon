@@ -35,9 +35,10 @@
                           </a>
 
                           <ul class="dropdown-menu">
-                              <li><a href="#">My Account</a></li>
+                              <li><a href="#">Mi perfil</a></li>
                               <li class="divider"></li>
-                              <li><a class="visible-phone" href="#">Settings</a></li>
+                              <li><a class="visible-phone" href="#"><i class="fa fa-cogs"></i> Settings</a></li>
+                              <!-- <li><a class="visible-phone" href="#"><i class="fa fa-clock-o"></i> Historial</a></li> -->
                               <li class="divider"></li>
                               <li><a href="{{ URL::to('logout'); }}"><i class="fa fa-sign-out"></i> Logout</a></li>
                           </ul>
@@ -99,6 +100,7 @@
         @if(!is_null(User::find(Auth::id())->roles()->where('id','<',8)->first()))
           <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Icons" href="{{ URL::to('history'); }}"><i class="fa fa-clock-o"></i> <span class="caption">Historial</span></a></li>
          @endif
+        <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Icons" href="{{ URL::to('reportes'); }}"><i class="fa fa-bar-chart"></i> <span class="caption">Reportes</span></a></li> 
       </ul>
   </div>
 <!-- end sidenavbar -->

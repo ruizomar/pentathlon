@@ -45,6 +45,7 @@ Route::post('cargos/update','AsignaCargosController@update');*/
 Route::controller('cargos', 'AsignaCargosController');
 Route::controller('ascensos', 'AsignaAscensosController');
 Route::controller('jura', 'JuraBanderaController');
+Route::controller('reportes', 'ReportesController');
 
 
 Route::post('buscar','BuscarController@buscar');
