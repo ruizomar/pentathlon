@@ -35,9 +35,9 @@
                           </a>
 
                           <ul class="dropdown-menu">
-                              <li><a href="#">Mi perfil</a></li>
+                              <li><a href="{{ URL::to('historial'); }}">Mi perfil</a></li>
                               <li class="divider"></li>
-                              <li><a class="visible-phone" href="#"><i class="fa fa-cogs"></i> Settings</a></li>
+                              <li><a class="visible-phone" href="{{ URL::to('settings'); }}"><i class="fa fa-cogs"></i> Settings</a></li>
                               <!-- <li><a class="visible-phone" href="#"><i class="fa fa-clock-o"></i> Historial</a></li> -->
                               <li class="divider"></li>
                               <li><a href="{{ URL::to('logout'); }}"><i class="fa fa-sign-out"></i> Logout</a></li>
