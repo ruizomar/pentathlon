@@ -29,4 +29,31 @@ class ReportesController extends BaseController {
 		}
 		return Response::json($companiasysubzonasArr);
 	}
+
+	public function postNombre()
+	{
+		$id = $_POST['id'];
+		$compayzona = Companiasysubzona::find($id);
+		$q = array(
+			'nombre' => $compayzona -> nombre,
+			'tipo' => 'Compania',
+			'status' => $compayzona -> status,
+			);
+		return Response::json($q);
+	}
+
+	public function postCompania()
+	{
+		$id = $_POST['id'];
+		$q = array(
+			'activos' => $id,
+			'menorMasculino' => '3',
+			'juvenilMasculino' => '23',
+			'mayorMasculino' => '34',
+			'menorFemenino' => '12',
+			'juvenilFemenino' => '34',
+			'mayorFemenino' => '29',
+			);
+		return Response::json($q);
+	}
 }

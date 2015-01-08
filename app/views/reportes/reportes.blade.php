@@ -7,14 +7,30 @@
         .contenido {
             background: #fff;
             padding: 10px;
-            border-top-width: 3px;
+            border-top-width: 2px;
             border-top-style: solid;
             padding-right: 20px;
+            box-shadow: 0px 3px 2px #aab2bd;
+            -moz-box-shadow: 0px 3px 2px #aab2bd;
+            -webkit-box-shadow: 0px 3px 2px #aab2bd;
+            margin-left: 25px;
+            margin-bottom: 30px;
+        }
+        .seleccion {
+            background: #fff;
+            padding: 10px;
+            border-top-width: 3px;
+            /*border-top-style: solid;*/
+            border-top-color: #7797DD;
+            padding-right: 20px;
+            box-shadow: 0px 10px 10px #606264;
+            -moz-box-shadow: 0px 10px 10px #606264;
+            -webkit-box-shadow: 0px 10px 10px #606264;
+            margin-left: 25px;
+            margin-bottom: 25px;
         }
         .informacion{
-            font-size: 15px;
-            /*padding: 2px;*/
-            /*margin-left: 10px;*/
+            font-size: 14px;
         }
         .requisitos{
             background: #fff;
@@ -36,9 +52,10 @@
             cursor: pointer;
         }
 
-        .error {
-            box-shadow: 0px 0px 10px red;
-            border-top-color: white;
+        #grafica {
+            background: #fff;
+            height: 400px;
+            margin-bottom: 20px;
         }
     </style>
     {{  HTML::style('css/sweet-alert.css')}}
@@ -48,7 +65,7 @@
     {{  HTML::script('js/chart/raphael-min.js')}}
 @endsection
 @section('contenido')
-    <div class="col-md-11 col-md-offset-1">
+    <div class="titulo1 col-md-11 col-md-offset-1">
         <h1 style="margin-bottom:20px;"><i class="fa fa-bar-chart"></i> Reportes</h1>
     </div>
     <div class="menu col-md-offset-1 col-md-10" style="margin-top:18px;">
@@ -67,7 +84,34 @@
       <!--   {{ Form::select('lugar',array(null),null,array('id' => 'lugares','class' => 'form-control col-msd-2')) }}
       {{ Form::button('<i class="fa fa-eye"></i> Buscar',array('class' => 'pull-right btn btn-info col-msd-4','id' => 'buscarext')) }} -->
     </div>
-    <div class="col-md-12" id="companias">
+    <div class="col-md-12" id="companias" style="margin-left:80px;">
+    </div>
+    <div class="hidden col-md-12" id="compania">
+        <h1 id="nombre" style="margin-bottom:20px;"><i class="fa fa-bar-chart"></i></h1>
+        <div class="form-group col-md-12">
+            <label class="checkbox-inline">
+                <input type="checkbox"> Masculino menor
+            </label>
+            <label class="checkbox-inline">
+                <input type="checkbox"> Masculino juvenil
+            </label>
+            <label class="checkbox-inline">
+                <input type="checkbox"> Masculino mayor
+            </label>
+            <label class="checkbox-inline">
+                <input type="checkbox"> Femenino menor
+            </label>
+            <label class="checkbox-inline">
+                <input type="checkbox"> Femenino juvenil
+            </label>
+            <label class="checkbox-inline">
+                <input type="checkbox"> Femenino mayor
+            </label>
+            <div id="generar">
+            </div>
+        </div>
+        <div id="grafica" class="col-md-9">
+        </div>
     </div>
 @stop
 @section('scripts')
@@ -76,19 +120,53 @@
             $('.menu').addClass('hidden');
             $.get('reportes/lugares', function(json) {
               $('#companias').html('');
-              console.log(json[1].numelementos);
               $.each(json,function(index,lugar){
                 if(lugar.status == 'Activa'){
-                    $('#companias').append('<div class="contenido col-md-4" onclick="verMas('+lugar.id+')"><h4>'+lugar.nombre+'</h4><br><i class="fa fa-users">'+lugar.numelementos+'</i><br><label class="informacion label label-default label-success">'+lugar.status+'</label><br><label class="informacion label label-default label-primary">'+lugar.tipo+'</label></div>');
+                    $('#companias').append('<div id="seleccion'+lugar.id+'" class="contenido col-md-3" onclick="seleccionar('+lugar.id+')"><h4>'+lugar.nombre+'</h4><br><i class="fa fa-users">'+lugar.numelementos+'</i><br><label class="informacion label label-success">'+lugar.status+'</label><br><label class="informacion label label-primary">'+lugar.tipo+'</label><label class="pull-right label label-default" style="cursor:pointer;" onclick="masInformacion('+lugar.id+')">Más información...</label></div>');
                 }else{
-                    $('#companias').append('<div class="contenido col-md-4" onclick="verMas('+lugar.id+')"><h4>'+lugar.nombre+'</h4><br><i class="fa fa-users">'+lugar.numelementos+'</i><br><label class="informacion label label-default label-danger">'+lugar.status+'</label><br><label class="informacion label label-default label-primary">'+lugar.tipo+'</label></div>');
+                    $('#companias').append('<div id="seleccion'+lugar.id+'" class="contenido col-md-3" onclick="seleccionar('+lugar.id+')"><h4>'+lugar.nombre+'</h4><br><i class="fa fa-users">'+lugar.numelementos+'</i><br><label class="informacion label label-danger">'+lugar.status+'</label><br><label class="informacion label label-primary">'+lugar.tipo+'</label><label class="pull-right label label-default" style="cursor:pointer;" onclick="masInformacion('+lugar.id+')">Más información...</label></div>');
                 }
               });
             }, 'json');
 
         }
-        function verMas(id) {
-            console.log(id);
+        function seleccionar(id) {
+            // console.log(id);
+            $('#seleccion'+id).toggleClass('seleccion');
         };
+        function masInformacion(id) {
+            // console.log(id);
+            // $('#grafica').html('');
+            // dibujagrafica(111,111,111);
+            $('#companias').addClass('hidden');
+            $('.titulo1').addClass('hidden');
+            $.post('reportes/nombre',{id:id}, function(json) {
+                // console.log(json);
+                $('#nombre').html(json.nombre);
+                $('#generar').html('<button class="pull-right btn-xs btn btn-success" onclick="dibujagrafica('+id+')"><i class="fa fa-bar-chart"></i> Generar reporte</button>');
+            }, 'json');
+            $('#compania').removeClass('hidden');
+        };
+    </script>
+    <script>
+        function dibujagrafica(id) {
+            $.post('reportes/compania',{id:id}, function(json) {
+                console.log(json);
+            }, 'json');
+
+            $('#grafica').html('');
+            Morris.Bar({
+                element: 'grafica',
+                data: [
+                { y: '2006', a: 100},
+                { y: '2007', a: 0,  b: 0 },
+                ],
+                xkey: 'y',
+                ykeys: ['a', 'b'],
+                labels: ['Femenil', 'Masculino'],
+                barColors:['#E91E63','#3F51B5'],
+                resize: 'true',
+            });
+        }
     </script>
 @endsection
