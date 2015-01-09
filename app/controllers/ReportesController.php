@@ -46,30 +46,72 @@ class ReportesController extends BaseController {
 	{
 		$id = $_POST['id'];
 		$compayzona = Companiasysubzona::find($id);
-		$activos =  Elemento::whereHas('status',function($q){
-				$q -> where('tipo','=','Activo');})
-			-> where('companiasysubzona_id','=',$compayzona->id)
+		$elementos = Elemento::where('companiasysubzona_id','=',$compayzona->id)
 			-> get();
-		$hombres =  Elemento::whereHas('status',function($q){
-				$q -> where('tipo','=','Activo');})
-			-> where('companiasysubzona_id','=',$compayzona->id) -> whereHas('persona',function ($qq){
-				$qq -> where('sexo','=','Hombre');})
-			-> get();
-		$mujeres =  Elemento::whereHas('status',function($q){
-				$q -> where('tipo','=','Activo');})
-			-> where('companiasysubzona_id','=',$compayzona->id) -> whereHas('persona',function ($qq){
-				$qq -> where('sexo','=','Mujer');})
-			-> get();
+		$activosArr = array();
+		$inactivosArr = array();
+		$nuevosArr = Array();
+		foreach ($elementos as $elemento) {
+			$tipo = $elemento -> status() -> orderBy('inicio','desc') -> first() -> tipo;
+			if($tipo == 'Activo'){
+				$activosArr[] = $elemento;
+			}
+			if($tipo == 'Inactivo'){
+				$inactivosArr[] = $elemento;
+			}
+			if($tipo == 'Nuevo'){
+				$nuevosArr[] = $elemento;
+			}
+		}
+		$hombresArr = array();
+		$mujeresArr = array();
+		foreach ($activosArr as $activo) {
+			$sexo = $activo -> persona -> sexo;
+			if ($sexo == 'Hombre') {
+				$hombresArr[] = $activo;
+			}
+			if ($sexo == 'Mujer') {
+				$mujeresArr[] = $activo;
+			}
+		}
+		$menorMasculino = array();
+		$juvenilMasculino = array();
+		$mayorMasculino = array();
+		$menorFemenino = array();
+		$juvenilFemenino = array();
+		$mayorFemenino = array();
+		$dob = "14-12-1990";
+		$tdate = date("Y-m-d");
+		$prueba = ReportesController::getAge( $dob, $tdate );
+		foreach ($hombresArr as $hombre) {
+		}
+		foreach ($mujeresArr as $mujer) {
+			# code...
+		}
 		$q = array(
-			'activos' => count($activos),
-			'inactivos' => $activos,
-			'menorMasculino' => '3',
-			'juvenilMasculino' => '23',
-			'mayorMasculino' => '34',
-			'menorFemenino' => '12',
-			'juvenilFemenino' => '34',
-			'mayorFemenino' => '29',
+			'a' => $prueba,
+			'activos' => count($activosArr),
+			'inactivos' => count($inactivosArr),
+			'nuevos' => count($nuevosArr),
+			'hombres' => count($hombresArr),
+			'mujeres' => count($mujeresArr),
+			'menorMasculino' => count($menorMasculino),
+			'juvenilMasculino' => count($juvenilMasculino),
+			'mayorMasculino' => count($mayorMasculino),
+			'menorFemenino' => count($menorFemenino),
+			'juvenilFemenino' => count($juvenilFemenino),
+			'mayorFemenino' => count($mayorFemenino),
 			);
 		return Response::json($q);
+	}
+	function getAge( $nacimiento, $tdate )
+	{
+		$nacimiento = new DateTime( $nacimiento );
+		$age = 0;
+		$now = new DateTime( $tdate );
+		while( $nacimiento->add( new DateInterval('P1Y') ) < $now ){
+			$age++;
+		}
+		return $age;
 	}
 }
