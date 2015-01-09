@@ -45,8 +45,24 @@ class ReportesController extends BaseController {
 	public function postCompania()
 	{
 		$id = $_POST['id'];
+		$compayzona = Companiasysubzona::find($id);
+		$activos =  Elemento::whereHas('status',function($q){
+				$q -> where('tipo','=','Activo');})
+			-> where('companiasysubzona_id','=',$compayzona->id)
+			-> get();
+		$hombres =  Elemento::whereHas('status',function($q){
+				$q -> where('tipo','=','Activo');})
+			-> where('companiasysubzona_id','=',$compayzona->id) -> whereHas('persona',function ($qq){
+				$qq -> where('sexo','=','Hombre');})
+			-> get();
+		$mujeres =  Elemento::whereHas('status',function($q){
+				$q -> where('tipo','=','Activo');})
+			-> where('companiasysubzona_id','=',$compayzona->id) -> whereHas('persona',function ($qq){
+				$qq -> where('sexo','=','Mujer');})
+			-> get();
 		$q = array(
-			'activos' => $id,
+			'activos' => count($activos),
+			'inactivos' => $activos,
 			'menorMasculino' => '3',
 			'juvenilMasculino' => '23',
 			'mayorMasculino' => '34',

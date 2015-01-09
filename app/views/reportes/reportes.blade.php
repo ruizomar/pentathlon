@@ -150,23 +150,22 @@
     </script>
     <script>
         function dibujagrafica(id) {
+            $('#grafica').html('');
             $.post('reportes/compania',{id:id}, function(json) {
                 console.log(json);
+                Morris.Bar({
+                    element: 'grafica',
+                    data: [
+                    { y: '2006', a: 100},
+                    { y: '2007', a: 30,  b: 60 },
+                    ],
+                    xkey: 'y',
+                    ykeys: ['a', 'b'],
+                    labels: ['Femenil', 'Masculino'],
+                    barColors:['#E91E63','#3F51B5'],
+                    resize: 'true',
+                });
             }, 'json');
-
-            $('#grafica').html('');
-            Morris.Bar({
-                element: 'grafica',
-                data: [
-                { y: '2006', a: 100},
-                { y: '2007', a: 0,  b: 0 },
-                ],
-                xkey: 'y',
-                ykeys: ['a', 'b'],
-                labels: ['Femenil', 'Masculino'],
-                barColors:['#E91E63','#3F51B5'],
-                resize: 'true',
-            });
         }
     </script>
 @endsection
