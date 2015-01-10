@@ -80,16 +80,30 @@ class ReportesController extends BaseController {
 		$menorFemenino = array();
 		$juvenilFemenino = array();
 		$mayorFemenino = array();
-		$dob = "14-12-1990";
-		$tdate = date("Y-m-d");
-		$prueba = ReportesController::getAge( $dob, $tdate );
 		foreach ($hombresArr as $hombre) {
+			$edad = ReportesController::getAge($hombre -> fechanacimiento);
+			if ($edad > 8 && $edad < 12) {
+				$menorMasculino[] = $hombre;
+			}
+			if ($edad > 11 && $edad < 16) {
+				$juvenilMasculino[] = $hombre;
+			}
+			if($edad > 15){
+				$mayorMasculino[] = $hombre;
+			}
 		}
 		foreach ($mujeresArr as $mujer) {
-			# code...
-		}
+			$edad = ReportesController::getAge($mujer -> fechanacimiento);
+			if ($edad > 8 && $edad < 12) {
+				$menorFemenino[] = $mujer;
+			}
+			if ($edad > 11 && $edad < 16) {
+				$juvenilFemenino[] = $mujer;
+			}
+			if($edad > 15){
+				$mayorFemenino[] = $mujer;
+			}		}
 		$q = array(
-			'a' => $prueba,
 			'activos' => count($activosArr),
 			'inactivos' => count($inactivosArr),
 			'nuevos' => count($nuevosArr),
@@ -101,17 +115,21 @@ class ReportesController extends BaseController {
 			'menorFemenino' => count($menorFemenino),
 			'juvenilFemenino' => count($juvenilFemenino),
 			'mayorFemenino' => count($mayorFemenino),
+			// 'menorMasculino' => 1,
+			// 'juvenilMasculino' => 2,
+			// 'mayorMasculino' => 3,
+			// 'menorFemenino' => 4,
+			// 'juvenilFemenino' => 5,
+			// 'mayorFemenino' => 6,
 			);
 		return Response::json($q);
 	}
-	function getAge( $nacimiento, $tdate )
+	function getAge($cumple)
 	{
-		$nacimiento = new DateTime( $nacimiento );
-		$age = 0;
-		$now = new DateTime( $tdate );
-		while( $nacimiento->add( new DateInterval('P1Y') ) < $now ){
-			$age++;
-		}
-		return $age;
+		$hoy = date("Y-m-d");
+		$d1 = new DateTime( $cumple );
+		$d2 = new DateTime($hoy );
+		$age = $d2->diff( $d1 );
+		return $age->y;
 	}
 }

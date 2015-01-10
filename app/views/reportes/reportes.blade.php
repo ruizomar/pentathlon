@@ -90,27 +90,27 @@
         <h1 id="nombre" style="margin-bottom:20px;"><i class="fa fa-bar-chart"></i></h1>
         <div class="form-group col-md-12">
             <label class="checkbox-inline">
-                <input type="checkbox"> Masculino menor
+                <input id="1" type="checkbox"> Masculino Menor
             </label>
             <label class="checkbox-inline">
-                <input type="checkbox"> Masculino juvenil
+                <input id="2" type="checkbox"> Masculino Juvenil
             </label>
             <label class="checkbox-inline">
-                <input type="checkbox"> Masculino mayor
+                <input id="3" type="checkbox"> Masculino Mayor
             </label>
             <label class="checkbox-inline">
-                <input type="checkbox"> Femenino menor
+                <input id="4" type="checkbox"> Femenino Menor
             </label>
             <label class="checkbox-inline">
-                <input type="checkbox"> Femenino juvenil
+                <input id="5" type="checkbox"> Femenino Juvenil
             </label>
             <label class="checkbox-inline">
-                <input type="checkbox"> Femenino mayor
+                <input id="6" type="checkbox"> Femenino Mayor
             </label>
             <div id="generar">
             </div>
         </div>
-        <div id="grafica" class="col-md-9">
+        <div id="grafica" class="col-md-9" style="background:#f2f2f2;">
         </div>
     </div>
 @stop
@@ -150,20 +150,29 @@
     </script>
     <script>
         function dibujagrafica(id) {
-            $('#grafica').html('');
             $.post('reportes/compania',{id:id}, function(json) {
-                console.log(json);
+                var lista = [
+                    {nombre:"Menor M.",cantidad:json.menorMasculino},
+                    {nombre:"Juvenil M.",cantidad:json.juvenilMasculino},
+                    {nombre:"Mayor M.",cantidad:json.mayorMasculino},
+                    {nombre:"Menor F.",cantidad:json.menorFemenino},
+                    {nombre:"Juvenil F.",cantidad:json.juvenilFemenino},
+                    {nombre:"Mayor F.",cantidad:json.mayorFemenino},
+                ];
+                var data = [];
+                $("input:checkbox:checked").each(function(){
+                    data.push(lista[$(this).attr('id')-1]);
+                });
+                // console.log(data);
+                // console.log(lista);
+                $('#grafica').html('');
                 Morris.Bar({
                     element: 'grafica',
-                    data: [
-                    { y: '2006', a: 100},
-                    { y: '2007', a: 30,  b: 60 },
-                    ],
-                    xkey: 'y',
-                    ykeys: ['a', 'b'],
-                    labels: ['Femenil', 'Masculino'],
-                    barColors:['#E91E63','#3F51B5'],
-                    resize: 'true',
+                    data: data,
+                    xkey: 'nombre',
+                    ykeys: ['cantidad',],
+                    labels: ['Cantidad'],
+                    barColors:['#E91E63'],
                 });
             }, 'json');
         }
