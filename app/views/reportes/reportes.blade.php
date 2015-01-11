@@ -82,7 +82,7 @@
     </div>
     <div class="col-md-3">
     </div>
-    <div class="col-md-12" id="companias" style="margin-left:80px;">
+    <div class="col-md-12 form-group" id="companias" style="margin-left:80px;">
     </div>
     <div class="hidden col-md-12" id="compania" style="left:10;">
         <h1 id="nombre" style="margin-bottom:20px;"><i class="fa fa-bar-chart"></i></h1>
@@ -134,17 +134,12 @@
 
         }
         function seleccionar(id) {
-            // console.log(id);
             $('#seleccion'+id).toggleClass('seleccion');
         };
         function masInformacion(id) {
-            // console.log(id);
-            // $('#grafica').html('');
-            // dibujagrafica(111,111,111);
             $('#companias').addClass('hidden');
             $('.titulo1').addClass('hidden');
             $.post('reportes/nombre',{id:id}, function(json) {
-                // console.log(json);
                 $('#nombre').html(json.nombre);
                 $('#generar').html('<button class="pull-right btn-xs btn btn-success" onclick="dibujagrafica('+id+')"><i class="fa fa-bar-chart"></i> Generar reporte</button>');
             }, 'json');
