@@ -6,8 +6,16 @@ class MembresiasController extends BaseController {
         $this->beforeFilter('auth');
         $this->beforeFilter('hacienda');
     }
+
 	public function getIndex(){
 		return View::make('pagos/pagos');
+	}
+
+	public function getDonativos(){
+		return View::make('pagos/donativos');
+	}
+
+	public function postDonativos(){
 	}
 
 	public function postElemento(){
