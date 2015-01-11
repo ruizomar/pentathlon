@@ -45,6 +45,12 @@ class ReportesController extends BaseController {
 	public function postCompania()
 	{
 		$id = $_POST['id'];
+		return Response::json(ReportesController::reporteCompania($id));
+	}
+
+	private function reporteCompania($id)
+	{
+		$id = $id;
 		$compayzona = Companiasysubzona::find($id);
 		$elementos = Elemento::where('companiasysubzona_id','=',$compayzona->id)
 			-> get();
@@ -115,16 +121,11 @@ class ReportesController extends BaseController {
 			'menorFemenino' => count($menorFemenino),
 			'juvenilFemenino' => count($juvenilFemenino),
 			'mayorFemenino' => count($mayorFemenino),
-			// 'menorMasculino' => 1,
-			// 'juvenilMasculino' => 2,
-			// 'mayorMasculino' => 3,
-			// 'menorFemenino' => 4,
-			// 'juvenilFemenino' => 5,
-			// 'mayorFemenino' => 6,
 			);
-		return Response::json($q);
+		return $q;
 	}
-	function getAge($cumple)
+
+	private function getAge($cumple)
 	{
 		$hoy = date("Y-m-d");
 		$d1 = new DateTime( $cumple );

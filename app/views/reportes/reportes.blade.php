@@ -81,12 +81,10 @@
         </a>
     </div>
     <div class="col-md-3">
-      <!--   {{ Form::select('lugar',array(null),null,array('id' => 'lugares','class' => 'form-control col-msd-2')) }}
-      {{ Form::button('<i class="fa fa-eye"></i> Buscar',array('class' => 'pull-right btn btn-info col-msd-4','id' => 'buscarext')) }} -->
     </div>
     <div class="col-md-12" id="companias" style="margin-left:80px;">
     </div>
-    <div class="hidden col-md-12" id="compania">
+    <div class="hidden col-md-12" id="compania" style="left:10;">
         <h1 id="nombre" style="margin-bottom:20px;"><i class="fa fa-bar-chart"></i></h1>
         <div class="form-group col-md-12">
             <label class="checkbox-inline">
@@ -110,7 +108,12 @@
             <div id="generar">
             </div>
         </div>
-        <div id="grafica" class="col-md-9" style="background:#f2f2f2;">
+        <div id="grafica" class="col-md-12" style="background:#f2f2f2;">
+        </div>
+        <div id="datos" class="col-md-6">
+        </div>
+        <div class="col-md-12">
+            <button id="imprimir" class="hidden pull-right btn btn-primary" onclick="window.print();return false;"><i class="fa fa-print"></i></button>
         </div>
     </div>
 @stop
@@ -150,6 +153,9 @@
     </script>
     <script>
         function dibujagrafica(id) {
+            $('#grafica').html('');
+            $('#datos').html('');
+            $('#imprimir').addClass('hidden');
             $.post('reportes/compania',{id:id}, function(json) {
                 var lista = [
                     {nombre:"Menor M.",cantidad:json.menorMasculino},
@@ -163,17 +169,21 @@
                 $("input:checkbox:checked").each(function(){
                     data.push(lista[$(this).attr('id')-1]);
                 });
-                // console.log(data);
-                // console.log(lista);
-                $('#grafica').html('');
-                Morris.Bar({
-                    element: 'grafica',
-                    data: data,
-                    xkey: 'nombre',
-                    ykeys: ['cantidad',],
-                    labels: ['Cantidad'],
-                    barColors:['#E91E63'],
-                });
+                if (data.length > 0){
+                    Morris.Bar({
+                        element: 'grafica',
+                        data: data,
+                        xkey: 'nombre',
+                        ykeys: ['cantidad',],
+                        labels: ['nombre'],
+                        barColors:['#F44336'],
+                    });
+                    $('.morris-default-style').addClass('hidden');
+                    $('#imprimir').removeClass('hidden');
+                    $.each(data,function(index,dato){
+                        $('#datos').append('<h1 class="informacion label label-danger" style="margin-left: 5px;">'+dato.nombre+' = '+dato.cantidad+' elementos</h1><br><br>');
+                    });
+                };
             }, 'json');
         }
     </script>
