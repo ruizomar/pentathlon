@@ -70,4 +70,5 @@ Route::get('forgot','RecoverPassword@getForgotpassword');
 Route::post('forgot','RecoverPassword@postForgotpassword');
 Route::get('recover/{token?}','RecoverPassword@getRecover');
 Route::post('recover','RecoverPassword@postRecover');
+Route::controller('settings','settingsController');
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>Recibo de Membrecia</title>
+    <title>Recibo de Donativos</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	{{  HTML::style('css/pure-min.css');  }}
 	<style type="text/css" media="screen">
@@ -54,42 +54,19 @@
 				<div class="pure-u-3-5">
 					<label class="azul">Nombre: </label><label>{{ $datos['name'] }}</label>
 				</div>
-				<div class="pure-u-2-5">
-					<label class="azul">Grado: </label><label>{{ $datos['grado'] }}</label>
-				</div>
-				<!------------>
-				<br>
-				<div class="pure-u-3-5">
-					<label class="azul">Matrícula: </label>
-					<label>
-						@if(!is_null($datos['matricula']))
-							{{ $datos['matricula']->id }}
-						@else
-							sin asignar
-						@endif		
-					</label>
-				</div>
-				<div class="pure-u-2-5">
-					<label class="azul">No. Reclutamiento: </label><label>{{ $datos['reclutamiento'] }}</label>
-				</div>
-				<!------------>
-				<br>
-				<div class="pure-u-3-5">
-					<label class="azul">Adscripción: </label><label>{{ $datos['zona'] }}</label>
-				</div>
 				<!------------>
 				<br>
 				<br>
 				<div class="pure-u-1">
-					<?php setlocale(LC_TIME, "Spanish"); ?>
-					<label>Oaxaca, Oax., a {{ strftime("%d de %B del %Y",strtotime($datos['fecha'])); }}</label>
+					<?php setlocale(LC_ALL,"Spanish"); ?>
+					<label>Oaxaca, Oax., a {{ strftime("%d de %B del %Y"); }}</label>
 				</div>
 				<br>
 				<h4>Titular de hacienda</h4>
-				<div class="pure-u-3-5">
+				<div class="pure-u-2-5">
 					<label class="azul">Nombre: </label>{{ $datos['hacienda'] }}</label>
 				</div>
-				<div class="pure-u-2-5">
+				<div class="pure-u-1-5">
 					<label class="azul">Grado: </label><label>{{ $datos['gradohacienda'] }}</label>
 				</div>
 			@else
