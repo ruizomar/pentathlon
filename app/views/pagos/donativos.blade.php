@@ -12,16 +12,16 @@
   {{ Form::open(array('id' => 'formularioalta','url'=>'pagos/donativos','files'=>true)) }}
     <div class="col-md-10 col-md-offset-1">
       <div class="col-md-4 form-group">
-        {{ Form::label('reclunombre', 'Nombre (s)',array('class' => 'control-label')) }}
-        {{ Form::text('reclunombre', null, array('class' => 'form-control mayuscula','autofocus')) }}
+        {{ Form::label('nombre', 'Nombre (s)',array('class' => 'control-label')) }}
+        {{ Form::text('nombre', null, array('class' => 'form-control mayuscula','autofocus')) }}
       </div>
       <div class="col-md-4 form-group">
-        {{ Form::label('reclupaterno', 'Apellido paterno') }}
-        {{ Form::text('reclupaterno', null, array('class' => 'form-control mayuscula')) }}
+        {{ Form::label('paterno', 'Apellido paterno') }}
+        {{ Form::text('paterno', null, array('class' => 'form-control mayuscula')) }}
       </div>
       <div class="col-md-4 form-group">
-        {{ Form::label('reclumaterno', 'Apellido materno') }}
-        {{ Form::text('reclumaterno', null, array('class' => 'form-control mayuscula')) }}
+        {{ Form::label('materno', 'Apellido materno') }}
+        {{ Form::text('materno', null, array('class' => 'form-control mayuscula')) }}
       </div>
       <div class="col-md-4 form-group">
         {{ Form::label('donativo ', 'Donativo') }}

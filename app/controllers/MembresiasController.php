@@ -16,6 +16,13 @@ class MembresiasController extends BaseController {
 	}
 
 	public function postDonativos(){
+		$donativo = Donativo::create(array(
+			'nombre' => Input::get('nombre'),
+			'paterno' => Input::get('paterno'),
+			'materno' => Input::get('materno'),
+			'donativo' => Input::get('donativo'),
+			'fecha' => date('Y-m-d'),
+		));
 	}
 
 	public function postElemento(){
@@ -163,7 +170,7 @@ class MembresiasController extends BaseController {
 									->first()->nombre,
 				'reclutamiento' =>  $pago->elemento->reclutamiento,
 				'matricula'		=>	$pago->elemento->matricula,
-				'fecha' 		=>  date('d/m/Y'),
+				'fecha' 		=>  $pago->fecha,
 				'cantidad'		=>	$pago->cantidad,
 				'zona' 			=> 	$pago->elemento->companiasysubzona->nombre,
 				'hacienda' 		=>  $nombrehacienda,
