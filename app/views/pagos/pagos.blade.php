@@ -35,6 +35,7 @@
                   <option value="Credencial">Credencial</option>
                   <option value="Evento">Evento</option>
                   <option value="Examen">Examen</option>
+                  <option value="Donativo">Donativo</option>
               </select>
             </div>
             <div class="form-group col-md-4 hidden">
@@ -51,6 +52,8 @@
             {{ Form::text('id', null, array('class' => 'hidden form-control')) }}
             <div class="form-group col-md-3 pull-right">
             {{ Form::button('Registrar entero',array('class' => 'btn btn-success','type' => 'submit','id' => 'bpagar')) }}
+            {{ Form::button('Imprimir',array('class' => 'btn btn-success hidden','type' => 'submit','id' => 'donativo')) }}
+            
             </div>
         {{form::close()}}
         </div>
@@ -117,12 +120,14 @@
         }
     })
     .on('success.form.bv', function(e) {
+            if($("[name = tipo] option:selected").val() != "Donativo")
             e.preventDefault();
             var $form = $(e.target);
             var bv = $form.data('bootstrapValidator');
             $('#myModal').modal('show')
             $('.spin-modal').removeClass('hidden');
             $('.alert').addClass('hidden');
+            if($("[name = tipo] option:selected").val() != "Donativo")
             $.post($form.attr('action'), $form.serialize(), function(json) {
                 if (json.success) {
                     $('#message').html(json.message+json.matricula);
@@ -170,6 +175,14 @@ $('#Enteros').addClass('active');
     });
     $("[name = tipo]").change(function(){
         $('#pagar').data('bootstrapValidator').resetField('cantidad', true);
+        if($("[name = tipo] option:selected").val() == "Donativo"){
+                $('#donativo').removeClass('hidden');
+                $('#bpagar').addClass('hidden');
+        }
+        else{
+            $('#donativo').addClass('hidden');
+            $('#bpagar').removeClass('hidden');
+        }
         if($("[name = tipo] option:selected").val() == "Evento"){
             llenarConcepto("{{ URL::to('eventos/eventos'); }}");
         }

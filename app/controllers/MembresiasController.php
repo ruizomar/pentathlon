@@ -17,12 +17,15 @@ class MembresiasController extends BaseController {
 
 	public function postDonativos(){
 		$donativo = Donativo::create(array(
-			'nombre' => Input::get('nombre'),
-			'paterno' => Input::get('paterno'),
-			'materno' => Input::get('materno'),
-			'donativo' => Input::get('donativo'),
-			'fecha' => date('Y-m-d'),
+			'nombre' 	=> Input::get('nombre'),
+			'paterno' 	=> Input::get('paterno'),
+			'materno' 	=> Input::get('materno'),
+			'donativo' 	=> Input::get('donativo'),
+			'fecha' 	=> date('Y-m-d'),
 		));
+		$pdf = App::make('dompdf');
+		$pdf->loadHTML(MembresiasController::viewDonativo($donativo));
+		return $pdf->stream();
 	}
 
 	public function postElemento(){
@@ -61,6 +64,19 @@ class MembresiasController extends BaseController {
 		////////////////////////////
 		if (Input::get('tipo') == 'Credencial') {
 			return Response::json(MembresiasController::pago(Input::get('id'),Input::get('cantidad'),Input::get('tipo')));
+		}
+		if (Input::get('tipo') == 'Donativo') {
+			$donativo = Donativo::create(array(
+				'nombre' 	=> Elemento::find(Input::get('id'))->persona->nombre,
+				'paterno' 	=> Elemento::find(Input::get('id'))->persona->apellidopaterno,
+				'materno' 	=> Elemento::find(Input::get('id'))->persona->apellidomaterno,
+				'donativo' 	=> Input::get('cantidad'),
+				'fecha' 	=> date('Y-m-d'),
+			));
+			$datos = MembresiasController::pago(Input::get('id'),Input::get('cantidad'),Input::get('tipo'));
+			$pdf = App::make('dompdf');
+			$pdf->loadHTML(MembresiasController::viewDonativo($donativo));
+			return $pdf->stream();
 		}
 		if (Input::get('tipo') == 'Evento') {
 			if(!is_null(Evento::find(Input::get('concepto'))->elementos()->where('elemento_id','=',Input::get('id'))->first())){
@@ -203,5 +219,32 @@ class MembresiasController extends BaseController {
 					'pago' 		=> $pago->id
 					);
 		return $dato;
+	}
+	public function viewDonativo($donativo){
+		$hacienda = Cargo::find(1)->elementos()->where('fecha_fin','=',null)->first();
+			if(is_null($hacienda)){
+				$nombrehacienda		=	"";
+				$gradohacienda		=	"";
+			}
+			else{
+				$nombrehacienda		=	$hacienda->persona->nombre.' '.
+										$hacienda->persona->apellidopaterno.' '.
+										$hacienda->persona->apellidomaterno;
+				$gradohacienda		=	$hacienda->grados()->orderBy('fecha','desc')
+										->first()->nombre;
+			}
+			$datos = array(
+					'name' 			=>  $donativo->nombre.' '.
+								 		$donativo->paterno.' '.
+								  		$donativo->materno,
+					'fecha' 		=>  $donativo->fecha,
+					'cantidad'		=>	$donativo->donativo,
+					'hacienda' 		=>  $nombrehacienda,
+					'gradohacienda' => 	$gradohacienda,
+					'folio'			=>	$donativo->id,
+					'concepto'		=>  "Donativo",
+					);
+			$html = View::make('pagos/recibodonativo')->with('datos',$datos);
+			return $html;
 	}
 }
