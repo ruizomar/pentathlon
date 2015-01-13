@@ -46,6 +46,7 @@ Route::controller('cargos', 'AsignaCargosController');
 Route::controller('ascensos', 'AsignaAscensosController');
 Route::controller('jura', 'JuraBanderaController');
 Route::controller('reportes', 'ReportesController');
+Route::controller('concursos', 'ConcursosController');
 
 
 Route::post('buscar','BuscarController@buscar');

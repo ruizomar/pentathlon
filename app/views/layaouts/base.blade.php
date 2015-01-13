@@ -98,9 +98,9 @@
           <li id="Armas"><a rel="tooltip" data-placement="right" data-original-title="Tables" href="{{ URL::to('armas'); }}"><i class="fa  fa-crosshairs"></i> <span class="caption">Armas</span></a></li>
           <li id="Cuerpos"><a rel="tooltip" data-placement="right" data-original-title="Mobile" href="{{ URL::to('cuerpos'); }}"><i class="fa fa-child"></i> <span class="caption">Cuerpos</span></a></li>
         @if(!is_null(User::find(Auth::id())->roles()->where('id','<',8)->first()))
-          <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Icons" href="{{ URL::to('history'); }}"><i class="fa fa-clock-o"></i> <span class="caption">Historial</span></a></li>
+          <li id="historial" class=" "><a rel="tooltip" data-placement="right" data-original-title="Icons" href="{{ URL::to('history'); }}"><i class="fa fa-clock-o"></i> <span class="caption">Historial</span></a></li>
          @endif
-        <li class=" "><a rel="tooltip" data-placement="right" data-original-title="Icons" href="{{ URL::to('reportes'); }}"><i class="fa fa-bar-chart"></i> <span class="caption">Reportes</span></a></li> 
+        <li id="reportes" class=" "><a rel="tooltip" data-placement="right" data-original-title="Icons" href="{{ URL::to('reportes'); }}"><i class="fa fa-bar-chart"></i> <span class="caption">Reportes</span></a></li> 
       </ul>
   </div>
 <!-- end sidenavbar -->
