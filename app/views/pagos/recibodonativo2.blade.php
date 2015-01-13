@@ -31,7 +31,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-			@if(isset($datos))
+			@for($inicio; $inicio <= $fin; $inicio++)
 			<div>
 				<center>
 					<img src="{{ asset('imgs/pdmu.jpg') }}" alt="">
@@ -43,30 +43,30 @@
 				</center>	
 			</div>	
 				<center>
-					<h3 class="azul" style="margin-bottom:-5px;">${{ $datos['cantidad'] }} PESOS 00/100 M.N.</h3>
-					<h2 class="azul" style="margin-top:-10px;">{{ $datos['concepto'] }}
+					<h3 class="azul" style="margin-bottom:-5px;">${{ Donativo::find($inicio)->donativo; }} PESOS 00/100 M.N.</h3>
+					<h2 class="azul" style="margin-top:-10px;">Donativo
 					</h2>
 				</center>
 				<div class="folio">
-					<label>Folio: <strong class="rojo">{{ $datos['folio'] }}</strong></label>
+					<label>Folio: <strong class="rojo">{{ Donativo::find($inicio)->id }}</strong></label>
 				</div>
 				<!------------>
 				<div class="pure-u-3-5">
-					<label class="azul">Nombre: </label><label><u>{{ $datos['name'] }}</u></label>
+					<label class="azul">Nombre: </label><label><u>{{ Donativo::find($inicio)->nombre }} {{ Donativo::find($inicio)->paterno }} {{ Donativo::find($inicio)->materno }}</u></label>
 				</div>
 				<!------------>
 				<br>
 				<br>
 				<div class="pure-u-1">
 					<?php setlocale(LC_ALL,"Spanish"); ?>
-					<label><u>Oaxaca, Oax., a {{ strftime("%d de %B del %Y",strtotime($datos['fecha'])); }}</u></label>
+					<label><u>Oaxaca, Oax., a {{ strftime("%d de %B del %Y",strtotime(Donativo::find($inicio)->fecha)); }}</u></label>
 				</div>
 				<br>
 				<h4>Titular de hacienda</h4>
 				<div class="pure-u-3-5">
-					<label class="azul">Nombre: </label><u>{{ $datos['hacienda'] }}</u></label>
+					<label class="azul">Nombre: </label><u>{{ $hacienda }}</u></label>
 				</div>
-				<h2 style="margin-top:200px;"></h2>
+				<div style="height:200px;"></div>
 				<div>
 					<center>
 						<img src="{{ asset('imgs/pdmu.jpg') }}" alt="">
@@ -78,34 +78,33 @@
 					</center>	
 				</div>	
 					<center>
-						<h3 class="azul" style="margin-bottom:-5px;">${{ $datos['cantidad'] }} PESOS 00/100 M.N.</h3>
-						<h2 class="azul" style="margin-top:-10px;">{{ $datos['concepto'] }}
+						<h3 class="azul" style="margin-bottom:-5px;">${{ Donativo::find($inicio)->donativo; }} PESOS 00/100 M.N.</h3>
+						<h2 class="azul" style="margin-top:-10px;">Donativo
 						</h2>
 					</center>
 					<div class="folio">
-						<label>Folio: <strong class="rojo">{{ $datos['folio'] }}</strong></label>
+						<label>Folio: <strong class="rojo">{{ Donativo::find($inicio)->id }}</strong></label>
 					</div>
 					<!------------>
 					<div class="pure-u-3-5">
-						<label class="azul">Nombre: </label><label><u>{{ $datos['name'] }}</u></label>
+						<label class="azul">Nombre: </label><label><u>{{ Donativo::find($inicio)->nombre }} {{ Donativo::find($inicio)->paterno }} {{ Donativo::find($inicio)->materno }}</u></label>
 					</div>
 					<!------------>
 					<br>
 					<br>
 					<div class="pure-u-1">
 						<?php setlocale(LC_ALL,"Spanish"); ?>
-						<label><u>Oaxaca, Oax., a {{ strftime("%d de %B del %Y"); }}</u></label>
+						<label><u>Oaxaca, Oax., a {{ strftime("%d de %B del %Y",strtotime(Donativo::find($inicio)->fecha)); }}</u></label>
 					</div>
 					<br>
 					<h4>Titular de hacienda</h4>
 					<div class="pure-u-3-5">
-						<label class="azul">Nombre: </label><u>{{ $datos['hacienda'] }}</u></label>
+						<label class="azul">Nombre: </label><u>{{ $hacienda }}</u></label>
 					</div>
-			@else
-			<div class="alert alert-danger fade in">
-			<strong>Error </strong>Algo salió mal X_x.
-			</div>
-			@endif	
+					@if($inicio != $fin)
+					<div style="page-break-after:always;"></div>
+					@endif
+			@endfor	
 			</div>
 		</div>
 	</div>
