@@ -57,6 +57,11 @@
             height: 400px;
             margin-bottom: 20px;
         }
+
+        .cabecera{
+            margin-top: 3px;
+            font-size: 14px;
+        }
     </style>
     {{  HTML::style('css/sweet-alert.css')}}
     {{  HTML::style('css/tour/bootstrap-tour.min.css')}}
@@ -82,7 +87,12 @@
     </div>
     <div class="col-md-3">
     </div>
-    <div class="col-md-12 form-group" id="companias" style="margin-left:80px;">
+    <div class="menucompanias hidden">
+        <div class="col-md-12 form-group" id="companias" style="margin-left:80px;">
+        </div>
+        <div class="col-md-12">
+            <button class="pull-right btn-xs btn btn-success" onclick="coleccion()"><i class="fa fa-bar-chart"></i> Generar reporte</button>
+        </div>
     </div>
     <div class="hidden col-md-12" id="compania" style="left:10;">
         <h1 id="nombre" style="margin-bottom:20px;"><i class="fa fa-bar-chart"></i></h1>
@@ -119,39 +129,65 @@
 @stop
 @section('scripts')
     <script>
+        var arrayId;
         function companias () {
             $('.menu').addClass('hidden');
             $.get('reportes/lugares', function(json) {
               $('#companias').html('');
               $.each(json,function(index,lugar){
                 if(lugar.status == 'Activa'){
-                    $('#companias').append('<div id="seleccion'+lugar.id+'" class="contenido col-md-3" onclick="seleccionar('+lugar.id+')"><h4>'+lugar.nombre+'</h4><br><i class="fa fa-users">'+lugar.numelementos+'</i><br><label class="informacion label label-success">'+lugar.status+'</label><br><label class="informacion label label-primary">'+lugar.tipo+'</label><label class="pull-right label label-default" style="cursor:pointer;" onclick="masInformacion('+lugar.id+')">Más información...</label></div>');
+                    $('#companias').append('<div id="seleccion'+lugar.id+'" class="contenido col-md-3" onclick="seleccionar('+lugar.id+')"><input class=" pull-right hidden" value="'+lugar.id+'" type="checkbox" id="check-'+lugar.id+'"><h3 class="cabecera">'+lugar.nombre+'</h3><i class="fa fa-users">'+lugar.numelementos+'</i><br><label class="informacion label label-success">'+lugar.status+'</label><br><label class="informacion label label-primary">'+lugar.tipo+'</label><label class="pull-right label label-default" style="cursor:pointer;" onclick="masInformacion('+lugar.id+')">Ver reporte <i class="fa fa-bar-chart"></i></label></div>');
                 }else{
-                    $('#companias').append('<div id="seleccion'+lugar.id+'" class="contenido col-md-3" onclick="seleccionar('+lugar.id+')"><h4>'+lugar.nombre+'</h4><br><i class="fa fa-users">'+lugar.numelementos+'</i><br><label class="informacion label label-danger">'+lugar.status+'</label><br><label class="informacion label label-primary">'+lugar.tipo+'</label><label class="pull-right label label-default" style="cursor:pointer;" onclick="masInformacion('+lugar.id+')">Más información...</label></div>');
+                    $('#companias').append('<div id="seleccion'+lugar.id+'" class="contenido col-md-3" onclick="seleccionar('+lugar.id+')"><input class=" pull-right hidden" value="'+lugar.id+'" type="checkbox" id="check-'+lugar.id+'"><h3 class="cabecera">'+lugar.nombre+'</h3><i class="fa fa-users">'+lugar.numelementos+'</i><br><label class="informacion label label-danger">'+lugar.status+'</label><br><label class="informacion label label-primary">'+lugar.tipo+'</label><label class="pull-right label label-default" style="cursor:pointer;" onclick="masInformacion('+lugar.id+')">Ver reporte <i class="fa fa-bar-chart"></i></label></div>');
                 }
               });
             }, 'json');
-
+            $('.menucompanias').removeClass('hidden');
         }
         function seleccionar(id) {
             $('#seleccion'+id).toggleClass('seleccion');
+            if($("#check-"+id).is(':checked')){
+                $("#check-"+id).prop("checked", false);
+            }
+            else{
+                $("#check-"+id).prop("checked", true);
+            }
         };
         function masInformacion(id) {
-            $('#companias').addClass('hidden');
+            arrayId = [];
+            arrayId.push($('#check-'+id).attr('value'));
+            $('.menucompanias').html('');
             $('.titulo1').addClass('hidden');
             $.post('reportes/nombre',{id:id}, function(json) {
                 $('#nombre').html(json.nombre);
-                $('#generar').html('<button class="pull-right btn-xs btn btn-success" onclick="dibujagrafica('+id+')"><i class="fa fa-bar-chart"></i> Generar reporte</button>');
+                $('#generar').html('<button class="pull-right btn-xs btn btn-success" onclick="dibujagrafica()"><i class="fa fa-bar-chart"></i> Generar reporte</button>');
             }, 'json');
             $('#compania').removeClass('hidden');
         };
+        function coleccion () {
+            arrayId = [];
+            $("input:checkbox:checked").each(function(){
+                arrayId.push($(this).attr('value'));
+                // dibujagrafica();
+            });
+            // console.log(arrayId);
+            dibujagrafica();
+            $('.menucompanias').html('');
+            $('.titulo1').addClass('hidden');
+            $('#compania').removeClass('hidden');
+            $('#generar').html('<button class="pull-right btn-xs btn btn-success" onclick="dibujagrafica()"><i class="fa fa-bar-chart"></i> Generar reporte</button>');
+
+        }
     </script>
     <script>
-        function dibujagrafica(id) {
+        function dibujagrafica() {
             $('#grafica').html('');
             $('#datos').html('');
             $('#imprimir').addClass('hidden');
+            console.log(arrayId);
+            id = arrayId;
             $.post('reportes/compania',{id:id}, function(json) {
+                console.log(json);
                 var lista = [
                     {nombre:"Menor M.",cantidad:json.menorMasculino},
                     {nombre:"Juvenil M.",cantidad:json.juvenilMasculino},
@@ -164,6 +200,7 @@
                 $("input:checkbox:checked").each(function(){
                     data.push(lista[$(this).attr('id')-1]);
                 });
+                // console.log(data);
                 if (data.length > 0){
                     Morris.Bar({
                         element: 'grafica',

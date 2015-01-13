@@ -44,8 +44,37 @@ class ReportesController extends BaseController {
 
 	public function postCompania()
 	{
-		$id = $_POST['id'];
-		return Response::json(ReportesController::reporteCompania($id));
+		$arrayId = $_POST['id'];
+		$q = array(
+			'activos' 				=> 0,
+			'inactivos' 			=> 0,
+			'nuevos' 				=> 0,
+			'hombres' 				=> 0,
+			'mujeres' 				=> 0,
+			'menorMasculino' 		=> 0,
+			'juvenilMasculino' 		=> 0,
+			'mayorMasculino' 		=> 0,
+			'menorFemenino' 		=> 0,
+			'juvenilFemenino' 		=> 0,
+			'mayorFemenino' 		=> 0,
+		);
+		foreach ($arrayId as $id) {
+			$data = ReportesController::reporteCompania($id);
+			$q['activos']			+= $data['activos'];
+			$q['inactivos']			+= $data['inactivos'];
+			$q['nuevos']			+= $data['nuevos'];
+			$q['hombres']			+= $data['hombres'];
+			$q['mujeres']			+= $data['mujeres'];
+			$q['menorMasculino']	+= $data['menorMasculino'];
+			$q['juvenilMasculino']	+= $data['juvenilMasculino'];
+			$q['mayorMasculino']	+= $data['mayorMasculino'];
+			$q['menorFemenino']		+= $data['menorFemenino'];
+			$q['juvenilFemenino']	+= $data['juvenilFemenino'];
+			$q['mayorFemenino']		+= $data['mayorFemenino'];
+		}
+		return Response::json($q);
+		// return Response::json($id[1]);
+		// return Response::json($q);
 	}
 
 	private function reporteCompania($id)
