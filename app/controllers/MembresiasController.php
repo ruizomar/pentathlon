@@ -14,7 +14,22 @@ class MembresiasController extends BaseController {
 	public function getDonativos(){
 		return View::make('pagos/donativos');
 	}
-
+	public function getImprimir(){
+		$hacienda = Cargo::find(1)->elementos()->where('fecha_fin','=',null)->first();
+		if(is_null($hacienda)){
+			$nombrehacienda		=	"";
+		}
+		else{
+			$nombrehacienda		=	$hacienda->persona->nombre.' '.
+									$hacienda->persona->apellidopaterno.' '.
+									$hacienda->persona->apellidomaterno;
+		}
+		$pdf = App::make('dompdf');
+		$html = View::make('pagos/recibodonativo2')
+		->with('inicio',1)->with('fin',5)->with('hacienda',$nombrehacienda);
+		$pdf->loadHTML($html);
+		return $pdf->stream();
+	}
 	public function postDonativos(){
 		$donativo = Donativo::create(array(
 			'nombre' 	=> Input::get('nombre'),
