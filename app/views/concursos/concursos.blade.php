@@ -54,9 +54,6 @@
             top: 9px;
             font-size: 25px;
         }
-        .integrante{
-            color: white;
-        }
     </style>
     {{  HTML::style('css/sweet-alert.css')}}
     {{  HTML::style('css/tour/bootstrap-tour.min.css')}}
@@ -105,46 +102,56 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12 integrantes">
+        <div class="col-md-12">
             <hr>
             <h4>Registro del integrantes del equipo</h4>
             <div class="row"></div>
 
-            <div class="botonagregar agregar col-md-4" data-toggle="modal" data-target=".bs-example-modal-lg">
+            <div class="botonagregar agregar col-md-4" data-toggle="modal" data-target="#myModal">
                 <a class="anadir"><i class="fa fa-plus"></i></a>
             </div>
-            <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <!-- Modal -->
+            <div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="col-md-4 form-group">
-                        {{ Form::label('concursantenombr', 'Nombre (s)',array('class' => 'control-label')) }}
-                        {{ Form::text('concursantenombr', null, array('class' => 'form-control')) }}
-                    </div>
-                    <div class="col-md-4 form-group">
-                        {{ Form::label('concursantepatero', 'Apellido paterno') }}
-                        {{ Form::text('concursantepatero', null, array('class' => 'form-control')) }}
-                    </div>
-                    <div class="col-md-4 form-group">
-                        {{ Form::label('concursantematero', 'Apellido materno') }}
-                        {{ Form::text('concursantematero', null, array('class' => 'form-control')) }}
-                    </div>
-                    <div class="col-md-4 form-group">
-                        {{ Form::label('concursantedomicilio', 'Telefono') }}
-                        <div class="input-group">
-                            <div class="input-group-addon"><i class="fa fa-phone"></i></div>
-                            {{ Form::text('concursantedomicilio', null, array('class' => 'form-control mayuscula')) }}
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Registro de integrante</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-md-4 form-group">
+                                {{ Form::label('concursantenombr', 'Nombre (s)',array('class' => 'control-label')) }}
+                                {{ Form::text('concursantenombr', null, array('class' => 'form-control')) }}
+                            </div>
+                            <div class="col-md-4 form-group">
+                                {{ Form::label('concursantepatero', 'Apellido paterno') }}
+                                {{ Form::text('concursantepatero', null, array('class' => 'form-control')) }}
+                            </div>
+                            <div class="col-md-4 form-group">
+                                {{ Form::label('concursantematero', 'Apellido materno') }}
+                                {{ Form::text('concursantematero', null, array('class' => 'form-control')) }}
+                            </div>
+                            <div class="col-md-4 form-group">
+                                {{ Form::label('concursantedomicilio', 'Telefono') }}
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-phone"></i></div>
+                                    {{ Form::text('concursantedomicilio', null, array('class' => 'form-control mayuscula')) }}
+                                </div>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                {{ Form::label('concursanteemail', 'email') }}
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-at"></i></div>
+                                    {{ Form::text('concursanteemail', null, array('class' => 'form-control mayuscula')) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <!-- <button type="button" class="btn btn-info" data-dismiss="modal">Close</button> -->
+                            <button type="button" class="btn btn-primary">Save changes</button>
                         </div>
                     </div>
-                    <div class="col-md-4 form-group">
-                        {{ Form::label('concursanteemail', 'email') }}
-                        <div class="input-group">
-                            <div class="input-group-addon"><i class="fa fa-at"></i></div>
-                            {{ Form::text('concursanteemail', null, array('class' => 'form-control mayuscula')) }}
-                        </div>
-                    </div>
-                    <label class="label label-success" onclick="otro()">ok</label>
                 </div>
-              </div>
             </div>
         </div>
         <div class="col-md-12">
