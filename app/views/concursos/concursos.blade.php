@@ -98,7 +98,7 @@
         <h1 style="margin-bottom:20px;"><i class="fa fa-trophy"></i> Convocatorias</h1>
     </div>
     <div class="hidden col-md-offset-3 col-md-6" style="margin-top:18px;">
-        <a href="#" class="requisitos col-md-12 text-center" onclick="ejemplo()">
+        <a href="#" class="requisitos col-md-12 text-center">
             <h4>Concurso de escoltas</h4>
             <i class="fa fa-flag-o fa-5x"></i>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aliquam error sint optio alias minus, nisi officia, aperiam dignissimos molestias necessitatibus. Temporibus, possimus laudantium iure. Veniam voluptatum laudantium natus enim.</p>
@@ -136,10 +136,10 @@
         </div>
         <div class="col-md-12">
             <hr>
-            <h4>Registro de integrantes del equipo</h4>
+            <h4 onclick="ejemplo()">Registro de integrantes del equipo</h4>
             <div class="anadidos col-md-12" style="margin-top:10px;">
             </div>
-            <div class="botonagregar col-md-4" data-toggle="modal" data-target="#myModal">
+            <div class="botonagregar col-md-4" data-toggle="modal" data-target="#myModal" onclick="limpio();">
                 <a class="anadir"><i class="fa fa-plus"></i></a>
             </div>
             <div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -163,10 +163,10 @@
                                 {{ Form::text('concursantematerno', null, array('class' => 'form-control')) }}
                             </div>
                             <div class="form-group">
-                                {{ Form::label('concursantedomicilio', 'Telefono') }}
+                                {{ Form::label('concursantetelefono', 'Telefono') }}
                                 <div class="input-group">
                                     <div class="input-group-addon"><i class="fa fa-phone"></i></div>
-                                    {{ Form::text('concursantedomicilio', null, array('class' => 'form-control mayuscula')) }}
+                                    {{ Form::text('concursantetelefono', null, array('class' => 'form-control mayuscula')) }}
                                 </div>
                             </div>
                             <div class="form-group">
@@ -178,7 +178,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="addintegrante()">Guardar</button>
+                            <button type="button" class="btn btn-primary guardar" data-dismiss="modal" onclick="addintegrante()">Guardar</button>
+                            <span id="actualizar"></span>
                             <!-- <button type="button" class="btn btn-primary" onclick="addintegrante()">Guardar</button> -->
                         </div>
                     </div>
@@ -188,8 +189,8 @@
         <div class="col-md-12">
             <hr>
             <h4>Registro datos del equipo</h4>
-            <div class="col-md-2 form-group">
-                {{ Form::label('reclumaterno', 'Estado') }}
+            <div class="col-md-3 form-group">
+                {{ Form::label('estado', 'Estado') }}
                 <select class="form-control" name="state" id="state">
                     <option value="Aguascalientes">Aguascalientes</option>
                     <option value="Baja California">Baja California</option>
@@ -226,19 +227,71 @@
                 </select>
             </div>
             <div class="col-md-4 form-group">
-                {{ Form::label('reclumaterno', 'Escuela') }}
-                {{ Form::text('reclumaterno', null, array('class' => 'form-control')) }}
+                {{ Form::label('escuela', 'Escuela') }}
+                {{ Form::text('escuela', null, array('class' => 'form-control')) }}
             </div>
         </div>
     {{Form::close()}}
 @stop
 @section('scripts')
     <script>
+    var id = 0;
+    var arr = [];
         function addintegrante() {
             nombre = $( "input[name$='concursantenombre']" ).val();
             paterno = $( "input[name$='concursantepaterno']" ).val();
             materno = $( "input[name$='concursantematerno']" ).val();
-            $('.anadidos').append('<div class="col-md-4" style="margin-top: 10px;"><div class="persona col-md-4" data-toggle="modal" data-target="#myModal"><a class="anadir"><i class="fa fa-user"></i></a></div><div class="col-md-8" style="top:-5px;"><p><h4><span class="text-capitalize spannombre">'+nombre+'</span><span class="text-capitalize spanpaterno"> '+paterno+'</span><span class="text-capitalize spanmaterno"> '+materno+'</span><span class="text-capitalize hidden spantelefono"> telefono</span><span class="text-capitalize hidden spanemail"> email</span></h4></p></div></div>')
+            telefono = $( "input[name$='concursantetelefono']" ).val();
+            email = $( "input[name$='concursanteemail']" ).val();
+            $('.anadidos').append('<div id="'+id+'" class="col-md-4" style="margin-top: 10px;"><div class="persona col-md-4" data-toggle="modal" data-target="#myModal" onclick="mostrarmodal('+id+')"><a class="anadir"><i class="fa fa-user"></i></a></div><div class="col-md-8" style="top:-5px;"><p><h4><span class="text-capitalize spannombre">'+nombre+'</span><span class="text-capitalize spanpaterno"> '+paterno+'</span><span class="text-capitalize spanmaterno"> '+materno+'</span><span class="text-capitalize hidden spantelefono"> '+telefono+'</span><span class="text-capitalize hidden spanemail"> '+email+'</span></h4></p></div></div>');
+            guardar(id);
+            id++;
+        }
+        function mostrarmodal (id) {
+            nombre = $( "input[name$='concursantenombre']" ).val(arr[id].nombre);
+            paterno = $( "input[name$='concursantepaterno']" ).val(arr[id].paterno);
+            materno = $( "input[name$='concursantematerno']" ).val(arr[id].materno);
+            telefono = $( "input[name$='concursantetelefono']" ).val(arr[id].telefono);
+            email = $( "input[name$='concursanteemail']" ).val(arr[id].email);
+            $('.guardar').addClass('hidden');
+            $('#actualizar').html('<button type="button" class="btn btn-danger" data-dismiss="modal" onclick="eliminar('+id+')">Eliminar</button><button type="button" class="btn btn-primary" data-dismiss="modal" onclick="actualizar('+id+')" style="margin-top: 0px">Actualizar</button>');
+
+        }
+        function actualizar (id) {
+            nombre = $( "input[name$='concursantenombre']" ).val();
+            paterno = $( "input[name$='concursantepaterno']" ).val();
+            materno = $( "input[name$='concursantematerno']" ).val();
+            telefono = $( "input[name$='concursantetelefono']" ).val();
+            email = $( "input[name$='concursanteemail']" ).val();
+            guardar(id);
+            $('#'+id+'').html('<div class="persona col-md-4" data-toggle="modal" data-target="#myModal" onclick="mostrarmodal('+id+')"><a class="anadir"><i class="fa fa-user"></i></a></div><div class="col-md-8" style="top:-5px;"><p><h4><span class="text-capitalize spannombre">'+nombre+'</span><span class="text-capitalize spanpaterno"> '+paterno+'</span><span class="text-capitalize spanmaterno"> '+materno+'</span><span class="text-capitalize hidden spantelefono"> '+telefono+'</span><span class="text-capitalize hidden spanemail"> '+email+'</span></h4></p></div>');
+
+        }
+        function eliminar (id) {
+            if(arr.length == 1){
+                arr = [];
+            }else{
+                delete arr[id];
+            }
+            $('#'+id+'').addClass('hidden');
+        }
+        function limpio () {
+            $( "input[name$='concursantenombre']" ).val('');
+            $( "input[name$='concursantepaterno']" ).val('');
+            $( "input[name$='concursantematerno']" ).val('');
+            $( "input[name$='concursantetelefono']" ).val('');
+            $( "input[name$='concursanteemail']" ).val('');
+            $('.guardar').removeClass('hidden');
+            $('#actualizar').html('');
+        }
+        function guardar (id) {
+            arr[id] = {
+                nombre:nombre,
+                paterno:paterno,
+                materno:materno,
+                telefono:telefono,
+                email:email,
+            };
         }
     </script>
 @endsection
