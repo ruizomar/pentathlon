@@ -26,7 +26,8 @@
         .content{
             margin-left: 0px;
         }
-        .agregar{
+        .botonagregar{
+            margin-left:15px;
             width: 50px;
             height: 50px;
             background: #39a1f4;
@@ -36,7 +37,8 @@
             -moz-box-shadow: 3px 3px 4px #aab2bd;
             -webkit-box-shadow: 3px 3px 4px #aab2bd;
         }
-        .agregar:hover{
+        .botonagregar:hover{
+            margin-left:15px;
             width: 50px;
             height: 50px;
             background: #2196F3;
@@ -53,6 +55,36 @@
             position: relative;
             top: 9px;
             font-size: 25px;
+        }
+        .anadir:hover{
+            color: #fff;
+            text-align: center;
+            color: #FFF;
+            position: relative;
+            top: 9px;
+            font-size: 25px;
+        }
+        .persona{
+            margin-left:15px;
+            width: 50px;
+            height: 50px;
+            background: #F44336;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 3px 3px 4px #aab2bd;
+            -moz-box-shadow: 3px 3px 4px #aab2bd;
+            -webkit-box-shadow: 3px 3px 4px #aab2bd;
+        }
+        .persona:hover{
+            margin-left:15px;
+            width: 50px;
+            height: 50px;
+            background: #C5261A;
+            border-radius: 100%;
+            cursor: pointer;
+            box-shadow: 4px 6px 6px #aab2bd;
+            -moz-box-shadow: 4px 6px 6px #aab2bd;
+            -webkit-box-shadow: 4px 6px 6px #aab2bd;
         }
     </style>
     {{  HTML::style('css/sweet-alert.css')}}
@@ -104,41 +136,40 @@
         </div>
         <div class="col-md-12">
             <hr>
-            <h4>Registro del integrantes del equipo</h4>
-            <div class="row"></div>
-
-            <div class="botonagregar agregar col-md-4" data-toggle="modal" data-target="#myModal">
+            <h4>Registro de integrantes del equipo</h4>
+            <div class="anadidos col-md-12" style="margin-top:10px;">
+            </div>
+            <div class="botonagregar col-md-4" data-toggle="modal" data-target="#myModal">
                 <a class="anadir"><i class="fa fa-plus"></i></a>
             </div>
-            <!-- Modal -->
-            <div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
+            <div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title" id="myModalLabel">Registro de integrante</h4>
                         </div>
                         <div class="modal-body">
-                            <div class="col-md-4 form-group">
-                                {{ Form::label('concursantenombr', 'Nombre (s)',array('class' => 'control-label')) }}
-                                {{ Form::text('concursantenombr', null, array('class' => 'form-control')) }}
+                            <div class="form-group">
+                                {{ Form::label('concursantenombre', 'Nombre (s)',array('class' => 'control-label')) }}
+                                {{ Form::text('concursantenombre', null, array('class' => 'form-control')) }}
                             </div>
-                            <div class="col-md-4 form-group">
-                                {{ Form::label('concursantepatero', 'Apellido paterno') }}
-                                {{ Form::text('concursantepatero', null, array('class' => 'form-control')) }}
+                            <div class="form-group">
+                                {{ Form::label('concursantepaterno', 'Apellido paterno') }}
+                                {{ Form::text('concursantepaterno', null, array('class' => 'form-control')) }}
                             </div>
-                            <div class="col-md-4 form-group">
-                                {{ Form::label('concursantematero', 'Apellido materno') }}
-                                {{ Form::text('concursantematero', null, array('class' => 'form-control')) }}
+                            <div class="form-group">
+                                {{ Form::label('concursantematerno', 'Apellido materno') }}
+                                {{ Form::text('concursantematerno', null, array('class' => 'form-control')) }}
                             </div>
-                            <div class="col-md-4 form-group">
+                            <div class="form-group">
                                 {{ Form::label('concursantedomicilio', 'Telefono') }}
                                 <div class="input-group">
                                     <div class="input-group-addon"><i class="fa fa-phone"></i></div>
                                     {{ Form::text('concursantedomicilio', null, array('class' => 'form-control mayuscula')) }}
                                 </div>
                             </div>
-                            <div class="col-md-4 form-group">
+                            <div class="form-group">
                                 {{ Form::label('concursanteemail', 'email') }}
                                 <div class="input-group">
                                     <div class="input-group-addon"><i class="fa fa-at"></i></div>
@@ -147,8 +178,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <!-- <button type="button" class="btn btn-info" data-dismiss="modal">Close</button> -->
-                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="addintegrante()">Guardar</button>
+                            <!-- <button type="button" class="btn btn-primary" onclick="addintegrante()">Guardar</button> -->
                         </div>
                     </div>
                 </div>
@@ -203,15 +234,11 @@
 @stop
 @section('scripts')
     <script>
-        function mas(id) {
-            $('.botonagregar').addClass('hidden');
-            $('#myModal').on('shown.bs.modal', function () {
-                $('#myInput').focus()
-              })
-            // $( ".integrante" ).clone().append( ".otrointegrante" );
-        }
-        function otro () {
-            console.log('sdsd');
+        function addintegrante() {
+            nombre = $( "input[name$='concursantenombre']" ).val();
+            paterno = $( "input[name$='concursantepaterno']" ).val();
+            materno = $( "input[name$='concursantematerno']" ).val();
+            $('.anadidos').append('<div class="col-md-4" style="margin-top: 10px;"><div class="persona col-md-4" data-toggle="modal" data-target="#myModal"><a class="anadir"><i class="fa fa-user"></i></a></div><div class="col-md-8" style="top:-5px;"><p><h4><span class="text-capitalize spannombre">'+nombre+'</span><span class="text-capitalize spanpaterno"> '+paterno+'</span><span class="text-capitalize spanmaterno"> '+materno+'</span><span class="text-capitalize hidden spantelefono"> telefono</span><span class="text-capitalize hidden spanemail"> email</span></h4></p></div></div>')
         }
     </script>
 @endsection
