@@ -102,10 +102,10 @@ class ReportesController extends BaseController {
 		$mujeresArr = array();
 		foreach ($activosArr as $activo) {
 			$sexo = $activo -> persona -> sexo;
-			if ($sexo == 'Hombre') {
+			if ($sexo == 'Masculino') {
 				$hombresArr[] = $activo;
 			}
-			if ($sexo == 'Mujer') {
+			if ($sexo == 'Femenino') {
 				$mujeresArr[] = $activo;
 			}
 		}
