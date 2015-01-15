@@ -21,7 +21,11 @@
           <div class="form-group">
               <label class="col-sm-2 control-label"><strong>Correo: </strong></label>
               <div class="col-sm-10">
+                @if(Elemento::find(Auth::user()->elemento_id)->persona->email)
                 <input type="text" name="email" value="{{ Elemento::find(Auth::user()->elemento_id)->persona->email->email}}" class="text">
+                @else
+                <input type="text" name="email" value="" class="text">
+                @endif
               </div>  
           </div>
           <div class="form-group">
