@@ -77,19 +77,20 @@
 	{{  HTML::script('js/fileinput.js'); }}
   	{{  HTML::style('css/fileinput.css');  }}
   	{{  HTML::style('css/bootstrap-datetimepicker.min.css');  }}
+  	{{  HTML::style('css/sweet-alert.css');  }}
 @endsection
 @section('contenido')
 	{{ Form::open(array('id' => 'formularioalta','url'=>'recluta/alta','files'=>true)) }}
 		<div class="col-md-2 step">
-			<div id="div1" class="seleccion activestep" onclick="javascript: resetActive(event, 33, 'step-1');">
+			<div id="div1" class="seleccion activestep" onclick="javascript:$('#formularioalta').data('bootstrapValidator').validate(); if($('#formularioalta').data('bootstrapValidator').isValid())resetActive(event, 33, 'step-1');">
 				<span class="fa fa-user"></span>
 				<p>Básicos</p>
 			</div>
-			<div class="seleccion" onclick="javascript: resetActive(event, 66, 'step-2');">
+			<div class="seleccion" onclick="javascript:$('#formularioalta').data('bootstrapValidator').validate(); if($('#formularioalta').data('bootstrapValidator').isValid())resetActive(event, 66, 'step-2');">
 				<span class="fa fa-pencil"></span>
 				<p>Datos de elemento</p>
 			</div>
-			<div class="seleccion" onclick="javascript: resetActive(event, 100, 'step-3');">
+			<div class="seleccion" onclick="javascript:$('#formularioalta').data('bootstrapValidator').validate(); if($('#formularioalta').data('bootstrapValidator').isValid())resetActive(event, 100, 'step-3');">
 				<span class="fa fa-plus-square"></span>
 				<p>Contacto/Tutor</p>
 			</div>
@@ -327,7 +328,8 @@
 					</div>
 				</div>
 				<div class="col-md-12">
-					{{ Form::button('<i class="fa fa-floppy-o"></i> Guardar',array('id' => 'btnenviar','class' => 'btn-sm pull-right btn btn-info btn-lg','type' => 'submit')) }}
+					{{ Form::button('<i class="fa fa-floppy-o"></i> Guardar',array('id' => 'btnenviar','class' => 'btn-sm pull-right btn btn-info btn-lg hidden','type' => 'submit')) }}
+					{{ Form::button('<i class="fa fa-floppy-o"></i> Guardar',array('id' => 'btnenviarr','class' => 'btn-sm pull-right btn btn-info btn-lg','type' => 'button','onclick' => '$("#formularioalta").data("bootstrapValidator").validate(); if($("[name = estatura]").val() == "" && $("#formularioalta").data("bootstrapValidator").isValid())swal("Error","Faltan los datos del elemento", "error");')) }}
 				</div>
 			</div>
 		</div>
@@ -515,12 +517,23 @@
 		            }
 		        }
 			})
+			.on('success.field.bv', function(e, data) {
+	            if (data.bv.getSubmitButton()) {
+	                data.bv.disableSubmitButtons(false);
+	            }
+	        })
+			.on('success.form.bv', function(e) {
+			    if($("[name = estatura]").val() != ""){
+			    	$("#btnenviar").removeClass("hidden");
+			    	$("#btnenviarr").addClass("hidden");
+			    }
+			});
 			$('#contactoredes').click(function(){
 				$('#contactofbtw').toggle(80);
-			})
+			});
 			$('#recluredes').click(function(){
 				$('#fbtw').toggle(80);
-			})
+			});
 			$('.mayuscula').focusout(function() {
 				$(this).val($(this).val().toUpperCase());
 			});
@@ -565,4 +578,5 @@
 {{  HTML::script('js/moment.js'); }}
 {{  HTML::script('js/bootstrap-datetimepicker.js'); }}
 {{  HTML::script('js/bootstrap-datetimepicker.es.js'); }}
+{{  HTML::script('js/sweet-alert.min.js'); }}
 @endsection
