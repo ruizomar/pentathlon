@@ -87,24 +87,21 @@
             -webkit-box-shadow: 4px 6px 6px #aab2bd;
         }
     </style>
-    {{  HTML::style('css/sweet-alert.css')}}
-    {{  HTML::style('css/tour/bootstrap-tour.min.css')}}
-    {{  HTML::script('js/tour/bootstrap-tour.min.js')}}
-    {{  HTML::script('js/chart/morris.min.js')}}
-    {{  HTML::script('js/chart/raphael-min.js')}}
+    {{  HTML::script('js/bootstrapValidator.js'); }}
 @endsection
 @section('contenido')
     <div class="titulo1 col-md-11 col-md-offset-1">
         <h1 style="margin-bottom:20px;"><i class="fa fa-trophy"></i> Convocatorias</h1>
     </div>
-    <div class="hidden col-md-offset-3 col-md-6" style="margin-top:18px;">
-        <a href="#" class="requisitos col-md-12 text-center">
+    <div class="col-sm-offset-3 col-sm-6 scol-sm-1 escoltas" style="margin-top:18px;" onclick="escoltas()">
+        <a href="#" class="requisitoss col-sm-12 text-center">
             <h4>Concurso de escoltas</h4>
             <i class="fa fa-flag-o fa-5x"></i>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aliquam error sint optio alias minus, nisi officia, aperiam dignissimos molestias necessitatibus. Temporibus, possimus laudantium iure. Veniam voluptatum laudantium natus enim.</p>
         </a>
     </div>
-    {{ Form::open(array('id' => 'formularioalta','url'=>'#','class'=>'col-md-offset-1 col-md-10 form-group')) }}
+    {{ Form::open(array('id' => 'formulario','url'=>'#','class'=>'hidden col-md-offset-1 col-md-10 form-group')) }}
+    <!-- <div id="formulario" class="hidden2 col-md-offset-1 col-md-10 form-group"> -->
         <div class="col-md-12">
             <h4>Registro del responsable</h4>
             <div class="col-md-4 form-group">
@@ -180,7 +177,6 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary guardar" data-dismiss="modal" onclick="addintegrante()">Guardar</button>
                             <span id="actualizar"></span>
-                            <!-- <button type="button" class="btn btn-primary" onclick="addintegrante()">Guardar</button> -->
                         </div>
                     </div>
                 </div>
@@ -231,12 +227,18 @@
                 {{ Form::text('escuela', null, array('class' => 'form-control')) }}
             </div>
         </div>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="btnenviar()">Enviar</button>
+    <!-- </div> -->
     {{Form::close()}}
 @stop
 @section('scripts')
     <script>
-    var id = 0;
-    var arr = [];
+        var id = 0;
+        var arr = [];
+        function escoltas () {
+            $('.escoltas').addClass('hidden');
+            $('#formulario').removeClass('hidden');
+        }
         function addintegrante() {
             nombre = $( "input[name$='concursantenombre']" ).val();
             paterno = $( "input[name$='concursantepaterno']" ).val();
@@ -293,5 +295,54 @@
                 email:email,
             };
         }
+        function btnenviar () {
+            nombre = $( "input[name$='nombre']" ).val();
+            paterno = $( "input[name$='paterno']" ).val();
+            materno = $( "input[name$='materno']" ).val();
+            telefono = $( "input[name$='telefono']" ).val();
+            email = $( "input[name$='email']" ).val();
+            estado = $( "#state" ).val();
+            escuela = $( "input[name$='escuela']" ).val();
+            data = {
+                lider:{
+                    nombre:nombre,
+                    paterno:paterno,
+                    materno:materno,
+                    telefono:telefono,
+                    email:email,
+                },
+                integrantes:arr,
+                equipo:{
+                    estado:estado,
+                    escuela:escuela,
+                }
+            }
+            // console.log(arr);
+            $.post('concursos/guardar',{data:data}, function(json) {
+                console.log(json);
+            }, 'json');
+        }
+        $(document).ready(function() {
+            $('#dashboard-menu').addClass('hidden');
+            $('#formulario2').bootstrapValidator({
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    nombre: {
+                        validators: {
+                            notEmpty: {}
+                        }
+                    },
+                    concursantenombre:{
+                        validators: {
+                            notEmpty: {}
+                        }
+                    },
+                }
+            })
+        });
     </script>
 @endsection

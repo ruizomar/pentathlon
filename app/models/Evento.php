@@ -8,4 +8,7 @@ class Evento extends Eloquent {
     public function elementos(){
 		return $this->belongsToMany('Elemento');
 	}
+	public function concursantes(){
+		return $this->belongsToMany('Concursante');
+	}
 }

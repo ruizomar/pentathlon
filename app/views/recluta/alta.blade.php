@@ -112,7 +112,7 @@
 					</div>
 					<div class="col-md-2 form-group">
 						{{ Form::label('reclusexo', 'Sexo') }}
-						{{Form::select('reclusexo', array('Hombre' => 'Hombre','Mujer' => 'Mujer',),null,array('placeholder' => '','class' => 'form-control')) }}
+						{{Form::select('reclusexo', array('Masculino' => 'Masculino','Femenino' => 'Femenino',),null,array('placeholder' => '','class' => 'form-control')) }}
 					</div>
 					<div class="col-md-3 form-group fecha">
 						{{ Form::label('birthday', 'Fecha nacimiento') }}
@@ -297,7 +297,7 @@
 					</div>
 					<div class="col-md-2 form-group">
 						{{ Form::label('contactosexo', 'Sexo') }}
-						{{Form::select('contactosexo', array('Hombre' => 'Hombre','Mujer' => 'Mujer',),null,array('placeholder' => '','class' => 'form-control')) }}
+						{{Form::select('contactosexo', array('Masculino' => 'Masculino','Femenino' => 'Femenino',),null,array('placeholder' => '','class' => 'form-control')) }}
 					</div>
 					<div class="col-md-4 form-group">
 						{{ Form::label('contactorelacion', 'Relación con el recluta') }}
