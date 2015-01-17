@@ -6,7 +6,7 @@ class CondecoracionesController extends BaseController{
         $this->beforeFilter('tecnica');
     }
 	public function getIndex(){
-		return View::make('administracion/condecoraciones');
+		return View::make('condecoraciones/condecoraciones');
 	}
 
 	public function postElemento(){
@@ -63,14 +63,23 @@ class CondecoracionesController extends BaseController{
 	}
 	public function postAgregar(){
 		$elemento = Elemento::find(Input::get('id'));
+		$condecoraciones=array();
 		foreach (Input::all() as $key => $value) {
 			if(is_numeric($key))
-				$elemento->reconocimientos()
+				$condecoraciones[] = $elemento->reconocimientos()
 				->save(new Reconocimiento(array(
 						'nombre' => 'Condecoración por '.$key.' años',
 						'fecha' => date('Y-m-d'),)
 				));
 		}
-		return Response::json(array('success' => true));
+		return Response::json(array('success' => true,
+			'condecoraciones' => $condecoraciones));
+	}
+	public function postImprimir(){
+		$pdf = App::make('dompdf');
+		$html = View::make('condecoraciones/reconocimiento')
+		->with('condecoraciones',Input::all());
+		$pdf->loadHTML($html)->setPaper('a4')->setOrientation('landscape');
+		return $pdf->stream();
 	}
 }
