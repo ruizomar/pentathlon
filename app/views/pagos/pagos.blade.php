@@ -31,7 +31,7 @@
             <div class="form-group col-md-4">
               <select name="tipo" class='form-control'>
                   <option value="">Concepto</option>
-                  <option value="Membresia">Membresia</option>
+                  <option value="Membresia">membresía</option>
                   <option value="Credencial">Credencial</option>
                   <option value="Evento">Evento</option>
                   <option value="Examen">Examen</option>
@@ -154,12 +154,12 @@ $('#Enteros').addClass('active');
     function encontrado(id){
             $.post('{{ URL::to("pagos/elemento"); }}', 'id='+id, function(json) {
                 $('#lnombre').html('<strong>'+json.nombre+'</strong>');
-                $('#lmatricula').html('<strong>Matricula:</strong> '+json.matricula);
+                $('#lmatricula').html('<strong>Matrícula:</strong> '+json.matricula);
                 $('#lfecha').html('<strong>Fecha de nacimiento:</strong> '+json.fecha);
                 $('[name=id]').val(id);
                 $('#fotoperfil').attr('src',json.foto);
                 $('#lgrado').html('<strong>Grado:</strong> '+json.grado);
-                $('#ladscripcion').html('<strong>Adscripcion:</strong> '+json.compania);
+                $('#ladscripcion').html('<strong>Adscripción:</strong> '+json.compania);
 
                 $('.fa-spinner').addClass('hidden');
                 $('#elemento').removeClass('hidden');

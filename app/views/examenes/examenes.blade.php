@@ -32,7 +32,7 @@
         @elseif(($status == 'ocupado'))
         <label id="status_title">Error</label>
             <label id="status">error</label>
-            <label id="message">Ya existe un exámen con ese nombre y grado</label>
+            <label id="message">Ya existe un examen con ese nombre y grado</label>
         @endif
     </div> 
 	<div class="col-md-8 col-md-offset-2">
@@ -75,13 +75,13 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
           <h4 class="modal-title" id="examen">
-            <i class="fa fa-pencil-square-o fa-lg"></i> Exámen
+            <i class="fa fa-pencil-square-o fa-lg"></i> Examen
           </h4>
         </div>
         {{ Form::open(array('url' => 'examenes/nuevo','role' => 'form','id' => 'nuevo-examen','class' => '')) }}
         <div class="modal-body">
             <center>
-            <h2 name="name"><i class="fa fa-pencil"></i> Nuevo exámen</h2>
+            <h2 name="name"><i class="fa fa-pencil"></i> Nuevo examen</h2>
             <i class="fa fa-refresh fa-spin hidden fa-2x"></i>
             </center>            
             <div class="form-group">  

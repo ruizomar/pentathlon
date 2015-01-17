@@ -46,7 +46,7 @@
 					{{ Form::text('id', 'id',array('class' => 'hidden')) }}
 					<h3 id="nombreelemento" name="nombre"></h3>
 					<h4>
-						{{ Form::label(null,'Matricula: ',array('class' => 'small')) }}
+						{{ Form::label(null,'Matrícula: ',array('class' => 'small')) }}
 						<ul>
 							<li style="list-style-type: none; margin-left: -40px;">
 							{{ Form::label('matricula',null,array('class' => 'label label-default')) }}

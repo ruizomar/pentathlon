@@ -161,7 +161,7 @@ Condecoraciones
         $('#elemento').addClass('hidden');
             $.post("{{ URL::to('condecoraciones/elemento'); }}", 'id='+id, function(json) {
                 $('#lnombre').html('<strong>Nombre:</strong> '+json.persona.nombre);
-                $('#lmatricula').html('<strong>Matricula:</strong> '+json.persona.matricula);
+                $('#lmatricula').html('<strong>Matrícula:</strong> '+json.persona.matricula);
                 $('#lfecha').html('<strong>Fecha de nacimiento:</strong> '+json.persona.fecha);
                 $('#foto').attr('src',json.persona.foto);
                 $('#insignias').html('');
@@ -186,7 +186,7 @@ Condecoraciones
             else{
                 var html='';
                 for (var i = 0; i < json.length; i++) {
-                    html +='<div class="col-sm-6 col-xs-6"><label><i class="fa fa-certificate fa-5x"></i><img src="{{ asset("imgs/condecoraciones") }}/'+json[i]+'.png" class="img-circle img-responsive new" alt="Responsive image"><input class="hidden" type="checkbox" onchange="check(this)" name="'+json[i]+'"></label><p>Condecoracion por '+json[i]+' años</p></div>';
+                    html +='<div class="col-sm-6 col-xs-6"><label><i class="fa fa-certificate fa-5x"></i><img src="{{ asset("imgs/condecoraciones") }}/'+json[i]+'.png" class="img-circle img-responsive new" alt="Responsive image"><input class="hidden" type="checkbox" onchange="check(this)" name="'+json[i]+'"></label><p>Condecoración por '+json[i]+' años</p></div>';
                 };
                 $('#checks').html(html);
                 $('#agregar').removeClass('hidden');

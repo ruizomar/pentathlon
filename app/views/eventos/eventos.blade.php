@@ -65,7 +65,7 @@
           </div>
         </div>
         <div class="form-group col-sm-7">
-          {{ Form::label('Descripcion', 'Descripcion',array('class' => 'control-label')) }}
+          {{ Form::label('Descripcion', 'Descripción',array('class' => 'control-label')) }}
           {{ Form::textarea('Descripcion', null, array('class' => 'form-control','rows' => '3')) }}
         </div>
         <div class="col-sm-3" style='top:25px;'>
@@ -191,6 +191,7 @@
   function cancel(){
     $('#form-nueva').data('bootstrapValidator').resetForm(true);
     $('[name = id]').val('');
+    $('[name = Descripcion]').val('');
     $('#ok').removeClass('hidden');
     $('.update').addClass('hidden');
   }

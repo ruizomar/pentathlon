@@ -80,7 +80,7 @@
 						{{ Form::text('id', 'id',array('class' => 'hidden')) }}
 						<h3 id="nombreelemento" name="nombre"></h3>
 						<h4>
-							{{ Form::label(null,'Matricula: ',array('class' => 'small')) }}
+							{{ Form::label(null,'Matrícula: ',array('class' => 'small')) }}
 							{{ Form::label('matricula',null,array('class' => 'pull-right label label-default')) }}
 						</h4>
 						<h4>

@@ -24,7 +24,7 @@ Arrestos
 						{{ Form::text('id', 'id',array('class' => 'hidden')) }}
 						<h2 id="nombreelemento" name="nombre"></h2>
 						<h4>
-							{{ Form::label(null,'Matricula: ',array('class' => 'small')) }}
+							{{ Form::label(null,'Matrícula: ',array('class' => 'small')) }}
 							{{ Form::label('matricula',null,array('class' => 'pull-right label label-default')) }}
 						</h4>
 						<h4>
@@ -54,7 +54,7 @@ Arrestos
 						{{ Form::text('motivo', null, array('class' => 'form-control')) }}
 					</div>
 					<div class="form-group col-sm-7">
-						{{ Form::label('sancion', 'Sancion',array('class' => 'control-label')) }}
+						{{ Form::label('sancion', 'Sanción',array('class' => 'control-label')) }}
 						{{ Form::textarea('sancion', null, array('class' => 'form-control','rows' => '3','style' => 'resize:none;')) }}
 					</div>
 				</div>

@@ -67,7 +67,7 @@ class CondecoracionesController extends BaseController{
 			if(is_numeric($key))
 				$elemento->reconocimientos()
 				->save(new Reconocimiento(array(
-						'nombre' => 'Condecoracion por '.$key.' años',
+						'nombre' => 'Condecoración por '.$key.' años',
 						'fecha' => date('Y-m-d'),)
 				));
 		}

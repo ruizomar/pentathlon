@@ -29,10 +29,10 @@
         </div>
         <div class="col-sm-8 col-sm-offset-1">
                 <h2 id='lnombre'><strong>{{ $elemento->persona->nombre." ".$elemento->persona->apellidopaterno." ".$elemento->persona->apellidomaterno }}</strong></h2>
-                <p id='lmatricula'><strong>Matricula: </strong>{{  $elemento->matricula->id  }}</p>
+                <p id='lmatricula'><strong>Matrícula: </strong>{{  $elemento->matricula->id  }}</p>
                 <p id='lfecha'><strong>Fecha de jura de bandera: </strong>{{  $elemento->status()->where('descripcion','=','Jura de Bandera')->first()->inicio  }}</p>
                 <p id='lgrado'><strong>Grado: </strong>{{  $elemento->grados->last()->nombre  }}</p>
-                <p id='ladscripcion'><strong>Adscripcion: </strong>{{  $elemento->companiasysubzona->tipo  }}{{  $elemento->companiasysubzona->nombre  }}</p>
+                <p id='ladscripcion'><strong>Adscripción: </strong>{{  $elemento->companiasysubzona->tipo  }}{{  $elemento->companiasysubzona->nombre  }}</p>
         </div>
     </div>
     <div class="col-sm-2 text-center">
@@ -43,11 +43,11 @@
     </div>
     <div id="reportes" class="tab-content">
         <div id="enteros" class="col-sm-6 col-sm-offset-3 tab-pane active">
-            <h2>Membresias</h2>
+            <h2>Membresías</h2>
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Membresia</th>
+                        <th>Membresía</th>
                         <th>Fecha</th>
                         <th>Entero</th>
                     </tr>
@@ -104,13 +104,13 @@
             </table>
         </div>
         <div id="examenes" class="col-sm-6 col-sm-offset-3 tab-pane">
-            <h2>Examenes</h2>
+            <h2>Exámenes</h2>
             <table class="table">
                 <thead>
                     <tr>
                         <th>Examen</th>
                         <th>Fecha</th>
-                        <th>Calificacion</th>
+                        <th>Calificación</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -129,7 +129,7 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Compañia / Subzona</th>
+                        <th>Compañía/Subzona</th>
                         <th>Fecha</th>
                         <th>Tipo</th>
                     </tr>
@@ -154,7 +154,7 @@
                         <th>Cargo</th>
                         <th>Fecha de inicio</th>
                         <th>Fecha de fin</th>
-                        <th>Compañia/subzona</th>
+                        <th>Compañía/subzona</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -211,7 +211,7 @@
                 <thead>
                     <tr>
                         <th>Motivo</th>
-                        <th>Sancion</th>
+                        <th>Sanción</th>
                     </tr>
                 </thead>
                 <tbody>
