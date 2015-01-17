@@ -18,10 +18,10 @@
         <h1 style="margin-bottom:20px;"><i class="fa  fa-clock-o"></i> Historial</h1>
     </div>
     <div class="col-sm-2 text-center">
-        <p class="" href="#enteros" data-toggle="tab"><i class="btn btn-warning fa  fa-money fa-3x"></i></p>
-        <p class="" href="#condecoraciones" data-toggle="tab"><i class="btn btn-warning fa  fa-shield fa-3x"></i></p>
-        <p class="" href="#eventos" data-toggle="tab"><i class="btn btn-warning fa  fa-calendar fa-3x"></i></p>
-        <p class="" href="#examenes" data-toggle="tab"><i class="btn btn-warning fa  fa-file-text-o fa-3x"></i></p>
+        <p class="" href="#enteros" data-toggle="tab" title="Enteros"><i class="btn btn-warning fa  fa-money fa-3x"></i></p>
+        <p class="" href="#condecoraciones" data-toggle="tab" title="Condecoraciones"><i class="btn btn-warning fa  fa-shield fa-3x"></i></p>
+        <p class="" href="#eventos" data-toggle="tab" title="Eventos"><i class="btn btn-warning fa  fa-calendar fa-3x"></i></p>
+        <p class="" href="#examenes" data-toggle="tab" title="Examenes"><i class="btn btn-warning fa  fa-file-text-o fa-3x"></i></p>
     </div>
     <div class="col-sm-7 contenedor">
         <div class="col-sm-3" style="margin-top: 20px;">
@@ -36,10 +36,10 @@
         </div>
     </div>
     <div class="col-sm-2 text-center">
-        <p class="" href="#asistencias" data-toggle="tab"><i class="btn btn-warning fa  fa-calendar-o fa-3x"></i></p>
-        <p class="" href="#cargos" data-toggle="tab"><i class="btn btn-warning fa  fa-magic fa-3x"></i></p>
-        <p class="" href="#ascensos" data-toggle="tab"><i class="btn btn-warning fa  fa-line-chart fa-3x"></i></p>
-        <p class="" href="#arrestos" data-toggle="tab"><i class="btn btn-warning fa  fa-gavel fa-3x"></i></p>
+        <p class="" href="#asistencias" data-toggle="tab" title="Asistencias"><i class="btn btn-warning fa  fa-calendar-o fa-3x"></i></p>
+        <p class="" href="#cargos" data-toggle="tab" title="Cargos"><i class="btn btn-warning fa  fa-magic fa-3x"></i></p>
+        <p class="" href="#ascensos" data-toggle="tab" title="Ascensos"><i class="btn btn-warning fa  fa-line-chart fa-3x"></i></p>
+        <p class="" href="#arrestos" data-toggle="tab" title="Arrestos"><i class="btn btn-warning fa  fa-gavel fa-3x"></i></p>
     </div>
     <div id="reportes" class="tab-content">
         <div id="enteros" class="col-sm-6 col-sm-offset-3 tab-pane active">
@@ -47,7 +47,7 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Membrecia</th>
+                        <th>Membresia</th>
                         <th>Fecha</th>
                         <th>Entero</th>
                     </tr>

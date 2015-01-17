@@ -132,7 +132,7 @@
 <script type="text/javascript">
     $('#cuerpos').dataTable( {
         "language": {
-            "lengthMenu": "Exámenes por página _MENU_",
+            "lengthMenu": "Cuerpos por página _MENU_",
             "zeroRecords": "No se encontro",
             "info": "Pagina _PAGE_ de _PAGES_",
             "infoEmpty": "No records available",
