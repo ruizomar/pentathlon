@@ -88,6 +88,7 @@
         }
     </style>
     {{  HTML::script('js/bootstrapValidator.js'); }}
+    {{  HTML::script('js/es_ES.js'); }}
     {{  HTML::style('css/sweet-alert.css');  }}
     {{  HTML::script('js/sweet-alert.min.js')}}
 @endsection
@@ -95,41 +96,99 @@
     <div class="titulo1 col-md-11 col-md-offset-1">
         <h1 style="margin-bottom:20px;"><i class="fa fa-trophy"></i> Convocatorias</h1>
     </div>
-    <div class="col-sm-offset-3 col-sm-6 scol-sm-1 escoltas" style="margin-top:18px;" onclick="escoltas()">
+    <div class="hidden col-sm-offset-3 col-sm-6 scol-sm-1 escoltas" style="margin-top:18px;" onclick="escoltas()">
         <a href="#" class="requisitoss col-sm-12 text-center">
             <h4>Concurso de escoltas</h4>
             <i class="fa fa-flag-o fa-5x"></i>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aliquam error sint optio alias minus, nisi officia, aperiam dignissimos molestias necessitatibus. Temporibus, possimus laudantium iure. Veniam voluptatum laudantium natus enim.</p>
         </a>
     </div>
-    {{ Form::open(array('id' => 'formulario','url'=>'#','class'=>'hidden col-md-offset-1 col-md-10 form-group')) }}
-    <!-- <div id="formulario" class="hidden2 col-md-offset-1 col-md-10 form-group"> -->
+    {{ Form::open(array('id' => 'formulario','url'=>'#','class'=>'hidden2 col-md-offset-1 col-md-10 form-group')) }}
         <div class="col-md-12">
-            <h4>Registro del responsable</h4>
-            <div class="col-md-4 form-group">
-                {{ Form::label('nombre', 'Nombre (s)',array('class' => 'control-label')) }}
-                {{ Form::text('nombre', null, array('class' => 'form-control','autofocus')) }}
-            </div>
-            <div class="col-md-4 form-group">
-                {{ Form::label('paterno', 'Apellido paterno') }}
-                {{ Form::text('paterno', null, array('class' => 'form-control')) }}
-            </div>
-            <div class="col-md-4 form-group">
-                {{ Form::label('materno', 'Apellido materno') }}
-                {{ Form::text('materno', null, array('class' => 'form-control')) }}
-            </div>
-            <div class="col-md-4 form-group">
-                {{ Form::label('telefono', 'Telefono') }}
-                <div class="input-group">
-                    <div class="input-group-addon"><i class="fa fa-phone"></i></div>
-                    {{ Form::text('telefono', null, array('class' => 'form-control mayuscula')) }}
+            <div class="row">
+                <h4>Registro datos del equipo</h4>
+                <div class="col-md-4 form-group">
+                    {{ Form::label('escuela', 'Escuela') }}
+                    {{ Form::text('escuela', null, array('class' => 'form-control')) }}
+                </div>
+                <div class="col-md-4 form-group">
+                    {{ Form::label('Nivel', 'Nivel Académico') }}
+                    <select class="form-control" name="nivel" id="nivel">
+                        <option value="Secundaria">Secundaria</option>
+                        <option value="Bachillerato">Bachillerato</option>
+                        <option value="Licenciatura">Licenciatura</option>
+                    </select>
+                </div>
+                <div class="col-md-4 form-group">
+                    {{ Form::label('estado', 'Estado') }}
+                    <select class="form-control" name="state" id="state">
+                        <option value="Aguascalientes">Aguascalientes</option>
+                        <option value="Baja California">Baja California</option>
+                        <option value="Baja California Sur">Baja California Sur</option>
+                        <option value="Campeche">Campeche</option>
+                        <option value="Chiapas">Chiapas</option>
+                        <option value="Chihuahua">Chihuahua</option>
+                        <option value="Coahuila">Coahuila</option>
+                        <option value="Colima">Colima</option>
+                        <option value="Distrito Federal">Distrito Federal</option>
+                        <option value="Durango">Durango</option>
+                        <option value="Estado de México">Estado de México</option>
+                        <option value="Guanajuato">Guanajuato</option>
+                        <option value="Guerrero">Guerrero</option>
+                        <option value="Hidalgo">Hidalgo</option>
+                        <option value="Jalisco">Jalisco</option>
+                        <option value="Michoacán">Michoacán</option>
+                        <option value="Morelos">Morelos</option>
+                        <option value="Nayarit">Nayarit</option>
+                        <option value="Nuevo León">Nuevo León</option>
+                        <option value="Oaxaca">Oaxaca</option>
+                        <option value="Puebla">Puebla</option>
+                        <option value="Querétaro">Querétaro</option>
+                        <option value="Quintana Roo">Quintana Roo</option>
+                        <option value="San Luis Potosí">San Luis Potosí</option>
+                        <option value="Sinaloa">Sinaloa</option>
+                        <option value="Sonora">Sonora</option>
+                        <option value="Tabasco">Tabasco</option>
+                        <option value="Tamaulipas">Tamaulipas</option>
+                        <option value="Tlaxcala">Tlaxcala</option>
+                        <option value="Veracruz">Veracruz</option>
+                        <option value="Yucatán">Yucatán</option>
+                        <option value="Zacatecas">Zacatecas</option>
+                    </select>
                 </div>
             </div>
-            <div class="col-md-4 form-group">
-                {{ Form::label('email', 'email') }}
-                <div class="input-group">
-                    <div class="input-group-addon"><i class="fa fa-at"></i></div>
-                    {{ Form::text('email', null, array('class' => 'form-control mayuscula')) }}
+        </div>
+        <div class="col-md-12">
+            <hr>
+            <div class="row">
+                <h4>Registro del responsable</h4>
+                <div class="col-md-4 form-group">
+                    {{ Form::label('nombre', 'Nombre (s)',array('class' => 'control-label')) }}
+                    {{ Form::text('nombre', null, array('class' => 'form-control','autofocus')) }}
+                </div>
+                <div class="col-md-4 form-group">
+                    {{ Form::label('paterno', 'Apellido paterno') }}
+                    {{ Form::text('paterno', null, array('class' => 'form-control')) }}
+                </div>
+                <div class="col-md-4 form-group">
+                    {{ Form::label('materno', 'Apellido materno') }}
+                    {{ Form::text('materno', null, array('class' => 'form-control')) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    {{ Form::label('telefono', 'Telefono') }}
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class="fa fa-phone"></i></div>
+                        {{ Form::text('telefono', null, array('class' => 'form-control mayuscula')) }}
+                    </div>
+                </div>
+                <div class="col-md-4 form-group">
+                    {{ Form::label('email', 'email') }}
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class="fa fa-at"></i></div>
+                        {{ Form::text('email', null, array('class' => 'form-control mayuscula')) }}
+                    </div>
                 </div>
             </div>
         </div>
@@ -161,20 +220,16 @@
                                 {{ Form::label('concursantematerno', 'Apellido materno') }}
                                 {{ Form::text('concursantematerno', null, array('class' => 'form-control')) }}
                             </div>
-                            <div class="form-group">
-                                {{ Form::label('concursantetelefono', 'Telefono') }}
-                                <div class="input-group">
-                                    <div class="input-group-addon"><i class="fa fa-phone"></i></div>
-                                    {{ Form::text('concursantetelefono', null, array('class' => 'form-control mayuscula')) }}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                {{ Form::label('concursanteemail', 'email') }}
-                                <div class="input-group">
-                                    <div class="input-group-addon"><i class="fa fa-at"></i></div>
-                                    {{ Form::text('concursanteemail', null, array('class' => 'form-control mayuscula')) }}
-                                </div>
-                            </div>
+                            {{ Form::label('posicion', 'Posición') }}
+                            <select class="form-control" name="posicion" id="posicion">
+                                <option value="Abanderado">Abanderado</option>
+                                <option value="Sargento">Sargento</option>
+                                <option value="Escolta derecho">Escolta derecho</option>
+                                <option value="Escolta izquierdo">Escolta izquierdo</option>
+                                <option value="Guardia derecho">Guardia derecho</option>
+                                <option value="Guardia izquierdo">Guardia izquierdo</option>
+                            </select>
+                            <label class="pull-right label label-warning">Una ves elegido, no puedes cambiarlo</label>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary guardar" data-dismiss="modal" onclick="addintegrante()">Guardar</button>
@@ -186,47 +241,20 @@
         </div>
         <div class="col-md-12">
             <hr>
-            <h4>Registro datos del equipo</h4>
-            <div class="col-md-3 form-group">
-                {{ Form::label('estado', 'Estado') }}
-                <select class="form-control" name="state" id="state">
-                    <option value="Aguascalientes">Aguascalientes</option>
-                    <option value="Baja California">Baja California</option>
-                    <option value="Baja California Sur">Baja California Sur</option>
-                    <option value="Campeche">Campeche</option>
-                    <option value="Chiapas">Chiapas</option>
-                    <option value="Chihuahua">Chihuahua</option>
-                    <option value="Coahuila">Coahuila</option>
-                    <option value="Colima">Colima</option>
-                    <option value="Distrito Federal">Distrito Federal</option>
-                    <option value="Durango">Durango</option>
-                    <option value="Estado de México">Estado de México</option>
-                    <option value="Guanajuato">Guanajuato</option>
-                    <option value="Guerrero">Guerrero</option>
-                    <option value="Hidalgo">Hidalgo</option>
-                    <option value="Jalisco">Jalisco</option>
-                    <option value="Michoacán">Michoacán</option>
-                    <option value="Morelos">Morelos</option>
-                    <option value="Nayarit">Nayarit</option>
-                    <option value="Nuevo León">Nuevo León</option>
-                    <option value="Oaxaca">Oaxaca</option>
-                    <option value="Puebla">Puebla</option>
-                    <option value="Querétaro">Querétaro</option>
-                    <option value="Quintana Roo">Quintana Roo</option>
-                    <option value="San Luis Potosí">San Luis Potosí</option>
-                    <option value="Sinaloa">Sinaloa</option>
-                    <option value="Sonora">Sonora</option>
-                    <option value="Tabasco">Tabasco</option>
-                    <option value="Tamaulipas">Tamaulipas</option>
-                    <option value="Tlaxcala">Tlaxcala</option>
-                    <option value="Veracruz">Veracruz</option>
-                    <option value="Yucatán">Yucatán</option>
-                    <option value="Zacatecas">Zacatecas</option>
-                </select>
-            </div>
-            <div class="col-md-4 form-group">
-                {{ Form::label('escuela', 'Escuela') }}
-                {{ Form::text('escuela', null, array('class' => 'form-control')) }}
+            <h4>Acompañante del PDMU</h4>
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    {{ Form::label('nombrePDMU', 'Nombre (s)',array('class' => 'control-label')) }}
+                    {{ Form::text('nombrePDMU', null, array('class' => 'form-control','autofocus')) }}
+                </div>
+                <div class="col-md-4 form-group">
+                    {{ Form::label('paternoPDMU', 'Apellido paterno') }}
+                    {{ Form::text('paternoPDMU', null, array('class' => 'form-control')) }}
+                </div>
+                <div class="col-md-4 form-group">
+                    {{ Form::label('maternoPDMU', 'Apellido materno') }}
+                    {{ Form::text('maternoPDMU', null, array('class' => 'form-control')) }}
+                </div>
             </div>
         </div>
         <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="btnenviar()">Enviar</button>
@@ -235,7 +263,7 @@
 @stop
 @section('scripts')
     <script>
-        var id = 0;
+        var count = 0;
         var arr = [];
         function escoltas () {
             $('.escoltas').addClass('hidden');
@@ -245,56 +273,45 @@
             nombre = $( "input[name$='concursantenombre']" ).val();
             paterno = $( "input[name$='concursantepaterno']" ).val();
             materno = $( "input[name$='concursantematerno']" ).val();
-            telefono = $( "input[name$='concursantetelefono']" ).val();
-            email = $( "input[name$='concursanteemail']" ).val();
-            $('.anadidos').append('<div id="'+id+'" class="col-md-4" style="margin-top: 10px;"><div class="persona col-md-4" data-toggle="modal" data-target="#myModal" onclick="mostrarmodal('+id+')"><a class="anadir"><i class="fa fa-user"></i></a></div><div class="col-md-8" style="top:-5px;"><p><h4><span class="text-capitalize spannombre">'+nombre+'</span><span class="text-capitalize spanpaterno"> '+paterno+'</span><span class="text-capitalize spanmaterno"> '+materno+'</span><span class="text-capitalize hidden spantelefono"> '+telefono+'</span><span class="text-capitalize hidden spanemail"> '+email+'</span></h4></p></div></div>');
-            guardar(id);
-            id++;
+            posicion = $( "#posicion" ).val();
+            $('.anadidos').append('<div id="'+count+'" class="col-md-4" style="margin-top: 10px;"><div class="persona col-md-4" data-toggle="modal" data-target="#myModal" onclick="mostrarmodal('+count+')"><a class="anadir"><i class="fa fa-user"></i></a></div><div class="col-md-8" style="top:-5px;"><p><h4><span class="text-capitalize spannombre">'+nombre+'</span><span class="text-capitalize spanpaterno"> '+paterno+'</span><span class="text-capitalize spanmaterno"> '+materno+'</span><br><label class="label label-success text-capitalize"> '+posicion+'</label></h4></p></div></div>');
+            guardar(count);
+            count++;
+            $("select").find("option:selected").remove();
         }
         function mostrarmodal (id) {
             nombre = $( "input[name$='concursantenombre']" ).val(arr[id].nombre);
             paterno = $( "input[name$='concursantepaterno']" ).val(arr[id].paterno);
             materno = $( "input[name$='concursantematerno']" ).val(arr[id].materno);
-            telefono = $( "input[name$='concursantetelefono']" ).val(arr[id].telefono);
-            email = $( "input[name$='concursanteemail']" ).val(arr[id].email);
+            posicion = $( "#posicion" ).val();
             $('.guardar').addClass('hidden');
-            $('#actualizar').html('<button type="button" class="btn btn-danger" data-dismiss="modal" onclick="eliminar('+id+')">Eliminar</button><button type="button" class="btn btn-primary" data-dismiss="modal" onclick="actualizar('+id+')" style="margin-top: 0px">Actualizar</button>');
+            $('#actualizar').html('<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="actualizar('+id+')" style="margin-top: 0px">Actualizar</button>');
 
         }
         function actualizar (id) {
             nombre = $( "input[name$='concursantenombre']" ).val();
             paterno = $( "input[name$='concursantepaterno']" ).val();
             materno = $( "input[name$='concursantematerno']" ).val();
-            telefono = $( "input[name$='concursantetelefono']" ).val();
-            email = $( "input[name$='concursanteemail']" ).val();
+            posicion = $( "#posicion" ).val();
             guardar(id);
-            $('#'+id+'').html('<div class="persona col-md-4" data-toggle="modal" data-target="#myModal" onclick="mostrarmodal('+id+')"><a class="anadir"><i class="fa fa-user"></i></a></div><div class="col-md-8" style="top:-5px;"><p><h4><span class="text-capitalize spannombre">'+nombre+'</span><span class="text-capitalize spanpaterno"> '+paterno+'</span><span class="text-capitalize spanmaterno"> '+materno+'</span><span class="text-capitalize hidden spantelefono"> '+telefono+'</span><span class="text-capitalize hidden spanemail"> '+email+'</span></h4></p></div>');
-
-        }
-        function eliminar (id) {
-            if(arr.length == 1){
-                arr = [];
-            }else{
-                delete arr[id];
-            }
-            $('#'+id+'').addClass('hidden');
+            $('#'+id+'').html('<div class="persona col-md-4" data-toggle="modal" data-target="#myModal" onclick="mostrarmodal('+id+')"><a class="anadir"><i class="fa fa-user"></i></a></div><div class="col-md-8" style="top:-5px;"><p><h4><span class="text-capitalize spannombre">'+nombre+'</span><span class="text-capitalize spanpaterno"> '+paterno+'</span><span class="text-capitalize spanmaterno"> '+materno+'</span></h4></p></div>');
         }
         function limpio () {
             $( "input[name$='concursantenombre']" ).val('');
             $( "input[name$='concursantepaterno']" ).val('');
             $( "input[name$='concursantematerno']" ).val('');
-            $( "input[name$='concursantetelefono']" ).val('');
-            $( "input[name$='concursanteemail']" ).val('');
             $('.guardar').removeClass('hidden');
             $('#actualizar').html('');
+            if (arr.length == 5) {
+                $('.botonagregar').addClass('hidden');
+            };
         }
         function guardar (id) {
             arr[id] = {
                 nombre:nombre,
                 paterno:paterno,
                 materno:materno,
-                telefono:telefono,
-                email:email,
+                posicion:posicion,
             };
         }
         function btnenviar () {
@@ -318,6 +335,10 @@
                         email = $( "input[name$='email']" ).val();
                         estado = $( "#state" ).val();
                         escuela = $( "input[name$='escuela']" ).val();
+                        nivel = $( "#nivel" ).val();
+                        nombrePDMU = $("input[name$='nombrePDMU']").val();
+                        paternoPDMU = $("input[name$='paternoPDMU']").val();
+                        maternoPDMU = $("input[name$='maternoPDMU']").val();
                         data = {
                             lider:{
                                 nombre:nombre,
@@ -330,9 +351,16 @@
                             equipo:{
                                 estado:estado,
                                 escuela:escuela,
+                                nivel:nivel
+                            },
+                            pdmu:{
+                                nombre:nombrePDMU,
+                                paterno:paternoPDMU,
+                                materno:maternoPDMU,
                             }
                         }
                         $.post('concursos/guardar',{data:data}, function(json) {
+                            // console.log(json);
                             if (json.success) {
                                 swal('!Hecho!', 'Se ha guardado el cargo', 'success');
                             }
@@ -352,7 +380,7 @@
                 });
         }
         $(document).ready(function() {
-            $('#dashboard-menu').addClass('hidden');
+            // $('#dashboard-menu').addClass('hidden');
             $('#formulario2').bootstrapValidator({
                 feedbackIcons: {
                     valid: 'glyphicon glyphicon-ok',
@@ -361,11 +389,6 @@
                 },
                 fields: {
                     nombre: {
-                        validators: {
-                            notEmpty: {}
-                        }
-                    },
-                    concursantenombre:{
                         validators: {
                             notEmpty: {}
                         }
