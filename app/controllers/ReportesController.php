@@ -19,7 +19,7 @@ class ReportesController extends BaseController {
 		{
 			$companiasysubzonasArr[$compayzona->id] = array(
 				'id' => $compayzona->id,
-				'nombre' => ucwords(strtolower($compayzona->nombre)),
+				'nombre' => $compayzona->nombre,
 				'numelementos' => count(Elemento::whereHas('status',function($q){
 					$q -> where('tipo','=','Activo');
 					}) -> where('companiasysubzona_id','=',$compayzona->id) -> get()),

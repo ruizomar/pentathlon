@@ -260,7 +260,7 @@
 	        {
 	          element: '.tour-6',
 	          title: 'No hechos',
-	          content: 'Al final se listan los exámens que no ha presentado el elemento',
+	          content: 'Al final se listan los exámenes que no ha presentado el elemento',
 	          placement:'bottom',
 	        },
 	        {
