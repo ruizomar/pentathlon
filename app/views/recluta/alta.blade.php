@@ -98,99 +98,111 @@
 		<div class="col-md-10">
 			<div class="setup-content activeStepInfo" id="step-1">
 				<div class="col-md-12">
-					<div class="col-md-4 form-group">
-						{{ Form::label('reclunombre', 'Nombre (s)',array('class' => 'control-label')) }}
-						{{ Form::text('reclunombre', null, array('class' => 'form-control mayuscula','autofocus')) }}
-					</div>
-					<div class="col-md-4 form-group">
-						{{ Form::label('reclupaterno', 'Apellido paterno') }}
-						{{ Form::text('reclupaterno', null, array('class' => 'form-control mayuscula')) }}
-					</div>
-					<div class="col-md-4 form-group">
-						{{ Form::label('reclumaterno', 'Apellido materno') }}
-						{{ Form::text('reclumaterno', null, array('class' => 'form-control mayuscula')) }}
-					</div>
-					<div class="col-md-2 form-group">
-						{{ Form::label('reclusexo', 'Sexo') }}
-						{{Form::select('reclusexo', array('Masculino' => 'Masculino','Femenino' => 'Femenino',),null,array('placeholder' => '','class' => 'form-control')) }}
-					</div>
-					<div class="col-md-3 form-group fecha">
-						{{ Form::label('birthday', 'Fecha nacimiento') }}
-						<div class="input-group date" id="datetimePicker">
-                            {{ Form::text('birthday', null, array('class' => 'form-control', 'placeholder' => 'YYYY-MM-DD', 'data-date-format' => 'YYYY-MM-DD')) }}
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                        </div>
-					</div>
-					<div class="col-md-4 form-group">
-						{{ Form::label('domicilio', 'Calle y número') }}
-						<div class="input-group">
-							<div class="input-group-addon"><i class="fa fa-home"></i></div>
-							{{ Form::text('domicilio', null, array('class' => 'form-control mayuscula')) }}
-						</div>
-					</div>
-					<div class="col-md-3 form-group">
-						{{ Form::label('colonia', 'Colonia') }}
-						{{ Form::text('colonia', null, array('class' => 'form-control mayuscula')) }}
-					</div>
-					<div class="col-md-4 form-group">
-						{{ Form::label('municipio', 'Municipio') }}
-						{{ Form::text('municipio', null, array('class' => 'form-control mayuscula')) }}
-					</div>
-					<div class="col-md-2 form-group">
-						{{ Form::label('estado', 'Estado') }}
-						{{Form::select('estado', array('Oaxaca' => 'Oaxaca',),null,array('class' => 'form-control')) }}
-					</div>
-					<div class="col-md-2 form-group">
-						{{ Form::label('postal', 'C. P.',array('class' => 'control-label')) }}
-						{{ Form::text('postal', null, array('placeholder' => '00000','class' => 'form-control')) }}
-					</div>
-					<div class="col-md-4 form-group">
-						{{ Form::label('lugnac', 'Lugar nacimiento') }}
-						{{ Form::text('lugnac', null, array('class' => 'form-control mayuscula')) }}
-					</div>
-					<div id="idcurp" class="col-md-4 form-group">
-						{{ Form::label('curp', 'CURP') }}
-						{{ Form::text('curp', null, array('id' => 'curp','class' => 'form-control mayuscula')) }}
-					</div>
-					<div class="col-md-4 form-group">
-						{{ Form::label('email', 'e-mail') }}
-						<div class="input-group">
-							<div class="input-group-addon"><i class="fa fa-envelope"></i></div>
-							{{ Form::email('recluemail', null, array('placeholder' => 'ejemplo@ejemplo.com','class' => 'form-control')) }}
-						</div>
-					</div>
-					<div class="col-md-4 form-group">
-						{{ Form::label('reclutelefonofijo', 'Teléfono casa') }}
-						<div class="input-group">
-							<div class="input-group-addon"><i class="fa fa-phone"></i></div>
-							{{ Form::text('reclutelefonofijo', null, array('placeholder' => '9511234567','class' => 'form-control')) }}
-						</div>
-					</div>
-					<div class="col-md-4 form-group">
-						{{ Form::label('reclutelefonomovil', 'Teléfono móvil') }}
-						<div class="input-group">
-							<div class="input-group-addon"><i class="fa fa-mobile"></i></div>
-							{{ Form::text('reclutelefonomovil', null, array('placeholder' => '9511234567','class' => 'form-control')) }}
-						</div>
-					</div>
-					<div class="col-md-3">
-					<br><br>
-						{{Form::button('<i class="fa fa-plus"></i> Redes Sociales',array('class' => 'btn btn-success btn-xs','id' => 'recluredes'))}}
-					</div>
-					<div class="col-md-12" id="fbtw" style="display: none;">
+					<div class="row">
 						<div class="col-md-4 form-group">
-							{{ Form::label('reclufacebook', 'Facebook') }}
+							{{ Form::label('reclunombre', 'Nombre (s)',array('class' => 'control-label')) }}
+							{{ Form::text('reclunombre', null, array('class' => 'form-control mayuscula','autofocus')) }}
+						</div>
+						<div class="col-md-4 form-group">
+							{{ Form::label('reclupaterno', 'Apellido paterno') }}
+							{{ Form::text('reclupaterno', null, array('class' => 'form-control mayuscula')) }}
+						</div>
+						<div class="col-md-4 form-group">
+							{{ Form::label('reclumaterno', 'Apellido materno') }}
+							{{ Form::text('reclumaterno', null, array('class' => 'form-control mayuscula')) }}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-2 form-group">
+							{{ Form::label('reclusexo', 'Sexo') }}
+							{{Form::select('reclusexo', array('Masculino' => 'Masculino','Femenino' => 'Femenino',),null,array('placeholder' => '','class' => 'form-control')) }}
+						</div>
+						<div class="col-md-3 form-group fecha">
+							{{ Form::label('birthday', 'Fecha nacimiento') }}
+							<div class="input-group date" id="datetimePicker">
+	                            {{ Form::text('birthday', null, array('class' => 'form-control', 'placeholder' => 'YYYY-MM-DD', 'data-date-format' => 'YYYY-MM-DD')) }}
+	                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+	                        </div>
+						</div>
+						<div class="col-md-4 form-group">
+							{{ Form::label('domicilio', 'Calle y número') }}
 							<div class="input-group">
-								<div class="input-group-addon"><i class="fa fa-facebook"></i></div>
-								{{ Form::text('reclufacebook', null, array('placeholder' => 'facebook.com/','class' => 'form-control')) }}
+								<div class="input-group-addon"><i class="fa fa-home"></i></div>
+								{{ Form::text('domicilio', null, array('class' => 'form-control mayuscula')) }}
 							</div>
 						</div>
-
+						<div class="col-md-3 form-group">
+							{{ Form::label('colonia', 'Colonia') }}
+							{{ Form::text('colonia', null, array('class' => 'form-control mayuscula')) }}
+						</div>
+					</div>
+					<div class="row">
 						<div class="col-md-4 form-group">
-							{{ Form::label('reclutwitter', 'Twitter') }}
+							{{ Form::label('municipio', 'Municipio') }}
+							{{ Form::text('municipio', null, array('class' => 'form-control mayuscula')) }}
+						</div>
+						<div class="col-md-2 form-group">
+							{{ Form::label('estado', 'Estado') }}
+							{{Form::select('estado', array('Oaxaca' => 'Oaxaca',),null,array('class' => 'form-control')) }}
+						</div>
+						<div class="col-md-2 form-group">
+							{{ Form::label('postal', 'C. P.',array('class' => 'control-label')) }}
+							{{ Form::text('postal', null, array('placeholder' => '00000','class' => 'form-control')) }}
+						</div>
+						<div class="col-md-4 form-group">
+							{{ Form::label('lugnac', 'Lugar nacimiento') }}
+							{{ Form::text('lugnac', null, array('class' => 'form-control mayuscula')) }}
+						</div>
+					</div>
+					<div class="row">
+						<div id="idcurp" class="col-md-4 form-group">
+							{{ Form::label('curp', 'CURP') }}
+							{{ Form::text('curp', null, array('id' => 'curp','class' => 'form-control mayuscula')) }}
+						</div>
+						<div class="col-md-4 form-group">
+							{{ Form::label('email', 'e-mail') }}
 							<div class="input-group">
-								<div class="input-group-addon"><i class="fa fa-twitter"></i></div>
-								{{ Form::text('reclutwitter', null, array('placeholder' => '@usuario','class' => 'form-control')) }}
+								<div class="input-group-addon"><i class="fa fa-envelope"></i></div>
+								{{ Form::email('recluemail', null, array('placeholder' => 'ejemplo@ejemplo.com','class' => 'form-control')) }}
+							</div>
+						</div>
+						<div class="col-md-4 form-group">
+							{{ Form::label('reclutelefonofijo', 'Teléfono casa') }}
+							<div class="input-group">
+								<div class="input-group-addon"><i class="fa fa-phone"></i></div>
+								{{ Form::text('reclutelefonofijo', null, array('placeholder' => '9511234567','class' => 'form-control')) }}
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4 form-group">
+							{{ Form::label('reclutelefonomovil', 'Teléfono móvil') }}
+							<div class="input-group">
+								<div class="input-group-addon"><i class="fa fa-mobile"></i></div>
+								{{ Form::text('reclutelefonomovil', null, array('placeholder' => '9511234567','class' => 'form-control')) }}
+							</div>
+						</div>
+						<div class="col-md-3">
+						<br><br>
+							{{Form::button('<i class="fa fa-plus"></i> Redes Sociales',array('class' => 'btn btn-success btn-xs','id' => 'recluredes'))}}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12" id="fbtw" style="display: none;">
+							<div class="col-md-4 form-group">
+								{{ Form::label('reclufacebook', 'Facebook') }}
+								<div class="input-group">
+									<div class="input-group-addon"><i class="fa fa-facebook"></i></div>
+									{{ Form::text('reclufacebook', null, array('placeholder' => 'facebook.com/','class' => 'form-control')) }}
+								</div>
+							</div>
+
+							<div class="col-md-4 form-group">
+								{{ Form::label('reclutwitter', 'Twitter') }}
+								<div class="input-group">
+									<div class="input-group-addon"><i class="fa fa-twitter"></i></div>
+									{{ Form::text('reclutwitter', null, array('placeholder' => '@usuario','class' => 'form-control')) }}
+								</div>
 							</div>
 						</div>
 					</div>
@@ -198,131 +210,145 @@
 			</div>
 			<div class="row setup-content hiddenStepInfo" id="step-2">
 				<div class="col-md-12">
-					<div class="col-md-3 form-group">
-						{{ Form::label('estatura', 'Estatura') }}
-						<div class="input-group">
-							<div class="input-group-addon">cm:</div>
-							{{ Form::text('estatura', null, array('class' => 'form-control')) }}
+					<div class="row">
+						<div class="col-md-3 form-group">
+							{{ Form::label('estatura', 'Estatura') }}
+							<div class="input-group">
+								<div class="input-group-addon">cm:</div>
+								{{ Form::text('estatura', null, array('class' => 'form-control')) }}
+							</div>
+						</div>
+						<div class="col-md-3 form-group">
+							{{ Form::label('peso', 'Peso') }}
+							<div class="input-group">
+								<div class="input-group-addon">kg:</div>
+								{{ Form::text('peso', null, array('class' => 'form-control')) }}
+							</div>
+						</div>
+						<div class="col-md-2 form-group">
+							{{Form::label('tiposangre', 'Tipo Sangre') }}
+							{{Form::select('tiposangre', array('Opositivo' => 'O+','Onegativo' => 'O-','Apositivo' => 'A+','Anegativo' => 'A-','Bpositivo' => 'B+','Bnegativo' => 'B-','ABpositivo' => 'AB+','ABnegativo' => 'AB-',),null,array('placeholder' => '','class' => 'form-control')) }}
+						</div>
+						<div class="col-md-2 form-group">
+							{{ Form::label('ocupacion', 'Ocupación') }}
+							{{ Form::text('ocupacion', null, array('class' => 'form-control mayuscula')) }}
+						</div>
+						<div class="col-md-2 form-group">
+							{{ Form::label('estadocivil', 'Estado Civil') }}
+							{{ Form::text('estadocivil', null, array('class' => 'form-control mayuscula')) }}
 						</div>
 					</div>
-					<div class="col-md-3 form-group">
-						{{ Form::label('peso', 'Peso') }}
-						<div class="input-group">
-							<div class="input-group-addon">kg:</div>
-							{{ Form::text('peso', null, array('class' => 'form-control')) }}
+					<div class="row">
+						<div class="col-md-2 form-group">
+							{{ Form::label('escolaridad', 'Escolaridad') }}
+							{{Form::select('escolaridad', array('primaria' => 'primaria','secundaria' => 'secundaria','bachillerato' => 'bachillerato','universidad' => 'universidad','licenciatura' => 'licenciatura','maestria' => 'maestria','doctorado' => 'doctorado',),null,array('placeholder' => '','class' => 'form-control')) }}
+						</div>
+						<div class="col-md-4 form-group">
+							{{ Form::label('escuela', 'Escuela') }}
+							{{ Form::text('escuela', null, array('class' => 'form-control mayuscula')) }}
+						</div>
+						<div class="col-md-3 form-group">
+							{{ Form::label('alergia', 'Alergias') }}
+							<div class="input-group">
+								<div class="input-group-addon"><i class="fa fa-ambulance"></i></div>
+								{{ Form::text('alergia', null, array('class' => 'form-control mayuscula')) }}
+							</div>
+						</div>
+						<div class="col-md-3 form-group">
+							{{ Form::label('vicios', 'Vicios') }}
+							{{ Form::text('vicios', null, array('class' => 'form-control mayuscula')) }}
 						</div>
 					</div>
-					<div class="col-md-2 form-group">
-						{{Form::label('tiposangre', 'Tipo Sangre') }}
-						{{Form::select('tiposangre', array('Opositivo' => 'O+','Onegativo' => 'O-','Apositivo' => 'A+','Anegativo' => 'A-','Bpositivo' => 'B+','Bnegativo' => 'B-','ABpositivo' => 'AB+','ABnegativo' => 'AB-',),null,array('placeholder' => '','class' => 'form-control')) }}
-					</div>
-					<div class="col-md-2 form-group">
-						{{ Form::label('ocupacion', 'Ocupación') }}
-						{{ Form::text('ocupacion', null, array('class' => 'form-control mayuscula')) }}
-					</div>
-					<div class="col-md-2 form-group">
-						{{ Form::label('estadocivil', 'Estado Civil') }}
-						{{ Form::text('estadocivil', null, array('class' => 'form-control mayuscula')) }}
-					</div>
-					<div class="col-md-2 form-group">
-						{{ Form::label('escolaridad', 'Escolaridad') }}
-						{{Form::select('escolaridad', array('primaria' => 'primaria','secundaria' => 'secundaria','bachillerato' => 'bachillerato','universidad' => 'universidad','licenciatura' => 'licenciatura','maestria' => 'maestria','doctorado' => 'doctorado',),null,array('placeholder' => '','class' => 'form-control')) }}
-					</div>
-					<div class="col-md-4 form-group">
-						{{ Form::label('escuela', 'Escuela') }}
-						{{ Form::text('escuela', null, array('class' => 'form-control mayuscula')) }}
-					</div>
-					<div class="col-md-3 form-group">
-						{{ Form::label('alergia', 'Alergias') }}
-						<div class="input-group">
-							<div class="input-group-addon"><i class="fa fa-ambulance"></i></div>
-							{{ Form::text('alergia', null, array('class' => 'form-control mayuscula')) }}
+					<div class="row">
+						<div class="col-md-2 form-group">
+							{{ Form::label('arma', 'Arma') }} <br>
+							{{ Form::select('arma', $armas,null,array('class' => 'form-control')) }}
 						</div>
-					</div>
-					<div class="col-md-3 form-group">
-						{{ Form::label('vicios', 'Vicios') }}
-						{{ Form::text('vicios', null, array('class' => 'form-control mayuscula')) }}
-					</div>
-					<div class="col-md-2 form-group">
-						{{ Form::label('arma', 'Arma') }} <br>
-						{{ Form::select('arma', $armas,null,array('class' => 'form-control')) }}
-					</div>
-					<div class="col-md-2 form-group">
-						{{ Form::label('cuerpo', 'Cuerpo') }} <br>
-						{{Form::select('cuerpo',$cuerpos,null,array('placeholder' => '','class' => 'form-control')) }}
-					</div>
-					<div class="col-md-3 form-group">
-						{{ Form::label('compania', 'Compañia - Subzona') }} <br>
-						{{Form::select('compania',$companiasysubzonas,null,array('placeholder' => '','class' => 'form-control')) }}
-					</div>
-					<div class="col-md-4 form-group">
-						{{ Form::file('fotoperfil',array('id' => 'filefoto')) }}
+						<div class="col-md-2 form-group">
+							{{ Form::label('cuerpo', 'Cuerpo') }} <br>
+							{{Form::select('cuerpo',$cuerpos,null,array('placeholder' => '','class' => 'form-control')) }}
+						</div>
+						<div class="col-md-3 form-group">
+							{{ Form::label('compania', 'Compañia - Subzona') }} <br>
+							{{Form::select('compania',$companiasysubzonas,null,array('placeholder' => '','class' => 'form-control')) }}
+						</div>
+						<div class="col-md-4 form-group">
+							{{ Form::file('fotoperfil',array('id' => 'filefoto')) }}
+						</div>
 					</div>
 				</div>
 			</div>
 			<div class="row setup-content hiddenStepInfo" id="step-3">
 				<div class="col-md-12 ">
-					<div class="col-md-4 form-group">
-						{{ Form::label('contactonombre', 'Nombre (s)') }}
-						{{ Form::text('contactonombre', null, array('class' => 'form-control mayuscula')) }}
-					</div>
-					<div class="col-md-4 form-group">
-						{{ Form::label('contactopaterno', 'Apellido paterno') }}
-						{{ Form::text('contactopaterno', null, array('class' => 'form-control mayuscula')) }}
-					</div>
-					<div class="col-md-4 form-group">
-						{{ Form::label('contactomaterno', 'Apellido materno') }}
-						{{ Form::text('contactomaterno', null, array('class' => 'form-control mayuscula')) }}
-					</div>
-					<div class="col-md-4 form-group">
-						{{ Form::label('email', 'e-mail') }}
-						<div class="input-group">
-							<div class="input-group-addon"><i class="fa fa-envelope"></i></div>
-							{{ Form::email('contactoemail', null, array('placeholder' => 'ejemplo@ejemplo.com','class' => 'form-control')) }}
-						</div>
-					</div>
-					<div class="col-md-3 form-group">
-						{{ Form::label('contactotelefonofijo', 'Teléfono de casa') }}
-						<div class="input-group">
-							<div class="input-group-addon"><i class="fa fa-phone"></i></div>
-							{{ Form::text('contactotelefonofijo', null, array('placeholder' => '9511234567','class' => 'form-control')) }}
-						</div>
-					</div>
-					<div class="col-md-3 form-group">
-						{{ Form::label('contactotelefonomovil', 'Teléfono de movil') }}
-						<div class="input-group">
-							<div class="input-group-addon"><i class="fa fa-mobile"></i></div>
-							{{ Form::text('contactotelefonomovil', null, array('placeholder' => '9511234567','class' => 'form-control')) }}
-						</div>
-					</div>
-					<div class="col-md-2 form-group">
-						{{ Form::label('contactosexo', 'Sexo') }}
-						{{Form::select('contactosexo', array('Masculino' => 'Masculino','Femenino' => 'Femenino',),null,array('placeholder' => '','class' => 'form-control')) }}
-					</div>
-					<div class="col-md-4 form-group">
-						{{ Form::label('contactorelacion', 'Relación con el recluta') }}
-						<div class="input-group">
-							<div class="input-group-addon"><i class="fa fa-link"></i></div>
-							{{ Form::text('contactorelacion', null, array('placeholder' => 'padre, madre, hermano, etc.','class' => 'form-control mayuscula')) }}
-						</div>
-					</div>
-					<div class="col-md-2">
-						<br><br>
-						{{Form::button('<i class="fa fa-plus"></i> Redes Sociales',array('class' => 'btn btn-success btn-xs','id' => 'contactoredes'))}}
-					</div>
-					<div id="contactofbtw" style="display: none;">
+					<div class="row">
 						<div class="col-md-4 form-group">
-							{{ Form::label('contactofacebook', 'Facebook') }}
+							{{ Form::label('contactonombre', 'Nombre (s)') }}
+							{{ Form::text('contactonombre', null, array('class' => 'form-control mayuscula')) }}
+						</div>
+						<div class="col-md-4 form-group">
+							{{ Form::label('contactopaterno', 'Apellido paterno') }}
+							{{ Form::text('contactopaterno', null, array('class' => 'form-control mayuscula')) }}
+						</div>
+						<div class="col-md-4 form-group">
+							{{ Form::label('contactomaterno', 'Apellido materno') }}
+							{{ Form::text('contactomaterno', null, array('class' => 'form-control mayuscula')) }}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4 form-group">
+							{{ Form::label('email', 'e-mail') }}
 							<div class="input-group">
-								<div class="input-group-addon"><i class="fa fa-facebook"></i></div>
-								{{ Form::text('contactofacebook', null, array('placeholder' => 'facebook.com/','class' => 'form-control')) }}
+								<div class="input-group-addon"><i class="fa fa-envelope"></i></div>
+								{{ Form::email('contactoemail', null, array('placeholder' => 'ejemplo@ejemplo.com','class' => 'form-control')) }}
 							</div>
 						</div>
-						<div class="col-md-4 form-group">
-							{{ Form::label('contactotwitter', 'Twitter') }}
+						<div class="col-md-3 form-group">
+							{{ Form::label('contactotelefonofijo', 'Teléfono de casa') }}
 							<div class="input-group">
-								<div class="input-group-addon"><i class="fa fa-twitter"></i></div>
-								{{ Form::text('contactotwitter', null, array('placeholder' => '@usuario','class' => 'form-control')) }}
+								<div class="input-group-addon"><i class="fa fa-phone"></i></div>
+								{{ Form::text('contactotelefonofijo', null, array('placeholder' => '9511234567','class' => 'form-control')) }}
+							</div>
+						</div>
+						<div class="col-md-3 form-group">
+							{{ Form::label('contactotelefonomovil', 'Teléfono de movil') }}
+							<div class="input-group">
+								<div class="input-group-addon"><i class="fa fa-mobile"></i></div>
+								{{ Form::text('contactotelefonomovil', null, array('placeholder' => '9511234567','class' => 'form-control')) }}
+							</div>
+						</div>
+						<div class="col-md-2 form-group">
+							{{ Form::label('contactosexo', 'Sexo') }}
+							{{Form::select('contactosexo', array('Masculino' => 'Masculino','Femenino' => 'Femenino',),null,array('placeholder' => '','class' => 'form-control')) }}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4 form-group">
+							{{ Form::label('contactorelacion', 'Relación con el recluta') }}
+							<div class="input-group">
+								<div class="input-group-addon"><i class="fa fa-link"></i></div>
+								{{ Form::text('contactorelacion', null, array('placeholder' => 'padre, madre, hermano, etc.','class' => 'form-control mayuscula')) }}
+							</div>
+						</div>
+						<div class="col-md-2">
+							<br><br>
+							{{Form::button('<i class="fa fa-plus"></i> Redes Sociales',array('class' => 'btn btn-success btn-xs','id' => 'contactoredes'))}}
+						</div>
+					</div>
+					<div class="row">
+						<div id="contactofbtw" style="display: none;">
+							<div class="col-md-4 form-group">
+								{{ Form::label('contactofacebook', 'Facebook') }}
+								<div class="input-group">
+									<div class="input-group-addon"><i class="fa fa-facebook"></i></div>
+									{{ Form::text('contactofacebook', null, array('placeholder' => 'facebook.com/','class' => 'form-control')) }}
+								</div>
+							</div>
+							<div class="col-md-4 form-group">
+								{{ Form::label('contactotwitter', 'Twitter') }}
+								<div class="input-group">
+									<div class="input-group-addon"><i class="fa fa-twitter"></i></div>
+									{{ Form::text('contactotwitter', null, array('placeholder' => '@usuario','class' => 'form-control')) }}
+								</div>
 							</div>
 						</div>
 					</div>
