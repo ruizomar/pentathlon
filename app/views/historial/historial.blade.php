@@ -323,8 +323,7 @@ $('#editar').on('hide.bs.modal', function() {
     $('#edit').bootstrapValidator('resetForm', true);
     $("tbody").find('tr').removeClass('danger').find('button').attr('disabled',false);
 });
-$('#sidebar-nav').find('li').removeClass('active');
-$('#Historial').addClass('active');
+$('#Historial, #2Historial').addClass('active');
 function editar(btn){
 	$(btn).closest("tbody").find('tr').removeClass('danger').find('button').attr('disabled',false);
 	$(btn).attr('disabled',true).closest("tr").addClass('danger');

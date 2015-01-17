@@ -149,8 +149,7 @@
     }, 'json');
     });
     });
-$('#sidebar-nav').find('li').removeClass('active');
-$('#Enteros').addClass('active');
+$('#Enteros, #2Enteros').addClass('active');
     function encontrado(id){
             $.post('{{ URL::to("pagos/elemento"); }}', 'id='+id, function(json) {
                 $('#lnombre').html('<strong>'+json.nombre+'</strong>');

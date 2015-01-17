@@ -163,8 +163,7 @@
     $('#datetimePicker').on('dp.change dp.show', function(e) {
         $('#form-nueva').bootstrapValidator('revalidateField', 'Fecha');
     });
-    $('#sidebar-nav').find('li').removeClass('active');
-    $('#Eventos').addClass('active');
+    $('#Eventos, #2Eventos').addClass('active');
 });
   </script>
   <script type="text/javascript">

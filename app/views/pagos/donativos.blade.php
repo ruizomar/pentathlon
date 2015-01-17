@@ -9,6 +9,7 @@
   </style>
 @endsection
 @section('contenido')
+<h1>Donativos</h1>
   {{ Form::open(array('id' => 'formularioalta','url'=>'pagos/donativos','files'=>true)) }}
     <div class="col-md-10 col-md-offset-1">
       <div class="row">
@@ -91,5 +92,6 @@ $(document).ready(function() {
         }
     });
   });
+$('#Enteros, #2Enteros').addClass('active');
 </script>
 @endsection

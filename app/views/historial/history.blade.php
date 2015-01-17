@@ -25,5 +25,6 @@ Historial
         $('[name=id]').val(id);
         $( "#hitoria" ).submit();
     }
+    $('#Historial, #2Historial').addClass('active');
 </script>
 @endsection

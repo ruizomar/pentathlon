@@ -573,6 +573,7 @@
 		});
 	</script>
 	<script type="text/javascript">
+	$('#Altas,#2Altas').addClass('active');
 		function resetActive(event, percent, step) {
 			//$(".progress-bar").css("width", percent + "%").attr("aria-valuenow", percent);
 			//$(".progress-completed").text(percent + "%");

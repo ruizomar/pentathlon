@@ -206,6 +206,7 @@
 		}
 	</script>
 	<script>
+	$('#Cargos, #2Cargos').addClass('active');
 	  $('#tour').on('click', function(e) {
 	    var tour = new Tour({
 	      steps: [

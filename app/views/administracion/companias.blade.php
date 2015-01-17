@@ -226,8 +226,7 @@ $('#nueva').on('hide.bs.modal', function() {
         $('#update').bootstrapValidator('resetForm', true);
     $('#update').bootstrapValidator('resetForm');
 });
-$('#sidebar-nav').find('li').removeClass('active');
-$('#Companias').addClass('active');
+$('#Companias, #2Companias').addClass('active');
 function editar(btn){
 	$(btn).closest("tbody").find('tr').removeClass('danger').find('button').attr('disabled',false);
 	$(btn).attr('disabled',true).closest("tr").addClass('danger');

@@ -129,8 +129,7 @@
 @stop
 @section('scripts')
     <script>
-        $('#sidebar-nav').find('li').removeClass('active');
-        $('#reportes').addClass('active');
+        $('#Reportes, #2Reportes').addClass('active');
         var arrayId;
         function companias () {
             $('.menu').addClass('hidden');

@@ -637,6 +637,7 @@
         });
       }, 'json');
     });
+    $('#Editar,#2Editar').addClass('active');
   </script>
   <script>
     $('#buscarext').click(function(){

@@ -161,8 +161,7 @@ $(document).ready(function() {
     $('.datetimePicker').on('dp.change dp.show', function(e) {
         $(this).closest('form').bootstrapValidator('revalidateField', 'fecha');
     });
-    $('#sidebar-nav').find('li').removeClass('active');
-    $('#Examenes').addClass('active');
+    $('#Examenes, #2Examenes').addClass('active');
 });
 </script>
 <script type="text/javascript" charset="utf-8">

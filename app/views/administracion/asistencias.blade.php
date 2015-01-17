@@ -187,8 +187,7 @@ $(document).ready(function() {
     $('#datetimePicker').on('dp.change dp.show', function(e) {
         $('#asis').bootstrapValidator('revalidateField', 'fecha');
     });
-    $('#sidebar-nav').find('li').removeClass('active');
-    $('#Asistencias').addClass('active');
+    $('#Asistencias, #2Asistencias').addClass('active');
 });
 </script>
 <script type="text/javascript" charset="utf-8">

@@ -1147,6 +1147,12 @@ label {
 #phone-navigation {
   padding: .5em 0em;
 }
+#phone-navigation .nav-list li.active {
+  background: #E2E2E2;
+  border-right: 0px;
+  border-top: 1px solid #cfcfd6;
+  border-bottom: 1px solid #cfcfd6;
+}
 #phone-navigation #phone-menu {
   margin: 0em auto;
   display: block;

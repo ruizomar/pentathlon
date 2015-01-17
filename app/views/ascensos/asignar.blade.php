@@ -226,6 +226,7 @@
 		}
 	</script>
 	<script>
+	$('#Ascensos, #2Ascensos').addClass('active');
 	  $('#tour').on('click', function(e) {
 	    var tour = new Tour({
 	      steps: [

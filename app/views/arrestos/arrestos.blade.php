@@ -124,8 +124,7 @@ $(document).ready(function() {
         $('#form-arresto').bootstrapValidator('revalidateField', 'Fecha');
     });
 });
-$('#sidebar-nav').find('li').removeClass('active');
-$('#Arrestos').addClass('active');
+$('#Arrestos, #2Arrestos').addClass('active');
     function encontrado (id) {
 			$('#graficaAsistencias').html('');
 			$('#calificaciones').html('');

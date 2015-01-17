@@ -3,16 +3,47 @@ body{
   font-family: 'Open Sans', sans-serif;
 
 }
-
-.login-form {
-  background:#eee;
-  width: 26%;
-  margin:9% auto 4% auto;
-  position: relative;
-  -webkit-border-radius: 0.4em;
-  -o-border-radius: 0.4em;
-  -moz-border-radius: 0.4em;
-}
+ @media screen and (max-device-width: 767px) and (orientation : portrait){
+    .login-form {
+      background:#eee;
+      width: 80%;
+      margin:9% auto 4% auto;
+      position: relative;
+      -webkit-border-radius: 0.4em;
+      -o-border-radius: 0.4em;
+      -moz-border-radius: 0.4em;
+    }
+    img{
+      max-height: 100px;
+      margin:15px auto 5px;
+    }
+  }
+  @media screen and (max-device-width: 767px) and (orientation : landscape){
+    .login-form {
+      background:#eee;
+      width: 60%;
+      margin:9% auto 4% auto;
+      position: relative;
+      -webkit-border-radius: 0.4em;
+      -o-border-radius: 0.4em;
+      -moz-border-radius: 0.4em;
+    }
+    img{
+      max-height: 150px;
+      margin:15px auto 5px;
+    }
+  }
+  @media screen and (min-device-width : 768px){
+    .login-form {
+      background:#eee;
+      width: 26%;
+      margin:9% auto 4% auto;
+      position: relative;
+      -webkit-border-radius: 0.4em;
+      -o-border-radius: 0.4em;
+      -moz-border-radius: 0.4em;
+    }
+  }
 
 .head {
   position: absolute;

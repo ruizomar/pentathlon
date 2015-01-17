@@ -248,8 +248,7 @@ $('#editar').on('hide.bs.modal', function() {
     $('#edit').bootstrapValidator('resetForm', true);
     $("tbody").find('tr').removeClass('danger').find('button').attr('disabled',false);
 });
-$('#sidebar-nav').find('li').removeClass('active');
-$('#Examenes').addClass('active');
+$('#Examenes,#2Examenes').addClass('active');
 function editar(btn){
 	$(btn).closest("tbody").find('tr').removeClass('danger').find('button').attr('disabled',false);
 	$(btn).attr('disabled',true).closest("tr").addClass('danger');
