@@ -88,6 +88,8 @@
         }
     </style>
     {{  HTML::script('js/bootstrapValidator.js'); }}
+    {{  HTML::style('css/sweet-alert.css');  }}
+    {{  HTML::script('js/sweet-alert.min.js')}}
 @endsection
 @section('contenido')
     <div class="titulo1 col-md-11 col-md-offset-1">
@@ -296,31 +298,58 @@
             };
         }
         function btnenviar () {
-            nombre = $( "input[name$='nombre']" ).val();
-            paterno = $( "input[name$='paterno']" ).val();
-            materno = $( "input[name$='materno']" ).val();
-            telefono = $( "input[name$='telefono']" ).val();
-            email = $( "input[name$='email']" ).val();
-            estado = $( "#state" ).val();
-            escuela = $( "input[name$='escuela']" ).val();
-            data = {
-                lider:{
-                    nombre:nombre,
-                    paterno:paterno,
-                    materno:materno,
-                    telefono:telefono,
-                    email:email,
+            swal({
+                    title: '¿Estás seguro?',
+                    text: 'Se guardarán tus datos para el día del evento',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#AEDEF4',
+                    confirmButtonText: 'Si',
+                    cancelButtonText: 'No, regresar a revisar',
+                    closeOnConfirm: false,
+                    closeOnCancel: false
                 },
-                integrantes:arr,
-                equipo:{
-                    estado:estado,
-                    escuela:escuela,
-                }
-            }
-            // console.log(arr);
-            $.post('concursos/guardar',{data:data}, function(json) {
-                console.log(json);
-            }, 'json');
+                function(isConfirm){
+                    if (isConfirm){
+                        nombre = $( "input[name$='nombre']" ).val();
+                        paterno = $( "input[name$='paterno']" ).val();
+                        materno = $( "input[name$='materno']" ).val();
+                        telefono = $( "input[name$='telefono']" ).val();
+                        email = $( "input[name$='email']" ).val();
+                        estado = $( "#state" ).val();
+                        escuela = $( "input[name$='escuela']" ).val();
+                        data = {
+                            lider:{
+                                nombre:nombre,
+                                paterno:paterno,
+                                materno:materno,
+                                telefono:telefono,
+                                email:email,
+                            },
+                            integrantes:arr,
+                            equipo:{
+                                estado:estado,
+                                escuela:escuela,
+                            }
+                        }
+                        $.post('concursos/guardar',{data:data}, function(json) {
+                            if (json.success) {
+                                swal('!Hecho!', 'Se ha guardado el cargo', 'success');
+                            }
+                            else{
+                                sweetAlert("Oops...", json.errormessage, "error");
+                            }
+                        }, 'json');
+                    }
+                    else {
+                        swal({
+                            title:'Cancelado',
+                            text:'No se ha guardado ningun cambio',
+                            type: 'error',
+                            timer: 1000
+                        });
+                    }
+                });
         }
         $(document).ready(function() {
             $('#dashboard-menu').addClass('hidden');

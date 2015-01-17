@@ -59,33 +59,42 @@ class ConcursosController extends BaseController {
 		else{
 			foreach ($data['integrantes'] as $integrante) {
 				$valIntegrante = Validator::make($integrante, $reglasPersona);
+				if($valIntegrante->fails()){
+					$dato = array(
+						'success'=>false,
+						'errormessage'=>'Revisa los datos de los integrantes'
+					);
+					return Response::json($dato);
+				}
+				else{
+					Concursante::create(array(
+						'evento_id' => 1,
+						'nombre' => $integrante['nombre'],
+						'paterno' => $integrante['paterno'],
+						'materno' => $integrante['materno'],
+						'telefono' => $integrante['telefono'],
+						'email' => $integrante['email'],
+						'escuela' => $data['equipo']['escuela'],
+						'estado' => $data['equipo']['estado'],
+						'tipo' => 'integrante',
+					));
+				}
 			}
-			if($valIntegrante->fails()){
-				$dato = array(
-					'success'=>false,
-					'errormessage'=>'Revisa los datos de los integrantes'
-				);
-				return Response::json($dato);
-			}
-			return Response::json('TODO BUENAS');
 		}
-		// $concursante = Concursante::create(array(
-		// 	'evento_id' => 1,
-		// 	'nombre' => 'nombre',
-		// 	'paterno' => 'paterno',
-		// 	'materno' => 'materno',
-		// 	'telefono' => 'telefono',
-		// 	'email' => 'email',
-		// 	'escuela' => 'escuela',
-		// 	'estado' => 'estado',
-		// 	'tipo' => 'tipo',
-		// ));
-		// return Response::json($data['integrantes']);
-		// $c = $data['integrantes'];
-		// foreach ($data['integrantes'] as $integrante) {
-		// 	$c++;
-		// }
-		// return $c;
-
+		Concursante::create(array(
+			'evento_id' => 1,
+			'nombre' => $data['lider']['nombre'],
+			'paterno' => $data['lider']['paterno'],
+			'materno' => $data['lider']['materno'],
+			'telefono' => $data['lider']['telefono'],
+			'email' => $data['lider']['email'],
+			'escuela' => $data['equipo']['escuela'],
+			'estado' => $data['equipo']['estado'],
+			'tipo' => 'lider',
+		));
+		$dato = array(
+			'success' => true,
+		);
+		return Response::json($dato);
 	}
 }
