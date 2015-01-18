@@ -1,4 +1,4 @@
-@extends('layaouts.base')
+@extends('layaouts.public')
 @section('titulo')
   Convocatorias
 @endsection
@@ -24,7 +24,8 @@
             cursor: pointer;
         }
         .content{
-            margin-left: 0px;
+            margin-left: 5px;
+            margin-right: 5px;
         }
         .botonagregar{
             margin-left:15px;
@@ -94,7 +95,7 @@
 @endsection
 @section('contenido')
     <div class="titulo1 col-md-11 col-md-offset-1">
-        <h1 style="margin-bottom:20px;"><i class="fa fa-trophy"></i> Convocatorias</h1>
+        <h1 style="margin-bottom:20px;"><i class="fa fa-trophy"></i> Concurso Nacional de Escoltas</h1>
     </div>
     <div class="hidden col-sm-offset-3 col-sm-6 scol-sm-1 escoltas" style="margin-top:18px;" onclick="escoltas()">
         <a href="#" class="requisitoss col-sm-12 text-center">
@@ -103,13 +104,13 @@
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aliquam error sint optio alias minus, nisi officia, aperiam dignissimos molestias necessitatibus. Temporibus, possimus laudantium iure. Veniam voluptatum laudantium natus enim.</p>
         </a>
     </div>
-    {{ Form::open(array('id' => 'formulario','url'=>'#','class'=>'hidden2 col-md-offset-1 col-md-10 form-group')) }}
+    {{ Form::open(array('id' => 'formulario','url'=>'#','class'=>'hidden2 col-md-offset-2 col-md-8 form-group')) }}
         <div class="col-md-12">
             <div class="row">
                 <h4>Registro datos del equipo</h4>
                 <div class="col-md-4 form-group">
                     {{ Form::label('escuela', 'Escuela') }}
-                    {{ Form::text('escuela', null, array('class' => 'form-control')) }}
+                    {{ Form::text('escuela', null, array('class' => 'form-control','autofocus')) }}
                 </div>
                 <div class="col-md-4 form-group">
                     {{ Form::label('Nivel', 'Nivel Académico') }}
@@ -164,7 +165,7 @@
                 <h4>Registro del responsable</h4>
                 <div class="col-md-4 form-group">
                     {{ Form::label('nombre', 'Nombre (s)',array('class' => 'control-label')) }}
-                    {{ Form::text('nombre', null, array('class' => 'form-control','autofocus')) }}
+                    {{ Form::text('nombre', null, array('class' => 'form-control')) }}
                 </div>
                 <div class="col-md-4 form-group">
                     {{ Form::label('paterno', 'Apellido paterno') }}
@@ -220,16 +221,18 @@
                                 {{ Form::label('concursantematerno', 'Apellido materno') }}
                                 {{ Form::text('concursantematerno', null, array('class' => 'form-control')) }}
                             </div>
-                            {{ Form::label('posicion', 'Posición') }}
-                            <select class="form-control" name="posicion" id="posicion">
-                                <option value="Abanderado">Abanderado</option>
-                                <option value="Sargento">Sargento</option>
-                                <option value="Escolta derecho">Escolta derecho</option>
-                                <option value="Escolta izquierdo">Escolta izquierdo</option>
-                                <option value="Guardia derecho">Guardia derecho</option>
-                                <option value="Guardia izquierdo">Guardia izquierdo</option>
-                            </select>
-                            <label class="pull-right label label-warning">Una ves elegido, no puedes cambiarlo</label>
+                            <div id="cargo">
+                                {{ Form::label('posicion', 'Posición') }}
+                                <select class="form-control" name="posicion" id="posicion">
+                                    <option value="Abanderado">Abanderado</option>
+                                    <option value="Sargento">Sargento</option>
+                                    <option value="Escolta derecho">Escolta derecho</option>
+                                    <option value="Escolta izquierdo">Escolta izquierdo</option>
+                                    <option value="Guardia derecho">Guardia derecho</option>
+                                    <option value="Guardia izquierdo">Guardia izquierdo</option>
+                                </select>
+                                <label class="pull-right label label-warning">Una vez elegido, no puedes cambiarlo</label>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary guardar" data-dismiss="modal" onclick="addintegrante()">Guardar</button>
@@ -258,7 +261,6 @@
             </div>
         </div>
         <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="btnenviar()">Enviar</button>
-    <!-- </div> -->
     {{Form::close()}}
 @stop
 @section('scripts')
@@ -285,6 +287,7 @@
             materno = $( "input[name$='concursantematerno']" ).val(arr[id].materno);
             posicion = $( "#posicion" ).val();
             $('.guardar').addClass('hidden');
+            $('#cargo').addClass('hidden');
             $('#actualizar').html('<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="actualizar('+id+')" style="margin-top: 0px">Actualizar</button>');
 
         }
@@ -292,15 +295,16 @@
             nombre = $( "input[name$='concursantenombre']" ).val();
             paterno = $( "input[name$='concursantepaterno']" ).val();
             materno = $( "input[name$='concursantematerno']" ).val();
-            posicion = $( "#posicion" ).val();
+            posicion = arr[id].posicion;
             guardar(id);
-            $('#'+id+'').html('<div class="persona col-md-4" data-toggle="modal" data-target="#myModal" onclick="mostrarmodal('+id+')"><a class="anadir"><i class="fa fa-user"></i></a></div><div class="col-md-8" style="top:-5px;"><p><h4><span class="text-capitalize spannombre">'+nombre+'</span><span class="text-capitalize spanpaterno"> '+paterno+'</span><span class="text-capitalize spanmaterno"> '+materno+'</span></h4></p></div>');
+            $('#'+id+'').html('<div class="persona col-md-4" data-toggle="modal" data-target="#myModal" onclick="mostrarmodal('+id+')"><a class="anadir"><i class="fa fa-user"></i></a></div><div class="col-md-8" style="top:-5px;"><p><h4><span class="text-capitalize spannombre">'+nombre+'</span><span class="text-capitalize spanpaterno"> '+paterno+'</span><span class="text-capitalize spanmaterno"> '+materno+'</span><br><label class="label label-success text-capitalize"> '+arr[id].posicion+'</label></h4></p></div>');
         }
         function limpio () {
             $( "input[name$='concursantenombre']" ).val('');
             $( "input[name$='concursantepaterno']" ).val('');
             $( "input[name$='concursantematerno']" ).val('');
             $('.guardar').removeClass('hidden');
+            $('#cargo').removeClass('hidden');
             $('#actualizar').html('');
             if (arr.length == 5) {
                 $('.botonagregar').addClass('hidden');
