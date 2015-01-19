@@ -110,7 +110,7 @@
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aliquam error sint optio alias minus, nisi officia, aperiam dignissimos molestias necessitatibus. Temporibus, possimus laudantium iure. Veniam voluptatum laudantium natus enim.</p>
         </a>
     </div>
-    {{ Form::open(array('id' => 'formulario','url'=>'#','class'=>'hidden2 col-md-offset-2 col-md-8 form-group')) }}
+    <div id="formulario" class="col-md-offset-2 col-md-8">
         <div class="col-md-12">
             <div class="row">
                 <h4>Registro datos del equipo</h4>
@@ -227,8 +227,8 @@
             </div>
         </div>
         <button type="button" class="pull-right btn btn-primary" data-dismiss="modal" onclick="btnenviar()">Enviar</button>
-    {{Form::close()}}
-    {{ Form::open(array('id' => 'formulariomodal','url'=>'#','class'=>'hidden2 col-md-offset-2 col-md-8 form-group')) }}
+    </div>
+    <div id="formulariomodal" class="col-md-offset-2 col-md-8">
         <div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
@@ -263,13 +263,13 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary guardar" data-dismiss="modal" onclick="addintegrante()">Guardar</button>
+                        <button type="button" class="btn btn-primary guardar" data-dismiss="modal" onclick="addintegrante()">Guardar</button>
                         <span id="actualizar"></span>
                     </div>
                 </div>
             </div>
         </div>
-    {{Form::close()}}
+    </div>
 @stop
 @section('scripts')
     <script>
@@ -311,11 +311,6 @@
                         }
                     },
                     paterno:{
-                        validators:{
-                            notEmpty :{},
-                        }
-                    },
-                    materno:{
                         validators:{
                             notEmpty :{},
                         }
@@ -365,7 +360,7 @@
             $('.anadidos').append('<div id="'+count+'" class="col-md-4" style="margin-top: 10px;"><div class="persona col-md-4" data-toggle="modal" data-target="#myModal" onclick="mostrarmodal('+count+')"><a class="anadir"><i class="fa fa-user"></i></a></div><div class="col-md-8" style="top:-5px;"><p><h4><span class="text-capitalize spannombre">'+nombre+'</span><span class="text-capitalize spanpaterno"> '+paterno+'</span><span class="text-capitalize spanmaterno"> '+materno+'</span><br><label class="label label-success text-capitalize"> '+posicion+'</label></h4></p></div></div>');
             guardar(count);
             count++;
-            $("select").find("option:selected").remove();
+            $("#posicion").find("option:selected").remove();
         }
         function mostrarmodal (id) {
             nombre = $( "input[name$='concursantenombre']" ).val(arr[id].nombre);
@@ -450,9 +445,9 @@
                             }
                         }
                         $.post('concursos/guardar',{data:data}, function(json) {
-                            // console.log(json);
                             if (json.success) {
                                 swal('!Hecho!', 'Se ha guardado el cargo', 'success');
+                                location.reload();
                             }
                             else{
                                 sweetAlert("Oops...", json.errormessage, "error");
