@@ -106,7 +106,7 @@ class AdminController extends BaseController {
     }
     public function getRestore($file){
         AdminController::SplitSQL('localhost','root','','centroto_db_pdmu','backups/'.$file);
-        echo "full";
+        return Response::json(array('success' => true));
     }
     public function SplitSQL($host,$user,$pass,$name,$file, $delimiter = ';')
     {
@@ -132,7 +132,7 @@ class AdminController extends BaseController {
 
                         if (mysql_query($query) === false)
                         {
-                            echo '<h3>ERROR: ' . $query . '</h3>' . "\n";
+                            //echo '<h3>ERROR: ' . $query . '</h3>' . "\n";
                         }
 
                         while (ob_get_level() > 0)

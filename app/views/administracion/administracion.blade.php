@@ -17,7 +17,7 @@
             <div class="col-sm-4 col-sm-offset-1">
                 <h2><i class="fa fa-database"></i> Backup:</h2>
                 @foreach($backups as $backup)
-                    <h3><a href="admin/download/{{$backup}}" title="Descargar"><i class="fa fa-download"></i> {{$backup}}</a> | <a href="admin/delete/{{$backup}}" title="Eliminar"><i class="fa fa-times"></i></a> | <a href="admin/restore/{{$backup}}" title="Restaurar"><i class="fa fa-upload"></i></a></h3>
+                    <h3><a href="admin/download/{{$backup}}" title="Descargar"><i class="fa fa-download"></i> {{$backup}}</a> | <a href="admin/delete/{{$backup}}" title="Eliminar" ><i class="fa fa-times"></i></a> | <button href="admin/restore/{{$backup}}" title="Restaurar" class="restore"><i class="fa fa-upload"></i></button></h3>
                 @endforeach
             </div>
         </div>
@@ -42,24 +42,14 @@
 {{  HTML::script('js/es_ES.js'); }}
 {{  HTML::script('js/sweet-alert.min.js'); }}
 <script type="text/javascript">
-    $('#companias').dataTable( {
-        "language": {
-            "lengthMenu": "Subzonas por página _MENU_",
-            "zeroRecords": "No se encontro",
-            "info": "Pagina _PAGE_ de _PAGES_",
-            "infoEmpty": "No records available",
-            "infoFiltered": "(Ver _MAX_ total records)",
-            'search': 'Buscar: ',
-            "paginate": {
-        "first":      "Inicio",
-        "last":       "Fin",
-        "next":       "Siguiente",
-        "previous":   "Anterior"
-    },
-        }
-} );
-</script>
-<script type="text/javascript">
 $('#Administracion, #2Administracion').addClass('active');
+$(".restore").click(function(){
+    $.getJSON( $(this).attr('href'), function( json ) {
+        console.log(json)
+      if(json.success){
+        swal('Operacion completada correctamente', null, "success");
+      }
+    });
+});
 </script>
 @endsection
