@@ -393,153 +393,168 @@
                 juvenilM = 0;
                 mayorM = 0;
                 $.each(json,function(index,lugar){
-                    if(lugar.Masculino){
-                        if(lugar.Masculino.Menor){
-                            $.each(lugar.Masculino.Menor,function(index,edad){
-                                menor += edad.length;
+                    if ($('#1').is(':checked')) {
+                        if(lugar.Masculino){
+                            if ($('#1').is(':checked') && $('#3').is(':checked')) {
+                                if(lugar.Masculino.Menor){
+                                    $.each(lugar.Masculino.Menor,function(index,edad){
+                                        menor += edad.length;
+                                        $.each(edad,function(index,grado){
+                                            $('#elementobody').append('<tr>'+
+                                                '<td>'+grado.nombre+'</td>'+
+                                                '<td>'+grado.paterno+'</td>'+
+                                                '<td>'+grado.materno+'</td>'+
+                                                '<td>'+grado.matricula+'</td>'+
+                                                '<td>'+grado.grado+'</td>'+
+                                                '<td>'+grado.fecha+'</td>'+
+                                                '<td>'+grado.sexo+'</td>'+
+                                                '<td>'+grado.edad+'</td>'+
+                                                '<td>'+grado.zona+'</td>');
+                                        });
+                                    });
+                                }
+                            };
+                            if ($('#1').is(':checked') && $('#4').is(':checked')) {
+                                if(lugar.Masculino.Juvenil){
+                                    $.each(lugar.Masculino.Juvenil,function(index,edad){
+                                        juvenil += edad.length;
+                                        $.each(edad,function(index,grado){
+                                            $('#elementobody').append('<tr>'+
+                                                '<td>'+grado.nombre+'</td>'+
+                                                '<td>'+grado.paterno+'</td>'+
+                                                '<td>'+grado.materno+'</td>'+
+                                                '<td>'+grado.matricula+'</td>'+
+                                                '<td>'+grado.grado+'</td>'+
+                                                '<td>'+grado.fecha+'</td>'+
+                                                '<td>'+grado.sexo+'</td>'+
+                                                '<td>'+grado.edad+'</td>'+
+                                                '<td>'+grado.zona+'</td>');
+                                        });
+                                    });
+                                }
+                            };
+                            if ($('#1').is(':checked') && $('#5').is(':checked')) {
+                                if(lugar.Masculino.Mayor){
+                                    $.each(lugar.Masculino.Mayor,function(index,edad){
+                                        mayor += edad.length;
+                                        $.each(edad,function(index,grado){
+                                            $('#elementobody').append('<tr>'+
+                                                '<td>'+grado.nombre+'</td>'+
+                                                '<td>'+grado.paterno+'</td>'+
+                                                '<td>'+grado.materno+'</td>'+
+                                                '<td>'+grado.matricula+'</td>'+
+                                                '<td>'+grado.grado+'</td>'+
+                                                '<td>'+grado.fecha+'</td>'+
+                                                '<td>'+grado.sexo+'</td>'+
+                                                '<td>'+grado.edad+'</td>'+
+                                                '<td>'+grado.zona+'</td>');
+                                        });
+                                    });
+                                }
+                            };
+                            $.each(lugar.Masculino,function(index,edad){
+                                recluta += edad.recluta.length;
+                                cadete += edad.cadete.length;
+                                cadete1 += edad.cadete1.length;
+                                cabo += edad.cabo.length;
+                                sargento2 += edad.sargento2.length;
+                                Sargento1 += edad.Sargento1.length;
+                                subOficial += edad.subOficial.length;
+                                Oficial1 += edad.Oficial1.length;
+                                Oficial2 += edad.Oficial2.length;
+                                Oficial3 += edad.Oficial3.length;
+                                Comandante1 += edad.Comandante1.length;
+                                Comandate2 += edad.Comandate2.length;
+                                Comandante3 += edad.Comandante3.length;
                                 $.each(edad,function(index,grado){
-                                    $('#elementobody').append('<tr>'+
-                                        '<td>'+grado.nombre+'</td>'+
-                                        '<td>'+grado.paterno+'</td>'+
-                                        '<td>'+grado.materno+'</td>'+
-                                        '<td>'+grado.matricula+'</td>'+
-                                        '<td>'+grado.grado+'</td>'+
-                                        '<td>'+grado.fecha+'</td>'+
-                                        '<td>'+grado.sexo+'</td>'+
-                                        '<td>'+grado.edad+'</td>'+
-                                        '<td>'+grado.zona+'</td>');
+                                    $.each(grado,function(index,hombre){
+                                        thombres++
+                                    });
                                 });
                             });
                         }
-                        if(lugar.Masculino.Juvenil){
-                            $.each(lugar.Masculino.Juvenil,function(index,edad){
-                                juvenil += edad.length;
+                    };
+                    if ($('#1').is(':checked')) {
+                        if(lugar.Femenino){
+                            if ($('#2').is(':checked') && $('#3').is(':checked')) {
+                                if(lugar.Femenino.Menor){
+                                    $.each(lugar.Femenino.Menor,function(index,edad){
+                                        menorM += edad.length;
+                                        $.each(edad,function(index,grado){
+                                            $('#elementobody').append('<tr>'+
+                                                '<td>'+grado.nombre+'</td>'+
+                                                '<td>'+grado.paterno+'</td>'+
+                                                '<td>'+grado.materno+'</td>'+
+                                                '<td>'+grado.matricula+'</td>'+
+                                                '<td>'+grado.grado+'</td>'+
+                                                '<td>'+grado.fecha+'</td>'+
+                                                '<td>'+grado.sexo+'</td>'+
+                                                '<td>'+grado.edad+'</td>'+
+                                                '<td>'+grado.zona+'</td>');
+                                        });
+                                    });
+                                }
+                            };
+                            if ($('#2').is(':checked') && $('#4').is(':checked')) {
+                                if(lugar.Femenino.Juvenil){
+                                    $.each(lugar.Femenino.Juvenil,function(index,edad){
+                                        juvenilM += edad.length;
+                                        $.each(edad,function(index,grado){
+                                            $('#elementobody').append('<tr>'+
+                                                '<td>'+grado.nombre+'</td>'+
+                                                '<td>'+grado.paterno+'</td>'+
+                                                '<td>'+grado.materno+'</td>'+
+                                                '<td>'+grado.matricula+'</td>'+
+                                                '<td>'+grado.grado+'</td>'+
+                                                '<td>'+grado.fecha+'</td>'+
+                                                '<td>'+grado.sexo+'</td>'+
+                                                '<td>'+grado.edad+'</td>'+
+                                                '<td>'+grado.zona+'</td>');
+                                        });
+                                    });
+                                }
+                            };
+                            if ($('#2').is(':checked') && $('#5').is(':checked')) {
+                                if(lugar.Femenino.Mayor){
+                                    $.each(lugar.Femenino.Mayor,function(index,edad){
+                                        mayorM += edad.length;
+                                        $.each(edad,function(index,grado){
+                                            $('#elementobody').append('<tr>'+
+                                                '<td>'+grado.nombre+'</td>'+
+                                                '<td>'+grado.paterno+'</td>'+
+                                                '<td>'+grado.materno+'</td>'+
+                                                '<td>'+grado.matricula+'</td>'+
+                                                '<td>'+grado.grado+'</td>'+
+                                                '<td>'+grado.fecha+'</td>'+
+                                                '<td>'+grado.sexo+'</td>'+
+                                                '<td>'+grado.edad+'</td>'+
+                                                '<td>'+grado.zona+'</td>');
+                                        });
+                                    });
+                                }
+                            };
+                            $.each(lugar.Femenino,function(index,edad){
+                                reclutaM += edad.recluta.length;
+                                cadeteM += edad.cadete.length;
+                                cadete1M += edad.cadete1.length;
+                                caboM += edad.cabo.length;
+                                sargento2M += edad.sargento2.length;
+                                Sargento1M += edad.Sargento1.length;
+                                subOficialM += edad.subOficial.length;
+                                Oficial1M += edad.Oficial1.length;
+                                Oficial2M += edad.Oficial2.length;
+                                Oficial3M += edad.Oficial3.length;
+                                Comandante1M += edad.Comandante1.length;
+                                Comandate2M += edad.Comandate2.length;
+                                Comandante3M += edad.Comandante3.length;
                                 $.each(edad,function(index,grado){
-                                    $('#elementobody').append('<tr>'+
-                                        '<td>'+grado.nombre+'</td>'+
-                                        '<td>'+grado.paterno+'</td>'+
-                                        '<td>'+grado.materno+'</td>'+
-                                        '<td>'+grado.matricula+'</td>'+
-                                        '<td>'+grado.grado+'</td>'+
-                                        '<td>'+grado.fecha+'</td>'+
-                                        '<td>'+grado.sexo+'</td>'+
-                                        '<td>'+grado.edad+'</td>'+
-                                        '<td>'+grado.zona+'</td>');
+                                    $.each(grado,function(index,mujer){
+                                        tmujeres++
+                                    });
                                 });
                             });
                         }
-                        if(lugar.Masculino.Mayor){
-                            $.each(lugar.Masculino.Mayor,function(index,edad){
-                                mayor += edad.length;
-                                $.each(edad,function(index,grado){
-                                    $('#elementobody').append('<tr>'+
-                                        '<td>'+grado.nombre+'</td>'+
-                                        '<td>'+grado.paterno+'</td>'+
-                                        '<td>'+grado.materno+'</td>'+
-                                        '<td>'+grado.matricula+'</td>'+
-                                        '<td>'+grado.grado+'</td>'+
-                                        '<td>'+grado.fecha+'</td>'+
-                                        '<td>'+grado.sexo+'</td>'+
-                                        '<td>'+grado.edad+'</td>'+
-                                        '<td>'+grado.zona+'</td>');
-                                });
-                            });
-                        }
-                        $.each(lugar.Masculino,function(index,edad){
-                            recluta += edad.recluta.length;
-                            cadete += edad.cadete.length;
-                            cadete1 += edad.cadete1.length;
-                            cabo += edad.cabo.length;
-                            sargento2 += edad.sargento2.length;
-                            Sargento1 += edad.Sargento1.length;
-                            subOficial += edad.subOficial.length;
-                            Oficial1 += edad.Oficial1.length;
-                            Oficial2 += edad.Oficial2.length;
-                            Oficial3 += edad.Oficial3.length;
-                            Comandante1 += edad.Comandante1.length;
-                            Comandate2 += edad.Comandate2.length;
-                            Comandante3 += edad.Comandante3.length;
-                            $.each(edad,function(index,grado){
-                                $.each(grado,function(index,hombre){
-                                    thombres++
-                                });
-                            });
-                        });
-                    }
-
-                    if(lugar.Femenino){
-                        if(lugar.Femenino.Menor){
-                            $.each(lugar.Femenino.Menor,function(index,edad){
-                                menorM += edad.length;
-                                $.each(edad,function(index,grado){
-                                    $('#elementobody').append('<tr>'+
-                                        '<td>'+grado.nombre+'</td>'+
-                                        '<td>'+grado.paterno+'</td>'+
-                                        '<td>'+grado.materno+'</td>'+
-                                        '<td>'+grado.matricula+'</td>'+
-                                        '<td>'+grado.grado+'</td>'+
-                                        '<td>'+grado.fecha+'</td>'+
-                                        '<td>'+grado.sexo+'</td>'+
-                                        '<td>'+grado.edad+'</td>'+
-                                        '<td>'+grado.zona+'</td>');
-                                });
-                            });
-                        }
-                        if(lugar.Femenino.Juvenil){
-                            $.each(lugar.Femenino.Juvenil,function(index,edad){
-                                juvenilM += edad.length;
-                                $.each(edad,function(index,grado){
-                                    $('#elementobody').append('<tr>'+
-                                        '<td>'+grado.nombre+'</td>'+
-                                        '<td>'+grado.paterno+'</td>'+
-                                        '<td>'+grado.materno+'</td>'+
-                                        '<td>'+grado.matricula+'</td>'+
-                                        '<td>'+grado.grado+'</td>'+
-                                        '<td>'+grado.fecha+'</td>'+
-                                        '<td>'+grado.sexo+'</td>'+
-                                        '<td>'+grado.edad+'</td>'+
-                                        '<td>'+grado.zona+'</td>');
-                                });
-                            });
-                        }
-                        if(lugar.Femenino.Mayor){
-                            $.each(lugar.Femenino.Mayor,function(index,edad){
-                                mayorM += edad.length;
-                                $.each(edad,function(index,grado){
-                                    $('#elementobody').append('<tr>'+
-                                        '<td>'+grado.nombre+'</td>'+
-                                        '<td>'+grado.paterno+'</td>'+
-                                        '<td>'+grado.materno+'</td>'+
-                                        '<td>'+grado.matricula+'</td>'+
-                                        '<td>'+grado.grado+'</td>'+
-                                        '<td>'+grado.fecha+'</td>'+
-                                        '<td>'+grado.sexo+'</td>'+
-                                        '<td>'+grado.edad+'</td>'+
-                                        '<td>'+grado.zona+'</td>');
-                                });
-                            });
-                        }
-                        $.each(lugar.Femenino,function(index,edad){
-                            reclutaM += edad.recluta.length;
-                            cadeteM += edad.cadete.length;
-                            cadete1M += edad.cadete1.length;
-                            caboM += edad.cabo.length;
-                            sargento2M += edad.sargento2.length;
-                            Sargento1M += edad.Sargento1.length;
-                            subOficialM += edad.subOficial.length;
-                            Oficial1M += edad.Oficial1.length;
-                            Oficial2M += edad.Oficial2.length;
-                            Oficial3M += edad.Oficial3.length;
-                            Comandante1M += edad.Comandante1.length;
-                            Comandate2M += edad.Comandate2.length;
-                            Comandante3M += edad.Comandante3.length;
-                            $.each(edad,function(index,grado){
-                                $.each(grado,function(index,mujer){
-                                    tmujeres++
-                                });
-                            });
-                        });
-                    }
+                    };
                 });
                 $('#spin').addClass('hidden');
                 $('#telementos').removeClass('hidden');
