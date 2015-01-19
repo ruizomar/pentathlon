@@ -45,18 +45,18 @@ class ReportesController extends BaseController {
 	public function postCompania()
 	{
 		$arrayId = $_POST['id'];
-		$parametros = $_POST['parametros'];
-		$inicio = $parametros['fechas']['inicio'];
-		$fin = $parametros['fechas']['fin'];
-		$sexo = $parametros['sexo'];
+		// $parametros = $_POST['parametros'];
+		$inicio = $_POST['inicio'];
+		$fin = $_POST['fin'];
+		// $sexo = $parametros['sexo'];
 		$q = array();
 		foreach ($arrayId as $id) {
 			$q[] = ReportesController::reporteCompania($id);
 		}
-		return Response::json(ReportesController::busquedaAvanzada($inicio,$fin,$sexo,$q));
+		return Response::json(ReportesController::busquedaAvanzada($inicio,$fin,$q));
 	}
 
-	public function busquedaAvanzada($inicio,$fin,$sexo,$q)
+	public function busquedaAvanzada($inicio,$fin,$q)
 	{
 		$todas = array();
 		foreach ($q as $elementos) {
@@ -149,7 +149,7 @@ class ReportesController extends BaseController {
 			$comandante1_3M = array();
 			foreach ($elementos as $elemento) {
 				if (new DateTime($elemento['fecha']) > new DateTime($inicio) && new DateTime($elemento['fecha']) < new DateTime($fin)) {
-					if ($elemento['sexo'] == $sexo[1]) {
+					if ($elemento['sexo'] == 'Masculino') {
 						if($elemento['edad'] > 8 && $elemento['edad'] < 12){
 							if ($elemento['grado_id'] == 1) {
 								$recluta[] = $elemento;
@@ -190,19 +190,19 @@ class ReportesController extends BaseController {
 							if ($elemento['grado_id'] == 13) {
 								$comandante1[] = $elemento;
 							}
-							$sexoArr['Masculino']['Menor']['Recluta'] = $recluta;
-							$sexoArr['Masculino']['Menor']['Cadete de infanteria'] = $cadeteInfanteria;
-							$sexoArr['Masculino']['Menor']['Cadete 1a'] = $cadete1;
-							$sexoArr['Masculino']['Menor']['Cabo'] = $cabo;
-							$sexoArr['Masculino']['Menor']['Sargento 2'] = $sargento2;
-							$sexoArr['Masculino']['Menor']['Sargento 1'] = $sargento1;
-							$sexoArr['Masculino']['Menor']['Sub Oficial'] = $subOficial;
-							$sexoArr['Masculino']['Menor']['3 Oficial'] = $oficial3;
-							$sexoArr['Masculino']['Menor']['2 Oficial'] = $oficial2;
-							$sexoArr['Masculino']['Menor']['1 Oficial'] = $oficial1;
-							$sexoArr['Masculino']['Menor']['3 Comandante'] = $comandante3;
-							$sexoArr['Masculino']['Menor']['2 Comandate'] = $comandate2;
-							$sexoArr['Masculino']['Menor']['1 Comandante'] = $comandante1;
+							$sexoArr['Masculino']['Menor']['recluta'] = $recluta;
+							$sexoArr['Masculino']['Menor']['cadete'] = $cadeteInfanteria;
+							$sexoArr['Masculino']['Menor']['cadete1'] = $cadete1;
+							$sexoArr['Masculino']['Menor']['cabo'] = $cabo;
+							$sexoArr['Masculino']['Menor']['sargento2'] = $sargento2;
+							$sexoArr['Masculino']['Menor']['Sargento1'] = $sargento1;
+							$sexoArr['Masculino']['Menor']['subOficial'] = $subOficial;
+							$sexoArr['Masculino']['Menor']['Oficial1'] = $oficial3;
+							$sexoArr['Masculino']['Menor']['Oficial2'] = $oficial2;
+							$sexoArr['Masculino']['Menor']['Oficial3'] = $oficial1;
+							$sexoArr['Masculino']['Menor']['Comandante1'] = $comandante3;
+							$sexoArr['Masculino']['Menor']['Comandate2'] = $comandate2;
+							$sexoArr['Masculino']['Menor']['Comandante3'] = $comandante1;
 						}
 						if($elemento['edad'] > 11 && $elemento['edad'] < 16){
 							if ($elemento['grado_id'] == 1) {
@@ -244,19 +244,19 @@ class ReportesController extends BaseController {
 							if ($elemento['grado_id'] == 13) {
 								$comandante1_2[] = $elemento;
 							}
-							$sexoArr['Masculino']['Juvenil']['Recluta'] = $recluta_2;
-							$sexoArr['Masculino']['Juvenil']['Cadete de infanteria'] = $cadeteInfanteria_2;
-							$sexoArr['Masculino']['Juvenil']['Cadete 1a'] = $cadete1_2;
-							$sexoArr['Masculino']['Juvenil']['Cabo'] = $cabo_2;
-							$sexoArr['Masculino']['Juvenil']['Sargento 2'] = $sargento2_2;
-							$sexoArr['Masculino']['Juvenil']['Sargento 1'] = $sargento1_2;
-							$sexoArr['Masculino']['Juvenil']['Sub Oficial'] = $subOficial_2;
-							$sexoArr['Masculino']['Juvenil']['3 Oficial'] = $oficial3_2;
-							$sexoArr['Masculino']['Juvenil']['2 Oficial'] = $oficial2_2;
-							$sexoArr['Masculino']['Juvenil']['1 Oficial'] = $oficial1_2;
-							$sexoArr['Masculino']['Juvenil']['3 Comandante'] = $comandante3_2;
-							$sexoArr['Masculino']['Juvenil']['2 Comandate'] = $comandate2_2;
-							$sexoArr['Masculino']['Juvenil']['1 Comandante'] = $comandante1_2;
+							$sexoArr['Masculino']['Juvenil']['recluta'] = $recluta_2;
+							$sexoArr['Masculino']['Juvenil']['cadete'] = $cadeteInfanteria_2;
+							$sexoArr['Masculino']['Juvenil']['cadete1'] = $cadete1_2;
+							$sexoArr['Masculino']['Juvenil']['cabo'] = $cabo_2;
+							$sexoArr['Masculino']['Juvenil']['sargento2'] = $sargento2_2;
+							$sexoArr['Masculino']['Juvenil']['Sargento1'] = $sargento1_2;
+							$sexoArr['Masculino']['Juvenil']['subOficial'] = $subOficial_2;
+							$sexoArr['Masculino']['Juvenil']['Oficial1'] = $oficial3_2;
+							$sexoArr['Masculino']['Juvenil']['Oficial2'] = $oficial2_2;
+							$sexoArr['Masculino']['Juvenil']['Oficial3'] = $oficial1_2;
+							$sexoArr['Masculino']['Juvenil']['Comandante1'] = $comandante3_2;
+							$sexoArr['Masculino']['Juvenil']['Comandate2'] = $comandate2_2;
+							$sexoArr['Masculino']['Juvenil']['Comandante3'] = $comandante1_2;
 						}
 						if($elemento['edad'] > 15){
 							if ($elemento['grado_id'] == 1) {
@@ -298,22 +298,22 @@ class ReportesController extends BaseController {
 							if ($elemento['grado_id'] == 13) {
 								$comandante1_3[] = $elemento;
 							}
-							$sexoArr['Masculino']['Mayor']['Recluta'] = $recluta_3;
-							$sexoArr['Masculino']['Mayor']['Cadete de infanteria'] = $cadeteInfanteria_3;
-							$sexoArr['Masculino']['Mayor']['Cadete 1a'] = $cadete1_3;
-							$sexoArr['Masculino']['Mayor']['Cabo'] = $cabo_3;
-							$sexoArr['Masculino']['Mayor']['Sargento 2'] = $sargento2_3;
-							$sexoArr['Masculino']['Mayor']['Sargento 1'] = $sargento1_3;
-							$sexoArr['Masculino']['Mayor']['Sub Oficial'] = $subOficial_3;
-							$sexoArr['Masculino']['Mayor']['3 Oficial'] = $oficial3_3;
-							$sexoArr['Masculino']['Mayor']['2 Oficial'] = $oficial2_3;
-							$sexoArr['Masculino']['Mayor']['1 Oficial'] = $oficial1_3;
-							$sexoArr['Masculino']['Mayor']['3 Comandante'] = $comandante3_3;
-							$sexoArr['Masculino']['Mayor']['2 Comandate'] = $comandate2_3;
-							$sexoArr['Masculino']['Mayor']['1 Comandante'] = $comandante1_3;
+							$sexoArr['Masculino']['Mayor']['recluta'] = $recluta_3;
+							$sexoArr['Masculino']['Mayor']['cadete'] = $cadeteInfanteria_3;
+							$sexoArr['Masculino']['Mayor']['cadete1'] = $cadete1_3;
+							$sexoArr['Masculino']['Mayor']['cabo'] = $cabo_3;
+							$sexoArr['Masculino']['Mayor']['sargento2'] = $sargento2_3;
+							$sexoArr['Masculino']['Mayor']['Sargento1'] = $sargento1_3;
+							$sexoArr['Masculino']['Mayor']['subOficial'] = $subOficial_3;
+							$sexoArr['Masculino']['Mayor']['Oficial1'] = $oficial3_3;
+							$sexoArr['Masculino']['Mayor']['Oficial2'] = $oficial2_3;
+							$sexoArr['Masculino']['Mayor']['Oficial3'] = $oficial1_3;
+							$sexoArr['Masculino']['Mayor']['Comandante1'] = $comandante3_3;
+							$sexoArr['Masculino']['Mayor']['Comandate2'] = $comandate2_3;
+							$sexoArr['Masculino']['Mayor']['Comandante3'] = $comandante1_3;
 						}
 					}
-					if ($elemento['sexo'] == $sexo[2]) {
+					if ($elemento['sexo'] == 'Femenino') {
 						if($elemento['edad'] > 8 && $elemento['edad'] < 12){
 							if ($elemento['grado_id'] == 1) {
 								$reclutaM[] = $elemento;
@@ -354,19 +354,19 @@ class ReportesController extends BaseController {
 							if ($elemento['grado_id'] == 13) {
 								$comandante1M[] = $elemento;
 							}
-							$sexoArr['Femenino']['Menor']['Recluta'] = $reclutaM;
-							$sexoArr['Femenino']['Menor']['Cadete de infanteria'] = $cadeteInfanteriaM;
-							$sexoArr['Femenino']['Menor']['Cadete 1a'] = $cadete1M;
-							$sexoArr['Femenino']['Menor']['Cabo'] = $caboM;
-							$sexoArr['Femenino']['Menor']['Sargento 2'] = $sargento2M;
-							$sexoArr['Femenino']['Menor']['Sargento 1'] = $sargento1M;
-							$sexoArr['Femenino']['Menor']['Sub Oficial'] = $subOficialM;
-							$sexoArr['Femenino']['Menor']['3 Oficial'] = $oficial3M;
-							$sexoArr['Femenino']['Menor']['2 Oficial'] = $oficial2M;
-							$sexoArr['Femenino']['Menor']['1 Oficial'] = $oficial1M;
-							$sexoArr['Femenino']['Menor']['3 Comandante'] = $comandante3M;
-							$sexoArr['Femenino']['Menor']['2 Comandate'] = $comandate2M;
-							$sexoArr['Femenino']['Menor']['1 Comandante'] = $comandante1M;
+							$sexoArr['Femenino']['Menor']['recluta'] = $reclutaM;
+							$sexoArr['Femenino']['Menor']['cadete'] = $cadeteInfanteriaM;
+							$sexoArr['Femenino']['Menor']['cadete1'] = $cadete1M;
+							$sexoArr['Femenino']['Menor']['cabo'] = $caboM;
+							$sexoArr['Femenino']['Menor']['sargento2'] = $sargento2M;
+							$sexoArr['Femenino']['Menor']['Sargento1'] = $sargento1M;
+							$sexoArr['Femenino']['Menor']['subOficial'] = $subOficialM;
+							$sexoArr['Femenino']['Menor']['Oficial1'] = $oficial3M;
+							$sexoArr['Femenino']['Menor']['Oficial2'] = $oficial2M;
+							$sexoArr['Femenino']['Menor']['Oficial3'] = $oficial1M;
+							$sexoArr['Femenino']['Menor']['Comandante1'] = $comandante3M;
+							$sexoArr['Femenino']['Menor']['Comandate2'] = $comandate2M;
+							$sexoArr['Femenino']['Menor']['Comandante3'] = $comandante1M;
 						}
 						if($elemento['edad'] > 11 && $elemento['edad'] < 16){
 							if ($elemento['grado_id'] == 1) {
@@ -408,19 +408,19 @@ class ReportesController extends BaseController {
 							if ($elemento['grado_id'] == 13) {
 								$comandante1_2M[] = $elemento;
 							}
-							$sexoArr['Femenino']['Juvenil']['Recluta'] = $recluta_2M;
-							$sexoArr['Femenino']['Juvenil']['Cadete de infanteria'] = $cadeteInfanteria_2M;
-							$sexoArr['Femenino']['Juvenil']['Cadete 1a'] = $cadete1_2M;
-							$sexoArr['Femenino']['Juvenil']['Cabo'] = $cabo_2M;
-							$sexoArr['Femenino']['Juvenil']['Sargento 2'] = $sargento2_2M;
-							$sexoArr['Femenino']['Juvenil']['Sargento 1'] = $sargento1_2M;
-							$sexoArr['Femenino']['Juvenil']['Sub Oficial'] = $subOficial_2M;
-							$sexoArr['Femenino']['Juvenil']['3 Oficial'] = $oficial3_2M;
-							$sexoArr['Femenino']['Juvenil']['2 Oficial'] = $oficial2_2M;
-							$sexoArr['Femenino']['Juvenil']['1 Oficial'] = $oficial1_2M;
-							$sexoArr['Femenino']['Juvenil']['3 Comandante'] = $comandante3_2M;
-							$sexoArr['Femenino']['Juvenil']['2 Comandate'] = $comandate2_2M;
-							$sexoArr['Femenino']['Juvenil']['1 Comandante'] = $comandante1_2M;
+							$sexoArr['Femenino']['Juvenil']['recluta'] = $recluta_2M;
+							$sexoArr['Femenino']['Juvenil']['cadete'] = $cadeteInfanteria_2M;
+							$sexoArr['Femenino']['Juvenil']['cadete1'] = $cadete1_2M;
+							$sexoArr['Femenino']['Juvenil']['cabo'] = $cabo_2M;
+							$sexoArr['Femenino']['Juvenil']['sargento2'] = $sargento2_2M;
+							$sexoArr['Femenino']['Juvenil']['Sargento1'] = $sargento1_2M;
+							$sexoArr['Femenino']['Juvenil']['subOficial'] = $subOficial_2M;
+							$sexoArr['Femenino']['Juvenil']['Oficial1'] = $oficial3_2M;
+							$sexoArr['Femenino']['Juvenil']['Oficial2'] = $oficial2_2M;
+							$sexoArr['Femenino']['Juvenil']['Oficial3'] = $oficial1_2M;
+							$sexoArr['Femenino']['Juvenil']['Comandante1'] = $comandante3_2M;
+							$sexoArr['Femenino']['Juvenil']['Comandate2'] = $comandate2_2M;
+							$sexoArr['Femenino']['Juvenil']['Comandante3'] = $comandante1_2M;
 						}
 						if($elemento['edad'] > 15){
 							if ($elemento['grado_id'] == 1) {
@@ -462,19 +462,19 @@ class ReportesController extends BaseController {
 							if ($elemento['grado_id'] == 13) {
 								$comandante1_3M[] = $elemento;
 							}
-							$sexoArr['Femenino']['Mayor']['Recluta'] = $recluta_3M;
-							$sexoArr['Femenino']['Mayor']['Cadete de infanteria'] = $cadeteInfanteria_3M;
-							$sexoArr['Femenino']['Mayor']['Cadete 1a'] = $cadete1_3M;
-							$sexoArr['Femenino']['Mayor']['Cabo'] = $cabo_3M;
-							$sexoArr['Femenino']['Mayor']['Sargento 2'] = $sargento2_3M;
-							$sexoArr['Femenino']['Mayor']['Sargento 1'] = $sargento1_3M;
-							$sexoArr['Femenino']['Mayor']['Sub Oficial'] = $subOficial_3M;
-							$sexoArr['Femenino']['Mayor']['3 Oficial'] = $oficial3_3M;
-							$sexoArr['Femenino']['Mayor']['2 Oficial'] = $oficial2_3M;
-							$sexoArr['Femenino']['Mayor']['1 Oficial'] = $oficial1_3M;
-							$sexoArr['Femenino']['Mayor']['3 Comandante'] = $comandante3_3M;
-							$sexoArr['Femenino']['Mayor']['2 Comandate'] = $comandate2_3M;
-							$sexoArr['Femenino']['Mayor']['1 Comandante'] = $comandante1_3M;
+							$sexoArr['Femenino']['Mayor']['recluta'] = $recluta_3M;
+							$sexoArr['Femenino']['Mayor']['cadete'] = $cadeteInfanteria_3M;
+							$sexoArr['Femenino']['Mayor']['cadete1'] = $cadete1_3M;
+							$sexoArr['Femenino']['Mayor']['cabo'] = $cabo_3M;
+							$sexoArr['Femenino']['Mayor']['sargento2'] = $sargento2_3M;
+							$sexoArr['Femenino']['Mayor']['Sargento1'] = $sargento1_3M;
+							$sexoArr['Femenino']['Mayor']['subOficial'] = $subOficial_3M;
+							$sexoArr['Femenino']['Mayor']['Oficial1'] = $oficial3_3M;
+							$sexoArr['Femenino']['Mayor']['Oficial2'] = $oficial2_3M;
+							$sexoArr['Femenino']['Mayor']['Oficial3'] = $oficial1_3M;
+							$sexoArr['Femenino']['Mayor']['Comandante1'] = $comandante3_3M;
+							$sexoArr['Femenino']['Mayor']['Comandate2'] = $comandate2_3M;
+							$sexoArr['Femenino']['Mayor']['Comandante3'] = $comandante1_3M;
 						}
 					}
 				}
