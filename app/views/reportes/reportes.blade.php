@@ -100,7 +100,7 @@
     </div>
     <div class="hidden col-md-12" id="compania" style="left:10;">
         <h1 id="nombre" style="margin-bottom:20px;"><i class="fa fa-bar-chart"></i></h1>
-        <button class="pull-right btn-xs btn btn-success" onclick="dibujagrafica()"><i class="fa fa-bar-chart"></i> Generar grafica</button>
+        <button class="pull-right btn-xs btn btn-success" onclick="dibujagrafica()"><i class="fa fa-bar-chart"></i> Generar gráfica</button>
         <div class="col-md-5">
             {{ Form::label('birthday', 'Fecha de inicio') }}
             <div class="input-group date col-md-6" id="datetimePicker">
@@ -219,13 +219,16 @@
             <!-- <div id="generar">
             </div> -->
         </div>
-        <div id="grafica" class="col-md-12" style="background:#f2f2f2;">
-        </div>
         <div id="datos" class="col-md-6">
         </div>
         <div class="col-md-12">
             <button id="imprimir" class="hidden pull-right btn btn-primary" onclick="window.print();return false;"><i class="fa fa-print"></i></button>
         </div>
+    </div>
+    <div id="spin" class="hidden col-md-12 text-center" style="padding: 200px;">
+        <i class="fa fa-cog fa-spin fa-5x"></i>
+    </div>
+    <div id="grafica" class="col-md-12" style="background:#f2f2f2;">
     </div>
 @stop
 @section('scripts')
@@ -268,7 +271,6 @@
             $('.titulo1').addClass('hidden');
             $.post('reportes/nombre',{id:id}, function(json) {
                 $('#nombre').html(json.nombre);
-                // $('#generar').html('<button class="pull-right btn-xs btn btn-success" onclick="dibujagrafica()"><i class="fa fa-bar-chart"></i> Generar grafica</button>');
             }, 'json');
             $('#compania').removeClass('hidden');
         };
@@ -276,10 +278,7 @@
             arrayId = [];
             $("input:checkbox:checked").each(function(){
                 arrayId.push($(this).attr('value'));
-                // dibujagrafica();
             });
-            // console.log(arrayId);
-            // dibujagrafica();
             $('.menucompanias').html('');
             $('.titulo1').addClass('hidden');
             $('#compania').removeClass('hidden');
@@ -289,10 +288,11 @@
     </script>
     <script>
         function dibujagrafica() {
+            // $('#compania').addClass('hidden');
+            $('#spin').removeClass('hidden');
             $('#grafica').html('');
             $('#datos').html('');
             $('#imprimir').addClass('hidden');
-            // console.log(arrayId);
             id = arrayId;
             inicio = $('#fechainicio').val();
             fin = $('#fechafin').val();
@@ -305,29 +305,10 @@
                     1:'Masculino',
                     2:'Femenino',
                 },
-                edad:{
-                    3:8,
-                    4:12,
-                    5:15,
-                },
-                grado:{
-                    7:1,
-                    8:2,
-                    9:3,
-                    10:4,
-                    11:5,
-                    12:6,
-                    13:7,
-                    14:8,
-                    15:9,
-                    16:10,
-                    17:11,
-                    18:12,
-                    19:13,
-                }
             }
             $.post('reportes/compania',{id:id,parametros:parametros}, function(json) {
                 console.log(json);
+                $('#spin').addClass('hidden');
                 // $('#nombre').html(json.nombre);
                 // // console.log(json);
                 // var lista = [

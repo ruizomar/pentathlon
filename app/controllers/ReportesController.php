@@ -46,25 +46,24 @@ class ReportesController extends BaseController {
 	{
 		$arrayId = $_POST['id'];
 		$parametros = $_POST['parametros'];
-		$fechas = $parametros['fechas'];
+		$inicio = $parametros['fechas']['inicio'];
+		$fin = $parametros['fechas']['fin'];
 		$sexo = $parametros['sexo'];
-		$edad = $parametros['edad'];
-		$grado = $parametros['grado'];
 		$q = array();
 		foreach ($arrayId as $id) {
 			$q[] = ReportesController::reporteCompania($id);
 		}
-		// return Response::json($q);
-		return Response::json(ReportesController::busquedaAvanzada($fechas,$sexo,$edad,$grado,$q));
+		return Response::json(ReportesController::busquedaAvanzada($inicio,$fin,$sexo,$q));
 	}
 
-	public function busquedaAvanzada($fechas,$sexo,$edad,$grado,$q)
+	public function busquedaAvanzada($inicio,$fin,$sexo,$q)
 	{
-		$sexoArr = array(
-			'Masculino' => null,
-			'Femenino' => null,
-			);
+		$todas = array();
 		foreach ($q as $elementos) {
+			$sexoArr = array(
+				'Masculino' => null,
+				'Femenino' => null,
+				);
 			$recluta = array();
 			$cadeteInfanteria = array();
 			$cadete1 = array();
@@ -149,7 +148,7 @@ class ReportesController extends BaseController {
 			$comandate2_3M = array();
 			$comandante1_3M = array();
 			foreach ($elementos as $elemento) {
-				if (condition) {
+				if (new DateTime($elemento['fecha']) > new DateTime($inicio) && new DateTime($elemento['fecha']) < new DateTime($fin)) {
 					if ($elemento['sexo'] == $sexo[1]) {
 						if($elemento['edad'] > 8 && $elemento['edad'] < 12){
 							if ($elemento['grado_id'] == 1) {
@@ -480,8 +479,9 @@ class ReportesController extends BaseController {
 					}
 				}
 			}
+			$todas[]=$sexoArr;
 		}
-		return ($sexoArr);
+		return ($todas);
 	}
 
 	public function datosElemento($elemento)
@@ -528,60 +528,6 @@ class ReportesController extends BaseController {
 			$elementosArr[] =  ReportesController::datosElemento($elemento);
 		}
 		return $elementosArr;
-		// $hombresArr = array();
-		// $mujeresArr = array();
-		// foreach ($activosArr as $activo) {
-		// 	$sexo = $activo -> persona -> sexo;
-		// 	if ($sexo == 'Masculino') {
-		// 		$hombresArr[] = $activo;
-		// 	}
-		// 	if ($sexo == 'Femenino') {
-		// 		$mujeresArr[] = $activo;
-		// 	}
-		// }
-		// $menorMasculino = array();
-		// $juvenilMasculino = array();
-		// $mayorMasculino = array();
-		// $menorFemenino = array();
-		// $juvenilFemenino = array();
-		// $mayorFemenino = array();
-		// foreach ($hombresArr as $hombre) {
-		// 	$edad = ReportesController::getAge($hombre -> fechanacimiento);
-		// 	if ($edad > 8 && $edad < 12) {
-		// 		$menorMasculino[] = $hombre;
-		// 	}
-		// 	if ($edad > 11 && $edad < 16) {
-		// 		$juvenilMasculino[] = $hombre;
-		// 	}
-		// 	if($edad > 15){
-		// 		$mayorMasculino[] = $hombre;
-		// 	}
-		// }
-		// foreach ($mujeresArr as $mujer) {
-		// 	$edad = ReportesController::getAge($mujer -> fechanacimiento);
-		// 	if ($edad > 8 && $edad < 12) {
-		// 		$menorFemenino[] = $mujer;
-		// 	}
-		// 	if ($edad > 11 && $edad < 16) {
-		// 		$juvenilFemenino[] = $mujer;
-		// 	}
-		// 	if($edad > 15){
-		// 		$mayorFemenino[] = $mujer;
-		// 	}		}
-		// $q = array(
-		// 	'activos' => count($activosArr),
-		// 	'inactivos' => count($inactivosArr),
-		// 	'nuevos' => count($nuevosArr),
-		// 	'hombres' => count($hombresArr),
-		// 	'mujeres' => count($mujeresArr),
-		// 	'menorMasculino' => count($menorMasculino),
-		// 	'juvenilMasculino' => count($juvenilMasculino),
-		// 	'mayorMasculino' => count($mayorMasculino),
-		// 	'menorFemenino' => count($menorFemenino),
-		// 	'juvenilFemenino' => count($juvenilFemenino),
-		// 	'mayorFemenino' => count($mayorFemenino),
-		// 	'nombre' => $compayzona -> nombre,
-		// 	);
 		return $q;
 	}
 
