@@ -15,6 +15,7 @@ Route::get('login', array('before' => 'guest', function(){
 	return View::make('login/login');
 }));
 Route::get('/', function(){
+	// return View::make('hello');
 	return View::make('hello');
 });
 Route::get('inicio', array('before' => 'auth', function(){

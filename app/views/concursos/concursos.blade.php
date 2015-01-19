@@ -87,6 +87,12 @@
             -moz-box-shadow: 4px 6px 6px #aab2bd;
             -webkit-box-shadow: 4px 6px 6px #aab2bd;
         }
+        h1{
+            color: #41414c;
+            font-family: 'Aguafina Script', sans-serif;
+            font-size: 30px;
+            text-align: center;
+        }
     </style>
     {{  HTML::script('js/bootstrapValidator.js'); }}
     {{  HTML::script('js/es_ES.js'); }}
@@ -94,7 +100,7 @@
     {{  HTML::script('js/sweet-alert.min.js')}}
 @endsection
 @section('contenido')
-    <div class="titulo1 col-md-11 col-md-offset-1">
+    <div class="col-md-12">
         <h1 style="margin-bottom:20px;"><i class="fa fa-trophy"></i> Concurso Nacional de Escoltas</h1>
     </div>
     <div class="hidden col-sm-offset-3 col-sm-6 scol-sm-1 escoltas" style="margin-top:18px;" onclick="escoltas()">
@@ -201,48 +207,6 @@
             <div class="botonagregar col-md-4" data-toggle="modal" data-target="#myModal" onclick="limpio();">
                 <a class="anadir"><i class="fa fa-plus"></i></a>
             </div>
-            {{ Form::open(array('id' => 'formulariomodal','url'=>'#','class'=>'hidden2 col-md-offset-2 col-md-8 form-group')) }}
-                <div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-sm">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" id="myModalLabel">Registro de integrante</h4>
-                            </div>
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    {{ Form::label('concursantenombre', 'Nombre (s)',array('class' => 'control-label')) }}
-                                    {{ Form::text('concursantenombre', null, array('class' => 'form-control')) }}
-                                </div>
-                                <div class="form-group">
-                                    {{ Form::label('concursantepaterno', 'Apellido paterno') }}
-                                    {{ Form::text('concursantepaterno', null, array('class' => 'form-control')) }}
-                                </div>
-                                <div class="form-group">
-                                    {{ Form::label('concursantematerno', 'Apellido materno') }}
-                                    {{ Form::text('concursantematerno', null, array('class' => 'form-control')) }}
-                                </div>
-                                <div id="cargo">
-                                    {{ Form::label('posicion', 'Posición') }}
-                                    <select class="form-control" name="posicion" id="posicion">
-                                        <option value="Abanderado">Abanderado</option>
-                                        <option value="Sargento">Sargento</option>
-                                        <option value="Escolta derecho">Escolta derecho</option>
-                                        <option value="Escolta izquierdo">Escolta izquierdo</option>
-                                        <option value="Guardia derecho">Guardia derecho</option>
-                                        <option value="Guardia izquierdo">Guardia izquierdo</option>
-                                    </select>
-                                    <label class="pull-right label label-warning">Una vez elegido, no puedes cambiarlo</label>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary guardar" data-dismiss="modal" onclick="addintegrante()">Guardar</button>
-                                <span id="actualizar"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {{Form::close()}}
         </div>
         <div class="col-md-12">
             <hr>
@@ -264,8 +228,128 @@
         </div>
         <button type="button" class="pull-right btn btn-primary" data-dismiss="modal" onclick="btnenviar()">Enviar</button>
     {{Form::close()}}
+    {{ Form::open(array('id' => 'formulariomodal','url'=>'#','class'=>'hidden2 col-md-offset-2 col-md-8 form-group')) }}
+        <div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Registro de integrante</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            {{ Form::label('concursantenombre', 'Nombre (s)',array('class' => 'control-label')) }}
+                            {{ Form::text('concursantenombre', null, array('class' => 'form-control')) }}
+                        </div>
+                        <div class="form-group">
+                            {{ Form::label('concursantepaterno', 'Apellido paterno') }}
+                            {{ Form::text('concursantepaterno', null, array('class' => 'form-control')) }}
+                        </div>
+                        <div class="form-group">
+                            {{ Form::label('concursantematerno', 'Apellido materno') }}
+                            {{ Form::text('concursantematerno', null, array('class' => 'form-control')) }}
+                        </div>
+                        <div id="cargo">
+                            {{ Form::label('posicion', 'Posición') }}
+                            <select class="form-control" name="posicion" id="posicion">
+                                <option value="Abanderado">Abanderado</option>
+                                <option value="Sargento">Sargento</option>
+                                <option value="Escolta derecho">Escolta derecho</option>
+                                <option value="Escolta izquierdo">Escolta izquierdo</option>
+                                <option value="Guardia derecho">Guardia derecho</option>
+                                <option value="Guardia izquierdo">Guardia izquierdo</option>
+                            </select>
+                            <label class="pull-right label label-warning">Una vez elegido, no puedes cambiarlo</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary guardar" data-dismiss="modal" onclick="addintegrante()">Guardar</button>
+                        <span id="actualizar"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{Form::close()}}
 @stop
 @section('scripts')
+    <script>
+        $(document).ready(function() {
+            $('#formulariomodal').bootstrapValidator({
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    concursantenombre: {
+                        validators: {
+                            notEmpty: {}
+                        }
+                    },
+                    concursantepaterno: {
+                        validators: {
+                            notEmpty: {}
+                        }
+                    },
+                }
+            });
+            $('#formulario').bootstrapValidator({
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    escuela:{
+                        validators:{
+                            notEmpty :{},
+                        }
+                    },
+                    nombre:{
+                        validators:{
+                            notEmpty :{},
+                        }
+                    },
+                    paterno:{
+                        validators:{
+                            notEmpty :{},
+                        }
+                    },
+                    materno:{
+                        validators:{
+                            notEmpty :{},
+                        }
+                    },
+                    telefono: {
+                        validators: {
+                            integer:{
+                            },
+                            stringLength: {
+                                min: 7,
+                                max:10,
+                            },
+                        }
+                    },
+                    email:{
+                        validators:{
+                            notEmpty :{},
+                            emailAddress: {}
+                        }
+                    },
+                    nombrePDMU:{
+                        validators:{
+                            notEmpty :{},
+                        }
+                    },
+                    paternoPDMU:{
+                        validators:{
+                            notEmpty :{},
+                        }
+                    },
+                }
+            });
+        });
+    </script>
     <script>
         var count = 0;
         var arr = [];
@@ -385,22 +469,5 @@
                     }
                 });
         }
-        $(document).ready(function() {
-            // $('#dashboard-menu').addClass('hidden');
-            $('#formulario').bootstrapValidator({
-                feedbackIcons: {
-                    valid: 'glyphicon glyphicon-ok',
-                    invalid: 'glyphicon glyphicon-remove',
-                    validating: 'glyphicon glyphicon-refresh'
-                },
-                fields: {
-                    concursantenombre: {
-                        validators: {
-                            notEmpty: {}
-                        }
-                    },
-                }
-            })
-        });
     </script>
 @endsection

@@ -265,6 +265,7 @@
             }
         };
         function masInformacion(id) {
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
             arrayId = [];
             arrayId.push($('#check-'+id).attr('value'));
             $('.menucompanias').html('');
@@ -275,6 +276,7 @@
             $('#compania').removeClass('hidden');
         };
         function coleccion () {
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
             arrayId = [];
             $("input:checkbox:checked").each(function(){
                 arrayId.push($(this).attr('value'));
@@ -288,7 +290,7 @@
     </script>
     <script>
         function dibujagrafica() {
-            // $('#compania').addClass('hidden');
+            $('#compania').addClass('hidden');
             $('#spin').removeClass('hidden');
             $('#grafica').html('');
             $('#datos').html('');
@@ -309,37 +311,6 @@
             $.post('reportes/compania',{id:id,parametros:parametros}, function(json) {
                 console.log(json);
                 $('#spin').addClass('hidden');
-                // $('#nombre').html(json.nombre);
-                // // console.log(json);
-                // var lista = [
-                //     {nombre:"Menor M.",cantidad:json.menorMasculino},
-                //     {nombre:"Juvenil M.",cantidad:json.juvenilMasculino},
-                //     {nombre:"Mayor M.",cantidad:json.mayorMasculino},
-                //     {nombre:"Menor F.",cantidad:json.menorFemenino},
-                //     {nombre:"Juvenil F.",cantidad:json.juvenilFemenino},
-                //     {nombre:"Mayor F.",cantidad:json.mayorFemenino},
-                // ];
-                // var data = [];
-                // $("input:checkbox:checked").each(function(){
-                //     parent = $(this).parent().attr('id');
-                //     data.push(lista[$(this).attr('id')-1]);
-                // });
-                // // console.log(data);
-                // if (data.length > 0){
-                //     Morris.Bar({
-                //         element: 'grafica',
-                //         data: data,
-                //         xkey: 'nombre',
-                //         ykeys: ['cantidad',],
-                //         labels: ['nombre'],
-                //         barColors:['#F44336'],
-                //     });
-                //     $('.morris-default-style').addClass('hidden');
-                //     $('#imprimir').removeClass('hidden');
-                //     $.each(data,function(index,dato){
-                //         $('#datos').append('<h1 class="informacion label label-danger" style="margin-left: 5px;">'+dato.nombre+' = '+dato.cantidad+' elementos</h1><br><br>');
-                //     });
-                // };
             }, 'json');
         }
     </script>
