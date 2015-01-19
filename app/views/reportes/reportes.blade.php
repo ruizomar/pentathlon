@@ -62,12 +62,16 @@
             margin-top: 3px;
             font-size: 14px;
         }
+        .etiquetas{
+            margin-top: 15px;
+        }
     </style>
     {{  HTML::style('css/sweet-alert.css')}}
     {{  HTML::style('css/tour/bootstrap-tour.min.css')}}
     {{  HTML::script('js/tour/bootstrap-tour.min.js')}}
     {{  HTML::script('js/chart/morris.min.js')}}
     {{  HTML::script('js/chart/raphael-min.js')}}
+    {{  HTML::style('css/bootstrap-datetimepicker.min.css');  }}
 @endsection
 @section('contenido')
     <div class="titulo1 col-md-11 col-md-offset-1">
@@ -80,8 +84,8 @@
             <div id="reconocimientos"></div>
         </a>
         <a href="{{ URL::to('history'); }}" class="requisitos col-md-6 text-center">
-            <h4>Reporte por elemento</h4>
-            <i class="fa fa-user fa-5x"></i>
+            <h4>Reporte por evento</h4>
+            <i class="fa fa-crosshairs fa-5x"></i>
             <div id="reconocimientos"></div>
         </a>
     </div>
@@ -96,27 +100,124 @@
     </div>
     <div class="hidden col-md-12" id="compania" style="left:10;">
         <h1 id="nombre" style="margin-bottom:20px;"><i class="fa fa-bar-chart"></i></h1>
-        <div class="form-group col-md-12">
-            <label class="checkbox-inline">
-                <input id="1" type="checkbox"> Masculino Menor
-            </label>
-            <label class="checkbox-inline">
-                <input id="2" type="checkbox"> Masculino Juvenil
-            </label>
-            <label class="checkbox-inline">
-                <input id="3" type="checkbox"> Masculino Mayor
-            </label>
-            <label class="checkbox-inline">
-                <input id="4" type="checkbox"> Femenino Menor
-            </label>
-            <label class="checkbox-inline">
-                <input id="5" type="checkbox"> Femenino Juvenil
-            </label>
-            <label class="checkbox-inline">
-                <input id="6" type="checkbox"> Femenino Mayor
-            </label>
-            <div id="generar">
+        <button class="pull-right btn-xs btn btn-success" onclick="dibujagrafica()"><i class="fa fa-bar-chart"></i> Generar grafica</button>
+        <div class="col-md-5">
+            {{ Form::label('birthday', 'Fecha de inicio') }}
+            <div class="input-group date col-md-6" id="datetimePicker">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                {{ Form::text('birthday', null, array('id' => 'fechainicio','class' => 'form-control', 'placeholder' => 'YYYY-MM-DD', 'data-date-format' => 'YYYY-MM-DD')) }}
             </div>
+        </div>
+        <div class="col-md-5">
+            {{ Form::label('birthday2', 'Fecha de fin') }}
+            <div class="input-group date col-md-6" id="datetimePicker2">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                {{ Form::text('birthday2', null, array('id' => 'fechafin','class' => 'form-control', 'placeholder' => 'YYYY-MM-DD', 'data-date-format' => 'YYYY-MM-DD')) }}
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            <hr>
+            <label class="label label-primary"> Género <i class="fa fa-female"></i> / <i class="fa fa-male"></i></label><br>
+            <div class="col-md-2 etiquetas">
+                <label id="1" class="checkbox-inline">
+                    <input id="1" type="checkbox">Masculino
+                </label>
+            </div>
+            <div class="col-md-2 etiquetas">
+                <label id="2" class="checkbox-inline">
+                    <input id="2" type="checkbox">Femenino
+                </label>
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            <hr>
+            <label class="label label-primary"> Edad <i class="fa fa-child"></i></label><br>
+            <div class="col-md-2 etiquetas">
+                <label id="1" class="checkbox-inline">
+                    <input id="1" type="checkbox">Menor
+                </label>
+            </div>
+            <div class="col-md-2 etiquetas">
+                <label id="2" class="checkbox-inline">
+                    <input id="2" type="checkbox">Juvenil
+                </label>
+            </div>
+            <div class="col-md-2 etiquetas">
+                <label id="3" class="checkbox-inline">
+                    <input id="3" type="checkbox">Mayor
+                </label>
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            <hr>
+            <label class="label label-primary"> Grados <i class="fa fa-star"></i></label><br>
+            <div class="col-md-3 etiquetas">
+                <label id="7" class="checkbox-inline">
+                    <input id="7" type="checkbox"> Recluta
+                </label>
+            </div>
+            <div class="col-md-3 etiquetas">
+                <label id="8" class="checkbox-inline">
+                    <input id="8" type="checkbox"> Cadete de infantería
+                </label>
+            </div>
+            <div class="col-md-3 etiquetas">
+                <label id="9" class="checkbox-inline">
+                    <input id="9" type="checkbox"> Cadete 1a
+                </label>
+            </div>
+            <div class="col-md-3 etiquetas">
+                <label id="10" class="checkbox-inline">
+                    <input id="10" type="checkbox"> Cabo
+                </label>
+            </div>
+            <div class="col-md-3 etiquetas">
+                <label id="11" class="checkbox-inline">
+                    <input id="11" type="checkbox"> Sargento 2
+                </label>
+            </div>
+            <div class="col-md-3 etiquetas">
+                <label id="12" class="checkbox-inline">
+                    <input id="12" type="checkbox"> Sargento 1
+                </label>
+            </div>
+            <div class="col-md-3 etiquetas">
+                <label id="13" class="checkbox-inline">
+                    <input id="13" type="checkbox"> Sub Oficial
+                </label>
+            </div>
+            <div class="col-md-3 etiquetas">
+                <label id="14" class="checkbox-inline">
+                    <input id="14" type="checkbox"> 3 Oficial
+                </label>
+            </div>
+            <div class="col-md-3 etiquetas">
+                <label id="15" class="checkbox-inline">
+                    <input id="15" type="checkbox"> 2 Oficial
+                </label>
+            </div>
+            <div class="col-md-3 etiquetas">
+                <label id="16" class="checkbox-inline">
+                    <input id="16" type="checkbox"> 1 Oficial
+                </label>
+            </div>
+            <div class="col-md-3 etiquetas">
+                <label id="17" class="checkbox-inline">
+                    <input id="17" type="checkbox"> 3 Comandante
+                </label>
+            </div>
+            <div class="col-md-3 etiquetas">
+                <label id="18" class="checkbox-inline">
+                    <input id="18" type="checkbox"> 2 Comandante
+                </label>
+            </div>
+            <div class="col-md-3 etiquetas">
+                <label id="19" class="checkbox-inline">
+                    <input id="19" type="checkbox"> 1 Comandante
+                </label>
+            </div>
+            <!-- <div id="generar">
+            </div> -->
         </div>
         <div id="grafica" class="col-md-12" style="background:#f2f2f2;">
         </div>
@@ -129,6 +230,12 @@
 @stop
 @section('scripts')
     <script>
+        $(document).ready(function() {
+            $('#datetimePicker ,#datetimePicker2').datetimepicker({
+                language: 'es',
+                pickTime: false
+            });
+        });
         $('#Reportes, #2Reportes').addClass('active');
         var arrayId;
         function companias () {
@@ -161,7 +268,7 @@
             $('.titulo1').addClass('hidden');
             $.post('reportes/nombre',{id:id}, function(json) {
                 $('#nombre').html(json.nombre);
-                $('#generar').html('<button class="pull-right btn-xs btn btn-success" onclick="dibujagrafica()"><i class="fa fa-bar-chart"></i> Generar reporte</button>');
+                // $('#generar').html('<button class="pull-right btn-xs btn btn-success" onclick="dibujagrafica()"><i class="fa fa-bar-chart"></i> Generar grafica</button>');
             }, 'json');
             $('#compania').removeClass('hidden');
         };
@@ -172,7 +279,7 @@
                 // dibujagrafica();
             });
             // console.log(arrayId);
-            dibujagrafica();
+            // dibujagrafica();
             $('.menucompanias').html('');
             $('.titulo1').addClass('hidden');
             $('#compania').removeClass('hidden');
@@ -185,39 +292,77 @@
             $('#grafica').html('');
             $('#datos').html('');
             $('#imprimir').addClass('hidden');
-            console.log(arrayId);
+            // console.log(arrayId);
             id = arrayId;
-            $.post('reportes/compania',{id:id}, function(json) {
+            inicio = $('#fechainicio').val();
+            fin = $('#fechafin').val();
+            parametros = {
+                fechas:{
+                    inicio:inicio,
+                    fin:fin,
+                },
+                sexo:{
+                    1:'Masculino',
+                    2:'Femenino',
+                },
+                edad:{
+                    3:8,
+                    4:12,
+                    5:15,
+                },
+                grado:{
+                    7:1,
+                    8:2,
+                    9:3,
+                    10:4,
+                    11:5,
+                    12:6,
+                    13:7,
+                    14:8,
+                    15:9,
+                    16:10,
+                    17:11,
+                    18:12,
+                    19:13,
+                }
+            }
+            $.post('reportes/compania',{id:id,parametros:parametros}, function(json) {
                 console.log(json);
-                var lista = [
-                    {nombre:"Menor M.",cantidad:json.menorMasculino},
-                    {nombre:"Juvenil M.",cantidad:json.juvenilMasculino},
-                    {nombre:"Mayor M.",cantidad:json.mayorMasculino},
-                    {nombre:"Menor F.",cantidad:json.menorFemenino},
-                    {nombre:"Juvenil F.",cantidad:json.juvenilFemenino},
-                    {nombre:"Mayor F.",cantidad:json.mayorFemenino},
-                ];
-                var data = [];
-                $("input:checkbox:checked").each(function(){
-                    data.push(lista[$(this).attr('id')-1]);
-                });
-                // console.log(data);
-                if (data.length > 0){
-                    Morris.Bar({
-                        element: 'grafica',
-                        data: data,
-                        xkey: 'nombre',
-                        ykeys: ['cantidad',],
-                        labels: ['nombre'],
-                        barColors:['#F44336'],
-                    });
-                    $('.morris-default-style').addClass('hidden');
-                    $('#imprimir').removeClass('hidden');
-                    $.each(data,function(index,dato){
-                        $('#datos').append('<h1 class="informacion label label-danger" style="margin-left: 5px;">'+dato.nombre+' = '+dato.cantidad+' elementos</h1><br><br>');
-                    });
-                };
+                // $('#nombre').html(json.nombre);
+                // // console.log(json);
+                // var lista = [
+                //     {nombre:"Menor M.",cantidad:json.menorMasculino},
+                //     {nombre:"Juvenil M.",cantidad:json.juvenilMasculino},
+                //     {nombre:"Mayor M.",cantidad:json.mayorMasculino},
+                //     {nombre:"Menor F.",cantidad:json.menorFemenino},
+                //     {nombre:"Juvenil F.",cantidad:json.juvenilFemenino},
+                //     {nombre:"Mayor F.",cantidad:json.mayorFemenino},
+                // ];
+                // var data = [];
+                // $("input:checkbox:checked").each(function(){
+                //     parent = $(this).parent().attr('id');
+                //     data.push(lista[$(this).attr('id')-1]);
+                // });
+                // // console.log(data);
+                // if (data.length > 0){
+                //     Morris.Bar({
+                //         element: 'grafica',
+                //         data: data,
+                //         xkey: 'nombre',
+                //         ykeys: ['cantidad',],
+                //         labels: ['nombre'],
+                //         barColors:['#F44336'],
+                //     });
+                //     $('.morris-default-style').addClass('hidden');
+                //     $('#imprimir').removeClass('hidden');
+                //     $.each(data,function(index,dato){
+                //         $('#datos').append('<h1 class="informacion label label-danger" style="margin-left: 5px;">'+dato.nombre+' = '+dato.cantidad+' elementos</h1><br><br>');
+                //     });
+                // };
             }, 'json');
         }
     </script>
+    {{  HTML::script('js/moment.js'); }}
+    {{  HTML::script('js/bootstrap-datetimepicker.js'); }}
+    {{  HTML::script('js/bootstrap-datetimepicker.es.js'); }}
 @endsection
