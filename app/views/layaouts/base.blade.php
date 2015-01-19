@@ -84,6 +84,9 @@
           <li id="2Historial" class=" "><a rel="tooltip" data-placement="right" data-original-title="Icons" href="{{ URL::to('history'); }}"><i class="fa fa-clock-o"></i> <span class="caption">Historial</span></a></li>
          @endif
         <li id="2Reportes" class=" "><a rel="tooltip" data-placement="right" data-original-title="Icons" href="{{ URL::to('reportes'); }}"><i class="fa fa-bar-chart"></i> <span class="caption">Reportes</span></a></li> 
+        @if(!is_null(User::find(Auth::id())->roles()->where('id','=',1)->first()))
+          <li id="2Administracion" class=" "><a rel="tooltip" data-placement="right" data-original-title="Icons" href="{{ URL::to('history'); }}"><i class="fa fa-tachometer"></i> <span class="caption">Administracion</span></a></li>
+         @endif
       </ul>
     </div>
   </div>
@@ -123,6 +126,9 @@
           <li id="Historial" class=" "><a rel="tooltip" data-placement="right" data-original-title="Icons" href="{{ URL::to('history'); }}"><i class="fa fa-clock-o"></i> <span class="caption">Historial</span></a></li>
          @endif
         <li id="Reportes" class=" "><a rel="tooltip" data-placement="right" data-original-title="Icons" href="{{ URL::to('reportes'); }}"><i class="fa fa-bar-chart"></i> <span class="caption">Reportes</span></a></li> 
+        @if(!is_null(User::find(Auth::id())->roles()->where('id','=',1)->first()))
+          <li id="2Administracion" class=" "><a rel="tooltip" data-placement="right" data-original-title="Icons" href="{{ URL::to('history'); }}"><i class="fa fa-tachometer"></i> <span class="caption">Administracion</span></a></li>
+         @endif
       </ul>
   </div>
 <!-- end sidenavbar -->

@@ -14,13 +14,23 @@
 @section('contenido')
     <div class="row">
         <div id="backups">
-            @foreach($backups as $backup)
-                <p><a href="admin/download/{{$backup}}" title="">{{$backup}}</a></p>
-            @endforeach
+            <div class="col-sm-4 col-sm-offset-1">
+                <h2><i class="fa fa-database"></i> Backup:</h2>
+                @foreach($backups as $backup)
+                    <h3><a href="admin/download/{{$backup}}" title="Descargar"><i class="fa fa-download"></i> {{$backup}}</a> | <a href="admin/delete/{{$backup}}" title="Eliminar"><i class="fa fa-times"></i></a> | <a href="admin/restore/{{$backup}}" title="Restaurar"><i class="fa fa-upload"></i></a></h3>
+                @endforeach
+            </div>
         </div>
+        <!-- <div class="restor">
+            <div class="col-sm-4 col-sm-offset-1">
+                <h2>Restore backup</h2>
+                <input type="file" name="bakup" value="" placeholder="backup.sql">
+                <button type="button" class="btn btn-success">ok</button>
+            </div>
+        </div> -->
     </div>
     <div class="row">  
-        <div class="col-sm-2">
+        <div class="col-sm-2 col-sm-offset-1">
             <a class="btn btn-primary" href="/admin/backup">Crear Backup</a>
         </div>
     </div>
@@ -50,80 +60,6 @@
 } );
 </script>
 <script type="text/javascript">
-$(document).ready(function() {
-    $('#update').bootstrapValidator({
-        feedbackIcons: {
-            valid: 'glyphicon glyphicon-ok nombre',
-            invalid: 'glyphicon glyphicon-remove nombre',
-            validating: 'glyphicon glyphicon-refresh nombre'
-        },
-        fields: {
-            nombre: {
-                validators: {
-                    notEmpty: {
-                    }
-                }
-            },
-            id: {
-                validators: {
-                    integer: {
-                    }
-                }
-            }
-        }
-    })
-    .on('success.field.bv', function(e, data) {
-            if (data.bv.getSubmitButton()) {
-                data.bv.disableSubmitButtons(false);
-            }
-        })
-    .on('success.form.bv', function(e) {
-        $('.fa-refresh').removeClass('hidden');
-    });
-});
-$('[name=estatus]').change(function() {
-  if ($('[name=id]').val() != '' && $('[name=estatus]').val() == 'Inactiva') {
-    $('#nueva').modal('hide');
-    $tipe = $('#tipo').val();
-    $('#malert').html('<h2 class=""><i class="fa fa-exclamation-triangle fa-lg text-danger"></i>  Esta operacion dara de baja a los elementos inscritos en esta '+$tipe+'.</h2>');
-    $('#confirmar').modal('show');
-    }
-});
-$('#bconfirmar').click(function(){
-    $('#nueva').modal('show');
-    $('#confirmar').modal('hide');
-});
-$('#bcancelar').click(function(){
-    $("tbody").find('tr').removeClass('danger') .find('button').attr('disabled',false);
-});
-$('#status').change(function(){
-    setTimeout (function () {
-        swal($('#status_title').text(), $('#message').text(), $('#status').text())
-    }, 1000);
-}).change();
-$('#bnueva').click(function(){
-        $('#nueva').modal('show');
-        $('[name=name]').html('<i class="fa fa-pencil"></i> Nueva Subzona/Compañía');
-        $('[name=id]').val("");
-        $('[name=nombre]').val("");
-        $("tbody").find('tr').removeClass('danger') .find('button').attr('disabled',false);
-    });
-$('#nueva').on('hide.bs.modal', function() {
-    if($('[name=id]').val() == '')
-        $('#update').bootstrapValidator('resetForm', true);
-    $('#update').bootstrapValidator('resetForm');
-});
-$('#Companias, #2Companias').addClass('active');
-function editar(btn){
-	$(btn).closest("tbody").find('tr').removeClass('danger').find('button').attr('disabled',false);
-	$(btn).attr('disabled',true).closest("tr").addClass('danger');
-	$('.message').addClass('hidden');
-	$('#nueva').modal('show');
-	$('[name=name]').text($(btn).closest("tr").find("td:nth-child(2)").text());
-	$('[name=id]').val($(btn).closest("tr").find("td:nth-child(1)").text());
-	$('[name=nombre]').val($(btn).closest("tr").find("td:nth-child(2)").text());
-	$('[name=tipo] option[value='+$(btn).closest("tr").find("td:nth-child(3)").text()+']').attr('selected', true);
-	$('[name=estatus] option[value='+$(btn).closest("tr").find("td:nth-child(4)").text()+']').attr('selected', true);
-}
+$('#Administracion, #2Administracion').addClass('active');
 </script>
 @endsection

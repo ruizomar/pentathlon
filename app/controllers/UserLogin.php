@@ -11,7 +11,7 @@ class UserLogin extends BaseController {
  
         if(Auth::attempt($userdata))
         {
-            return Redirect::to('/');
+            return Redirect::to('inicio');
         }
         else{
 			return Redirect::to('login')->with('mensaje_error','El nombre de usuario o la contraseña son incorrectos.');
