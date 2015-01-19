@@ -27,15 +27,15 @@ class AdminController extends BaseController {
     public function backup_tables($host,$user,$pass,$name,$tables = "*")
     {
         // $tables = 'tipoarmas,companiasysubzonas,tipocuerpos,personas,elementos,matriculas,arrestos,grados,ascensos,asistencias,cargos,cargo_elemento,documentos,tipoeventos,eventos,elemento_evento,examens,elemento_examen,emails,facebooks,pagos,reconocimientos,status,telefonos,tutores,twitters,users,roles,role_user,reminders,donativos';
-        $link = mysql_connect($host,$user,$pass);
-        mysql_select_db($name,$link);
+        $link = mysqli_connect($host,$user,$pass,$name);
+        //mysql_select_db($name,$link);
         
         //get all of the tables
         if($tables == '*')
         {
             $tables = array();
-            $result = mysql_query('SHOW TABLES');
-            while($row = mysql_fetch_row($result))
+            $result = mysqli_query($link,'SHOW TABLES');
+            while($row = mysqli_fetch_row($result))
             {
                 $tables[] = $row[0];
             }
@@ -50,7 +50,7 @@ class AdminController extends BaseController {
         {
             
             $return.= 'DROP TABLE IF EXISTS '.$table.';';
-            $row2 = mysql_fetch_row(mysql_query('SHOW CREATE TABLE '.$table));
+            $row2 = mysqli_fetch_row(mysqli_query($link,'SHOW CREATE TABLE '.$table));
             $return.= "\n\n".$row2[1].";\n\n";
 
             $return.="\n\n\n";
@@ -58,11 +58,11 @@ class AdminController extends BaseController {
         //////inserts
         foreach($tables as $table)
         {
-            $result = mysql_query('SELECT * FROM '.$table);
-            $num_fields = mysql_num_fields($result);
+            $result = mysqli_query($link,'SELECT * FROM '.$table);
+            $num_fields = mysqli_num_fields($result);
             for ($i = 0; $i < $num_fields; $i++) 
             {
-                while($row = mysql_fetch_row($result))
+                while($row = mysqli_fetch_row($result))
                 {
                     $return.= 'INSERT INTO '.$table.' VALUES(';
                     for($j=0; $j<$num_fields; $j++) 
@@ -78,8 +78,8 @@ class AdminController extends BaseController {
         }
         //////////////triggers
         $triggers = array();
-        $result = mysql_query('SHOW TRIGGERS');
-        while($row = mysql_fetch_row($result))
+        $result = mysqli_query($link,'SHOW TRIGGERS');
+        while($row = mysqli_fetch_row($result))
         {
             $triggers[] = $row[0];
         }
@@ -87,7 +87,7 @@ class AdminController extends BaseController {
         foreach($triggers as $trigger)
         {
             $return.= 'DROP TRIGGER IF EXISTS '.$trigger.';';
-            $row2 = mysql_fetch_row(mysql_query('SHOW CREATE TRIGGER '.$trigger));
+            $row2 = mysqli_fetch_row(mysqli_query($link,'SHOW CREATE TRIGGER '.$trigger));
             $return.= "\n\n".$row2[2].";\n\n";
         }
         $return.="DELIMITER ;\n\n\n";
@@ -130,7 +130,7 @@ class AdminController extends BaseController {
                     {
                         $query = trim(implode('', $query));
 
-                        if (mysql_query($query) === false)
+                        if (mysqli_query($link,$query) === false)
                         {
                             //echo '<h3>ERROR: ' . $query . '</h3>' . "\n";
                         }
