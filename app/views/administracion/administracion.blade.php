@@ -17,7 +17,7 @@
             <div class="col-sm-4 col-sm-offset-1">
                 <h2><i class="fa fa-database"></i> Backup:</h2>
                 @foreach($backups as $backup)
-                    <h3><a href="admin/download/{{$backup}}" title="Descargar"><i class="fa fa-download"></i> {{$backup}}</a> | <a href="admin/delete/{{$backup}}" title="Eliminar" ><i class="fa fa-times"></i></a> | <button href="admin/restore/{{$backup}}" title="Restaurar" class="restore"><i class="fa fa-upload"></i></button></h3>
+                    <h3><a href="{{'admin/download/'.$backup}}" title="Descargar"><i class="fa fa-download"></i> {{$backup}}</a> | <a href="{{'admin/delete/'.$backup}}" title="Eliminar" ><i class="fa fa-times"></i></a> | <button href="{{'admin/restore/'.$backup}}" title="Restaurar" class="restore"><i class="fa fa-upload"></i></button></h3>
                 @endforeach
             </div>
         </div>
@@ -31,7 +31,7 @@
     </div>
     <div class="row">  
         <div class="col-sm-2 col-sm-offset-1">
-            <a class="btn btn-primary" href="/admin/backup">Crear Backup</a>
+            <a class="btn btn-primary" href="{{ URL::to('admin/backup'); }}">Crear Backup</a>
         </div>
     </div>
 @endsection
