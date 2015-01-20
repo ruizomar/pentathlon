@@ -4,6 +4,7 @@ class AsignaCargosController extends BaseController {
 	public function __construct()
     {
         $this->beforeFilter('auth');
+        $this->beforeFilter('militar');
     }
 
 	public function getIndex()

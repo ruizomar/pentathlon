@@ -28,7 +28,7 @@ return array(
 	|
 	*/
 
-	'host' => 'smtp.gmail.com',
+	'host' => 'privauk-10.privatednsorg.com',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -54,7 +54,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => '', 'name' => ''),
+	'from' => array('address' => '', 'name' => 'Pentathlon Oaxaca'),
 
 	/*
 	|--------------------------------------------------------------------------

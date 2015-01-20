@@ -1,6 +1,9 @@
 <?php 
 class BuscarController extends BaseController{
-
+	public function __construct()
+    {
+        $this->beforeFilter('auth');
+    }
 	public function buscar(){
 		$rules = array(
 			'nombre' => 'required',

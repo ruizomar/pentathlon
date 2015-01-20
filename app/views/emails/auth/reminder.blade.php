@@ -8,13 +8,13 @@
 <div>
 	<p>Recientemente has solicitado restablecer tu contraseña.</p>
 
-	<p>Click en el enlase para restablecer tu contraseña:<br>
+	<p>Click en el enlace para restablecer tu contraseña:<br>
 	{{ URL::to('recover', array($token)) }}</p>
 
 	<p>Te recomendamos que cambies la contraseña por una que recuerdes fácilmente.</p>
 
 	<p>Atentamente<br/>
-	Pentathlón Deportivo Militarizado Universitario</p>
+	Pentathlón Deportivo Militarizado Universitario de Oaxaca</p>
 </div>
 </body>
 </html>

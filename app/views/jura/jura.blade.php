@@ -52,6 +52,7 @@
 @section('scripts')
 	{{  HTML::script('js/sweet-alert.min.js')}}
 	<script>
+	$('#Juras,#2Juras').addClass('active');
 		$('#listar').on('click', function(e) {
 			$('#eliminar').removeClass('hidden');
 			$('#elementobody').html('');

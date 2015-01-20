@@ -3,6 +3,7 @@ class ArmasController extends BaseController{
 	public function __construct()
     {
         $this->beforeFilter('auth');
+        $this->beforeFilter('admin');
     }
 	public function getIndex(){
 		return View::make('armas/armas')->with('armas',Tipoarma::all());
