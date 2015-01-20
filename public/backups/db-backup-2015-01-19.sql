@@ -29,7 +29,7 @@ CREATE TABLE `ascensos` (
   KEY `fk_ascensos_elementos1_idx` (`elemento_id`),
   CONSTRAINT `fk_ascensos_elementos1` FOREIGN KEY (`elemento_id`) REFERENCES `elementos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_ascensos_grados1` FOREIGN KEY (`grado_id`) REFERENCES `grados` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=252 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=231 DEFAULT CHARSET=utf8;
 
 
 
@@ -65,7 +65,7 @@ CREATE TABLE `cargo_elemento` (
   KEY `fk_cargosobtenido_elementos1` (`elemento_id`),
   CONSTRAINT `fk_cargosobtenido_cargos1` FOREIGN KEY (`cargo_id`) REFERENCES `cargos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_cargosobtenido_elementos1` FOREIGN KEY (`elemento_id`) REFERENCES `elementos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 
 
@@ -89,7 +89,28 @@ CREATE TABLE `companiasysubzonas` (
   `tipo` varchar(45) DEFAULT NULL,
   `status` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+
+
+
+
+DROP TABLE IF EXISTS concursantes;
+
+CREATE TABLE `concursantes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(45) DEFAULT NULL,
+  `paterno` varchar(45) DEFAULT NULL,
+  `materno` varchar(45) DEFAULT NULL,
+  `telefono` varchar(45) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  `escuela` varchar(45) DEFAULT NULL,
+  `estado` varchar(45) DEFAULT NULL,
+  `tipo` varchar(45) DEFAULT NULL,
+  `evento_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_concursantes_eventos1_idx` (`evento_id`),
+  CONSTRAINT `fk_concursantes_eventos1` FOREIGN KEY (`evento_id`) REFERENCES `eventos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
@@ -104,7 +125,7 @@ CREATE TABLE `documentos` (
   PRIMARY KEY (`id`),
   KEY `fk_documentos_elementos1_idx` (`elemento_id`),
   CONSTRAINT `fk_documentos_elementos1` FOREIGN KEY (`elemento_id`) REFERENCES `elementos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=712 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=691 DEFAULT CHARSET=utf8;
 
 
 
@@ -119,7 +140,7 @@ CREATE TABLE `donativos` (
   `donativo` int(6) NOT NULL,
   `fecha` date NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 
 
@@ -192,7 +213,7 @@ CREATE TABLE `elementos` (
   CONSTRAINT `fk_elementos_companiasysubzonas1` FOREIGN KEY (`companiasysubzona_id`) REFERENCES `companiasysubzonas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_elementos_cuerpos1` FOREIGN KEY (`tipocuerpo_id`) REFERENCES `tipocuerpos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_elementos_personas1` FOREIGN KEY (`persona_id`) REFERENCES `personas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=252 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=231 DEFAULT CHARSET=utf8;
 
 
 
@@ -224,7 +245,7 @@ CREATE TABLE `eventos` (
   PRIMARY KEY (`id`),
   KEY `fk_eventos_tipoeventos1_idx` (`tipoevento_id`),
   CONSTRAINT `fk_eventos_tipoeventos1` FOREIGN KEY (`tipoevento_id`) REFERENCES `tipoeventos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 
 
@@ -239,7 +260,7 @@ CREATE TABLE `examens` (
   PRIMARY KEY (`id`,`grado_id`),
   KEY `fk_examens_grados1_idx` (`grado_id`),
   CONSTRAINT `fk_examens_grados1` FOREIGN KEY (`grado_id`) REFERENCES `grados` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 
 
@@ -294,7 +315,7 @@ CREATE TABLE `pagos` (
   PRIMARY KEY (`id`),
   KEY `fk_pagos_elementos1_idx` (`elemento_id`),
   CONSTRAINT `fk_pagos_elementos1` FOREIGN KEY (`elemento_id`) REFERENCES `elementos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=231 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=235 DEFAULT CHARSET=utf8;
 
 
 
@@ -308,7 +329,7 @@ CREATE TABLE `personas` (
   `apellidomaterno` varchar(45) DEFAULT NULL,
   `sexo` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=503 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=461 DEFAULT CHARSET=utf8;
 
 
 
@@ -325,7 +346,7 @@ CREATE TABLE `reconocimientos` (
   PRIMARY KEY (`id`,`elemento_id`),
   KEY `fk_reconocimientos_elementos1_idx` (`elemento_id`),
   CONSTRAINT `fk_reconocimientos_elementos1` FOREIGN KEY (`elemento_id`) REFERENCES `elementos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 
 
@@ -382,7 +403,7 @@ CREATE TABLE `status` (
   PRIMARY KEY (`id`,`elemento_id`),
   KEY `fk_status_elementos1_idx` (`elemento_id`),
   CONSTRAINT `fk_status_elementos1` FOREIGN KEY (`elemento_id`) REFERENCES `elementos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=252 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=231 DEFAULT CHARSET=utf8;
 
 
 
@@ -447,7 +468,7 @@ CREATE TABLE `tutores` (
   KEY `fk_tutores_elementos1_idx` (`elemento_id`),
   CONSTRAINT `fk_tutores_elementos1` FOREIGN KEY (`elemento_id`) REFERENCES `elementos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_tutores_personas1` FOREIGN KEY (`persona_id`) REFERENCES `personas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=252 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=231 DEFAULT CHARSET=utf8;
 
 
 
@@ -476,25 +497,25 @@ CREATE TABLE `users` (
   `remember_token` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`,`elemento_id`),
   KEY `fk_usuarios_elementos1_idx` (`elemento_id`),
-  CONSTRAINT `fk_usuarios_elementos1` FOREIGN KEY (`elemento_id`) REFERENCES `elementos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `fk_usuarios_elementos1` FOREIGN KEY (`elemento_id`) REFERENCES `elementos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=231 DEFAULT CHARSET=utf8;
 
 
 
 
-INSERT INTO ascensos VALUES("1","2","1","0000-00-00");
+INSERT INTO ascensos VALUES("1","2","1","2013-06-30");
 INSERT INTO ascensos VALUES("2","5","2","2013-05-11");
-INSERT INTO ascensos VALUES("3","2","3","0000-00-00");
-INSERT INTO ascensos VALUES("4","2","4","0000-00-00");
+INSERT INTO ascensos VALUES("3","2","3","2013-06-30");
+INSERT INTO ascensos VALUES("4","2","4","2013-06-30");
 INSERT INTO ascensos VALUES("5","2","5","2013-06-30");
 INSERT INTO ascensos VALUES("6","2","6","2013-06-30");
 INSERT INTO ascensos VALUES("7","2","7","2013-06-30");
 INSERT INTO ascensos VALUES("8","2","8","2013-06-30");
-INSERT INTO ascensos VALUES("9","2","9","0000-00-00");
-INSERT INTO ascensos VALUES("10","2","10","0000-00-00");
-INSERT INTO ascensos VALUES("11","2","11","0000-00-00");
-INSERT INTO ascensos VALUES("12","2","12","0000-00-00");
-INSERT INTO ascensos VALUES("13","2","13","0000-00-00");
+INSERT INTO ascensos VALUES("9","2","9","2013-06-30");
+INSERT INTO ascensos VALUES("10","2","10","2013-06-30");
+INSERT INTO ascensos VALUES("11","2","11","2013-06-30");
+INSERT INTO ascensos VALUES("12","2","12","2013-06-30");
+INSERT INTO ascensos VALUES("13","2","13","2013-06-30");
 INSERT INTO ascensos VALUES("14","2","14","2013-06-30");
 INSERT INTO ascensos VALUES("15","2","15","2013-06-30");
 INSERT INTO ascensos VALUES("16","2","16","2013-06-30");
@@ -512,7 +533,7 @@ INSERT INTO ascensos VALUES("27","2","27","2013-06-30");
 INSERT INTO ascensos VALUES("28","2","28","2013-06-30");
 INSERT INTO ascensos VALUES("29","2","29","2013-06-30");
 INSERT INTO ascensos VALUES("30","2","30","2013-06-30");
-INSERT INTO ascensos VALUES("31","4","31","0000-00-00");
+INSERT INTO ascensos VALUES("31","4","31","2013-06-30");
 INSERT INTO ascensos VALUES("32","2","32","2013-06-30");
 INSERT INTO ascensos VALUES("33","2","33","2013-06-30");
 INSERT INTO ascensos VALUES("34","2","34","2013-06-30");
@@ -559,8 +580,8 @@ INSERT INTO ascensos VALUES("74","2","74","2013-06-30");
 INSERT INTO ascensos VALUES("75","2","75","2013-06-30");
 INSERT INTO ascensos VALUES("76","2","76","2013-06-30");
 INSERT INTO ascensos VALUES("77","2","77","2013-06-30");
-INSERT INTO ascensos VALUES("78","4","78","0000-00-00");
-INSERT INTO ascensos VALUES("79","2","79","0000-00-00");
+INSERT INTO ascensos VALUES("78","4","78","2013-06-30");
+INSERT INTO ascensos VALUES("79","2","79","2013-06-30");
 INSERT INTO ascensos VALUES("80","2","80","2013-06-30");
 INSERT INTO ascensos VALUES("81","2","81","2013-06-30");
 INSERT INTO ascensos VALUES("82","2","82","2013-06-30");
@@ -712,29 +733,11 @@ INSERT INTO ascensos VALUES("227","2","227","2013-06-30");
 INSERT INTO ascensos VALUES("228","2","228","2013-06-30");
 INSERT INTO ascensos VALUES("229","9","229","1988-03-12");
 INSERT INTO ascensos VALUES("230","13","230","2013-09-09");
-INSERT INTO ascensos VALUES("231","1","231","2015-01-15");
-INSERT INTO ascensos VALUES("232","1","232","2015-01-15");
-INSERT INTO ascensos VALUES("233","1","233","2015-01-15");
-INSERT INTO ascensos VALUES("234","1","234","2015-01-15");
-INSERT INTO ascensos VALUES("235","1","235","2015-01-15");
-INSERT INTO ascensos VALUES("236","1","236","2015-01-15");
-INSERT INTO ascensos VALUES("237","1","237","2015-01-15");
-INSERT INTO ascensos VALUES("238","1","238","2015-01-15");
-INSERT INTO ascensos VALUES("239","1","239","2015-01-15");
-INSERT INTO ascensos VALUES("240","1","240","2015-01-15");
-INSERT INTO ascensos VALUES("241","1","241","2015-01-15");
-INSERT INTO ascensos VALUES("242","1","242","2015-01-15");
-INSERT INTO ascensos VALUES("243","1","243","2015-01-15");
-INSERT INTO ascensos VALUES("244","1","244","2015-01-15");
-INSERT INTO ascensos VALUES("245","1","245","2015-01-15");
-INSERT INTO ascensos VALUES("246","1","246","2015-01-15");
-INSERT INTO ascensos VALUES("247","1","247","2015-01-15");
-INSERT INTO ascensos VALUES("248","1","248","2015-01-15");
-INSERT INTO ascensos VALUES("249","1","249","2015-01-15");
-INSERT INTO ascensos VALUES("250","1","250","2015-01-16");
-INSERT INTO ascensos VALUES("251","1","251","2015-01-16");
 INSERT INTO cargo_elemento VALUES("1","2013-10-16","","1","229");
 INSERT INTO cargo_elemento VALUES("2","0000-00-00","","8","230");
+INSERT INTO cargo_elemento VALUES("8","2015-01-16","2015-01-17","11","1");
+INSERT INTO cargo_elemento VALUES("15","2015-01-16","2015-01-17","11","1");
+INSERT INTO cargo_elemento VALUES("16","2015-01-17","","11","229");
 INSERT INTO cargos VALUES("1","Sección de hacienda");
 INSERT INTO cargos VALUES("2","Sección tecnica");
 INSERT INTO cargos VALUES("3","Sección militar");
@@ -746,7 +749,7 @@ INSERT INTO cargos VALUES("8","Comandante de zona");
 INSERT INTO cargos VALUES("9","Comandante de compañia");
 INSERT INTO cargos VALUES("10","Comandante de cuerpos especiales");
 INSERT INTO cargos VALUES("11","Instructor");
-INSERT INTO companiasysubzonas VALUES("1","Flores Magón","Compañia","Activa");
+INSERT INTO companiasysubzonas VALUES("1","Flores Magón","Compañía","Activa");
 INSERT INTO companiasysubzonas VALUES("2","Tecnológico","Compañia","Activa");
 INSERT INTO companiasysubzonas VALUES("3","Unidad deportiva C.U.","Compañia","Activa");
 INSERT INTO companiasysubzonas VALUES("4","pendiente","Compañia","Activa");
@@ -759,6 +762,7 @@ INSERT INTO companiasysubzonas VALUES("10","Tlacolula","Zubzona","Activa");
 INSERT INTO companiasysubzonas VALUES("11","Ocotlan","Zubzona","Activa");
 INSERT INTO companiasysubzonas VALUES("12","Policia Militar","Compañia","Activa");
 INSERT INTO companiasysubzonas VALUES("13","Estado Mayor","Compañia","Activa");
+INSERT INTO companiasysubzonas VALUES("14","Ejemplo","Subzona","Activa");
 INSERT INTO documentos VALUES("461","1","imgs/fotos/default.png","fotoperfil");
 INSERT INTO documentos VALUES("462","2","imgs/fotos/default.png","fotoperfil");
 INSERT INTO documentos VALUES("463","3","imgs/fotos/default.png","fotoperfil");
@@ -989,31 +993,12 @@ INSERT INTO documentos VALUES("687","227","imgs/fotos/default.png","fotoperfil")
 INSERT INTO documentos VALUES("688","228","imgs/fotos/default.png","fotoperfil");
 INSERT INTO documentos VALUES("689","229","imgs/fotos/default.png","fotoperfil");
 INSERT INTO documentos VALUES("690","230","imgs/fotos/default.png","fotoperfil");
-INSERT INTO documentos VALUES("691","231","imgs/fotos/default.png","fotoperfil");
-INSERT INTO documentos VALUES("692","232","imgs/fotos/default.png","fotoperfil");
-INSERT INTO documentos VALUES("693","233","imgs/fotos/default.png","fotoperfil");
-INSERT INTO documentos VALUES("694","234","imgs/fotos/default.png","fotoperfil");
-INSERT INTO documentos VALUES("695","235","imgs/fotos/default.png","fotoperfil");
-INSERT INTO documentos VALUES("696","236","imgs/fotos/default.png","fotoperfil");
-INSERT INTO documentos VALUES("697","237","imgs/fotos/default.png","fotoperfil");
-INSERT INTO documentos VALUES("698","238","imgs/fotos/default.png","fotoperfil");
-INSERT INTO documentos VALUES("699","239","imgs/fotos/default.png","fotoperfil");
-INSERT INTO documentos VALUES("700","240","imgs/fotos/default.png","fotoperfil");
-INSERT INTO documentos VALUES("701","241","imgs/fotos/default.png","fotoperfil");
-INSERT INTO documentos VALUES("702","242","imgs/fotos/default.png","fotoperfil");
-INSERT INTO documentos VALUES("703","243","imgs/fotos/default.png","fotoperfil");
-INSERT INTO documentos VALUES("704","244","imgs/fotos/default.png","fotoperfil");
-INSERT INTO documentos VALUES("705","245","imgs/fotos/default.png","fotoperfil");
-INSERT INTO documentos VALUES("706","246","imgs/fotos/default.png","fotoperfil");
-INSERT INTO documentos VALUES("707","247","imgs/fotos/default.png","fotoperfil");
-INSERT INTO documentos VALUES("708","248","imgs/fotos/default.png","fotoperfil");
-INSERT INTO documentos VALUES("709","249","imgs/fotos/default.png","fotoperfil");
-INSERT INTO documentos VALUES("710","250","imgs/fotos/default.png","fotoperfil");
-INSERT INTO documentos VALUES("711","251","imgs/fotos/default.png","fotoperfil");
-INSERT INTO donativos VALUES("1","qwehghj","ghjghj","ghj","111","2015-01-19");
-INSERT INTO donativos VALUES("2","qwehghj","ghjghj","ghj","111","2015-01-19");
-INSERT INTO donativos VALUES("3","qwehghj","ghjghj","ghj","111","2015-01-19");
-INSERT INTO elementos VALUES("1","1","151","43","","Soltero","2000-01-19","Secundaria","","0000-00-00","Oaxaca de Juárez","BAME0000119HOCTN9RA","","","","","41","","","1","1","5","Oaxaca","Bpositivo");
+INSERT INTO donativos VALUES("1","Armando Marcelino","Rojas","Cruz","1234","2015-01-16");
+INSERT INTO donativos VALUES("2","Armando Marcelino","Rojas","Cruz","123","2015-01-16");
+INSERT INTO donativos VALUES("3","Armando Marcelino","Rojas","Cruz","123","2015-01-16");
+INSERT INTO donativos VALUES("4","Armando Marcelino","Rojas","Cruz","123","2015-01-16");
+INSERT INTO donativos VALUES("5","asdda","asdsad","","112","2015-01-16");
+INSERT INTO elementos VALUES("1","1","151","43","","Soltero","2000-01-19","Secundaria","","0000-00-00","Oaxaca de Juárez","BAME0000119HOCTN9RA","","","","","41","","","1","1","1","Oaxaca","Bpositivo");
 INSERT INTO elementos VALUES("2","2","164","70","","Soltero","1995-11-05","Técnico","","0000-00-00","Oaxaca de Juárez","GLI951105HOCRZR06","Av. Sabinos 5 Mza H 6a etapa","Fracc. El Retiro","68297","Sta. María el Tule","0","","","1","1","7","Oaxaca","Opositivo");
 INSERT INTO elementos VALUES("3","3","155","52","","Soltero","1999-01-14","Secundaria","","0000-00-00","La Paz Obispo San Agustín Loxicha","MARD990105HOCTZN06","Priv. Venustiano Carranza 10","2a Sección","","San Antonio de la Cal","41","","","1","1","5","Oaxaca","");
 INSERT INTO elementos VALUES("4","4","0","0","","Soltero","0000-00-00","","","0000-00-00","","","","","","","41","","","1","1","4","Oaxaca","");
@@ -1241,33 +1226,14 @@ INSERT INTO elementos VALUES("225","225","0","0","","Soltera","0000-00-00","",""
 INSERT INTO elementos VALUES("226","226","0","0","","Soltero","0000-00-00","","","0000-00-00","","","","","","","40","","","1","1","9","Oaxaca","");
 INSERT INTO elementos VALUES("227","227","0","0","","Soltera","0000-00-00","","","0000-00-00","","","","","","","40","","","1","1","4","Oaxaca","");
 INSERT INTO elementos VALUES("228","228","0","0","","Soltera","0000-00-00","","","0000-00-00","","","","","","","40","","","1","1","4","Oaxaca","");
-INSERT INTO elementos VALUES("229","229","160","67","","Casado","1960-08-26","","","2015-01-14","","ROCA600826HOCJRR09","Priv. Adolfo Lopez Mateos 106","Dolores","68020","Oaxaca de Juárez","33","","","1","1","13","Oaxaca","Opositivo");
+INSERT INTO elementos VALUES("229","229","160","67","","Casado","1960-08-26","","","2015-01-16","","ROCA600826HOCJRR09","Priv. Adolfo Lopez Mateos 106","Dolores","68020","Oaxaca de Juárez","33","","","1","1","13","Oaxaca","Opositivo");
 INSERT INTO elementos VALUES("230","230","0","0","","Casado","0000-00-00","Licenciatura","","1980-08-01","","","","","","","1","","","1","1","13","Oaxaca","");
-INSERT INTO elementos VALUES("231","461","0","0","","","0000-00-00","primaria","","2015-01-15","","","","","","","33","","","1","1","1","","");
-INSERT INTO elementos VALUES("232","463","0","0","","","0000-00-00","primaria","","2015-01-15","","","","","","","33","","","1","1","1","","");
-INSERT INTO elementos VALUES("233","465","0","0","","","0000-00-00","primaria","","2015-01-15","","","","","","","33","","","1","1","1","","");
-INSERT INTO elementos VALUES("234","467","0","0","","","0000-00-00","primaria","","2015-01-15","","","","","","","33","","","1","1","1","","");
-INSERT INTO elementos VALUES("235","469","0","0","","","0000-00-00","primaria","","2015-01-15","","","","","","","33","","","1","1","1","","");
-INSERT INTO elementos VALUES("236","471","0","0","","","2015-01-15","primaria","","2015-01-15","","ASDASDASDASDASDASD","","","","","33","","","1","1","1","","");
-INSERT INTO elementos VALUES("237","473","12","34","","","2015-01-07","primaria","","2015-01-15","","QWEQWEQWEQWEFGHFGH","","","","","33","","","1","1","1","","");
-INSERT INTO elementos VALUES("238","475","11","33","","","2015-01-15","primaria","","2015-01-15","","ADASDASDASDASDASDA","","","","","33","","","1","1","1","","");
-INSERT INTO elementos VALUES("239","477","21","21","","","1991-11-07","primaria","","2015-01-15","","RUMO910914HOCZZM05","","","","","33","","","1","1","1","","");
-INSERT INTO elementos VALUES("240","479","0","0","","","2015-01-15","primaria","","2015-01-15","","546546546545646454","","","","","33","","","1","1","1","","");
-INSERT INTO elementos VALUES("241","481","0","0","","","1991-11-07","primaria","","2015-01-15","","HDBFGJNDFLJNDFKJFK","","","","","33","","","1","1","1","","");
-INSERT INTO elementos VALUES("242","483","22","22","","","2015-01-15","primaria","","2015-01-15","","ASDASDASDAOOOOOOOO","","","","","33","","","1","1","1","","");
-INSERT INTO elementos VALUES("243","485","22","22","","","2015-01-15","primaria","","2015-01-15","","ASDASDASDAOOOOOOOO","","","","","33","","","1","1","1","","");
-INSERT INTO elementos VALUES("244","487","22","22","","","2015-01-15","primaria","","2015-01-15","","ASDASDASDAOOOOOOOO","","","","","33","","","1","1","1","","");
-INSERT INTO elementos VALUES("245","489","22","22","","","2015-01-15","primaria","","2015-01-15","","ASDASDASDAOOOOOOOO","","","","","33","","","1","1","1","","");
-INSERT INTO elementos VALUES("246","491","22","22","","","2015-01-15","primaria","","2015-01-15","","ASDASDASDAOOOOOOOO","","","","","33","","","1","1","1","","");
-INSERT INTO elementos VALUES("247","493","12","56","","","2015-01-15","primaria","","2015-01-15","","OSSLFKJSLFJSKDFJSD","","","","","33","","","1","1","1","","");
-INSERT INTO elementos VALUES("248","495","8","2","","","2015-01-15","primaria","","2015-01-15","","456313218555666655","","","","","33","","","1","1","1","","");
-INSERT INTO elementos VALUES("249","497","3","4","","","2015-01-15","primaria","","2015-01-15","","FDFKOIOOOOOOOOOOOO","","","","","33","","","1","1","1","","");
-INSERT INTO elementos VALUES("250","499","0","0","","","2015-01-16","primaria","","2015-01-16","","QWERTYUIOPASDFGHJN","","","","","33","","","1","1","1","","");
-INSERT INTO elementos VALUES("251","501","2","2","","","2015-01-16","primaria","","2015-01-16","","SDSASDASDASDASDASD","","","","","33","","","1","1","1","","");
 INSERT INTO emails VALUES("1","229","a_rojascruz@hotmail.com");
+INSERT INTO eventos VALUES("1","Concurso de escoltas","Oaxaca","2015-02-24","Concurso Nacional de escoltas en Oaxaca","100","2");
+INSERT INTO examens VALUES("1","examen","11","123");
 INSERT INTO grados VALUES("1","Recluta","");
 INSERT INTO grados VALUES("2","Cadete de infanteria","");
-INSERT INTO grados VALUES("3","Cadete 1a ","");
+INSERT INTO grados VALUES("3","Cadete 1a","");
 INSERT INTO grados VALUES("4","Cabo","");
 INSERT INTO grados VALUES("5","Sargento 2","");
 INSERT INTO grados VALUES("6","Sargento 1","");
@@ -1738,6 +1704,10 @@ INSERT INTO pagos VALUES("227","227","Membresia","0000-00-00","300");
 INSERT INTO pagos VALUES("228","228","Membresia","0000-00-00","300");
 INSERT INTO pagos VALUES("229","229","Membresia 2013","0000-00-00","300");
 INSERT INTO pagos VALUES("230","230","Membresia 2013","0000-00-00","300");
+INSERT INTO pagos VALUES("231","229","Donativo","2015-01-16","1234");
+INSERT INTO pagos VALUES("232","229","Donativo","2015-01-16","123");
+INSERT INTO pagos VALUES("233","229","Donativo","2015-01-16","123");
+INSERT INTO pagos VALUES("234","229","Donativo","2015-01-16","123");
 INSERT INTO personas VALUES("1","Erick","Bautista","Méndez","Masculino");
 INSERT INTO personas VALUES("2","Irving Arturo ","García","Lázaro","Masculino");
 INSERT INTO personas VALUES("3","Daniel","Matus","Ruíz","Masculino");
@@ -1759,7 +1729,7 @@ INSERT INTO personas VALUES("18","Martha Abigail","Antonio","Cruz","Femenino");
 INSERT INTO personas VALUES("19","Itzel Soledad ","Aquino","Cabrera","Femenino");
 INSERT INTO personas VALUES("20","Rigoberto","Aragón","Martínez","Masculino");
 INSERT INTO personas VALUES("21","Yahuitl Antonia ","Arce","Jacobo","Femenino");
-INSERT INTO personas VALUES("22","Andrea","Arrazola","Díaz","");
+INSERT INTO personas VALUES("22","Andrea","Arrazola","Díaz","Femenino");
 INSERT INTO personas VALUES("23","Carlos Omar","Avendaño","Ríos","Masculino");
 INSERT INTO personas VALUES("24","Denzel Gerardo","Ayala","Velasco","Masculino");
 INSERT INTO personas VALUES("25","Edzen Eduardo","Ayala","Velasco","Masculino");
@@ -1966,7 +1936,7 @@ INSERT INTO personas VALUES("225","Wendy Lizeth","Gómez","López","Femenino");
 INSERT INTO personas VALUES("226","José David","López","Jacinto","Masculino");
 INSERT INTO personas VALUES("227","Ángela Cristina","Vásquez","","Femenino");
 INSERT INTO personas VALUES("228","Daylin Belem","Olivera","Pérez","Femenino");
-INSERT INTO personas VALUES("229","Armando Marcelino","Rojas","Cruz","Hombre");
+INSERT INTO personas VALUES("229","Armando Marcelino","Rojas","Cruz","Masculino");
 INSERT INTO personas VALUES("230","Juan Francisco","Pichardo","Tinoco","Masculino");
 INSERT INTO personas VALUES("231","","","","");
 INSERT INTO personas VALUES("232","","","","");
@@ -2198,54 +2168,10 @@ INSERT INTO personas VALUES("457","","","","");
 INSERT INTO personas VALUES("458","","","","");
 INSERT INTO personas VALUES("459","","","","");
 INSERT INTO personas VALUES("460","","","","");
-INSERT INTO personas VALUES("461","","","","Hombre");
-INSERT INTO personas VALUES("462","QWER","QWE","QWE","Hombre");
-INSERT INTO personas VALUES("463","","","","Hombre");
-INSERT INTO personas VALUES("464","QWE","QWE","","Hombre");
-INSERT INTO personas VALUES("465","","","","Hombre");
-INSERT INTO personas VALUES("466","FGH","FGH","","Hombre");
-INSERT INTO personas VALUES("467","","","","Hombre");
-INSERT INTO personas VALUES("468","E","E","","Hombre");
-INSERT INTO personas VALUES("469","4445","","","Hombre");
-INSERT INTO personas VALUES("470","O","E","","Hombre");
-INSERT INTO personas VALUES("471","QWE","QWE","","Hombre");
-INSERT INTO personas VALUES("472","ASD","ASDÑ","","Hombre");
-INSERT INTO personas VALUES("473","ASD","ASD","","Hombre");
-INSERT INTO personas VALUES("474","","","","Hombre");
-INSERT INTO personas VALUES("475","A","D","","Hombre");
-INSERT INTO personas VALUES("476","LL","LL","","Hombre");
-INSERT INTO personas VALUES("477","KMLKM","LKMLKM","LKM","Hombre");
-INSERT INTO personas VALUES("478","54","KJN","KJN","Hombre");
-INSERT INTO personas VALUES("479","FGHJK","TYUJIK","VBNM","Hombre");
-INSERT INTO personas VALUES("480","KJNKJN","KJNKJKJNK","KJN","Hombre");
-INSERT INTO personas VALUES("481","KJNKJ","KJNKJN","KJNKJN","Hombre");
-INSERT INTO personas VALUES("482","HB","KJJB","KJN","Hombre");
-INSERT INTO personas VALUES("483","SDF","AA","","Hombre");
-INSERT INTO personas VALUES("484","ASD","A","","Hombre");
-INSERT INTO personas VALUES("485","SDF","AA","","Hombre");
-INSERT INTO personas VALUES("486","ASD","A","","Hombre");
-INSERT INTO personas VALUES("487","SDF","AA","","Hombre");
-INSERT INTO personas VALUES("488","ASD","A","","Hombre");
-INSERT INTO personas VALUES("489","SDF","AA","","Hombre");
-INSERT INTO personas VALUES("490","ASD","A","","Hombre");
-INSERT INTO personas VALUES("491","SDF","AA","","Hombre");
-INSERT INTO personas VALUES("492","ASD","A","","Hombre");
-INSERT INTO personas VALUES("493","JHBJH","KJH","","Hombre");
-INSERT INTO personas VALUES("494","D","F","","Hombre");
-INSERT INTO personas VALUES("495","KKK","KK","","Hombre");
-INSERT INTO personas VALUES("496","LL","MM","","Hombre");
-INSERT INTO personas VALUES("497","SD","D","","Hombre");
-INSERT INTO personas VALUES("498","LLL","MMM","","Hombre");
-INSERT INTO personas VALUES("499","AS","AS","","Hombre");
-INSERT INTO personas VALUES("500","WE","WE","","Hombre");
-INSERT INTO personas VALUES("501","AS","S","","Hombre");
-INSERT INTO personas VALUES("502","S","S","","Hombre");
-INSERT INTO reconocimientos VALUES("1","229","Condecoración por 5 años","2015-01-17","","");
-INSERT INTO reconocimientos VALUES("2","229","Condecoración por 10 años","2015-01-17","","");
-INSERT INTO reconocimientos VALUES("3","230","Condecoración por 5 años","2015-01-17","","");
-INSERT INTO reconocimientos VALUES("4","230","Condecoración por 10 años","2015-01-17","","");
-INSERT INTO reconocimientos VALUES("5","230","Condecoración por 15 años","2015-01-17","","");
-INSERT INTO reconocimientos VALUES("6","230","Condecoración por 20 años","2015-01-17","","");
+INSERT INTO reconocimientos VALUES("1","229","Condecoracion por 10 años","2015-01-16","","");
+INSERT INTO reconocimientos VALUES("2","229","Condecoracion por 5 años","2015-01-16","","");
+INSERT INTO reconocimientos VALUES("3","230","Condecoracion por 5 años","2015-01-16","","");
+INSERT INTO reconocimientos VALUES("4","230","Condecoración por 10 años","2015-01-16","","");
 INSERT INTO role_user VALUES("8","1");
 INSERT INTO role_user VALUES("8","2");
 INSERT INTO role_user VALUES("8","3");
@@ -2474,7 +2400,7 @@ INSERT INTO role_user VALUES("8","225");
 INSERT INTO role_user VALUES("8","226");
 INSERT INTO role_user VALUES("8","227");
 INSERT INTO role_user VALUES("8","228");
-INSERT INTO role_user VALUES("2","229");
+INSERT INTO role_user VALUES("7","229");
 INSERT INTO role_user VALUES("8","229");
 INSERT INTO role_user VALUES("1","230");
 INSERT INTO role_user VALUES("2","230");
@@ -2722,27 +2648,6 @@ INSERT INTO status VALUES("227","227","Activo","2013-06-30","Jura de bandera");
 INSERT INTO status VALUES("228","228","Activo","2013-06-30","Jura de bandera");
 INSERT INTO status VALUES("229","229","Activo","2001-08-18","Jura de bandera");
 INSERT INTO status VALUES("230","230","Activo","1981-08-17","Jura de bandera");
-INSERT INTO status VALUES("231","231","Nuevo","2015-01-15","Nuevo elemento");
-INSERT INTO status VALUES("232","232","Nuevo","2015-01-15","Nuevo elemento");
-INSERT INTO status VALUES("233","233","Nuevo","2015-01-15","Nuevo elemento");
-INSERT INTO status VALUES("234","234","Nuevo","2015-01-15","Nuevo elemento");
-INSERT INTO status VALUES("235","235","Nuevo","2015-01-15","Nuevo elemento");
-INSERT INTO status VALUES("236","236","Nuevo","2015-01-15","Nuevo elemento");
-INSERT INTO status VALUES("237","237","Nuevo","2015-01-15","Nuevo elemento");
-INSERT INTO status VALUES("238","238","Nuevo","2015-01-15","Nuevo elemento");
-INSERT INTO status VALUES("239","239","Nuevo","2015-01-15","Nuevo elemento");
-INSERT INTO status VALUES("240","240","Nuevo","2015-01-15","Nuevo elemento");
-INSERT INTO status VALUES("241","241","Nuevo","2015-01-15","Nuevo elemento");
-INSERT INTO status VALUES("242","242","Nuevo","2015-01-15","Nuevo elemento");
-INSERT INTO status VALUES("243","243","Nuevo","2015-01-15","Nuevo elemento");
-INSERT INTO status VALUES("244","244","Nuevo","2015-01-15","Nuevo elemento");
-INSERT INTO status VALUES("245","245","Nuevo","2015-01-15","Nuevo elemento");
-INSERT INTO status VALUES("246","246","Nuevo","2015-01-15","Nuevo elemento");
-INSERT INTO status VALUES("247","247","Nuevo","2015-01-15","Nuevo elemento");
-INSERT INTO status VALUES("248","248","Nuevo","2015-01-15","Nuevo elemento");
-INSERT INTO status VALUES("249","249","Nuevo","2015-01-15","Nuevo elemento");
-INSERT INTO status VALUES("250","250","Nuevo","2015-01-16","Nuevo elemento");
-INSERT INTO status VALUES("251","251","Nuevo","2015-01-16","Nuevo elemento");
 INSERT INTO telefonos VALUES("1","28","1447733","fijo");
 INSERT INTO telefonos VALUES("2","34","5027153","fijo");
 INSERT INTO telefonos VALUES("3","50","9511278395","fijo");
@@ -2772,7 +2677,7 @@ INSERT INTO tipocuerpos VALUES("2","Policia Militar");
 INSERT INTO tipocuerpos VALUES("3","Banda de guerra");
 INSERT INTO tipoeventos VALUES("1","Curso");
 INSERT INTO tipoeventos VALUES("2","Concurso");
-INSERT INTO tipoeventos VALUES("3","Convencion");
+INSERT INTO tipoeventos VALUES("3","Convención");
 INSERT INTO tipoeventos VALUES("4","otro");
 INSERT INTO tutores VALUES("1","231","1","");
 INSERT INTO tutores VALUES("2","232","2","");
@@ -3004,28 +2909,7 @@ INSERT INTO tutores VALUES("227","457","227","");
 INSERT INTO tutores VALUES("228","458","228","");
 INSERT INTO tutores VALUES("229","459","229","");
 INSERT INTO tutores VALUES("230","460","230","");
-INSERT INTO tutores VALUES("231","462","231","QWE");
-INSERT INTO tutores VALUES("232","464","232","WWW");
-INSERT INTO tutores VALUES("233","466","233","FGH");
-INSERT INTO tutores VALUES("234","468","234","E");
-INSERT INTO tutores VALUES("235","470","235","E");
-INSERT INTO tutores VALUES("236","472","236","ASD");
-INSERT INTO tutores VALUES("237","474","237","");
-INSERT INTO tutores VALUES("238","476","238","PP");
-INSERT INTO tutores VALUES("239","478","239","KJN");
-INSERT INTO tutores VALUES("240","480","240","KJN");
-INSERT INTO tutores VALUES("241","482","241","KJN");
-INSERT INTO tutores VALUES("242","484","242","D");
-INSERT INTO tutores VALUES("243","486","243","D");
-INSERT INTO tutores VALUES("244","488","244","D");
-INSERT INTO tutores VALUES("245","490","245","D");
-INSERT INTO tutores VALUES("246","492","246","D");
-INSERT INTO tutores VALUES("247","494","247","F");
-INSERT INTO tutores VALUES("248","496","248","LL");
-INSERT INTO tutores VALUES("249","498","249","KK");
-INSERT INTO tutores VALUES("250","500","250","W");
-INSERT INTO tutores VALUES("251","502","251","S");
-INSERT INTO users VALUES("1","1","201330658","$2y$10$ufFmzJ4W3MAVN2AH7UB/IuKk5sk0kgjj5DczJXtTpKHquG5UNG5T6","");
+INSERT INTO users VALUES("1","1","201330658","$2y$10$ufFmzJ4W3MAVN2AH7UB/IuKk5sk0kgjj5DczJXtTpKHquG5UNG5T6","m3vMHzJXU21y1krrTkSrdxzxf39jGXT2uRymjxUxIYW1DwzI7NSYtjl5tZXC");
 INSERT INTO users VALUES("2","2","201030093","$2y$10$ufFmzJ4W3MAVN2AH7UB/IuKk5sk0kgjj5DczJXtTpKHquG5UNG5T6","");
 INSERT INTO users VALUES("3","3","201330659","$2y$10$ufFmzJ4W3MAVN2AH7UB/IuKk5sk0kgjj5DczJXtTpKHquG5UNG5T6","");
 INSERT INTO users VALUES("4","4","201330920","$2y$10$ufFmzJ4W3MAVN2AH7UB/IuKk5sk0kgjj5DczJXtTpKHquG5UNG5T6","");
@@ -3253,15 +3137,15 @@ INSERT INTO users VALUES("225","225","201330917","$2y$10$ufFmzJ4W3MAVN2AH7UB/IuK
 INSERT INTO users VALUES("226","226","201330918","$2y$10$ufFmzJ4W3MAVN2AH7UB/IuKk5sk0kgjj5DczJXtTpKHquG5UNG5T6","");
 INSERT INTO users VALUES("227","227","201330853","$2y$10$ufFmzJ4W3MAVN2AH7UB/IuKk5sk0kgjj5DczJXtTpKHquG5UNG5T6","");
 INSERT INTO users VALUES("228","228","201330852","$2y$10$ufFmzJ4W3MAVN2AH7UB/IuKk5sk0kgjj5DczJXtTpKHquG5UNG5T6","");
-INSERT INTO users VALUES("229","229","201330650","$2y$10$ufFmzJ4W3MAVN2AH7UB/IuKk5sk0kgjj5DczJXtTpKHquG5UNG5T6","fDKDLkgvexTWdL3iVDtbsduk8IDRPeMRkXQS7VYEHUja2WruA7tc09sSH2Bq");
-INSERT INTO users VALUES("230","230","20801063078","$2y$10$ufFmzJ4W3MAVN2AH7UB/IuKk5sk0kgjj5DczJXtTpKHquG5UNG5T6","e2q8MuRCywGgiISpXneJQ7PUvwTzceYLkUtrKyh6NzqsoMDw3jnA4RzrrZjQ");
+INSERT INTO users VALUES("229","229","201330650","$2y$10$ufFmzJ4W3MAVN2AH7UB/IuKk5sk0kgjj5DczJXtTpKHquG5UNG5T6","ELh898Wce9QwcPYhRXTDegbmC4iJUWyQa3jpEWbzOeFaCGplhu26c9jdlLMd");
+INSERT INTO users VALUES("230","230","20801063078","$2y$10$ufFmzJ4W3MAVN2AH7UB/IuKk5sk0kgjj5DczJXtTpKHquG5UNG5T6","ql5F3kMlmJqDjmK191Bai4XcAotrZZ95zeWM9p4dUzyQfTKY0mcI2RrRQouk");
 DELIMITER $$
 
 
 DROP TRIGGER IF EXISTS userupdate;
 
-CREATE DEFINER=`root`@`localhost` TRIGGER userupdate AFTER INSERT ON cargo_elemento
-FOR EACH ROW BEGIN
+CREATE DEFINER=root@localhost TRIGGER `userupdate` AFTER INSERT ON `cargo_elemento`
+ FOR EACH ROW BEGIN
 if new.cargo_id = 1 THEN 
 insert into role_user (user_id,role_id) VALUES((select id from users where elemento_id=NEW.elemento_id),2);
 end if;
@@ -3284,8 +3168,8 @@ END;
 
 DROP TRIGGER IF EXISTS cargoupdate;
 
-CREATE DEFINER=`root`@`localhost` TRIGGER cargoupdate AFTER UPDATE ON cargo_elemento
-FOR EACH ROW BEGIN
+CREATE DEFINER=root@localhost TRIGGER `cargoupdate` AFTER UPDATE ON `cargo_elemento`
+ FOR EACH ROW BEGIN
 if OLD.cargo_id = 1 THEN 
 DELETE FROM role_user WHERE user_id = (select id from users where elemento_id=old.elemento_id) and role_id = 2;
 end if;
@@ -3308,8 +3192,8 @@ END;
 
 DROP TRIGGER IF EXISTS eliminar;
 
-CREATE DEFINER=`root`@`localhost` TRIGGER eliminar AFTER INSERT ON status
-FOR EACH ROW BEGIN
+CREATE DEFINER=root@localhost TRIGGER `eliminar` AFTER INSERT ON `status`
+ FOR EACH ROW BEGIN
 if new.tipo = 'Baja' || new.tipo = 'Inactivo' then
 DELETE FROM users WHERE elemento_id = NEW.elemento_id;
 end if;
@@ -3320,8 +3204,8 @@ END;
 
 DROP TRIGGER IF EXISTS users_AINS;
 
-CREATE DEFINER=`root`@`localhost` TRIGGER `users_AINS` AFTER INSERT ON `users` FOR EACH ROW
-INSERT INTO role_user (user_id,role_id) VALUES(new.id,8);
+CREATE DEFINER=root@localhost TRIGGER `users_AINS` AFTER INSERT ON `users`
+ FOR EACH ROW INSERT INTO role_user (user_id,role_id) VALUES(new.id,8);
 
 DELIMITER ;
 

@@ -74,6 +74,8 @@
     {{  HTML::style('css/bootstrap-datetimepicker.min.css');  }}
     {{  HTML::script('js/tables/jquery.dataTables.min.js')}}
     {{  HTML::style('css/jquery.dataTables.css')}}
+    {{  HTML::style('css/dataTables.tableTools.css')}}
+    {{  HTML::script('js/dataTables.tableTools.min.js')}}
 
 @endsection
 @section('contenido')
@@ -237,19 +239,19 @@
         <div id="graficaedad" class="grafica col-md-6">
         </div>
     </div>
-    <div class="col-md-offset-1 col-md-10">
+    <div class="row">
         <table id="telementos" class="contenido hidden col-md-12 display" cellspacing="0" width="100%">
             <thead>
                 <tr class="tour-3">
-                <th>nombre</th>
-                <th>paterno</th>
-                <th>materno</th>
-                <th>matricula</th>
-                <th>grado</th>
-                <th>fecha</th>
-                <th>sexo</th>
-                <th>edad</th>
-                <th>zona</th>
+                <th>Nombre</th>
+                <th>Paterno</th>
+                <th>Materno</th>
+                <th>Matrícula</th>
+                <th>Grado</th>
+                <th>Fecha</th>
+                <th>Sexo</th>
+                <th>Edad</th>
+                <th>Zona</th>
                 </tr>
             </thead>
             <tbody id="elementobody">
@@ -318,12 +320,12 @@
     </script>
     <script>
         function dibujartabla () {
-            tabla = $('#telementos').DataTable( {
+            $('#telementos').DataTable( {
                 "language": {
                     "sProcessing": "Procesando...",
                     "sLengthMenu": "Mostrar _MENU_ registros",
                     "sZeroRecords": "No se encontraron resultados",
-                    "sEmptyTable": "NingÃºn dato disponible en esta tabla",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
                     "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
                     "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
                     "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
@@ -334,7 +336,7 @@
                     "sLoadingRecords": "Cargando...",
                     "oPaginate": {
                     "sFirst": "Primero",
-                    "sLast": "Ãšltimo",
+                    "sLast": "Último",
                     "sNext": "Siguiente",
                     "sPrevious": "Anterior"
                     },
@@ -345,6 +347,19 @@
                 },
                 paging: true,
                 searching: true,
+                dom: 'T<"clear">lfrtip',
+                tableTools : {
+                    "sSwfPath": "../public/swf/copy_csv_xls_pdf.swf",
+                    aButtons: [
+                        "copy",
+                        "xls",
+                        {
+                            "sExtends": "pdf",
+                            "sPdfOrientation": "landscape",
+                            "sPdfMessage": "Pentathlón Deportivo Militarizado Universitario"
+                        },
+                    ]
+                },
             });
         }
         function dibujagrafica() {
