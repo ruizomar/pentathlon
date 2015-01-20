@@ -4,6 +4,10 @@ class EditaReclutaController extends BaseController {
 	public function __construct()
     {
         $this->beforeFilter('auth');
+        $this->beforeFilter(function(){
+		    if(is_null(User::find(Auth::id())->roles()->where('id','<',8)->first()))
+    	 		return "No Tienes acceso";
+        });
     }
 
 	public function editar()

@@ -88,9 +88,9 @@ Route::filter('csrf', function()
 		throw new Illuminate\Session\TokenMismatchException;
 	}
 });
-Route::filter('root',function(){
+Route::filter('admin',function(){
     if(is_null(User::find(Auth::id())->roles()->where('id','=',1)->first()))
-    	 return "No eres root";
+    	 return "No eres Administrador";
 });
 Route::filter('hacienda',function(){
     if(is_null(User::find(Auth::id())->roles()->where('id','=',2)->first()))

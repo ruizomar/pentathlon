@@ -63,9 +63,7 @@ Route::controller('arrestos','ArrestosController');
 Route::controller('armas','ArmasController');
 Route::controller('cuerpos','CuerposController');
 Route::controller('historial','HistorialController');
-Route::get('history',array('before' => 'auth', function(){
-	return View::make('historial/history');
-}));
+
 Route::post('login', 'UserLogin@user');
 Route::get('logout', 'UserLogin@logOut');
 
