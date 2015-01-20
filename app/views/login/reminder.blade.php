@@ -17,6 +17,7 @@
         <p>
         Si no ves el correo electrónico, revisa otros lugares donde podría estar, como tus carpetas de correo no deseado, sociales u otras.
         </p>
+        <a href="{{URL::to('login');}}" title="login" class="btn btn-primary">Login</a>
       </div>
     </div>
 

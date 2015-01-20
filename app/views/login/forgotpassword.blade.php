@@ -17,7 +17,7 @@
           @if (!is_null($status))
             <p style='color:#FB1D1D' >{{$status}}</p>
           @else
-            <p>Introduzca usuario continuar.</p>
+            <p>Introduzca su matricula continuar.</p>
           @endif
               <div class="submit">
                 <input type="submit" value="Recuperar" >
