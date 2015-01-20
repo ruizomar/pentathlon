@@ -60,8 +60,8 @@ Route::controller('condecoraciones','CondecoracionesController');
 Route::controller('eventos','EventosController');
 Route::controller('examenes','ExamenesController');
 Route::controller('arrestos','ArrestosController');
-Route::controller('armas','armasController');
-Route::controller('cuerpos','cuerposController');
+Route::controller('armas','ArmasController');
+Route::controller('cuerpos','CuerposController');
 Route::controller('historial','HistorialController');
 Route::get('history',array('before' => 'auth', function(){
 	return View::make('historial/history');
