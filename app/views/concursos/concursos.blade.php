@@ -226,7 +226,7 @@
                 </div>
             </div>
         </div>
-        <button type="button" class="pull-right btn btn-primary" data-dismiss="modal" onclick="btnenviar()">Enviar</button>
+        <button type="button" class="pull-right btn btn-primary" data-dismiss="modal" onclick="$('#formulario').data('bootstrapValidator').validate(); if($('#formulario').data('bootstrapValidator').isValid()) btnenviar()">Enviar</button>
     </div>
     <div id="formulariomodal" class="col-md-offset-2 col-md-8">
         <div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -263,7 +263,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary guardar" data-dismiss="modal" onclick="addintegrante()">Guardar</button>
+                        <button type="button" class="btn btn-primary guardar" onclick="$('#formulariomodal').data('bootstrapValidator').validate(); if($('#formulariomodal').data('bootstrapValidator').isValid()) addintegrante()">Guardar</button>
                         <span id="actualizar"></span>
                     </div>
                 </div>
@@ -353,6 +353,7 @@
             $('#formulario').removeClass('hidden');
         }
         function addintegrante() {
+            $('#myModal').modal('hide');
             nombre = $( "input[name$='concursantenombre']" ).val();
             paterno = $( "input[name$='concursantepaterno']" ).val();
             materno = $( "input[name$='concursantematerno']" ).val();
@@ -361,6 +362,9 @@
             guardar(count);
             count++;
             $("#posicion").find("option:selected").remove();
+            if (arr.length == 6) {
+                $('.botonagregar').addClass('hidden');
+            };
         }
         function mostrarmodal (id) {
             nombre = $( "input[name$='concursantenombre']" ).val(arr[id].nombre);
@@ -387,9 +391,6 @@
             $('.guardar').removeClass('hidden');
             $('#cargo').removeClass('hidden');
             $('#actualizar').html('');
-            if (arr.length == 5) {
-                $('.botonagregar').addClass('hidden');
-            };
         }
         function guardar (id) {
             arr[id] = {

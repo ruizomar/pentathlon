@@ -349,7 +349,7 @@
                 searching: true,
                 dom: 'T<"clear">lfrtip',
                 tableTools : {
-                    "sSwfPath": "../public/swf/copy_csv_xls_pdf.swf",
+                    "sSwfPath": "{{URL::to('swf/copy_csv_xls_pdf.swf')}}",
                     aButtons: [
                         "copy",
                         "xls",
