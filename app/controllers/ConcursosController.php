@@ -23,24 +23,27 @@ class ConcursosController extends BaseController {
 			'integrantes' => 'required|min:6',
 		);
 		$reglasPersona = array(
-			'nombre' => 'required',
-			'paterno' => 'required',
+			'nombre' => 'required|max:35',
+			'paterno' => 'required|max:35',
+			'materno' => 'max:35',
 			'telefono' => 'required|integer|min:10',
 			'email' => 'email',
 		);
 		$reglasIntegrantes = array(
-			'nombre' => 'required',
-			'paterno' => 'required',
-			'posicion' => 'required',
+			'nombre' => 'required|max:35',
+			'paterno' => 'required|max:35',
+			'materno' => 'max:35',
+			'posicion' => 'required|max:35',
 		);
 		$reglasEquipo = array(
-			'estado' => 'required',
-			'escuela' => 'required',
-			'nivel' => 'required',
+			'escuela' => 'required|max:35',
+			'estado' => 'required|max:35',
+			'nivel' => 'required|max:35',
 		);
 		$reglasPDMU = array(
-			'nombre' => 'required',
-			'paterno' => 'required',
+			'nombre' => 'required|max:35',
+			'paterno' => 'required|max:35',
+			'materno' => 'max:35',
 		);
 		$valArray = Validator::make($data, $reglasArray);
 		$valLider = Validator::make($data['lider'], $reglasPersona);
@@ -84,42 +87,37 @@ class ConcursosController extends BaseController {
 					);
 					return Response::json($dato);
 				}
-				else{
-					Concursante::create(array(
-						'evento_id' => 1,
-						'nombre' => $integrante['nombre'],
-						'paterno' => $integrante['paterno'],
-						'materno' => $integrante['materno'],
-						'telefono' => null,
-						'email' => null,
-						'escuela' => $data['equipo']['escuela'],
-						'estado' => $data['equipo']['estado'],
-						'tipo' => $integrante['posicion'],
-					));
-				}
 			}
 		}
-		Concursante::create(array(
+		$equipo = Equipo::create(array(
 			'evento_id' => 1,
-			'nombre' => $data['lider']['nombre'],
-			'paterno' => $data['lider']['paterno'],
-			'materno' => $data['lider']['materno'],
+			'correo' => $data['lider']['email'],
 			'telefono' => $data['lider']['telefono'],
-			'email' => $data['lider']['email'],
 			'escuela' => $data['equipo']['escuela'],
 			'estado' => $data['equipo']['estado'],
-			'tipo' => 'lider',
 		));
+		foreach ($data['integrantes'] as $integrante) {
+			Concursante::create(array(
+					'equipo_id' => $equipo -> id,
+					'nombre' => $integrante['nombre'],
+					'paterno' => $integrante['paterno'],
+					'materno' => $integrante['materno'],
+					'tipo' => $integrante['posicion'],
+			));
+		}
 		Concursante::create(array(
-			'evento_id' => 1,
+			'equipo_id' => $equipo -> id,
 			'nombre' => $data['pdmu']['nombre'],
 			'paterno' => $data['pdmu']['paterno'],
 			'materno' => $data['pdmu']['materno'],
-			'telefono' => null,
-			'email' => null,
-			'escuela' => $data['equipo']['escuela'],
-			'estado' => $data['equipo']['estado'],
 			'tipo' => 'PDMU',
+		));
+		Concursante::create(array(
+			'equipo_id' => $equipo -> id,
+			'nombre' => $data['lider']['nombre'],
+			'paterno' => $data['lider']['paterno'],
+			'materno' => $data['lider']['materno'],
+			'tipo' => 'Lider',
 		));
 		$dato = array(
 			'success' => true,

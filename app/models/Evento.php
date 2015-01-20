@@ -9,6 +9,6 @@ class Evento extends Eloquent {
 		return $this->belongsToMany('Elemento');
 	}
 	public function concursantes(){
-		return $this->belongsToMany('Concursante');
+		return $this->belongsToMany('Equipo');
 	}
 }
