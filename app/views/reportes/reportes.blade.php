@@ -111,14 +111,14 @@
         <div class="col-md-3 form-group">
             {{ Form::label('birthday', 'Fecha de inicio') }}
             <div class="input-group" id="datetimePicker">
-                {{ Form::text('birthday', null, array('class' => 'form-control', 'placeholder' => 'YYYY-MM-DD', 'data-date-format' => 'YYYY-MM-DD')) }}
+                {{ Form::text('birthday', null, array('class' => 'form-control', 'placeholder' => 'AAAA-MM-DD', 'data-date-format' => 'YYYY-MM-DD')) }}
                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
             </div>
         </div>
         <div class="col-md-3 form-group">
             {{ Form::label('birthday', 'Fecha de fin') }}
             <div class="input-group" id="datetimePicker">
-                {{ Form::text('birthday2', null, array('class' => 'form-control', 'placeholder' => 'YYYY-MM-DD', 'data-date-format' => 'YYYY-MM-DD')) }}
+                {{ Form::text('birthday2', null, array('class' => 'form-control', 'placeholder' => 'AAAA-MM-DD', 'data-date-format' => 'YYYY-MM-DD')) }}
                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
             </div>
         </div>
