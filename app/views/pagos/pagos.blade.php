@@ -11,8 +11,12 @@
 </style>
 @endsection
 @section('h2')
-<span class="col-md-10" style="font-size:40px;">Enteros</span>
-<span class="col-md-2"><a class="label label-primary" href="{{URL::to('pagos/donativos');}}">Donativo de un civil</a></span>
+    <div class="row">
+        <div class="pull-left" style="font-size:40px;">Enteros</div>
+        <div class="pull-right">
+            <a class="label label-primary" href="{{URL::to('pagos/donativos');}}">Donativo de un civil</a> <a class="label label-success" href="{{URL::to('pagos/reportes');}}"><i class="fa fa-line-chart"></i> Reporte</a>
+        </div>
+    </div>
 @endsection
 @section('elemento')
     <div class="col-sm-7 col-sm-offset-2 contenedor">
@@ -31,7 +35,7 @@
             <div class="form-group col-md-4">
               <select name="tipo" class='form-control'>
                   <option value="">Concepto</option>
-                  <option value="Membresia">membresía</option>
+                  <option value="Membresia">Membresia</option>
                   <option value="Credencial">Credencial</option>
                   <option value="Evento">Evento</option>
                   <option value="Examen">Examen</option>

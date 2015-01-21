@@ -14,6 +14,32 @@ class MembresiasController extends BaseController {
 	public function getDonativos(){
 		return View::make('pagos/donativos');
 	}
+
+	public function getReportes(){
+		$pagos = Pago::all();
+		return View::make('pagos.reportes') -> with('pagos',$pagos);
+	}
+
+	public function postReportes(){
+		$inicio = new DateTime($_POST['i']);
+		$fin = new DateTime($_POST['f']);
+		$membresia = $_POST['mem'];
+		$credencial = $_POST['cre'];
+		$evento = $_POST['eve'];
+		$examen = $_POST['exa'];
+		$donativo = $_POST['don'];
+		$pagos = Pago::all();
+		$pagosArr = array();
+		foreach ($pagos as $pago) {
+			if ($pago -> fecha > $inicio && $pago -> fecha < $fin) {
+				if ($pago -> concepto == $membresia || $pago -> concepto == $credencial || $pago -> concepto == $evento || $pago -> concepto == $examen || $pago -> concepto == $donativo) {
+					$pagosArr[] = $pago;
+				}
+			}
+		}
+		return Response::json($pagosArr);
+	}
+
 	public function getImprimir(){
 		$hacienda = Cargo::find(1)->elementos()->where('fecha_fin','=',null)->first();
 		if(is_null($hacienda)){
