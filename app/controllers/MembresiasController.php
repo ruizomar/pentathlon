@@ -47,7 +47,7 @@ class MembresiasController extends BaseController {
 		$inicio = new DateTime($_POST['i']);
 		$fin = new DateTime($_POST['f']);
 		$data = array();
-		$pagos = Pago::where('concepto','like','Membresia'.'%') -> where('fecha','>',$inicio) -> where('fecha','<=',$fin) -> get();
+		$pagos = Pago::where('concepto','like','Membresia'.'%') -> where('fecha','>=',$inicio) -> where('fecha','<=',$fin) -> get();
 		foreach ($pagos as $pago) {
 			$data[] = array(
 				'nombre' => $pago -> elemento -> persona -> nombre,
@@ -56,7 +56,7 @@ class MembresiasController extends BaseController {
 				'membresia' => $pago -> concepto,
 				'fecha' => $pago -> fecha,
 				'zona' => $pago -> elemento -> companiasysubzona -> nombre,
-				'cargo' => '',
+				'grado' => $pago -> elemento -> grados -> last() -> nombre,
 				);
 		}
 		return Response::json($data);

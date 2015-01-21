@@ -35,15 +35,16 @@
 		<button class="boton pull-right btn-sm btn btn-success" onclick="$('#reportes').data('bootstrapValidator').validate(); if($('#reportes').data('bootstrapValidator').isValid()) generar()"><i class="fa fa-bars"></i> Mostrar lista</button>
 		<div class="total row">
 		</div>
-		<table id="telementos" class="hidden col-md-6 display" cellspacing="0" width="100%">
+		<table id="telementos" class="hidden col-md-offset-1 col-md-10 display" cellspacing="0" width="100%">
 			<thead>
 				<tr>
 					<th>Nombre</th>
 					<th>Paterno</th>
 					<th>Materno</th>
-					<th>Matricula</th>
 					<th>Membresia</th>
+					<th>Fecha</th>
 					<th>Zona</th>
+					<th>Grado</th>
 				</tr>
 			</thead>
 			<tbody id="elementobody">
@@ -92,10 +93,49 @@
 		    });
 		});
 		function generar () {
+			$('.boton').addClass('hidden');
 			i = $('#fechainicio').val();
 			f = $('#fechafin').val();
 			$.post('membresias',{i:i,f:f}, function(json) {
-				console.log(json);
+				$.each(json,function(index,pago){
+					$('#elementobody').append('<tr>'+
+						'<td>'+pago.nombre+'</td>'+
+						'<td>'+pago.paterno+'</td>'+
+						'<td>'+pago.materno+'</td>'+
+						'<td>'+pago.membresia+'</td>'+
+						'<td>'+pago.fecha+'</td>'+
+						'<td>'+pago.zona+'</td>'+
+						'<td>'+pago.grado+'</td>');
+				});
+				table = $('#telementos').DataTable( {
+				    "language": {
+				        "sProcessing": "Procesando...",
+				        "sLengthMenu": "Mostrar _MENU_ registros",
+				        "sZeroRecords": "No se encontraron resultados",
+				        "sEmptyTable": "Ningún dato disponible en esta tabla",
+				        "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+				        "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+				        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+				        "sInfoPostFix": "",
+				        "sSearch": "Buscar:",
+				        "sUrl": "",
+				        "sInfoThousands": ",",
+				        "sLoadingRecords": "Cargando...",
+				        "oPaginate": {
+				        "sFirst": "Primero",
+				        "sLast": "Último",
+				        "sNext": "Siguiente",
+				        "sPrevious": "Anterior"
+				        },
+				        "oAria": {
+				        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+				        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+				        }
+				    },
+				    paging: true,
+				    searching: true,
+				    dom: 'T<"clear">lfrtip',
+				});
 			}, 'json');
 			$('#telementos').removeClass('hidden');
 		}
