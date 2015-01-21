@@ -4,10 +4,9 @@ class ExamenesController extends BaseController{
     {
         $this->beforeFilter('auth');
         $this->beforeFilter(function(){
-		    if(is_null(User::find(Auth::id())->roles()->where('id','=',4)->first()))
-		    	 if(is_null(User::find(Auth::id())->roles()->where('id','=',3)->first()))
-    	 		return "No eres de Seccion Tecnica";
-        });
+		    if(is_null(User::find(Auth::id())->roles()->where('id','>',2)->where('id','<',6)->first()))
+    	 		return "No tienes acceso";
+        }, array('only' =>array('getIndex', 'postNuevo','postUpdate')));
     }
 	public function getIndex(){
 		$grados = array();
@@ -80,7 +79,7 @@ class ExamenesController extends BaseController{
 	public function getCalificaciones(){
 		$id = Auth::user()->elemento_id;
 		$conf = Elemento::find($id)->cargos()->where('fecha_fin','=',null,'and')
-											->where('cargo_id','=','11')->first();
+											->where('cargo_id','=','12')->first();
 		if(!is_null($conf)){
 											
 		$instructorid = $id;

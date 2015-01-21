@@ -30,6 +30,9 @@
     <div class="col-sm-6 col-sm-offset-3 col-xs-7">
         <h1 style="margin-bottom:20px;">Eventos <i class="fa fa-refresh fa-spin hidden"></i></h1>
     </div>
+    <div class="col-sm-3 pull-right">
+      <a Class="btn btn-primary" href="{{URL::to('eventos/inscripciones');}}" title="">Inscripciones</a>
+    </div>
 </div>
     <div class="contenedor col-md-8">
       {{ Form::open(array('url' => 'eventos/nuevoevento','role' => 'form','id' => 'form-nueva','class' => '')) }}

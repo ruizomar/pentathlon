@@ -9,7 +9,7 @@ class AsistenciasController extends BaseController{
 	public function getIndex(){
 		$id = Auth::user()->elemento_id;
 		$conf = Elemento::find($id)->cargos()->where('fecha_fin','=',null,'and')
-											->where('cargo_id','=','11')->first();
+											->where('cargo_id','=','12')->first();
 		if(!is_null($conf)){
 											
 		$instructorid = $id;
