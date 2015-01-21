@@ -16,8 +16,7 @@ class MembresiasController extends BaseController {
 	}
 
 	public function getReportes(){
-		$pagos = Pago::all();
-		return View::make('pagos.reportes') -> with('pagos',$pagos);
+		return View::make('pagos.reportes');
 	}
 
 	public function postReportes(){
@@ -32,12 +31,35 @@ class MembresiasController extends BaseController {
 		$pagosArr = array();
 		foreach ($pagos as $pago) {
 			if ($pago -> fecha > $inicio && $pago -> fecha < $fin) {
-				if ($pago -> concepto == $membresia || $pago -> concepto == $credencial || $pago -> concepto == $evento || $pago -> concepto == $examen || $pago -> concepto == $donativo) {
+				if (strpos($pago -> concepto, $membresia) == 0 || $pago -> concepto == $credencial || $pago -> concepto == $evento || $pago -> concepto == $examen || $pago -> concepto == $donativo) {
 					$pagosArr[] = $pago;
 				}
 			}
 		}
 		return Response::json($pagosArr);
+	}
+
+	public function getMembresias(){
+		return View::make('pagos.membresias');
+	}
+
+	public function postMembresias(){
+		$inicio = new DateTime($_POST['i']);
+		$fin = new DateTime($_POST['f']);
+		$data = array();
+		$pagos = Pago::where('concepto','like','Membresia'.'%') -> where('fecha','>',$inicio) -> where('fecha','<=',$fin) -> get();
+		foreach ($pagos as $pago) {
+			$data[] = array(
+				'nombre' => $pago -> elemento -> persona -> nombre,
+				'paterno' => $pago -> elemento -> persona -> apellidopaterno,
+				'materno' => $pago -> elemento -> persona -> apellidomaterno,
+				'membresia' => $pago -> concepto,
+				'fecha' => $pago -> fecha,
+				'zona' => $pago -> elemento -> companiasysubzona -> nombre,
+				'cargo' => '',
+				);
+		}
+		return Response::json($data);
 	}
 
 	public function getImprimir(){

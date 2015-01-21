@@ -364,8 +364,8 @@
       </div>
     </div>
     <div class="col-md-2">
-          {{ Form::image('imgs/fotos/default.png','fotoperfil',array('class' => 'img-responsive img-circle','alt' => 'Responsive image')) }}
-          {{ Form::file('fotoperfil',array('id' => 'filefoto')) }}
+<!--           {{ Form::image('imgs/fotos/default.png','fotoperfil',array('class' => 'img-responsive img-circle','alt' => 'Responsive image')) }}
+          {{ Form::file('fotoperfil',array('id' => 'filefoto')) }} -->
     </div>
   </form>
     <!-- {{form::close()}} -->

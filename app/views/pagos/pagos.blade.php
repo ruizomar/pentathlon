@@ -14,7 +14,7 @@
     <div class="row">
         <div class="pull-left" style="font-size:40px;">Enteros</div>
         <div class="pull-right">
-            <a class="label label-primary" href="{{URL::to('pagos/donativos');}}">Donativo de un civil</a> <a class="label label-success" href="{{URL::to('pagos/reportes');}}"><i class="fa fa-line-chart"></i> Reporte</a>
+            <a class="label label-primary" href="{{URL::to('pagos/donativos');}}">Donativo de un civil</a> <a class="label label-success" href="{{URL::to('pagos/reportes');}}"><i class="fa fa-line-chart"></i> Reporte general</a> <a class="label label-warning" href="{{URL::to('pagos/membresias');}}"><i class="fa fa-bars"></i> Reporte de membresias</a>
         </div>
     </div>
 @endsection

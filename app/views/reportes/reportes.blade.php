@@ -111,14 +111,14 @@
         <div class="col-md-3 form-group">
             {{ Form::label('birthday', 'Fecha de inicio') }}
             <div class="input-group" id="datetimePicker">
-                {{ Form::text('birthday', null, array('class' => 'form-control', 'placeholder' => 'AAAA-MM-DD', 'data-date-format' => 'YYYY-MM-DD')) }}
+                {{ Form::text('birthday', null, array('id' => 'fechainicio','class' => 'form-control', 'placeholder' => 'AAAA-MM-DD', 'data-date-format' => 'YYYY-MM-DD')) }}
                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
             </div>
         </div>
         <div class="col-md-3 form-group">
             {{ Form::label('birthday', 'Fecha de fin') }}
             <div class="input-group" id="datetimePicker">
-                {{ Form::text('birthday2', null, array('class' => 'form-control', 'placeholder' => 'AAAA-MM-DD', 'data-date-format' => 'YYYY-MM-DD')) }}
+                {{ Form::text('birthday2', null, array('id' => 'fechafin','class' => 'form-control', 'placeholder' => 'AAAA-MM-DD', 'data-date-format' => 'YYYY-MM-DD')) }}
                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
             </div>
         </div>
@@ -364,7 +364,33 @@
         }
     </script>
     <script>
-        function dibujartabla () {
+        function dibujartabla (inicio,fin) {
+            var d = new Date();
+            var month = d.getMonth()+1;
+            var day = d.getDate();
+            var output = d.getFullYear() + '/' +
+                (month<10 ? '0' : '') + month + '/' +
+                (day<10 ? '0' : '') + day;
+            mensaje = 'PDMU (Rango de fechas: '+inicio+' al '+fin+')';
+            if($('#1').is(':checked')){mensaje += ' Hombres: ' +thombres};
+            if($('#2').is(':checked')){mensaje += ' Mujeres: '+tmujeres};
+            if($('#3').is(':checked')){mensaje += ' Menores: '+(menor + menorM)};
+            if($('#4').is(':checked')){mensaje += ' Juvenil: '+(juvenil + juvenilM)};
+            if($('#5').is(':checked')){mensaje += ' Mayor: '+(mayor + mayorM)};
+            if($('#6').is(':checked')){mensaje += ' Reclutas: '+(recluta + reclutaM)};
+            if($('#7').is(':checked')){mensaje += ' Cadete: '+(cadete + cadeteM)};
+            if($('#8').is(':checked')){mensaje += ' Cadete de Primera: '+(cadete1 + cadete1M)};
+            if($('#9').is(':checked')){mensaje += ' Cabo: '+(cabo + caboM)};
+            if($('#10').is(':checked')){mensaje += ' Sargento: '+(sargento2 + sargento2M)};
+            if($('#1').is(':checked')){mensaje += ' Sargento: '+(Sargento1 + Sargento1M)};
+            if($('#12').is(':checked')){mensaje += ' Sub Oficial: '+(subOficial + subOficialM)};
+            if($('#13').is(':checked')){mensaje += ' 3 Oficial: '+(Oficial1 + Oficial1M)};
+            if($('#14').is(':checked')){mensaje += ' 2 Oficial: '+(Oficial2 + Oficial2M)};
+            if($('#15').is(':checked')){mensaje += ' 1 Oficial: '+(Oficial3 + Oficial3M)};
+            if($('#16').is(':checked')){mensaje += ' 3 Comandante: '+(Comandante1 + Comandante1M)};
+            if($('#17').is(':checked')){mensaje += ' 2 Comandante: '+(Comandate2 + Comandate2M)};
+            if($('#18').is(':checked')){mensaje += ' 1 Comandante: '+(Comandante3 + Comandante3M)};
+            mensaje += ' Fecha del reporte: '+output;
             $('#telementos').DataTable( {
                 "language": {
                     "sProcessing": "Procesando...",
@@ -401,7 +427,7 @@
                         {
                             "sExtends": "pdf",
                             "sPdfOrientation": "landscape",
-                            "sPdfMessage": "Pentathlón Deportivo Militarizado Universitario"
+                            "sPdfMessage": mensaje
                         },
                     ]
                 },
@@ -417,6 +443,7 @@
             inicio = $('#fechainicio').val();
             fin = $('#fechafin').val();
             $.post('reportes/compania',{id:id,inicio:inicio,fin:fin}, function(json) {
+                console.log(json);
                 thombres = 0;
                 recluta = 0;
                 cadete = 0;
@@ -640,7 +667,7 @@
                 });
                 $('#spin').addClass('hidden');
                 $('#telementos').removeClass('hidden');
-                dibujartabla();
+                dibujartabla(inicio,fin);
                 Morris.Donut({
                 element: 'graficasexos',
                 data: [
@@ -674,17 +701,17 @@
                     data: [
                         {label: 'recluta', value: recluta + reclutaM},
                         {label: 'cadete', value: cadete + cadeteM},
-                        {label: 'cadete1', value: cadete1 + cadete1M},
+                        {label: 'cadete de 1', value: cadete1 + cadete1M},
                         {label: 'cabo', value: cabo + caboM},
-                        {label: 'sargento2', value: sargento2 + sargento2M},
-                        {label: 'Sargento1', value: Sargento1 + Sargento1M},
+                        {label: 'sargento 2', value: sargento2 + sargento2M},
+                        {label: 'Sargento 1', value: Sargento1 + Sargento1M},
                         {label: 'subOficial', value: subOficial + subOficialM},
-                        {label: 'Oficial1', value: Oficial1 + Oficial1M},
-                        {label: 'Oficial2', value: Oficial2 + Oficial2M},
-                        {label: 'Oficial3', value: Oficial3 + Oficial3M},
-                        {label: 'Comandante1', value: Comandante1 + Comandante1M},
-                        {label: 'Comandate2', value: Comandate2 + Comandate2M},
-                        {label: 'Comandante3', value: Comandante3 + Comandante3M},
+                        {label: '1 Oficial', value: Oficial1 + Oficial1M},
+                        {label: '2 Oficial', value: Oficial2 + Oficial2M},
+                        {label: '3 Oficial', value: Oficial3 + Oficial3M},
+                        {label: '3 Comandante', value: Comandante1 + Comandante1M},
+                        {label: '2 Comandate', value: Comandate2 + Comandate2M},
+                        {label: '3 Comandante', value: Comandante3 + Comandante3M},
                     ],
                     backgroundColor: '#F7F7F7',
                     labelColor: '#2B2B2B',
