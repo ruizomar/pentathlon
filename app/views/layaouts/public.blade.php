@@ -17,7 +17,7 @@
 <!-- navbar -->
   <div class="navbar navbar-inverse navbar-fixed-top" style="margin-bottom: -20px;  padding-bottom: 40px">
     <div class="navbar-header">
-      <a class="navbar-brand" href="/inicio"><img src="{{asset('imgs/pdmu.png')}}"> PDMU</a>
+      <a class="navbar-brand" href="{{URL::to('/')}}"><img src="{{asset('imgs/pdmu.png')}}"> PDMU</a>
     </div>
   </div>
 

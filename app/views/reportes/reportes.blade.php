@@ -76,6 +76,8 @@
     {{  HTML::style('css/jquery.dataTables.css')}}
     {{  HTML::style('css/dataTables.tableTools.css')}}
     {{  HTML::script('js/dataTables.tableTools.min.js')}}
+    {{  HTML::script('js/bootstrapValidator.js'); }}
+    {{  HTML::script('js/es_ES.js'); }}
 
 @endsection
 @section('contenido')
@@ -103,21 +105,21 @@
         <div class="col-md-12 form-group" id="companias" style="margin-left:80px;">
         </div>
     </div>
-    <div class="hidden col-md-12" id="compania" style="left:10;">
+    <div class="hidden col-md-12 form-horizontal" id="compania" style="left:10;">
         <h1 id="nombre" style="margin-bottom:20px;"><i class="fa fa-bar-chart"></i></h1>
-        <button class="pull-right btn-sm btn btn-success" onclick="dibujagrafica()"><i class="fa fa-bar-chart"></i> Generar</button>
-        <div class="col-md-5">
+        <button class="pull-right btn-sm btn btn-success" onclick="$('#compania').data('bootstrapValidator').validate(); if($('#compania').data('bootstrapValidator').isValid()) dibujagrafica()"><i class="fa fa-bar-chart"></i> Generar</button>
+        <div class="col-md-3 form-group">
             {{ Form::label('birthday', 'Fecha de inicio') }}
-            <div class="input-group date col-md-6" id="datetimePicker">
+            <div class="input-group" id="datetimePicker">
+                {{ Form::text('birthday', null, array('class' => 'form-control', 'placeholder' => 'YYYY-MM-DD', 'data-date-format' => 'YYYY-MM-DD')) }}
                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                {{ Form::text('birthday', '1949-02-01', array('id' => 'fechainicio','class' => 'form-control', 'placeholder' => 'YYYY-MM-DD', 'data-date-format' => 'YYYY-MM-DD')) }}
             </div>
         </div>
-        <div class="col-md-5">
-            {{ Form::label('birthday2', 'Fecha de fin') }}
-            <div class="input-group date col-md-6" id="datetimePicker2">
+        <div class="col-md-3 form-group">
+            {{ Form::label('birthday', 'Fecha de fin') }}
+            <div class="input-group" id="datetimePicker">
+                {{ Form::text('birthday2', null, array('class' => 'form-control', 'placeholder' => 'YYYY-MM-DD', 'data-date-format' => 'YYYY-MM-DD')) }}
                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                {{ Form::text('birthday2', '2015-01-19', array('id' => 'fechafin','class' => 'form-control', 'placeholder' => 'YYYY-MM-DD', 'data-date-format' => 'YYYY-MM-DD')) }}
             </div>
         </div>
         <div class="form-group col-md-12">
@@ -125,12 +127,12 @@
             <label class="label label-primary"> Género <i class="fa fa-female"></i> / <i class="fa fa-male"></i></label><br>
             <div class="col-md-2 etiquetas">
                 <label class="checkbox-inline">
-                    <input id="1" type="checkbox">Masculino
+                    <input id="1" name="sexo[]" type="checkbox">Masculino
                 </label>
             </div>
             <div class="col-md-2 etiquetas">
                 <label class="checkbox-inline">
-                    <input id="2" type="checkbox">Femenino
+                    <input id="2" name="sexo[]" type="checkbox">Femenino
                 </label>
             </div>
         </div>
@@ -139,17 +141,17 @@
             <label class="label label-primary"> Edad <i class="fa fa-child"></i></label><br>
             <div class="col-md-2 etiquetas">
                 <label class="checkbox-inline">
-                    <input id="3" type="checkbox">Menor
+                    <input id="3" name="edad[]" type="checkbox">Menor
                 </label>
             </div>
             <div class="col-md-2 etiquetas">
                 <label class="checkbox-inline">
-                    <input id="4" type="checkbox">Juvenil
+                    <input id="4" name="edad[]" type="checkbox">Juvenil
                 </label>
             </div>
             <div class="col-md-2 etiquetas">
                 <label class="checkbox-inline">
-                    <input id="5" type="checkbox">Mayor
+                    <input id="5" name="edad[]" type="checkbox">Mayor
                 </label>
             </div>
         </div>
@@ -158,67 +160,67 @@
             <label class="label label-primary"> Grados <i class="fa fa-star"></i></label><br>
             <div class="col-md-3 etiquetas">
                 <label class="checkbox-inline">
-                    <input id="6" type="checkbox"> Recluta
+                    <input id="6" name="grado[]" type="checkbox"> Recluta
                 </label>
             </div>
             <div class="col-md-3 etiquetas">
                 <label class="checkbox-inline">
-                    <input id="7" type="checkbox"> Cadete de infantería
+                    <input id="7" name="grado[]" type="checkbox"> Cadete de infantería
                 </label>
             </div>
             <div class="col-md-3 etiquetas">
                 <label class="checkbox-inline">
-                    <input id="8" type="checkbox"> Cadete 1a
+                    <input id="8" name="grado[]" type="checkbox"> Cadete 1a
                 </label>
             </div>
             <div class="col-md-3 etiquetas">
                 <label class="checkbox-inline">
-                    <input id="9" type="checkbox"> Cabo
+                    <input id="9" name="grado[]" type="checkbox"> Cabo
                 </label>
             </div>
             <div class="col-md-3 etiquetas">
                 <label class="checkbox-inline">
-                    <input id="10" type="checkbox"> Sargento 2
+                    <input id="10" name="grado[]" type="checkbox"> Sargento 2
                 </label>
             </div>
             <div class="col-md-3 etiquetas">
                 <label class="checkbox-inline">
-                    <input id="11" type="checkbox"> Sargento 1
+                    <input id="11" name="grado[]" type="checkbox"> Sargento 1
                 </label>
             </div>
             <div class="col-md-3 etiquetas">
                 <label class="checkbox-inline">
-                    <input id="12" type="checkbox"> Sub Oficial
+                    <input id="12" name="grado[]" type="checkbox"> Sub Oficial
                 </label>
             </div>
             <div class="col-md-3 etiquetas">
                 <label class="checkbox-inline">
-                    <input id="13" type="checkbox"> 3 Oficial
+                    <input id="13" name="grado[]" type="checkbox"> 3 Oficial
                 </label>
             </div>
             <div class="col-md-3 etiquetas">
                 <label class="checkbox-inline">
-                    <input id="14" type="checkbox"> 2 Oficial
+                    <input id="14" name="grado[]" type="checkbox"> 2 Oficial
                 </label>
             </div>
             <div class="col-md-3 etiquetas">
                 <label class="checkbox-inline">
-                    <input id="15" type="checkbox"> 1 Oficial
+                    <input id="15" name="grado[]" type="checkbox"> 1 Oficial
                 </label>
             </div>
             <div class="col-md-3 etiquetas">
                 <label class="checkbox-inline">
-                    <input id="16" type="checkbox"> 3 Comandante
+                    <input id="16" name="grado[]" type="checkbox"> 3 Comandante
                 </label>
             </div>
             <div class="col-md-3 etiquetas">
                 <label class="checkbox-inline">
-                    <input id="17" type="checkbox"> 2 Comandante
+                    <input id="17" name="grado[]" type="checkbox"> 2 Comandante
                 </label>
             </div>
             <div class="col-md-3 etiquetas">
                 <label class="checkbox-inline">
-                    <input id="18" type="checkbox"> 1 Comandante
+                    <input id="18" name="grado[]" type="checkbox"> 1 Comandante
                 </label>
             </div>
             <!-- <div id="generar">
@@ -234,9 +236,11 @@
         <i class="fa fa-cog fa-spin fa-5x"></i>
     </div>
     <div class="col-md-12">
-        <div id="graficasexos" class="grafica col-md-6">
+        <div id="graficasexos" class="grafica col-md-4">
         </div>
-        <div id="graficaedad" class="grafica col-md-6">
+        <div id="graficaedades" class="grafica col-md-4">
+        </div>
+        <div id="graficagrados" class="grafica col-md-4">
         </div>
     </div>
     <div class="row">
@@ -261,6 +265,47 @@
 @stop
 @section('scripts')
     <script>
+        $(document).ready(function() {
+            $('#compania').bootstrapValidator({
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    'sexo[]': {
+                        validators: {
+                            choice :{
+                                min : 1,
+                            }
+                        }
+                    },
+                    'edad[]': {
+                        validators: {
+                            choice :{
+                                min : 1,
+                            }
+                        }
+                    },
+                    birthday: {
+                        validators: {
+                            notEmpty: {},
+                            date: {
+                                format: 'YYYY-MM-DD',
+                            }
+                        }
+                    },
+                    birthday2: {
+                        validators: {
+                            notEmpty: {},
+                            date: {
+                                format: 'YYYY-MM-DD',
+                            }
+                        }
+                    },
+                }
+            });
+        });
         $(document).ready(function() {
             $('#datetimePicker ,#datetimePicker2').datetimepicker({
                 language: 'es',
@@ -414,18 +459,20 @@
                                 if(lugar.Masculino.Menor){
                                     $.each(lugar.Masculino.Menor,function(index,edad){
                                         menor += edad.length;
-                                        $.each(edad,function(index,grado){
-                                            $('#elementobody').append('<tr>'+
-                                                '<td>'+grado.nombre+'</td>'+
-                                                '<td>'+grado.paterno+'</td>'+
-                                                '<td>'+grado.materno+'</td>'+
-                                                '<td>'+grado.matricula+'</td>'+
-                                                '<td>'+grado.grado+'</td>'+
-                                                '<td>'+grado.fecha+'</td>'+
-                                                '<td>'+grado.sexo+'</td>'+
-                                                '<td>'+grado.edad+'</td>'+
-                                                '<td>'+grado.zona+'</td>');
-                                        });
+                                        if(lugar.Masculino.Menor){
+                                            $.each(edad,function(index,grado){
+                                                $('#elementobody').append('<tr>'+
+                                                    '<td>'+grado.nombre+'</td>'+
+                                                    '<td>'+grado.paterno+'</td>'+
+                                                    '<td>'+grado.materno+'</td>'+
+                                                    '<td>'+grado.matricula+'</td>'+
+                                                    '<td>'+grado.grado+'</td>'+
+                                                    '<td>'+grado.fecha+'</td>'+
+                                                    '<td>'+grado.sexo+'</td>'+
+                                                    '<td>'+grado.edad+'</td>'+
+                                                    '<td>'+grado.zona+'</td>');
+                                            });
+                                        }
                                     });
                                 }
                             };
@@ -433,18 +480,20 @@
                                 if(lugar.Masculino.Juvenil){
                                     $.each(lugar.Masculino.Juvenil,function(index,edad){
                                         juvenil += edad.length;
-                                        $.each(edad,function(index,grado){
-                                            $('#elementobody').append('<tr>'+
-                                                '<td>'+grado.nombre+'</td>'+
-                                                '<td>'+grado.paterno+'</td>'+
-                                                '<td>'+grado.materno+'</td>'+
-                                                '<td>'+grado.matricula+'</td>'+
-                                                '<td>'+grado.grado+'</td>'+
-                                                '<td>'+grado.fecha+'</td>'+
-                                                '<td>'+grado.sexo+'</td>'+
-                                                '<td>'+grado.edad+'</td>'+
-                                                '<td>'+grado.zona+'</td>');
-                                        });
+                                        if(lugar.Masculino.Juvenil){
+                                            $.each(edad,function(index,grado){
+                                                $('#elementobody').append('<tr>'+
+                                                    '<td>'+grado.nombre+'</td>'+
+                                                    '<td>'+grado.paterno+'</td>'+
+                                                    '<td>'+grado.materno+'</td>'+
+                                                    '<td>'+grado.matricula+'</td>'+
+                                                    '<td>'+grado.grado+'</td>'+
+                                                    '<td>'+grado.fecha+'</td>'+
+                                                    '<td>'+grado.sexo+'</td>'+
+                                                    '<td>'+grado.edad+'</td>'+
+                                                    '<td>'+grado.zona+'</td>');
+                                            });
+                                        }
                                     });
                                 }
                             };
@@ -452,61 +501,70 @@
                                 if(lugar.Masculino.Mayor){
                                     $.each(lugar.Masculino.Mayor,function(index,edad){
                                         mayor += edad.length;
-                                        $.each(edad,function(index,grado){
-                                            $('#elementobody').append('<tr>'+
-                                                '<td>'+grado.nombre+'</td>'+
-                                                '<td>'+grado.paterno+'</td>'+
-                                                '<td>'+grado.materno+'</td>'+
-                                                '<td>'+grado.matricula+'</td>'+
-                                                '<td>'+grado.grado+'</td>'+
-                                                '<td>'+grado.fecha+'</td>'+
-                                                '<td>'+grado.sexo+'</td>'+
-                                                '<td>'+grado.edad+'</td>'+
-                                                '<td>'+grado.zona+'</td>');
-                                        });
+                                        if(lugar.Masculino.Mayor){
+                                            $.each(edad,function(index,grado){
+                                                $('#elementobody').append('<tr>'+
+                                                    '<td>'+grado.nombre+'</td>'+
+                                                    '<td>'+grado.paterno+'</td>'+
+                                                    '<td>'+grado.materno+'</td>'+
+                                                    '<td>'+grado.matricula+'</td>'+
+                                                    '<td>'+grado.grado+'</td>'+
+                                                    '<td>'+grado.fecha+'</td>'+
+                                                    '<td>'+grado.sexo+'</td>'+
+                                                    '<td>'+grado.edad+'</td>'+
+                                                    '<td>'+grado.zona+'</td>');
+                                            });
+                                        }
                                     });
                                 }
                             };
                             $.each(lugar.Masculino,function(index,edad){
-                                recluta += edad.recluta.length;
-                                cadete += edad.cadete.length;
-                                cadete1 += edad.cadete1.length;
-                                cabo += edad.cabo.length;
-                                sargento2 += edad.sargento2.length;
-                                Sargento1 += edad.Sargento1.length;
-                                subOficial += edad.subOficial.length;
-                                Oficial1 += edad.Oficial1.length;
-                                Oficial2 += edad.Oficial2.length;
-                                Oficial3 += edad.Oficial3.length;
-                                Comandante1 += edad.Comandante1.length;
-                                Comandate2 += edad.Comandate2.length;
-                                Comandante3 += edad.Comandante3.length;
+                                if($('#6').is(':checked')){recluta += edad.recluta.length;}
+                                if($('#7').is(':checked')){cadete += edad.cadete.length;}
+                                if($('#8').is(':checked')){cadete1 += edad.cadete1.length;}
+                                if($('#9').is(':checked')){cabo += edad.cabo.length;}
+                                if($('#10').is(':checked')){sargento2 += edad.sargento2.length;}
+                                if($('#11').is(':checked')){Sargento1 += edad.Sargento1.length;}
+                                if($('#12').is(':checked')){subOficial += edad.subOficial.length;}
+                                if($('#13').is(':checked')){Oficial1 += edad.Oficial1.length;}
+                                if($('#14').is(':checked')){Oficial2 += edad.Oficial2.length;}
+                                if($('#15').is(':checked')){Oficial3 += edad.Oficial3.length;}
+                                if($('#16').is(':checked')){Comandante1 += edad.Comandante1.length;}
+                                if($('#17').is(':checked')){Comandate2 += edad.Comandate2.length;}
+                                if($('#18').is(':checked')){Comandante3 += edad.Comandante3.length;}
                                 $.each(edad,function(index,grado){
                                     $.each(grado,function(index,hombre){
-                                        thombres++
+                                        if (!$('#3').is(':checked') && !$('#4').is(':checked') && !$('#5').is(':checked')) {
+                                            thombres++;
+                                        }
+                                        else{
+                                            thombres = menor+juvenil+mayor;
+                                        }
                                     });
                                 });
                             });
                         }
                     };
-                    if ($('#1').is(':checked')) {
+                    if ($('#2').is(':checked')) {
                         if(lugar.Femenino){
                             if ($('#2').is(':checked') && $('#3').is(':checked')) {
                                 if(lugar.Femenino.Menor){
                                     $.each(lugar.Femenino.Menor,function(index,edad){
                                         menorM += edad.length;
-                                        $.each(edad,function(index,grado){
-                                            $('#elementobody').append('<tr>'+
-                                                '<td>'+grado.nombre+'</td>'+
-                                                '<td>'+grado.paterno+'</td>'+
-                                                '<td>'+grado.materno+'</td>'+
-                                                '<td>'+grado.matricula+'</td>'+
-                                                '<td>'+grado.grado+'</td>'+
-                                                '<td>'+grado.fecha+'</td>'+
-                                                '<td>'+grado.sexo+'</td>'+
-                                                '<td>'+grado.edad+'</td>'+
-                                                '<td>'+grado.zona+'</td>');
-                                        });
+                                        if(lugar.Femenino.Menor){
+                                            $.each(edad,function(index,grado){
+                                                $('#elementobody').append('<tr>'+
+                                                    '<td>'+grado.nombre+'</td>'+
+                                                    '<td>'+grado.paterno+'</td>'+
+                                                    '<td>'+grado.materno+'</td>'+
+                                                    '<td>'+grado.matricula+'</td>'+
+                                                    '<td>'+grado.grado+'</td>'+
+                                                    '<td>'+grado.fecha+'</td>'+
+                                                    '<td>'+grado.sexo+'</td>'+
+                                                    '<td>'+grado.edad+'</td>'+
+                                                    '<td>'+grado.zona+'</td>');
+                                            });
+                                        }
                                     });
                                 }
                             };
@@ -514,18 +572,20 @@
                                 if(lugar.Femenino.Juvenil){
                                     $.each(lugar.Femenino.Juvenil,function(index,edad){
                                         juvenilM += edad.length;
-                                        $.each(edad,function(index,grado){
-                                            $('#elementobody').append('<tr>'+
-                                                '<td>'+grado.nombre+'</td>'+
-                                                '<td>'+grado.paterno+'</td>'+
-                                                '<td>'+grado.materno+'</td>'+
-                                                '<td>'+grado.matricula+'</td>'+
-                                                '<td>'+grado.grado+'</td>'+
-                                                '<td>'+grado.fecha+'</td>'+
-                                                '<td>'+grado.sexo+'</td>'+
-                                                '<td>'+grado.edad+'</td>'+
-                                                '<td>'+grado.zona+'</td>');
-                                        });
+                                        if(lugar.Femenino.Juvenil){
+                                            $.each(edad,function(index,grado){
+                                                $('#elementobody').append('<tr>'+
+                                                    '<td>'+grado.nombre+'</td>'+
+                                                    '<td>'+grado.paterno+'</td>'+
+                                                    '<td>'+grado.materno+'</td>'+
+                                                    '<td>'+grado.matricula+'</td>'+
+                                                    '<td>'+grado.grado+'</td>'+
+                                                    '<td>'+grado.fecha+'</td>'+
+                                                    '<td>'+grado.sexo+'</td>'+
+                                                    '<td>'+grado.edad+'</td>'+
+                                                    '<td>'+grado.zona+'</td>');
+                                            });
+                                        }
                                     });
                                 }
                             };
@@ -533,38 +593,45 @@
                                 if(lugar.Femenino.Mayor){
                                     $.each(lugar.Femenino.Mayor,function(index,edad){
                                         mayorM += edad.length;
-                                        $.each(edad,function(index,grado){
-                                            $('#elementobody').append('<tr>'+
-                                                '<td>'+grado.nombre+'</td>'+
-                                                '<td>'+grado.paterno+'</td>'+
-                                                '<td>'+grado.materno+'</td>'+
-                                                '<td>'+grado.matricula+'</td>'+
-                                                '<td>'+grado.grado+'</td>'+
-                                                '<td>'+grado.fecha+'</td>'+
-                                                '<td>'+grado.sexo+'</td>'+
-                                                '<td>'+grado.edad+'</td>'+
-                                                '<td>'+grado.zona+'</td>');
-                                        });
+                                        if(lugar.Femenino.Mayor){
+                                            $.each(edad,function(index,grado){
+                                                $('#elementobody').append('<tr>'+
+                                                    '<td>'+grado.nombre+'</td>'+
+                                                    '<td>'+grado.paterno+'</td>'+
+                                                    '<td>'+grado.materno+'</td>'+
+                                                    '<td>'+grado.matricula+'</td>'+
+                                                    '<td>'+grado.grado+'</td>'+
+                                                    '<td>'+grado.fecha+'</td>'+
+                                                    '<td>'+grado.sexo+'</td>'+
+                                                    '<td>'+grado.edad+'</td>'+
+                                                    '<td>'+grado.zona+'</td>');
+                                            });
+                                        }
                                     });
                                 }
                             };
                             $.each(lugar.Femenino,function(index,edad){
-                                reclutaM += edad.recluta.length;
-                                cadeteM += edad.cadete.length;
-                                cadete1M += edad.cadete1.length;
-                                caboM += edad.cabo.length;
-                                sargento2M += edad.sargento2.length;
-                                Sargento1M += edad.Sargento1.length;
-                                subOficialM += edad.subOficial.length;
-                                Oficial1M += edad.Oficial1.length;
-                                Oficial2M += edad.Oficial2.length;
-                                Oficial3M += edad.Oficial3.length;
-                                Comandante1M += edad.Comandante1.length;
-                                Comandate2M += edad.Comandate2.length;
-                                Comandante3M += edad.Comandante3.length;
+                                if($('#6').is(':checked')){reclutaM += edad.recluta.length;}
+                                if($('#7').is(':checked')){cadeteM += edad.cadete.length;}
+                                if($('#8').is(':checked')){cadete1M += edad.cadete1.length;}
+                                if($('#9').is(':checked')){caboM += edad.cabo.length;}
+                                if($('#10').is(':checked')){sargento2M += edad.sargento2.length;}
+                                if($('#11').is(':checked')){Sargento1M += edad.Sargento1.length;}
+                                if($('#12').is(':checked')){subOficialM += edad.subOficial.length;}
+                                if($('#13').is(':checked')){Oficial1M += edad.Oficial1.length;}
+                                if($('#14').is(':checked')){Oficial2M += edad.Oficial2.length;}
+                                if($('#15').is(':checked')){Oficial3M += edad.Oficial3.length;}
+                                if($('#16').is(':checked')){Comandante1M += edad.Comandante1.length;}
+                                if($('#17').is(':checked')){Comandate2M += edad.Comandate2.length;}
+                                if($('#18').is(':checked')){Comandante3M += edad.Comandante3.length;}
                                 $.each(edad,function(index,grado){
                                     $.each(grado,function(index,mujer){
-                                        tmujeres++
+                                        if (!$('#3').is(':checked') && !$('#4').is(':checked') && !$('#5').is(':checked')) {
+                                            tmujeres++;
+                                        }
+                                        else{
+                                            tmujeres = menorM+juvenilM+mayorM;
+                                        }
                                     });
                                 });
                             });
@@ -588,7 +655,7 @@
                 ],
                 });
                 Morris.Donut({
-                    element: 'graficaedad',
+                    element: 'graficaedades',
                     data: [
                         {label: "Menor", value: menorM + menor},
                         {label: "Juvenil", value: juvenilM + juvenil},
@@ -600,6 +667,41 @@
                         '#4CD964',
                         '#FFCC00',
                         '#FF3B30',
+                    ],
+                });
+                Morris.Donut({
+                    element: 'graficagrados',
+                    data: [
+                        {label: 'recluta', value: recluta + reclutaM},
+                        {label: 'cadete', value: cadete + cadeteM},
+                        {label: 'cadete1', value: cadete1 + cadete1M},
+                        {label: 'cabo', value: cabo + caboM},
+                        {label: 'sargento2', value: sargento2 + sargento2M},
+                        {label: 'Sargento1', value: Sargento1 + Sargento1M},
+                        {label: 'subOficial', value: subOficial + subOficialM},
+                        {label: 'Oficial1', value: Oficial1 + Oficial1M},
+                        {label: 'Oficial2', value: Oficial2 + Oficial2M},
+                        {label: 'Oficial3', value: Oficial3 + Oficial3M},
+                        {label: 'Comandante1', value: Comandante1 + Comandante1M},
+                        {label: 'Comandate2', value: Comandate2 + Comandate2M},
+                        {label: 'Comandante3', value: Comandante3 + Comandante3M},
+                    ],
+                    backgroundColor: '#F7F7F7',
+                    labelColor: '#2B2B2B',
+                    colors: [
+                        '#4CD964',
+                        '#FFCC00',
+                        '#FF3B30',
+                        '#4CD964',
+                        '#FFCC00',
+                        '#FF3B30',
+                        '#4CD964',
+                        '#FFCC00',
+                        '#FF3B30',
+                        '#4CD964',
+                        '#FFCC00',
+                        '#FF3B30',
+                        '#4CD964',
                     ],
                 });
             }, 'json');
