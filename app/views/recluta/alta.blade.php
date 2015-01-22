@@ -418,12 +418,26 @@
 					},
 		            nombre: {
 		                validators: {
-		                    notEmpty: {}
+		                    notEmpty: {},
+							stringLength:{
+								max: 30,
+							},
+							regexp: {
+							    regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+							    message: 'Por favor verifica el campo'
+							},
 		                }
 		            },
 		            reclunombre: {
 		                validators: {
-		                    notEmpty: {}
+		                    notEmpty: {},
+							stringLength:{
+								max: 30,
+							},
+							regexp: {
+							    regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+							    message: 'Por favor verifica el campo'
+							},
 		                }
 		            },
 		            postal:{
@@ -438,11 +452,6 @@
 		            },
 		            curp:{
 						validators:{
-		                    // stringLength: {
-		                    //     min: 18,
-		                    //     max:18,
-		                    //     message:'La CURP esta formada por 18 caracteres'
-		                    // },
 		                    notEmpty:{},
 		                    regexp: {
 		                        regexp:/^[a-zA-Z]{4}((\d{2}((0[13578]|1[02])(0[1-9]|[12]\d|3[01])|(0[13456789]|1[012])(0[1-9]|[12]\d|30)|02(0[1-9]|1\d|2[0-8])))|([02468][048]|[13579][26])0229)(H|M)(AS|BC|BS|CC|CL|CM|CS|CH|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|SM|NE)([a-zA-Z]{3})([a-zA-Z0-9\s]{1})\d{1}$/,
@@ -452,12 +461,26 @@
 		            },
 		            paterno: {
 		                validators: {
-		                    notEmpty: {}
+		                    notEmpty: {},
+							stringLength:{
+								max: 30,
+							},
+							regexp: {
+							    regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+							    message: 'Por favor verifica el campo'
+							},
 		                }
 		            },
 		            reclupaterno: {
 		                validators: {
-		                    notEmpty: {}
+		                    notEmpty: {},
+							stringLength:{
+								max: 30,
+							},
+							regexp: {
+							    regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+							    message: 'Por favor verifica el campo'
+							},
 		                }
 		            },
 		            recluemail: {
@@ -480,8 +503,7 @@
 		            },
 		            reclutelefonofijo: {
 		                validators: {
-		                    integer:{
-							},
+		                    integer:{},
 							stringLength: {
 							    min: 7,
 							    max:10,
@@ -490,8 +512,7 @@
 		            },
 		            reclutelefonomovil: {
 		                validators: {
-		                    integer:{
-							},
+		                    integer:{},
 							stringLength: {
 							    min: 7,
 							    max:10,
@@ -500,8 +521,7 @@
 		            },
 		            contactotelefonofijo: {
 		                validators: {
-		                    integer:{
-							},
+		                    integer:{},
 							stringLength: {
 							    min: 7,
 							    max:10,
@@ -510,8 +530,7 @@
 		            },
 		            contactotelefonomovil: {
 		                validators: {
-		                    integer:{
-							},
+		                    integer:{},
 							stringLength: {
 							    min: 7,
 							    max:10,
@@ -522,27 +541,164 @@
 						validators:{
 							notEmpty: {},
 							integer:{},
+							stringLength:{
+								max:3,
+							},
 						}
 		            },
 		            peso:{
 						validators:{
 							notEmpty:{},
-							integer:{}
+							integer:{},
+							stringLength:{
+								max:3,
+							}
 						}
 		            },
 		            contactonombre:{
 						validators:{
-							notEmpty:{}
+							notEmpty:{},
+							stringLength:{
+								max: 30,
+							},
+							regexp: {
+							    regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+							    message: 'Por favor verifica el campo'
+							},
 						}
 		            },
 		            contactopaterno:{
 						validators:{
-							notEmpty:{}
+							notEmpty:{},
+							stringLength:{
+								max: 30,
+							},
+							regexp: {
+							    regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+							    message: 'Por favor verifica el campo'
+							},
 						}
 		            },
 		            contactorelacion:{
 						validators:{
-							notEmpty:{}
+							notEmpty:{},
+							stringLength:{
+								max: 30,
+							},
+							regexp: {
+							    regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+							    message: 'Por favor verifica el campo'
+							},
+						}
+		            },
+		            escuela:{
+						validators:{
+							stringLength:{
+								max: 40,
+							},
+							regexp: {
+							    regexp:/^[0-9 a-zA-Z áéíóúñÑÁÉÍÓÚ . #]+$/,
+							    message: 'Por favor verifica el campo'
+							},
+						}
+		            },
+		            alergia:{
+						validators:{
+							stringLength:{
+								max: 40,
+							},
+							regexp: {
+							    regexp:/^[0-9 a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+							    message: 'Por favor verifica el campo'
+							},
+						}
+		            },
+		            vicios:{
+						validators:{
+							stringLength:{
+								max: 40,
+							},
+							regexp: {
+							    regexp:/^[0-9 a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+							    message: 'Por favor verifica el campo'
+							},
+						}
+		            },
+		            ocupacion:{
+						validators:{
+							stringLength:{
+								max: 40,
+							},
+							regexp: {
+							    regexp:/^[0-9 a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+							    message: 'Por favor verifica el campo'
+							},
+						}
+		            },
+		            domicilio:{
+						validators:{
+							stringLength:{
+								max: 40,
+							},
+							regexp: {
+							    regexp:/^[0-9 a-zA-Z áéíóúñÑÁÉÍÓÚ # .]+$/,
+							    message: 'Por favor verifica el campo'
+							},
+						}
+		            },
+		            colonia:{
+						validators:{
+							stringLength:{
+								max: 40,
+							},
+							regexp: {
+							    regexp:/^[0-9 a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+							    message: 'Por favor verifica el campo'
+							},
+						}
+		            },
+		            lugnac:{
+						validators:{
+							stringLength:{
+								max: 40,
+							},
+							regexp: {
+							    regexp:/^[0-9 a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+							    message: 'Por favor verifica el campo'
+							},
+						}
+		            },
+		            reclufacebook:{
+						validators:{
+							stringLength:{
+								max: 40,
+							},
+							regexp: {
+							    regexp:/^[0-9 a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+							    message: 'Por favor verifica el campo'
+							},
+						}
+		            },
+		            reclutwitter:{
+						validators:{
+							stringLength:{
+								max: 40,
+							},
+							regexp: {
+							    regexp:/^[0-9 a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+							    message: 'Por favor verifica el campo'
+							},
+						}
+		            },
+		            contactorelacion:{
+						validators:{
+							stringLength:{
+								max: 40,
+							},
+							regexp: {
+							    regexp:/^[0-9 a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+							    message: 'Por favor verifica el campo'
+							},
 						}
 		            }
 		        }
