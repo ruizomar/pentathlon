@@ -30,6 +30,10 @@
 <div class="col-sm-5 contenedor" style="min-height:700px; top:50px;">
   <div id="delementos"></div>
 </div>
+<div class="col-sm-5 col-sm-offset-1 contenedor">
+  {{ Form::open(array('url' => 'credenciales/imprimir','role' => 'form','id' => 'credenciales','class' => 'form-control')) }}
+  {{ Form::close() }}
+</div>
 @endsection
 @section('scripts')
 {{  HTML::script('js/tables/jquery.dataTables.min.js'); }}
@@ -87,16 +91,11 @@ $('#imprimir').click(function(){
   }
   else{
     var elementos = '';
-    $('#noinscritos').DataTable().rows('.success').data().each(function( row ) {
-      elementos += row[0]+"=on&";
+    $('#elementos').DataTable().rows('.success').data().each(function( row ) {
+      elementos += '<input class="" type="checkbox" checked name="'+row[0]+'">';
     });
-    $.post("{{ URL::to('credenciales/imprimir'); }}", elementos+'id='+$('[name = compania]').val(), function(json) {
-      if(json.success){
-        swal('Operacion completada correctamente', null, "success");
-      }
-      else
-        swal('Error', "Ocurrio un error intenta nuevamente", "error");
-      }, 'json');
+    $('#credenciales').html(elementos);
+    $('#credenciales').submit();
   }
 });
 $('#Credenciales, #Credenciales').addClass('active');

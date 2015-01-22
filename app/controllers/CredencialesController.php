@@ -37,7 +37,17 @@ class CredencialesController extends BaseController {
         return Response::json(array('success' => true,"elementos" => $Elementos));
     }
     public function postImprimir(){
-        return View::make('credenciales.imprecion')->with('elementos',$elementos);
+        $elementos = array();
+        foreach (Input::all() as $key => $value) {
+            if(is_integer($key))
+                $elementos[] = Elemento::find($key);
+        }
+        //return View::make('credenciales.imprecion')->with('elementos',$elementos);
+        $html =  View::make('credenciales.imprecion')->with('elementos',$elementos); 
+
+        $pdf = App::make('dompdf');
+        $pdf->loadHTML($html);
+        return $pdf->stream();
     }
 }
 
