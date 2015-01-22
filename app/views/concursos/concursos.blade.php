@@ -283,12 +283,37 @@
                 fields: {
                     concursantenombre: {
                         validators: {
-                            notEmpty: {}
+                            notEmpty: {},
+                            stringLength:{
+                                max: 30,
+                            },
+                            regexp: {
+                                regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+                                message: 'Por favor verifica el campo'
+                            },
                         }
                     },
                     concursantepaterno: {
                         validators: {
-                            notEmpty: {}
+                            notEmpty: {},
+                            stringLength:{
+                                max: 30,
+                            },
+                            regexp: {
+                                regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+                                message: 'Por favor verifica el campo'
+                            },
+                        }
+                    },
+                    concursantematerno: {
+                        validators: {
+                            stringLength:{
+                                max: 30,
+                            },
+                            regexp: {
+                                regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+                                message: 'Por favor verifica el campo'
+                            },
                         }
                     },
                 }
@@ -301,18 +326,50 @@
                 },
                 fields: {
                     escuela:{
-                        validators:{
-                            notEmpty :{},
+                        validators: {
+                            notEmpty: {},
+                            stringLength:{
+                                max: 30,
+                            },
+                            regexp: {
+                                regexp:/^[0-9.a-zA-Z áéíóúñÑÁÉÍÓÚ]+(\#\d+)*$/,
+                                message: 'Por favor verifica el campo'
+                            },
                         }
                     },
                     nombre:{
-                        validators:{
-                            notEmpty :{},
+                        validators: {
+                            notEmpty: {},
+                            stringLength:{
+                                max: 30,
+                            },
+                            regexp: {
+                                regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+                                message: 'Por favor verifica el campo'
+                            },
                         }
                     },
                     paterno:{
-                        validators:{
-                            notEmpty :{},
+                        validators: {
+                            notEmpty: {},
+                            stringLength:{
+                                max: 30,
+                            },
+                            regexp: {
+                                regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+                                message: 'Por favor verifica el campo'
+                            },
+                        }
+                    },
+                    materno:{
+                        validators: {
+                            stringLength:{
+                                max: 30,
+                            },
+                            regexp: {
+                                regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+                                message: 'Por favor verifica el campo'
+                            },
                         }
                     },
                     telefono: {
@@ -331,13 +388,38 @@
                         }
                     },
                     nombrePDMU:{
-                        validators:{
-                            notEmpty :{},
+                        validators: {
+                            notEmpty: {},
+                            stringLength:{
+                                max: 30,
+                            },
+                            regexp: {
+                                regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+                                message: 'Por favor verifica el campo'
+                            },
                         }
                     },
                     paternoPDMU:{
-                        validators:{
-                            notEmpty :{},
+                        validators: {
+                            notEmpty: {},
+                            stringLength:{
+                                max: 30,
+                            },
+                            regexp: {
+                                regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+                                message: 'Por favor verifica el campo'
+                            },
+                        }
+                    },
+                    maternoPDMU:{
+                        validators: {
+                            stringLength:{
+                                max: 30,
+                            },
+                            regexp: {
+                                regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+                                message: 'Por favor verifica el campo'
+                            },
                         }
                     },
                 }
@@ -357,7 +439,7 @@
             paterno = $( "input[name$='concursantepaterno']" ).val();
             materno = $( "input[name$='concursantematerno']" ).val();
             posicion = $( "#posicion" ).val();
-            $('.anadidos').append('<div id="'+count+'" class="col-md-4" style="margin-top: 10px;"><div class="persona col-md-4" data-toggle="modal" data-target="#myModal" onclick="mostrarmodal('+count+')"><a class="anadir"><i class="fa fa-user"></i></a></div><div class="col-md-8" style="top:-5px;"><p><h4><span class="text-capitalize spannombre">'+nombre+'</span><span class="text-capitalize spanpaterno"> '+paterno+'</span><span class="text-capitalize spanmaterno"> '+materno+'</span><br><label class="label label-success text-capitalize"> '+posicion+'</label></h4></p></div></div>');
+            $('.anadidos').append('<div id="'+count+'" class="col-md-4" style="margin-top: 10px;"><div class="persona col-md-4" data-toggle="modal" data-target="#myModal" onclick="mostrarmodal('+count+')"><a class="anadir"><i class="fa fa-user"></i></a></div><div class="col-md-8" style="top:-5px;"><p><h4><span class="text-uppercase spannombre">'+nombre+'</span><span class="text-uppercase spanpaterno"> '+paterno+'</span><span class="text-uppercase spanmaterno"> '+materno+'</span><br><label class="label label-success text-uppercase"> '+posicion+'</label></h4></p></div></div>');
             guardar(count);
             count++;
             $("#posicion").find("option:selected").remove();
@@ -381,7 +463,7 @@
             materno = $( "input[name$='concursantematerno']" ).val();
             posicion = arr[id].posicion;
             guardar(id);
-            $('#'+id+'').html('<div class="persona col-md-4" data-toggle="modal" data-target="#myModal" onclick="mostrarmodal('+id+')"><a class="anadir"><i class="fa fa-user"></i></a></div><div class="col-md-8" style="top:-5px;"><p><h4><span class="text-capitalize spannombre">'+nombre+'</span><span class="text-capitalize spanpaterno"> '+paterno+'</span><span class="text-capitalize spanmaterno"> '+materno+'</span><br><label class="label label-success text-capitalize"> '+arr[id].posicion+'</label></h4></p></div>');
+            $('#'+id+'').html('<div class="persona col-md-4" data-toggle="modal" data-target="#myModal" onclick="mostrarmodal('+id+')"><a class="anadir"><i class="fa fa-user"></i></a></div><div class="col-md-8" style="top:-5px;"><p><h4><span class="text-uppercase spannombre">'+nombre+'</span><span class="text-uppercase spanpaterno"> '+paterno+'</span><span class="text-uppercase spanmaterno"> '+materno+'</span><br><label class="label label-success text-uppercase"> '+arr[id].posicion+'</label></h4></p></div>');
         }
         function limpio () {
             $( "input[name$='concursantenombre']" ).val('');

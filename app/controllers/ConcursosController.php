@@ -33,11 +33,10 @@ class ConcursosController extends BaseController {
 			'nombre' => 'required|max:35',
 			'paterno' => 'required|max:35',
 			'materno' => 'max:35',
-			'posicion' => 'required|max:35',
+			'posicion' => array('required','regex:/^(Abanderado|Sargento|Escolta derecho|Escolta izquierdo|Guardia derecho|Guardia izquierdo)$/'),
 		);
 		$reglasEquipo = array(
 			'escuela' => 'required|max:35',
-			// 'estado' => 'required|max:35|regex:/^(Aguascalientes|Baja California|Baja California Sur|Campeche|Chiapas|Chihuahua|Coahuila|Colima|Distrito Federal|Durango|Estado de México|Guanajuato|Guerrero|Hidalgo|Jalisco|Michoacán|Morelos|Nayarit|Nuevo León|Oaxaca|Puebla|Querétaro|Quintana Roo|San Luis Potosí|Sinaloa|Sonora|Tabasco|Tamaulipas|Tlaxcala|Veracruz|Yucatán|Zacatecas)$/i',
 			'estado' => array('required','regex:/^(Aguascalientes|Baja California|Baja California Sur|Campeche|Chiapas|Chihuahua|Coahuila|Colima|Distrito Federal|Durango|Estado de México|Guanajuato|Guerrero|Hidalgo|Jalisco|Michoacán|Morelos|Nayarit|Nuevo León|Oaxaca|Puebla|Querétaro|Quintana Roo|San Luis Potosí|Sinaloa|Sonora|Tabasco|Tamaulipas|Tlaxcala|Veracruz|Yucatán|Zacatecas)$/'),
 			'nivel' => array('required','regex:/^(Secundaria|Bachillerato|Licenciatura)$/'),
 		);

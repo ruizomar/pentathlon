@@ -674,7 +674,7 @@
                 max: 40,
               },
               regexp: {
-                regexp:/^[0-9 a-zA-Z áéíóúñÑÁÉÍÓÚ . #]+$/,
+                regexp:/^[0-9.a-zA-Z áéíóúñÑÁÉÍÓÚ]+(\#\d+)*$/,
                 message: 'Por favor verifica el campo'
               },
             }
