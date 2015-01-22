@@ -3,7 +3,7 @@ class HistorialController extends BaseController{
 	public function __construct()
     {
         $this->beforeFilter('auth');
-        $this->beforeFilter('tecnica', array('except' => 'getMe'));
+        //$this->beforeFilter('tecnica', array('except' => 'getMe'));
     }
 	public function getIndex(){
 		return View::make('historial/history');

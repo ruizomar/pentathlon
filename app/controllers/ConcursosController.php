@@ -37,8 +37,9 @@ class ConcursosController extends BaseController {
 		);
 		$reglasEquipo = array(
 			'escuela' => 'required|max:35',
-			'estado' => 'required|max:35',
-			'nivel' => 'required|max:35',
+			// 'estado' => 'required|max:35|regex:/^(Aguascalientes|Baja California|Baja California Sur|Campeche|Chiapas|Chihuahua|Coahuila|Colima|Distrito Federal|Durango|Estado de México|Guanajuato|Guerrero|Hidalgo|Jalisco|Michoacán|Morelos|Nayarit|Nuevo León|Oaxaca|Puebla|Querétaro|Quintana Roo|San Luis Potosí|Sinaloa|Sonora|Tabasco|Tamaulipas|Tlaxcala|Veracruz|Yucatán|Zacatecas)$/i',
+			'estado' => array('required','regex:/^(Aguascalientes|Baja California|Baja California Sur|Campeche|Chiapas|Chihuahua|Coahuila|Colima|Distrito Federal|Durango|Estado de México|Guanajuato|Guerrero|Hidalgo|Jalisco|Michoacán|Morelos|Nayarit|Nuevo León|Oaxaca|Puebla|Querétaro|Quintana Roo|San Luis Potosí|Sinaloa|Sonora|Tabasco|Tamaulipas|Tlaxcala|Veracruz|Yucatán|Zacatecas)$/'),
+			'nivel' => array('required','regex:/^(Secundaria|Bachillerato|Licenciatura)$/'),
 		);
 		$reglasPDMU = array(
 			'nombre' => 'required|max:35',
@@ -52,14 +53,14 @@ class ConcursosController extends BaseController {
 		if($valEquipo->fails()){
 			$dato = array(
 				'success'=>false,
-				'errormessage'=>'Se necesita información de la escuela'
+				'errormessage'=>'Revisa los datos de la escuela'
 			);
 			return Response::json($dato);
 		}
 		if($valLider->fails()){
 			$dato = array(
 				'success'=>false,
-				'errormessage'=>'Se necesita información del responsable'
+				'errormessage'=>'Revisa los datos del responsable'
 			);
 			return Response::json($dato);
 		}
@@ -73,7 +74,7 @@ class ConcursosController extends BaseController {
 		if($valPDMU->fails()){
 			$dato = array(
 				'success'=>false,
-				'errormessage'=>'Se necesita información del acompañante del PDMU'
+				'errormessage'=>'Revisa la información del acompañante del PDMU'
 			);
 			return Response::json($dato);
 		}

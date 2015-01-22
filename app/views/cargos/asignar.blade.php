@@ -170,7 +170,7 @@
 	</script>
 	<script>
 		$('#cargo').change(function(){
-			if ($('#cargo').val() == 11) {
+			if ($('#cargo').val() == '12') {
 				$('#ubicacion').removeClass('hidden');
 			}
 			else {
