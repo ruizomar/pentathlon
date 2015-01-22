@@ -53,7 +53,7 @@
     <div id="phone-navigation" class="visible-xs">
       <ul id="dashboard-menu" class="nav nav-list">
         @if(!is_null(User::find(Auth::id())->roles()->where('id','=',1)->first()))
-          <li id="2Administracion" class=" "><a rel="tooltip" data-placement="right" data-original-title="Icons" href="{{ URL::to('admin'); }}"><i class="fa fa-tachometer"></i> <span class="caption">Administracion</span></a></li>
+          <li id="2Administracion" class=" "><a rel="tooltip" data-placement="right" data-original-title="Icons" href="http://www.admin.pentathlonoaxaca.mx"><i class="fa fa-tachometer"></i> <span class="caption">Administracion</span></a></li>
 
           <li id="2Armas"><a rel="tooltip" data-placement="right" data-original-title="Tables" href="{{ URL::to('armas'); }}"><i class="fa  fa-crosshairs"></i> <span class="caption">Armas</span></a></li>
 
@@ -104,7 +104,7 @@
   <div id="sidebar-nav" class="hidden-xs">
       <ul id="dashboard-menu" class="nav nav-list">
         @if(!is_null(User::find(Auth::id())->roles()->where('id','=',1)->first()))
-          <li id="2Administracion" class=" "><a rel="tooltip" data-placement="right" data-original-title="Icons" href="{{ URL::to('admin'); }}"><i class="fa fa-tachometer"></i> <span class="caption">Administracion</span></a></li>
+          <li id="2Administracion" class=" "><a rel="tooltip" data-placement="right" data-original-title="Icons" href="http://www.admin.pentathlonoaxaca.mx"><i class="fa fa-tachometer"></i> <span class="caption">Administracion</span></a></li>
 
           <li id="2Armas"><a rel="tooltip" data-placement="right" data-original-title="Tables" href="{{ URL::to('armas'); }}"><i class="fa  fa-crosshairs"></i> <span class="caption">Armas</span></a></li>
 

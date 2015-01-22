@@ -174,6 +174,9 @@ $(document).ready(function() {
             nombre: {
                 validators: {
                     notEmpty: {
+                    },
+                    stringLength:{
+                      max: 45,
                     }
                 }
             },

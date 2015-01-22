@@ -22,9 +22,11 @@ class RecoverPassword extends BaseController {
                     $reminder->token = $token;
                     $reminder->token_live = date('Y-m-d H:i:s', strtotime('+ 1 hours'));
             $reminder->save();
+            if(is_null($user->elemento->persona->email))
+                return Redirect::to('forgot')->with('mensaje_error','Error al enviar el correo');
             $email = $user->elemento->persona->email->email;
             Mail::send('emails.auth.reminder', array('token' => $token,'nombre'=>$user->elemento->persona->nombre), function($message) use ($email){
-                $message->to($email,'PDMU')->subject('Recuperar contraseña');
+                $message->to($email,$user->elemento->persona->nombre)->subject('Recuperar contraseña');
             });
             return  View::make('login.reminder')
                     ->with('email',str_limit( $email , 3)."@...");

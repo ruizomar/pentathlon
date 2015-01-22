@@ -160,18 +160,12 @@ $(document).ready(function() {
             nombre: {
                 validators: {
                     notEmpty: {
+                    },
+                    stringLength:{
+                      max: 15,
                     }
                 }
             },
-            enabled: false,
-            precio: {
-                validators: {
-                    notEmpty: {
-                    },
-                    integer: {
-                    }
-                }
-            }
         }
     })
     .on('success.form.bv', function(e) {

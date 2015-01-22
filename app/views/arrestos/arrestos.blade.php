@@ -95,12 +95,18 @@ $(document).ready(function() {
             motivo: {
                 validators: {
                     notEmpty: {
+                    },
+                    stringLength:{
+                      max: 100,
                     }
                 }
             },
             sancion: {
                 validators: {
                     notEmpty: {
+                    },
+                    stringLength:{
+                      max: 100,
                     }
                 }
             }
