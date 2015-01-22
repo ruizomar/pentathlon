@@ -191,6 +191,9 @@ $(document).ready(function() {
             nombre: {
                 validators: {
                     notEmpty: {
+                    },
+                    stringLength:{
+                      max: 15,
                     }
                 }
             },
@@ -200,6 +203,9 @@ $(document).ready(function() {
                     notEmpty: {
                     },
                     integer: {
+                    },
+                    stringLength:{
+                      max: 4,
                     }
                 }
             }
@@ -219,6 +225,9 @@ $(document).ready(function() {
             nombre: {
                 validators: {
                     notEmpty: {
+                    },
+                    stringLength:{
+                      max: 15,
                     }
                 }
             },
@@ -228,6 +237,9 @@ $(document).ready(function() {
                     notEmpty: {
                     },
                     integer: {
+                    },
+                    stringLength:{
+                      max: 4,
                     }
                 }
             }

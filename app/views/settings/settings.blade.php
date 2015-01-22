@@ -71,7 +71,10 @@
                 validators: {
                     notEmpty: {
                     },
-                    emailAddress: {}
+                    emailAddress: {},
+                    stringLength:{
+                      max: 30,
+                    }
                 }
             },
             enabled: false,

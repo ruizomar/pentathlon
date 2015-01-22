@@ -133,12 +133,18 @@
             Nombre: {
                 validators: {
                     notEmpty: {
+                    },
+                    stringLength:{
+                      max: 45,
                     }
                 }
             },
             Lugar: {
                 validators: {
                     notEmpty: {
+                    },
+                    stringLength:{
+                      max: 45,
                     }
                 }
             },
@@ -147,6 +153,9 @@
                     integer: {
                     },
                     notEmpty: {
+                    },
+                    stringLength:{
+                      max: 5,
                     }
                 }
             }

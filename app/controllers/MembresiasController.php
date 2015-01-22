@@ -63,7 +63,7 @@ class MembresiasController extends BaseController {
 	}
 
 	public function getImprimir(){
-		$hacienda = Cargo::find(1)->elementos()->where('fecha_fin','=',null)->first();
+		$hacienda = Cargo::find(2)->elementos()->where('fecha_fin','=',null)->first();
 		if(is_null($hacienda)){
 			$nombrehacienda		=	"";
 		}
@@ -227,7 +227,7 @@ class MembresiasController extends BaseController {
 		}
 
 		$pago = Pago::find(Input::get('id'));
-		$hacienda = Cargo::find(1)->elementos()->where('fecha_fin','=',null)->first();
+		$hacienda = Cargo::find(2)->elementos()->where('fecha_fin','=',null)->first();
 		if(is_null($hacienda)){
 			$nombrehacienda		=	"";
 			$gradohacienda		=	"";
@@ -284,7 +284,7 @@ class MembresiasController extends BaseController {
 		return $dato;
 	}
 	public function viewDonativo($donativo){
-		$hacienda = Cargo::find(1)->elementos()->where('fecha_fin','=',null)->first();
+		$hacienda = Cargo::find(2)->elementos()->where('fecha_fin','=',null)->first();
 			if(is_null($hacienda)){
 				$nombrehacienda		=	"";
 				$gradohacienda		=	"";

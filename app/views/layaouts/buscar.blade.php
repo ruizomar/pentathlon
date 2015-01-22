@@ -90,6 +90,9 @@ $(document).ready(function() {
                     regexp: {
                         regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
                         message: 'Por favor verifica el campo'
+                    },
+                    stringLength:{
+                      max: 30,
                     }
                 }
             },
@@ -99,6 +102,9 @@ $(document).ready(function() {
                     regexp: {
                         regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
                         message: 'Por favor verifica el campo'
+                    },
+                    stringLength:{
+                      max: 30,
                     }
                 }
             },
@@ -108,6 +114,9 @@ $(document).ready(function() {
                         regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/
                         ,
                         message: 'Por favor verifica el campo'
+                    },
+                    stringLength:{
+                      max: 30,
                     }
                 }
             },

@@ -112,6 +112,9 @@
                     regexp: {
                         regexp:/^[0-9]*\.?[0-9]+$/,
                         message: 'Por favor introduce una cantidad'
+                    },
+                    stringLength:{
+                      max: 5,
                     }
                 }
             },

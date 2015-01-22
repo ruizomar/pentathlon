@@ -59,6 +59,9 @@ $(document).ready(function() {
                     regexp: {
                         regexp:/^[0-9]*\.?[0-9]+$/,
                         message: 'Por favor introduce una cantidad'
+                    },
+                    stringLength:{
+                      max: 6,
                     }
                 }
             },
@@ -69,6 +72,9 @@ $(document).ready(function() {
                     regexp: {
                         regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
                         message: 'Por favor verifica el campo'
+                    },
+                    stringLength:{
+                      max: 30,
                     }
                 }
             },
@@ -79,6 +85,9 @@ $(document).ready(function() {
                     regexp: {
                         regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
                         message: 'Por favor verifica el campo'
+                    },
+                    stringLength:{
+                      max: 30,
                     }
                 }
             },
@@ -87,7 +96,11 @@ $(document).ready(function() {
                     regexp: {
                         regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
                         message: 'Por favor verifica el campo'
-                    }                }
+                    },
+                    stringLength:{
+                      max: 30,
+                    }                
+                }
             }
         }
     });
