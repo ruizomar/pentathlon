@@ -95,6 +95,7 @@ class ConcursosController extends BaseController {
 			'telefono' => $data['lider']['telefono'],
 			'escuela' => $data['equipo']['escuela'],
 			'estado' => $data['equipo']['estado'],
+			'nivel' => $data['equipo']['nivel'],
 		));
 		foreach ($data['integrantes'] as $integrante) {
 			Concursante::create(array(

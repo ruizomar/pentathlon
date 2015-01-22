@@ -50,6 +50,10 @@
 		</center>
 		<div style="height:200px;"></div>
 		<div style="page-break-after:always;"></div>
+		curp
+		matricula
+		domicilio
+		tipo de sangre
 	@endforeach
 </body>
 </html>
