@@ -327,7 +327,6 @@
                     },
                     email:{
                         validators:{
-                            notEmpty :{},
                             emailAddress: {}
                         }
                     },
@@ -373,7 +372,7 @@
             posicion = $( "#posicion" ).val();
             $('.guardar').addClass('hidden');
             $('#cargo').addClass('hidden');
-            $('#actualizar').html('<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="actualizar('+id+')" style="margin-top: 0px">Actualizar</button>');
+            $('#actualizar').html('<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="$(\'#formulariomodal\').data(\'bootstrapValidator\').validate(); if($(\'#formulariomodal\').data(\'bootstrapValidator\').isValid()) actualizar('+id+')" style="margin-top: 0px">Actualizar</button>');
 
         }
         function actualizar (id) {
@@ -447,7 +446,7 @@
                         }
                         $.post('concursos/guardar',{data:data}, function(json) {
                             if (json.success) {
-                                swal('!Hecho!', 'Se ha guardado el cargo', 'success');
+                                swal('!Hecho!', 'Se han guardado los datos', 'success');
                                 location.reload();
                             }
                             else{
@@ -465,5 +464,8 @@
                     }
                 });
         }
+        $('#myModal').on('shown.bs.modal', function() {
+            $('#formulariomodal').bootstrapValidator('resetForm');
+        });
     </script>
 @endsection

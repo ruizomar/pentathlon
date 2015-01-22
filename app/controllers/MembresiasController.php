@@ -27,14 +27,18 @@ class MembresiasController extends BaseController {
 		$evento = $_POST['eve'];
 		$examen = $_POST['exa'];
 		$donativo = $_POST['don'];
-		$pagos = Pago::all();
+		$pagos = Pago::where('fecha','>=',$inicio)
+					-> where('fecha','<=',$fin)
+					-> get();
 		$pagosArr = array();
+		$erer = '';
 		foreach ($pagos as $pago) {
-			if ($pago -> fecha > $inicio && $pago -> fecha < $fin) {
-				if (strpos($pago -> concepto, $membresia) == 0 || $pago -> concepto == $credencial || $pago -> concepto == $evento || $pago -> concepto == $examen || $pago -> concepto == $donativo) {
+			// if ($pago -> fecha < $fin/* && $pago -> fecha < $fin*/) {
+				// if (strpos($pago -> concepto, $membresia) == 0 || $pago -> concepto == $credencial || $pago -> concepto == $evento || $pago -> concepto == $examen || $pago -> concepto == $donativo) {
+				if (strpos($pago -> concepto, $membresia) == 0) {
 					$pagosArr[] = $pago;
 				}
-			}
+			// }
 		}
 		return Response::json($pagosArr);
 	}

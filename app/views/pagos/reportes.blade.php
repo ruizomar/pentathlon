@@ -19,7 +19,7 @@
 		<div class="form-group col-md-6">
 		    <label class="label label-primary"><i class="fa fa-chevron-circle-right"></i> Parámetros</label><br>
 		        <label class="checkbox-inline">
-		            <input id="1" name="tipo[]" type="checkbox" value="Membresia">Membresias
+		            <input id="1" name="tipo[]" type="checkbox" value="Membresia">Membresia
 		        </label>
 		        <label class="checkbox-inline">
 		            <input id="2" name="tipo[]" type="checkbox" value="Credencial">Credencial
@@ -107,20 +107,21 @@
 		});
 		function generar () {
 			$('#elementobody').html('');
-			$('.boton').addClass('hidden');
+			// $('.boton').addClass('hidden');
 			i = $('#fechainicio').val();
 			f = $('#fechafin').val();
-			mem = '';
-			cre = '';
-			eve = '';
-			exa = '';
-			don = '';
+			mem = '.';
+			cre = '.';
+			eve = '.';
+			exa = '.';
+			don = '.';
 			if ($('#1').is(':checked')) {mem = $('#1').val();};
 			if ($('#2').is(':checked')) {cre = $('#2').val();};
 			if ($('#3').is(':checked')) {eve = $('#3').val();};
 			if ($('#4').is(':checked')) {exa = $('#4').val();};
 			if ($('#5').is(':checked')) {don = $('#5').val();};
 			$.post('reportes',{i:i,f:f,mem:mem,cre:cre,eve:eve,exa:exa,don:don}, function(json) {
+				console.log(json);
 				total = 0;
 				$.each(json,function(index,pago){
 					$('#elementobody').append('<tr>'+
