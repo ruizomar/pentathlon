@@ -761,6 +761,9 @@
           }
         }
       })
+      $('#datetimePicker').on('dp.change dp.show', function(e) {
+          $('#elemento').bootstrapValidator('revalidateField', 'birthday');
+      });
       $('#bnext1').click(function(){
         $('#parte1').toggle(100);
         $('#parte2').toggle(200);
