@@ -30,7 +30,7 @@
 <div class="col-sm-5 contenedor" style="min-height:700px; top:50px;">
   <div id="delementos"></div>
 </div>
-<div class="col-sm-5 col-sm-offset-1 contenedor">
+<div class="col-sm-5 col-sm-offset-1 hidden">
   {{ Form::open(array('url' => 'credenciales/imprimir','role' => 'form','id' => 'credenciales','class' => 'form-control')) }}
   {{ Form::close() }}
 </div>

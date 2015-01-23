@@ -23,12 +23,15 @@
 			max-height: 30px;
 		}
 		label{
-			font-size: 9px;		
+			font-size: 9px;
+		}
+		.datos label{
+			margin:0 0 -5px 5px;
 		}
 	</style>
 </head>
 <body>
-	@foreach($elementos as $elemento)
+	@foreach($elementos as $key => $elemento)
 		<center>
 			<img class="logo" src="{{ asset('imgs/pdmu.jpg') }}" alt="">
 			<p class='azul'>PENTATHLÓN DEPORTIVO MILITARIZADO UNIVERSITARIO <br>
@@ -36,24 +39,27 @@
 			</p>
 	
 		<!------------>
-			<?php $foto = $elemento->documentos()->where('tipo','=','fotoperfil')->first()->ruta; ?>
-			<img src="{{ asset($foto) }}" style="max-height:70px" alt="">
+			<img src="{{ asset($elemento['foto']) }}" style="max-height:70px" alt="">
 
 			<div style="max-width: 150px;margin:10px auto;">
-				<label>{{$elemento->persona->nombre}} {{$elemento->persona->apellidopaterno}} {{$elemento->persona->apellidomaterno}}</label>
+				<label>{{$elemento['nombre']}}</label>
 			</div>
 
-			<label class="azul">{{$elemento->companiasysubzona->tipo}} {{$elemento->companiasysubzona->nombre}}</label>
+			<label class="azul">{{$elemento['compania']}}</label>
 			<br>
-			<br>
-			<label class="azul">Grado: </label><label><u>{{$elemento->grados->last()->nombre}}</u></label>
+			<label class="azul">Grado: </label><label><u>{{$elemento['grado']}}</u></label>
+			<div class="datos" style="max-width: 200px; text-align: left;margin:0 auto;">
+				<label class="azul">CURP: </label><label><u>{{$elemento['curp']}}</u></label><br>
+				<label class="azul">Calle: </label><label><u>{{$elemento['calle']}}</u></label><br>
+				<label class="azul">Colonia: </label><label><u>{{$elemento['colonia']}}</u></label><br>
+				<label class="azul">Municipio: </label><label><u>{{$elemento['municipio']}}</u></label><br>
+				<label class="azul">Tipo de sangre: </label><label><u>{{$elemento['sangre']}}</u></label>
+			</div>
 		</center>
-		<div style="height:200px;"></div>
-		<div style="page-break-after:always;"></div>
-		curp
-		matricula
-		domicilio
-		tipo de sangre
+		<div style="height:60px;"></div>
+		@if(($key+1)%3 == 0 && $key+1 < count($elementos))
+			<div style="page-break-after:always;"></div>
+		@endif
 	@endforeach
 </body>
 </html>

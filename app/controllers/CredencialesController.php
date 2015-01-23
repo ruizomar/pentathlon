@@ -39,12 +39,23 @@ class CredencialesController extends BaseController {
     public function postImprimir(){
         $elementos = array();
         foreach (Input::all() as $key => $value) {
-            if(is_integer($key))
-                $elementos[] = Elemento::find($key);
+            if(is_integer($key)){
+                $elemento = array();
+                $Elemento = Elemento::find($key);
+                $elemento['foto']       = $Elemento->documentos()->where('tipo','=','fotoperfil')->first()->ruta;
+                $elemento['nombre']     = $Elemento->persona->nombre." ".$Elemento->persona->apellidopaterno." ".$Elemento->persona->apellidomaterno;
+                $elemento['compania']   = $Elemento->companiasysubzona->tipo." ".$Elemento->companiasysubzona->nombre;
+                $elemento['grado']      = $Elemento->grados->last()->nombre;
+                $elemento['curp']       = $Elemento->curp;
+                $elemento['calle']      = $Elemento->calle;
+                $elemento['colonia']    = $Elemento->colonia;
+                $elemento['municipio']  = $Elemento->municipio;
+                $elemento['sangre']     = $Elemento->tiposangre;
+                $elementos[]            = $elemento;
+            }
         }
-        //return View::make('credenciales.imprecion')->with('elementos',$elementos);
-        $html =  View::make('credenciales.imprecion')->with('elementos',$elementos); 
 
+        $html =  View::make('credenciales/imprecion')->with('elementos',$elementos); 
         $pdf = App::make('dompdf');
         $pdf->loadHTML($html);
         return $pdf->stream();
