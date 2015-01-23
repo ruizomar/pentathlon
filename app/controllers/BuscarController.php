@@ -42,7 +42,7 @@ class BuscarController extends BaseController{
 		else if(count($elemento) > 1){
 			$dato = array();
 			foreach ($elemento as $elemento) {
-				if ($elemento->status()->orderBy('inicio','desc')->first()->tipo == 'Activo') {
+				if ($elemento->status()->orderBy('inicio','desc')->first()->tipo == 'Nuevo' || $elemento->status()->orderBy('inicio','desc')->first()->tipo == 'Activo') {
 					$dato[] = array(
 						'id' => $elemento->id,
 						'nombre' => $elemento->persona->nombre,

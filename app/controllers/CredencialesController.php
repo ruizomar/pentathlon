@@ -14,7 +14,7 @@ class CredencialesController extends BaseController {
     public function postElementos()
     {
         $rules = array(
-            'compania' => 'required|exists:Companiasysubzonas,id',
+            'compania' => 'required|exists:companiasysubzonas,id',
             );
 
         $validation = Validator::make(Input::all(), $rules);
@@ -55,7 +55,7 @@ class CredencialesController extends BaseController {
             }
         }
 
-        $html =  View::make('credenciales/imprecion')->with('elementos',$elementos); 
+        $html =  View::make('credenciales/impresion')->with('elementos',$elementos); 
         $pdf = App::make('dompdf');
         $pdf->loadHTML($html);
         return $pdf->stream();

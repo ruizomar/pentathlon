@@ -3,14 +3,7 @@
 <head>
     <title>Credenciales</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	{{  HTML::style('css/pure-min.css');  }}
 	<style type="text/css" media="screen">
-		.rojo{
-			color: red;
-		}
-		.negro{
-			color: #000;
-			font-size: 9px;
 		}
 		.azul{
 			color: #2d6ca2;
