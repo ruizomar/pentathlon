@@ -31,14 +31,10 @@ class MembresiasController extends BaseController {
 					-> where('fecha','<=',$fin)
 					-> get();
 		$pagosArr = array();
-		$erer = '';
 		foreach ($pagos as $pago) {
-			// if ($pago -> fecha < $fin/* && $pago -> fecha < $fin*/) {
-				// if (strpos($pago -> concepto, $membresia) == 0 || $pago -> concepto == $credencial || $pago -> concepto == $evento || $pago -> concepto == $examen || $pago -> concepto == $donativo) {
-				if (strpos($pago -> concepto, $membresia) == 0) {
+				if (strpos($pago -> concepto, $membresia) === 0 || $pago -> concepto == $credencial || $pago -> concepto == $evento || $pago -> concepto == $examen || $pago -> concepto == $donativo) {
 					$pagosArr[] = $pago;
 				}
-			// }
 		}
 		return Response::json($pagosArr);
 	}

@@ -85,12 +85,12 @@
         <h1 style="margin-bottom:20px;"><i class="fa fa-bar-chart"></i> Reportes</h1>
     </div>
     <div class="menu col-md-offset-1 col-md-10" style="margin-top:18px;">
-        <a href="#" class="requisitos col-md-6 text-center" onclick="companias()">
+        <a href="#" class="requisitos col-md-12 text-center" onclick="companias()">
             <h4>Reporte por compañía</h4>
             <i class="fa fa-map-marker fa-5x"></i>
             <div id="reconocimientos"></div>
         </a>
-        <a href="{{ URL::to('history'); }}" class="requisitos col-md-6 text-center">
+        <a href="{{ URL::to('history'); }}" class="hidden requisitos col-md-6 text-center">
             <h4>Reporte por evento</h4>
             <i class="fa fa-crosshairs fa-5x"></i>
             <div id="reconocimientos"></div>
@@ -358,9 +358,9 @@
             });
             $('.menucompanias').html('');
             $('.titulo1').addClass('hidden');
+            $('#nombre').addClass('hidden');
             $('#compania').removeClass('hidden');
             $('#generar').html('<button class="pull-right btn-xs btn btn-success" onclick="dibujagrafica()"><i class="fa fa-bar-chart"></i> Generar reporte</button>');
-
         }
     </script>
     <script>

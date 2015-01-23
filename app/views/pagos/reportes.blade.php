@@ -107,7 +107,7 @@
 		});
 		function generar () {
 			$('#elementobody').html('');
-			// $('.boton').addClass('hidden');
+			$('.boton').addClass('hidden');
 			i = $('#fechainicio').val();
 			f = $('#fechafin').val();
 			mem = '.';
