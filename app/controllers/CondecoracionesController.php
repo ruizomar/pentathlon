@@ -77,8 +77,9 @@ class CondecoracionesController extends BaseController{
 	}
 	public function postImprimir(){
 		$pdf = App::make('dompdf');
+		$comandante = Cargo::find(9)->elementos()->where('fecha_fin','=',null)->first();
 		$html = View::make('condecoraciones/reconocimiento')
-		->with('condecoraciones',Input::all());
+		->with('condecoraciones',Input::all())->with('comandante',$comandante);
 		$pdf->loadHTML($html)->setPaper('a4')->setOrientation('landscape');
 		return $pdf->stream();
 	}

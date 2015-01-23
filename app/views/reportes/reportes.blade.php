@@ -65,6 +65,10 @@
         .etiquetas{
             margin-top: 15px;
         }
+        .fecha i{
+            top:25px !important;
+            right: 55px !important;
+        }
     </style>
     {{  HTML::style('css/sweet-alert.css')}}
     {{  HTML::style('css/tour/bootstrap-tour.min.css')}}
@@ -108,16 +112,16 @@
     <div class="hidden col-md-12 form-horizontal" id="compania" style="left:10;">
         <h1 id="nombre" style="margin-bottom:20px;"><i class="fa fa-bar-chart"></i></h1>
         <button class="pull-right btn-sm btn btn-success" onclick="$('#compania').data('bootstrapValidator').validate(); if($('#compania').data('bootstrapValidator').isValid()) dibujagrafica()"><i class="fa fa-bar-chart"></i> Generar</button>
-        <div class="col-md-3 form-group">
+        <div class="col-md-3 form-group fecha">
             {{ Form::label('birthday', 'Fecha de inicio') }}
             <div class="input-group" id="datetimePicker">
                 {{ Form::text('birthday', null, array('id' => 'fechainicio','class' => 'form-control', 'placeholder' => 'AAAA-MM-DD', 'data-date-format' => 'YYYY-MM-DD')) }}
                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
             </div>
         </div>
-        <div class="col-md-3 form-group">
+        <div class="col-md-3 form-group fecha">
             {{ Form::label('birthday', 'Fecha de fin') }}
-            <div class="input-group" id="datetimePicker">
+            <div class="input-group" id="datetimePicker2">
                 {{ Form::text('birthday2', null, array('id' => 'fechafin','class' => 'form-control', 'placeholder' => 'AAAA-MM-DD', 'data-date-format' => 'YYYY-MM-DD')) }}
                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
             </div>
@@ -266,6 +270,10 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
+            $('#datetimePicker ,#datetimePicker2').datetimepicker({
+                language: 'es',
+                pickTime: false
+            });
             $('#compania').bootstrapValidator({
                 feedbackIcons: {
                     valid: 'glyphicon glyphicon-ok',
@@ -305,12 +313,13 @@
                     },
                 }
             });
-        });
-        $(document).ready(function() {
-            $('#datetimePicker ,#datetimePicker2').datetimepicker({
-                language: 'es',
-                pickTime: false
+            $('#datetimePicker').on('dp.change dp.show', function(e) {
+                $('#compania').bootstrapValidator('revalidateField', 'birthday');
             });
+            $('#datetimePicker2').on('dp.change dp.show', function(e) {
+                $('#compania').bootstrapValidator('revalidateField', 'birthday2');
+            });
+            
         });
         $('#Reportes, #2Reportes').addClass('active');
         var arrayId;

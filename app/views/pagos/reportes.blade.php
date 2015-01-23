@@ -12,6 +12,12 @@
 	{{  HTML::style('css/bootstrap-datetimepicker.min.css');  }}
 	{{  HTML::script('js/bootstrapValidator.js'); }}
 	{{  HTML::script('js/es_ES.js'); }}
+	<style type="text/css" media="screen">
+		.fecha{
+			top:0 !important;
+			right: 50px !important;
+		}
+	</style>
 @endsection
 @section('contenido')
 	<div id="reportes" class="col-md-12">
@@ -43,7 +49,7 @@
 			    </div>
 			</div>
 			<div class="col-md-6 form-group">
-			    <div class="input-group" id="datetimePicker">
+			    <div class="input-group" id="datetimePicker2">
 			        {{ Form::text('birthday2', null, array('id' => 'fechafin','class' => 'form-control', 'placeholder' => 'Fecha de fin', 'data-date-format' => 'YYYY-MM-DD')) }}
 			        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 			    </div>
@@ -74,9 +80,9 @@
 		    });
 		    $('#reportes').bootstrapValidator({
 		        feedbackIcons: {
-		            valid: 'glyphicon glyphicon-ok',
-		            invalid: 'glyphicon glyphicon-remove',
-		            validating: 'glyphicon glyphicon-refresh'
+		            valid: 'glyphicon glyphicon-ok fecha',
+		            invalid: 'glyphicon glyphicon-remove fecha',
+		            validating: 'glyphicon glyphicon-refresh fecha'
 		        },
 		        fields: {
 		            'tipo[]': {
@@ -103,6 +109,12 @@
 		                }
 		            },
 		        }
+		    });
+		    $('#datetimePicker').on('dp.change dp.show', function(e) {
+		        $('#reportes').bootstrapValidator('revalidateField', 'birthday');
+		    });
+		    $('#datetimePicker2').on('dp.change dp.show', function(e) {
+		        $('#reportes').bootstrapValidator('revalidateField', 'birthday2');
 		    });
 		});
 		function generar () {
