@@ -84,7 +84,7 @@
         <div class="modal-footer">
           {{ Form::open(array('url' => 'pagos/recibo','role' => 'form','id' => 'recibo','class' => 'form-inline')) }}
               {{ Form::text('id', null, array('id' => 'pag','class' => 'hidden form-control')) }}
-            <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar Ventana</button>
             {{ Form::button('Imprimir recibo',array('class' => 'btn btn-success','type' => 'submit','id' => 'imprimir')) }}
           {{form::close()}}
         </div>

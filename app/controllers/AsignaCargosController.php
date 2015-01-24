@@ -97,7 +97,7 @@ class AsignaCargosController extends BaseController {
 		$id = Input::get('id');
 		$elemento = Elemento::find($id);
 		$cargo = Input::get('cargo');
-		if ($cargo == 11) {
+		if ($cargo == 12) {
 			Elemento::find($id)
 			-> update(array(
 				'companiasysubzona_id' => Input::get('companiasysubzona'),

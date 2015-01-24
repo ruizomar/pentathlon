@@ -9,6 +9,36 @@
 .nombre{
     top: 25px !important;
 }
+.menu{
+    background: #fff;
+    padding: 10px;
+    margin-bottom: 15px;
+    box-shadow: 0px 3px 2px #aab2bd;
+    -moz-box-shadow: 0px 3px 2px #aab2bd;
+    -webkit-box-shadow: 0px 3px 2px #aab2bd;
+    left: 12px;
+    border-top-width: 3px;
+    border-top-style: solid;
+    border-top-color: #82B1FF;
+    font-size: 19px;
+}
+.resultado{
+    background: #fff;
+    padding: 10px;
+    margin-bottom: 15px;
+    box-shadow: 0px 3px 2px #aab2bd;
+    -moz-box-shadow: 0px 3px 2px #aab2bd;
+    -webkit-box-shadow: 0px 3px 2px #aab2bd;
+    left: 12px;
+    border-top-width: 5px;
+    border-top-style: solid;
+    border-top-color: #F44336;
+    font-size: 19px;
+}
+.menu:hover{
+    background: #E3F2FD;
+    cursor:pointer; cursor: hand;
+}
 </style>
 @endsection
 @section('contenido')
@@ -17,13 +47,13 @@
     <div class="col-md-10 col-md-offset-1">
         <h1 style="margin-bottom:20px;"><i class="fa  fa-clock-o"></i> Historial</h1>
     </div>
-    <div class="col-sm-2 text-center">
-        <p class="" href="#enteros" data-toggle="tab" title="Enteros"><i class="btn btn-warning fa  fa-money fa-3x"></i></p>
-        <p class="" href="#condecoraciones" data-toggle="tab" title="Condecoraciones"><i class="btn btn-warning fa  fa-shield fa-3x"></i></p>
-        <p class="" href="#eventos" data-toggle="tab" title="Eventos"><i class="btn btn-warning fa  fa-calendar fa-3x"></i></p>
-        <p class="" href="#examenes" data-toggle="tab" title="Examenes"><i class="btn btn-warning fa  fa-file-text-o fa-3x"></i></p>
+    <div class="col-sm-3 text-center">
+        <p class="menu" href="#enteros" data-toggle="tab" title="Enteros"><i class="fa fa-money pull-left"></i><span><strong> Enteros</strong></span></p>
+        <p class="menu" href="#condecoraciones" data-toggle="tab" title="Condecoraciones"><i class="fa fa-shield pull-left"></i><span><strong> Condecoraciones</strong></span></p>
+        <p class="menu" href="#eventos" data-toggle="tab" title="Eventos"><i class="fa fa-calendar pull-left"></i><span><strong> Eventos</strong></span></p>
+        <p class="menu" href="#examenes" data-toggle="tab" title="Examenes"><i class="fa fa-file-text-o pull-left"></i><span><strong> Examenes</strong></span></p>
     </div>
-    <div class="col-sm-7 contenedor">
+    <div class="col-sm-6 contenedor" style="left:0px;">
         <div class="col-sm-3" style="margin-top: 20px;">
             <img id="fotoperfil" class="img-responsive img-thumbnail img-circle" alt="Responsive image" src="{{ asset($elemento->documentos()->where('tipo','=','fotoperfil')->first()->ruta) }}"/>
         </div>
@@ -35,14 +65,14 @@
                 <p id='ladscripcion'><strong>Adscripción: </strong>{{  $elemento->companiasysubzona->tipo  }}{{  $elemento->companiasysubzona->nombre  }}</p>
         </div>
     </div>
-    <div class="col-sm-2 text-center">
-        <p class="" href="#asistencias" data-toggle="tab" title="Asistencias"><i class="btn btn-warning fa  fa-calendar-o fa-3x"></i></p>
-        <p class="" href="#cargos" data-toggle="tab" title="Cargos"><i class="btn btn-warning fa  fa-magic fa-3x"></i></p>
-        <p class="" href="#ascensos" data-toggle="tab" title="Ascensos"><i class="btn btn-warning fa  fa-line-chart fa-3x"></i></p>
-        <p class="" href="#arrestos" data-toggle="tab" title="Arrestos"><i class="btn btn-warning fa  fa-gavel fa-3x"></i></p>
+    <div class="col-sm-3 text-center">
+        <p class="menu" href="#asistencias" data-toggle="tab" title="Asistencias"><i class="fa fa-calendar-o pull-left"></i><span><strong> Asistencias</strong></span></p>
+        <p class="menu" href="#cargos" data-toggle="tab" title="Cargos"><i class="fa fa-magic pull-left"></i><span><strong> Cargos</strong></span></p>
+        <p class="menu" href="#ascensos" data-toggle="tab" title="Ascensos"><i class="fa fa-line-chart pull-left"></i><span><strong> Ascensos</strong></span></p>
+        <p class="menu" href="#arrestos" data-toggle="tab" title="Arrestos"><i class="fa fa-gavel pull-left"></i><span><strong class="font-size:23px;"> Arrestos</strong></span></p>
     </div>
     <div id="reportes" class="tab-content">
-        <div id="enteros" class="col-sm-6 col-sm-offset-3 tab-pane active">
+        <div id="enteros" class="resultado col-sm-6 col-sm-offset-3 tab-pane active">
             <h2>Membresías</h2>
             <table class="table">
                 <thead>
@@ -63,7 +93,7 @@
                 </tbody>
             </table>
         </div>
-        <div id="condecoraciones" class="col-sm-6 col-sm-offset-3 tab-pane">
+        <div id="condecoraciones" class="resultado col-sm-6 col-sm-offset-3 tab-pane">
             <h2>Condecoraciones</h2>
             <table class="table">
                 <thead>
@@ -82,7 +112,7 @@
                 </tbody>
             </table>
         </div>
-        <div id="eventos" class="col-sm-6 col-sm-offset-3 tab-pane">
+        <div id="eventos" class="resultado col-sm-6 col-sm-offset-3 tab-pane">
             <h2>Eventos</h2>
             <table class="table">
                 <thead>
@@ -103,7 +133,7 @@
                 </tbody>
             </table>
         </div>
-        <div id="examenes" class="col-sm-6 col-sm-offset-3 tab-pane">
+        <div id="examenes" class="resultado col-sm-6 col-sm-offset-3 tab-pane">
             <h2>Exámenes</h2>
             <table class="table">
                 <thead>
@@ -124,7 +154,7 @@
                 </tbody>
             </table>
         </div>
-        <div id="asistencias" class="col-sm-6 col-sm-offset-3 tab-pane">
+        <div id="asistencias" class="resultado col-sm-6 col-sm-offset-3 tab-pane">
             <h2>Asistencias</h2>
             <table class="table">
                 <thead>
@@ -146,7 +176,7 @@
                 </tbody>
             </table>
         </div>
-        <div id="cargos" class="col-sm-6 col-sm-offset-3 tab-pane">
+        <div id="cargos" class="resultado col-sm-6 col-sm-offset-3 tab-pane">
             <h2>Cargos</h2>
             <table class="table">
                 <thead>
@@ -186,7 +216,7 @@
                 </tbody>
             </table>
         </div>
-        <div id="ascensos" class="col-sm-6 col-sm-offset-3 tab-pane">
+        <div id="ascensos" class="resultado col-sm-6 col-sm-offset-3 tab-pane">
             <h2>Ascensos</h2>
             <table class="table">
                 <thead>
@@ -205,7 +235,7 @@
                 </tbody>
             </table>
         </div>
-        <div id="arrestos" class="col-sm-6 col-sm-offset-3 tab-pane">
+        <div id="arrestos" class="resultado col-sm-6 col-sm-offset-3 tab-pane">
             <h2>Arrestos</h2>
             <table class="table">
                 <thead>

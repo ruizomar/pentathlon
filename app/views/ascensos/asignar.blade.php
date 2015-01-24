@@ -193,7 +193,7 @@
 					resize: true,
 					formatter: function (x, data) { return data.formatted; }
 				});
-				if ((asistencias/total)< .7) {
+				if ((asistencias/total)*100 < 70) {
 					$('#graficaAsistencias').addClass('error');
 				};
 			}
