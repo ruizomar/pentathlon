@@ -60,9 +60,102 @@ class AsistenciasController extends BaseController{
 	}
 
 	public function getReporte(){
-		$companias = Companiasysubzona::all();
-		return View::make('reportes/asistencias')->with('companias',$companias);
+		$id = Auth::user()->elemento_id;
+		$conf = Elemento::find($id)->cargos()->where('fecha_fin','=',null,'and')
+											->where('cargo_id','=','12')->first();
+		if(!is_null($conf)){
+			$compania = Elemento::find($id)->companiasysubzona;
+			$companiasysubzonasArr = array();
+			$companiasysubzonasArr[$compania->id] = $compania->tipo.' '.$compania->nombre;
+			return View::make('administracion/reportes')->with('compania',$companiasysubzonasArr);
+		}
+		$conf = Elemento::find($id)->cargos()->where('fecha_fin','=',null,'and')
+											->where('cargo_id','=','6')->first();
+		if(!is_null($conf)){
+			$companiasysubzonas = Companiasysubzona::where('status','=','activa')->get();
+			$companiasysubzonasArr = array();
+			foreach($companiasysubzonas as $compayzona)
+			{
+				$companiasysubzonasArr[$compayzona->id] = $compayzona->tipo.' '.$compayzona->nombre;
+			}
+			return View::make('administracion/reportes')->with('compania',$companiasysubzonasArr);
+		}
+		if(is_null($conf)){
+			echo "No eres instructor lastimanentes";
+		}
+
 	}
+
+	public function postDia(){
+		$inicio = new DateTime(Input::get('i'));
+		$lugar = Input::get('lugar');
+		$elementos = Elemento::where('companiasysubzona_id','=',$lugar) -> get();
+		$data = array();
+		foreach ($elementos as $elemento) {
+			$asistencias = 0;
+			$permisos = 0;
+			$faltas = 0;
+			$estatus = $elemento->status()->orderBy('inicio','desc')->first();
+			if ($estatus->tipo == 'Activo') {
+				$lista = $elemento -> asistencias() -> where('fecha','=',$inicio) -> get();
+				if (empty($lista)) {
+					$data[] = array(
+						'nombre' => $elemento -> persona -> nombre,
+						'paterno' => $elemento -> persona -> apellidopaterno,
+						'materno' => $elemento -> persona -> apellidomaterno,
+						'asistencias' => 'sin resgistro',
+					);
+				}
+				else{
+					$data[] = array(
+						'nombre' => $elemento -> persona -> nombre,
+						'paterno' => $elemento -> persona -> apellidopaterno,
+						'materno' => $elemento -> persona -> apellidomaterno,
+						'asistencias' => $lista -> last() -> tipo,
+					);
+				}
+			}
+		}
+		return Response::json($data);
+	}
+
+	public function postRango(){
+		$inicio = new DateTime(Input::get('i'));
+		$fin = new DateTime(Input::get('f'));
+		$lugar = Input::get('lugar');
+		$elementos = Elemento::where('companiasysubzona_id','=',$lugar) -> get();
+		$data = array();
+		foreach ($elementos as $elemento) {
+			$asistencias = 0;
+			$permisos = 0;
+			$faltas = 0;
+			$estatus = $elemento->status()->orderBy('inicio','desc')->first();
+			if ($estatus->tipo == 'Activo') {
+				$lista = $elemento -> asistencias() -> where('fecha','>',$inicio) -> where('fecha','<',$fin) -> get();
+				foreach ($lista as $valor) {
+					if($valor -> tipo == 1){
+						$asistencias++;
+					}
+					if($valor -> tipo == 0){
+						$faltas++;
+					}
+					if($valor -> tipo == 2){
+						$permisos++;
+					}
+				}
+				$data[] = array(
+					'nombre' => $elemento -> persona -> nombre,
+					'paterno' => $elemento -> persona -> apellidopaterno,
+					'materno' => $elemento -> persona -> apellidomaterno,
+					'asistencias' => $asistencias,
+					'faltas' => $faltas,
+					'permisos' => $permisos,
+				);
+			}
+		}
+		return Response::json($data);
+	}
+
 	public function postCompania(){
 
 		$id = Input::get('id');
