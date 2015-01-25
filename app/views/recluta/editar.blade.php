@@ -128,7 +128,7 @@
     </table>
   </div>
   <i class="fa fa-spinner fa-2x fa-spin hidden spin-form"></i>
-  <form id="buscarelemento" class="row" role="form" method="POST" action="update">
+  {{ Form::open(array('id' => 'update_elemento','url'=>'recluta/update','files'=>true)) }}
     <div id="elemento" class="col-mds-12 tabla hidden">
     <div class="col-md-10">
       <div class="col-md-2 step">
@@ -371,13 +371,14 @@
       </div>
     </div>
     <div class="col-md-2">
-<!--           {{ Form::image('imgs/fotos/default.png','fotoperfil',array('class' => 'img-responsive img-circle','alt' => 'Responsive image')) }}
-          {{ Form::file('fotoperfil',array('id' => 'filefoto')) }} -->
+      {{ Form::image('imgs/fotos/default.png','fotoperfil',array('class' => 'img-responsive img-circle','alt' => 'Responsive image')) }}
+          {{ Form::file('fotoperfil',array('id' => 'filefoto')) }}
     </div>
-  </form>
+  
 
     <!-- {{form::close()}} -->
   </div>
+  {{Form::close()}}
     <div class="modal fade bs-example-modal-lg" id="Elementos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog modal-lg">
             <div class="modal-content">
@@ -487,13 +488,22 @@
             },
           }
       })
-      $('#elemento').bootstrapValidator({
+      $('#update_elemento').bootstrapValidator({
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
             invalid: 'glyphicon glyphicon-remove',
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
+          fotoperfil:{
+            validators: {
+              file: {
+                extension: 'jpeg,png,jpg,gif',
+                type: 'image/jpg,image/jpeg,image/png,image/gif',
+                maxSize: 2048 * 1024,   // 2 MB
+              }
+            }
+          },
           nombre: {
             validators: {
               notEmpty: {},
@@ -800,7 +810,7 @@
         }
       });
       $('#datetimePicker').on('dp.change dp.show', function(e) {
-          $('#elemento').bootstrapValidator('revalidateField', 'birthday');
+          $('#update_elemento').bootstrapValidator('revalidateField', 'birthday');
       });
       $('#datetimePicker2').on('dp.change dp.show', function(e) {
           $('#status').bootstrapValidator('revalidateField', 'fechabaja');

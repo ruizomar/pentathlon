@@ -200,7 +200,7 @@ class AltaReclutaController extends BaseController {
 		$email -> email = $correo;
 		$email -> save();
 	}
-	function resizeImagen($ruta, $nombre, $alto, $ancho,$nombreN,$extension){
+	public function resizeImagen($ruta, $nombre, $alto, $ancho,$nombreN,$extension){
         $rutaImagenOriginal = $ruta.$nombre;
         if($extension == 'GIF' || $extension == 'gif'){
         $img_original = imagecreatefromgif($rutaImagenOriginal);
@@ -210,6 +210,9 @@ class AltaReclutaController extends BaseController {
         }
         if($extension == 'png' || $extension == 'PNG'){
         $img_original = imagecreatefrompng($rutaImagenOriginal);
+        }
+        if($extension == 'jpeg' || $extension == 'JPEG'){
+        $img_original = imagecreatefromjpeg($rutaImagenOriginal);
         }
         $max_ancho = $ancho;
         $max_alto = $alto;

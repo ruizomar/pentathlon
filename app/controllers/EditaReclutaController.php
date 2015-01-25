@@ -197,12 +197,14 @@ class EditaReclutaController extends BaseController {
 			Telefono::where('persona_id', '=', $tutor -> id)->where('tipo','=','movil')->delete();
 		}
 		if (Input::file("fotoperfil") != "") {
+			$elemento = Elemento::where('persona_id','=',Input::get('persona_id'))->first();
+			File::delete($elemento->documentos()->where('tipo','=','fotoperfil')->first()->ruta);
 			$file = Input::file("fotoperfil")->move("imgs/fotos/",$elemento->id.'.'.Input::file('fotoperfil')->guessClientExtension());
-			$documento = new Documento;
-			$documento -> elemento_id = $elemento->id;
-			$documento -> ruta = 'imgs/fotos/'.$elemento->id.'.'.Input::file('fotoperfil')->guessClientExtension();
-			$documento -> tipo = 'fotoperfil';
-			$documento -> save();
+			$documento = Documento::where('elemento_id','=',$elemento->id) -> update(array(
+				'ruta' => 'imgs/fotos/'.$elemento->id.'.'.Input::file('fotoperfil')->guessClientExtension(),
+				));
+			$documento = Documento::where('elemento_id','=',$elemento->id)->first();
+			EditaReclutaController::resizeImagen('', $documento->ruta, 200, 200,$documento->ruta,Input::file('fotoperfil')->guessClientExtension());
 		}
 		return Redirect::to('recluta/editar');
 	}
@@ -395,4 +397,41 @@ class EditaReclutaController extends BaseController {
 		));
 		return Response::json(true);
 	}
+
+	public function resizeImagen($ruta, $nombre, $alto, $ancho,$nombreN,$extension){
+        $rutaImagenOriginal = $ruta.$nombre;
+        if($extension == 'GIF' || $extension == 'gif'){
+        $img_original = imagecreatefromgif($rutaImagenOriginal);
+        }
+        if($extension == 'jpg' || $extension == 'JPG'){
+        $img_original = imagecreatefromjpeg($rutaImagenOriginal);
+        }
+        if($extension == 'png' || $extension == 'PNG'){
+        $img_original = imagecreatefrompng($rutaImagenOriginal);
+        }
+        if($extension == 'jpeg' || $extension == 'JPEG'){
+        $img_original = imagecreatefromjpeg($rutaImagenOriginal);
+        }
+        $max_ancho = $ancho;
+        $max_alto = $alto;
+        list($ancho,$alto)=getimagesize($rutaImagenOriginal);
+        $x_ratio = $max_ancho / $ancho;
+        $y_ratio = $max_alto / $alto;
+        if( ($ancho <= $max_ancho) && ($alto <= $max_alto) ){//Si ancho 
+        $ancho_final = $ancho;
+            $alto_final = $alto;
+        } elseif (($x_ratio * $alto) < $max_alto){
+            $alto_final = ceil($x_ratio * $alto);
+            $ancho_final = $max_ancho;
+        } else{
+            $ancho_final = ceil($y_ratio * $ancho);
+            $alto_final = $max_alto;
+        }
+        $tmp=imagecreatetruecolor($ancho_final,$alto_final);
+        imagecopyresampled($tmp,$img_original,0,0,0,0,$ancho_final, $alto_final,$ancho,$alto);
+        imagedestroy($img_original);
+        $calidad=70;
+        imagejpeg($tmp,$ruta.$nombreN,$calidad);
+        
+    }
 }
