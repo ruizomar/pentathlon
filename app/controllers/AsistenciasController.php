@@ -4,7 +4,8 @@ class AsistenciasController extends BaseController{
 	 public function __construct()
     {
         $this->beforeFilter('auth');
-        $this->beforeFilter('instructor');
+        //$this->beforeFilter('instructor', array('only' => 'getIndex');
+       	//$this->beforeFilter('investigacion', array('only' => 'getReporte');
     }
 	public function getIndex(){
 		$id = Auth::user()->elemento_id;
