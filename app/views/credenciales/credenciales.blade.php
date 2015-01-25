@@ -10,7 +10,7 @@
 @section('contenido')
 <div class="row">
     <div class="col-sm-6 col-sm-offset-3 col-xs-7">
-        <h1 style="margin-bottom:20px;">Imprecion de credenciales <small><span class="fa-stack"><i class="fa fa-square fa-stack-2x"></i><i class="fa fa-user fa-stack-1x fa-inverse"></i></small></span>
+        <h1 style="margin-bottom:20px;">Impresión de credenciales <small><span class="fa-stack"><i class="fa fa-square fa-stack-2x"></i><i class="fa fa-user fa-stack-1x fa-inverse"></i></small></span>
         </h1>
     </div>
 </div>

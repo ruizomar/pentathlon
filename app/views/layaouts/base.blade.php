@@ -53,7 +53,7 @@
     <div id="phone-navigation" class="visible-xs">
       <ul id="dashboard-menu" class="nav nav-list">
         @if(!is_null(User::find(Auth::id())->roles()->where('id','=',1)->first()))
-          <li id="2Administracion" class=" "><a rel="tooltip" data-placement="right" data-original-title="Icons" href="http://www.admin.pentathlonoaxaca.mx"><i class="fa fa-tachometer"></i> <span class="caption">Administracion</span></a></li>
+          <li id="2Administracion" class=" "><a rel="tooltip" data-placement="right" data-original-title="Icons" href="http://www.admin.pentathlonoaxaca.mx"><i class="fa fa-tachometer"></i> <span class="caption">Administración</span></a></li>
 
           <li id="2Armas"><a rel="tooltip" data-placement="right" data-original-title="Tables" href="{{ URL::to('armas'); }}"><i class="fa  fa-crosshairs"></i> <span class="caption">Armas</span></a></li>
 
@@ -70,7 +70,7 @@
           <li id="2Ascensos"><a rel="tooltip" data-placement="right" data-original-title="Calendar" href="{{ URL::to('ascensos'); }}"><i class="fa fa-line-chart"></i> <span class="caption">Ascensos</span></a></li>
         @endif
         @if(!is_null(User::find(Auth::id())->roles()->where('id','=',4)->first()))
-          <li id="2Credenciales"><a rel="tooltip" data-placement="right" data-original-title="Reports" href="{{ URL::to('credenciales'); }}"><i class="fa fa-user"></i> <span class="caption">Imprecion de Credenciales</span></a></li>
+          <li id="2Credenciales"><a rel="tooltip" data-placement="right" data-original-title="Reports" href="{{ URL::to('credenciales'); }}"><i class="fa fa-user"></i> <span class="caption">Impresión de Credenciales</span></a></li>
 
           <li id="2Companias"><a rel="tooltip" data-placement="right" data-original-title="Reports" href="{{ URL::to('companias'); }}"><i class="fa fa-map-marker"></i> <span class="caption">Companias</span></a></li>
           
@@ -125,7 +125,7 @@
           <li id="Ascensos"><a rel="tooltip" data-placement="right" data-original-title="Calendar" href="{{ URL::to('ascensos'); }}"><i class="fa fa-line-chart"></i> <span class="caption">Ascensos</span></a></li>
         @endif
         @if(!is_null(User::find(Auth::id())->roles()->where('id','=',4)->first()))
-          <li id="2Credenciales"><a rel="tooltip" data-placement="right" data-original-title="Reports" href="{{ URL::to('credenciales'); }}"><i class="fa fa-user"></i> <span class="caption">Imprecion de Credenciales</span></a></li>
+          <li id="2Credenciales"><a rel="tooltip" data-placement="right" data-original-title="Reports" href="{{ URL::to('credenciales'); }}"><i class="fa fa-user"></i> <span class="caption">Impresión de Credenciales</span></a></li>
           <li id="Companias"><a rel="tooltip" data-placement="right" data-original-title="Reports" href="{{ URL::to('companias'); }}"><i class="fa fa-map-marker"></i> <span class="caption">Companias</span></a></li>
           
           <li id="Cargos"><a rel="tooltip" data-placement="right" data-original-title="Faq" href="{{ URL::to('cargos'); }}"><i class="fa fa-magic"></i> <span class="caption">Cargos</span></a></li>

@@ -21,36 +21,34 @@
 @endsection
 @section('contenido')
 	<div id="reportes" class="col-md-12">
-		<br>
-		    <label class="label label-primary"><i class="fa fa-chevron-circle-right"></i> Rango de fechas</label><br>
-		<br>
-		<div class="col-sm-offset-3 col-sm-6">
-			<div class="col-md-6 form-group">
-			    <div class="input-group" id="datetimePicker">
-			        {{ Form::text('birthday', null, array('id' => 'fechainicio','class' => 'form-control', 'placeholder' => 'Inicio', 'data-date-format' => 'YYYY-MM-DD')) }}
-			        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-			    </div>
-			</div>
-			<div class="col-md-6 form-group">
-			    <div class="input-group" id="datetimePicker2">
-			        {{ Form::text('birthday2', null, array('id' => 'fechafin','class' => 'form-control', 'placeholder' => 'Fin', 'data-date-format' => 'YYYY-MM-DD')) }}
-			        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-			    </div>
-			</div>
+	<div class="row">
+	<label class="label label-primary"><i class="fa fa-chevron-circle-right"></i> Búsqueda por fechas</label><br>
+		<div class="col-md-4 form-group">
+		    <div class="input-group" id="datetimePicker">
+		        {{ Form::text('birthday', null, array('id' => 'fechainicio','class' => 'form-control', 'placeholder' => 'Fecha de inicio', 'data-date-format' => 'YYYY-MM-DD')) }}
+		        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+		    </div>
 		</div>
-		<button class="boton pull-right btn-sm btn btn-success" onclick="$('#reportes').data('bootstrapValidator').validate(); if($('#reportes').data('bootstrapValidator').isValid()) generar()"><i class="fa fa-bars"></i> Mostrar lista</button>
-		<div class="total row">
+		<div class="col-md-4 form-group">
+		    <div class="input-group" id="datetimePicker2">
+		        {{ Form::text('birthday2', null, array('id' => 'fechafin','class' => 'form-control', 'placeholder' => 'Fecha de fin', 'data-date-format' => 'YYYY-MM-DD')) }}
+		        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+		    </div>
 		</div>
-		<table id="telementos" class="hidden col-md-offset-1 col-md-10 display" cellspacing="0" width="100%">
+		<button class="boton btn-sm btn btn-success" onclick="$('#reportes').data('bootstrapValidator').validate(); if($('#reportes').data('bootstrapValidator').isValid()) generar()"><i class="fa fa-bar-chart"></i> Generar</button>
+	</div>
+		<table id="telementos" class="hidden col-md-12 display" cellspacing="0" width="100%">
 			<thead>
 				<tr>
 					<th>Nombre</th>
 					<th>Paterno</th>
 					<th>Materno</th>
-					<th>Membresia</th>
-					<th>Fecha</th>
+					<th>Fecha arresto</th>
 					<th>Zona</th>
 					<th>Grado</th>
+					<th>Motivo</th>
+					<th>Detalles</th>
+					<th>Remitido por:</th>
 				</tr>
 			</thead>
 			<tbody id="elementobody">
@@ -103,23 +101,26 @@
 		    $('#datetimePicker2').on('dp.change dp.show', function(e) {
 		        $('#reportes').bootstrapValidator('revalidateField', 'birthday2');
 		    });
+		    $('#Arrestos, #2Arrestos').addClass('active');
 		});
 		function generar () {
 			$('.boton').addClass('hidden');
 			i = $('#fechainicio').val();
 			f = $('#fechafin').val();
-			$.post('membresias',{i:i,f:f}, function(json) {
+			$.post('reportes',{i:i,f:f}, function(json) {
 				$.each(json,function(index,pago){
 					$('#elementobody').append('<tr>'+
 						'<td>'+pago.nombre+'</td>'+
 						'<td>'+pago.paterno+'</td>'+
 						'<td>'+pago.materno+'</td>'+
-						'<td>'+pago.membresia+'</td>'+
 						'<td>'+pago.fecha+'</td>'+
 						'<td>'+pago.zona+'</td>'+
-						'<td>'+pago.grado+'</td>');
+						'<td>'+pago.grado+'</td>'+
+						'<td>'+pago.motivo+'</td>'+
+						'<td>'+pago.detalles+'</td>'+
+						'<td>'+pago.punisher+'</td>');
 				});
-				table = $('#telementos').DataTable( {
+				$('#telementos').DataTable( {
 				    "language": {
 				        "sProcessing": "Procesando...",
 				        "sLengthMenu": "Mostrar _MENU_ registros",

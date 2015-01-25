@@ -9,22 +9,30 @@ class ArrestosController extends BaseController{
 		return View::make('arrestos/arrestos');
 	}
 
-	public function postElemento(){
-		$elemento 		= 	Elemento::find(Input::get('id'));
-		$matricula 		= 	$elemento->matricula;
-		$nummatricula	=	"";
-			if (!is_null($matricula)) {
-				$nummatricula 	= 	$matricula->id;
-			}
-		$dato = array(
-			'nombre'	=> $elemento->persona->nombre.' '.$elemento->persona->apellidopaterno.' '.$elemento->persona->apellidomaterno,
-			'fecha'		=> $elemento->fechanacimiento,
-			'matricula' => $nummatricula,
-			'foto'		=> $elemento->documentos()->where('tipo','=','fotoperfil')->first()->ruta,
-			'grado'		=> $elemento->grados()->orderBy('fecha','desc')->first()->nombre,
-			'compania'	=> $elemento->companiasysubzona->tipo." ".$elemento->companiasysubzona->nombre
-			);
-			return Response::json($dato);
+	public function getReportes()
+	{
+		return View::make('arrestos.reportes');
+	}
+
+	public function postReportes(){
+		$inicio = new DateTime($_POST['i']);
+		$fin = new DateTime($_POST['f']);
+		$data = array();
+		$pagos = Arresto::where('fecha','>=',$inicio) -> where('fecha','<=',$fin) -> get();
+		foreach ($pagos as $pago) {
+			$data[] = array(
+				'nombre' => $pago -> elemento -> persona -> nombre,
+				'paterno' => $pago -> elemento -> persona -> apellidopaterno,
+				'materno' => $pago -> elemento -> persona -> apellidomaterno,
+				'fecha' => $pago -> fecha,
+				'zona' => $pago -> elemento -> companiasysubzona -> nombre,
+				'grado' => $pago -> elemento -> grados -> last() -> nombre,
+				'motivo' => $pago -> motivo,
+				'detalles' => $pago -> sancion,
+				'punisher' => $pago -> matriculaarrestador,
+				);
+		}
+		return Response::json($data);
 	}
 	public function postNuevo(){
 		$rules = array(

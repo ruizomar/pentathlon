@@ -1,6 +1,6 @@
 @extends('layaouts.base')
 @section('titulo')
-  PDMU
+  Editar elemento
 @endsection
 @section('head')
   <style>
@@ -76,8 +76,15 @@
   {{  HTML::script('js/tables/jquery.dataTables.min.js')}}
   {{  HTML::style('css/jquery.dataTables.css')}}
   {{  HTML::style('css/bootstrap-datetimepicker.min.css');  }}
+  {{  HTML::style('css/sweet-alert.css')}}
+  {{  HTML::script('js/sweet-alert.min.js')}}
 @endsection
 @section('contenido')
+  <div id="inactivo" class="alert alert-danger hidden" role="alert">
+    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+    <span class="sr-only">Error:</span>
+    Este elemento se encuentra inactivo
+  </div>
   <form id="buscarelemento" role="form" method="POST" action="buscar">
     {{ Form::button('<i class="fa fa-question"></i>',array('id' => 'tour','class' => 'pull-right btn btn-warning btn-xs')) }}
     <div class="col-md-10">
@@ -121,7 +128,7 @@
     </table>
   </div>
   <i class="fa fa-spinner fa-2x fa-spin hidden spin-form"></i>
-  <form id="buscarelemento" role="form" method="POST" action="update">
+  <form id="buscarelemento" class="row" role="form" method="POST" action="update">
     <div id="elemento" class="col-mds-12 tabla hidden">
     <div class="col-md-10">
       <div class="col-md-2 step">
@@ -368,6 +375,7 @@
           {{ Form::file('fotoperfil',array('id' => 'filefoto')) }} -->
     </div>
   </form>
+
     <!-- {{form::close()}} -->
   </div>
     <div class="modal fade bs-example-modal-lg" id="Elementos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -400,6 +408,8 @@
             </div>
         </div>
     </div>
+    <div id="status" class="row col-md-offset-4 col-md-4">
+    </div>
 @endsection
 @section('scripts')
   <!-- Para Bootstrap Validator -->
@@ -411,7 +421,7 @@
       fileType: "any"
     });
     $(document).ready(function() {
-      $('#datetimePicker').datetimepicker({
+      $('#datetimePicker, #datetimePicker2').datetimepicker({
         language: 'es',
         pickTime: false
       });
@@ -761,7 +771,7 @@
           }
         }
       })
-      $('#datetimePicker').on('dp.change dp.show', function(e) {
+      $('#datetimePicker, #datetimePicker2').on('dp.change dp.show', function(e) {
           $('#elemento').bootstrapValidator('revalidateField', 'birthday');
       });
       $('#bnext1').click(function(){

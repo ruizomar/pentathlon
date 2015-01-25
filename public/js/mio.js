@@ -15,6 +15,14 @@ $(document).ready(function() {
 
             $('.spin-form').removeClass('hidden');
             $.post($form.attr('action'), $form.serialize(), function(json) {
+                if(json.status == 'Activo'){
+                    $('#status').html('<a class="label label-danger" style="font-size:12px;" onclick="baja('+json.persona_id+')">Poner inactivo</a>');
+                    $('.content').addClass('inactivo');
+                }
+                if(json.status == 'Inactivo'){
+                    $('#status').html('<a class="label label-success" style="font-size:12px;" onclick="alta('+json.persona_id+')">Poner activo</a>');
+                    $('#inactivo').removeClass('hidden');
+                }
                 if (json.success) {
                     $('[name=persona_id]').val(json.persona_id);
                     $('[name=reclunombre]').val(json.name);
@@ -210,4 +218,74 @@ function llenartabla(a) {
     $('[name=contactotwitter]').val($row.find("td:nth-child(42)").text());
 
     $('#elemento').removeClass('hidden');
+}
+function baja (id) {
+    $('#status').html('<textarea id="descripcion" class="form-control" rows="3"></textarea><div class="form-group fecha has-feedback"><label for="fechabaja">Fecha nacimiento</label><div class="input-group date" id="datetimePicker2"><input class="form-control" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD" name="birthday" type="text" id="fechabaja" data-bv-field="irthday"><span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span></span></div></div><a class="label label-danger pull-right" style="font-size:12px;" onclick="inactivar('+id+')">Confirmar Baja</a>');
+}
+function alta (id) {
+    $('#status').html('<textarea id="descripcion" class="form-control" rows="3"></textarea><div class="form-group fecha has-feedback"><label for="fechabaja">Fecha nacimiento</label><div class="input-group date" id="datetimePicker2"><input class="form-control" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD" name="birthday" type="text" id="fechabaja" data-bv-field="irthday"><span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span></span></div></div><a class="label label-danger pull-right" style="font-size:12px;" onclick="activar('+id+')">Confirmar Baja</a>');
+}
+function inactivar (id) {
+    fecha = $('#fechabaja').val();
+    desc = $('#descripcion').val();
+    status = 'Inactivo';
+    swal({
+        title: '¿Estás seguro?',
+        text: 'El elemento será puesto en INACTIVO',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#AEDEF4',
+        confirmButtonText: 'Si',
+        cancelButtonText: 'No, regresar a revisar',
+        closeOnConfirm: false,
+        closeOnCancel: false
+    },
+    function(isConfirm){
+        if (isConfirm){
+            $.post('status',{id:id,desc:desc,fecha:fecha,status:status}, function(json) {
+                swal('!Hecho!', 'Se ha guardado el cargo', 'success');
+                location.reload();
+            }, 'json');
+        }
+        else {
+            swal({
+                title:'Cancelado',
+                text:'No se ha guardado ningun cambio',
+                type: 'error',
+                timer: 1000
+            });
+        }
+    });
+}
+function activar (id) {
+    fecha = $('#fechabaja').val();
+    desc = $('#descripcion').val();
+    status = 'Activo';
+    swal({
+        title: '¿Estás seguro?',
+        text: 'El elemento será puesto en ACTIVO',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#AEDEF4',
+        confirmButtonText: 'Si',
+        cancelButtonText: 'No, regresar a revisar',
+        closeOnConfirm: false,
+        closeOnCancel: false
+    },
+    function(isConfirm){
+        if (isConfirm){
+            $.post('status',{id:id,desc:desc,fecha:fecha,status:status}, function(json) {
+                swal('!Hecho!', 'Se ha guardado el cargo', 'success');
+                location.reload();
+            }, 'json');
+        }
+        else {
+            swal({
+                title:'Cancelado',
+                text:'No se ha guardado ningun cambio',
+                type: 'error',
+                timer: 1000
+            });
+        }
+    });
 }

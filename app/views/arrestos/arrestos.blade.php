@@ -12,7 +12,12 @@
 </style>
 @endsection
 @section('h2')
-Arrestos
+<div class="row">
+    <div class="pull-left" style="font-size:40px;">Arrestos</div>
+    <div class="pull-right">
+        <a class="label label-success" href="{{URL::to('arrestos/reportes');}}"><i class="fa fa-line-chart"></i> Reporte</a>
+    </div>
+</div>
 @endsection
 @section('elemento')
 	<div class="col-sm-8 col-sm-offset-2 contenedor" style="top:20px">
@@ -106,7 +111,7 @@ $(document).ready(function() {
                     notEmpty: {
                     },
                     stringLength:{
-                      max: 100,
+                      max: 140,
                     }
                 }
             }

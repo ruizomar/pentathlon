@@ -132,7 +132,7 @@
 			<h4 class="titulo text-center">Reconocimientos</h4>
 			<div id="reconocimientos"></div>
 		</div>
-		<div class="tour-8 requisitos col-md-3" style="left:5px;">
+		<div class="hidden tour-s8 requisitos col-md-3" style="left:5px;">
 			<h4 class="titulo text-center">Enteros</h4>
 			<div id="pagos"></div>
 		</div>
@@ -193,7 +193,7 @@
 					resize: true,
 					formatter: function (x, data) { return data.formatted; }
 				});
-				if ((asistencias/total)*100 < 70) {
+				if ((faltas/total)*100 > 30) {
 					$('#graficaAsistencias').addClass('error');
 				};
 			}

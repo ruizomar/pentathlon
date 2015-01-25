@@ -320,6 +320,7 @@ class EditaReclutaController extends BaseController {
 			'contactoemail' => $contactoemail,
 			'contactofacebook' => $contactofacebook,
 			'contactotwitter' => $contactotwitter,
+			'status' => $elemento->status()->orderBy('inicio','desc')->first()->tipo,
 		);
 		return $dato;
 	}
@@ -378,5 +379,20 @@ class EditaReclutaController extends BaseController {
 			}
 		}
 		return Response::json($cargo);
+	}
+	public function status()
+	{
+		$id = $_POST['id'];
+		$descripcion = $_POST['desc'];
+		$fecha = $_POST['fecha'];
+		$estado = $_POST['status'];
+		$elemento = Elemento::find($id);
+		$status = $elemento->status()->save(new Statu(array(
+			'tipo' => $estado,
+			'inicio' => $fecha,
+			'descripcion' => $descripcion
+			)
+		));
+		return Response::json(true);
 	}
 }
