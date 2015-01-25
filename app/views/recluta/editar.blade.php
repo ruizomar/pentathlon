@@ -409,7 +409,16 @@
         </div>
     </div>
     @if(!is_null(User::find(Auth::id())->roles()->where('id','=',2)->first()))
-      <div id="status" class="row col-md-offset-4 col-md-4">
+      <div id="titlstatus" class="row col-md-offset-4 col-md-4" style="bottom:10px;"></div>
+      <div id="status" class="row col-md-offset-4 col-md-4 hidden">
+        <textarea id="descripcion" placeholder="Añade un comentario al cambio" class="form-control" rows="3"></textarea>
+        <div class="form-group fecha">
+          <label for="fechabaja">Fecha nacimiento</label>
+            <div class="input-group date" id="datetimePicker2">
+              <input class="form-control" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD" name="fechabaja" type="text" id="fechabaja" data-bv-field="irthday"><span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span></span>
+            </div>
+        </div>
+        <div id="btnstatus"></div>
       </div>
     @endif  
 @endsection
@@ -423,7 +432,7 @@
       fileType: "any"
     });
     $(document).ready(function() {
-      $('#datetimePicker, #datetimePicker2').datetimepicker({
+      $('#datetimePicker,#datetimePicker2').datetimepicker({
         language: 'es',
         pickTime: false
       });
@@ -773,8 +782,28 @@
           }
         }
       })
-      $('#datetimePicker, #datetimePicker2').on('dp.change dp.show', function(e) {
+      $('#status').bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+          fechabaja: {
+            validators: {
+              notEmpty: {},
+              date: {
+                format: 'YYYY-MM-DD',
+              }
+            }
+          }
+        }
+      });
+      $('#datetimePicker').on('dp.change dp.show', function(e) {
           $('#elemento').bootstrapValidator('revalidateField', 'birthday');
+      });
+      $('#datetimePicker2').on('dp.change dp.show', function(e) {
+          $('#status').bootstrapValidator('revalidateField', 'fechabaja');
       });
       $('#bnext1').click(function(){
         $('#parte1').toggle(100);
