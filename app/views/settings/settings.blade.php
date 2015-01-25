@@ -1,7 +1,7 @@
 @extends('layaouts.base')
 
 @section('titulo')
-  Settings PDMU
+  Ajustes
 @endsection
 @section('head')
 {{  HTML::style('css/login.css')  }}
@@ -16,7 +16,7 @@
 @section('contenido')
 <div class="main">
       <div class="text-center col-sm-6 col-sm-offset-3">
-        <h2 style="font-size: 30px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif"><i class="fa fa-cogs "></i> Settings</h2>
+        <h2 style="font-size: 30px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif"><i class="fa fa-cogs "></i> Ajustes</h2>
           {{ Form::open(array('url' => 'settings/update','role' => 'form','id' => 'update','class' => 'form-horizontal')) }}
           <div class="form-group">
               <label class="col-sm-2 control-label"><strong>Correo: </strong></label>

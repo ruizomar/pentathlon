@@ -98,22 +98,18 @@ class AsistenciasController extends BaseController{
 			$estatus = $elemento->status()->orderBy('inicio','desc')->first();
 			if ($estatus->tipo == 'Activo') {
 				$lista = $elemento -> asistencias() -> where('fecha','=',$inicio) -> get();
-				if (empty($lista)) {
-					$data[] = array(
-						'nombre' => $elemento -> persona -> nombre,
-						'paterno' => $elemento -> persona -> apellidopaterno,
-						'materno' => $elemento -> persona -> apellidomaterno,
-						'asistencias' => 'sin resgistro',
-					);
+				if (is_null($lista -> last())) {
+					$mensaje = 'Sin registro en la fecha seleccionada';
 				}
 				else{
-					$data[] = array(
-						'nombre' => $elemento -> persona -> nombre,
-						'paterno' => $elemento -> persona -> apellidopaterno,
-						'materno' => $elemento -> persona -> apellidomaterno,
-						'asistencias' => $lista -> last() -> tipo,
-					);
+					$mensaje = $lista -> last() -> tipo;
 				}
+				$data[] = array(
+					'nombre' => $elemento -> persona -> nombre,
+					'paterno' => $elemento -> persona -> apellidopaterno,
+					'materno' => $elemento -> persona -> apellidomaterno,
+					'asistencias' => $mensaje,
+				);
 			}
 		}
 		return Response::json($data);

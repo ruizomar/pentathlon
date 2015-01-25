@@ -19,7 +19,7 @@ Route::get('/', function(){
 	return View::make('hello');
 });
 Route::get('inicio', array('before' => 'auth', function(){
-	return View::make('layaouts/base');
+	return View::make('inicio');
 }));
 Route::get('asd', function(){
 	$elemento = Elemento::find(2)->arrestos;

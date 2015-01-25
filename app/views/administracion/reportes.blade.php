@@ -38,13 +38,13 @@
 		<br>
 		<div class="col-md-4 form-group fecha1">
 		    <div class="input-group" id="datetimePicker">
-		        {{ Form::text('birthday', '2015-01-24', array('id' => 'fechainicio','class' => 'form-control', 'placeholder' => 'Fecha de inicio', 'data-date-format' => 'YYYY-MM-DD')) }}
+		        {{ Form::text('birthday', null, array('id' => 'fechainicio','class' => 'form-control', 'placeholder' => 'Fecha de inicio', 'data-date-format' => 'YYYY-MM-DD')) }}
 		        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 		    </div>
 		</div>
 		<div class="col-md-4 form-group fecha2">
 		    <div class="input-group" id="datetimePicker2">
-		        {{ Form::text('birthday2', '2016-01-01', array('id' => 'fechafin','class' => 'form-control', 'placeholder' => 'Fecha de fin', 'data-date-format' => 'YYYY-MM-DD')) }}
+		        {{ Form::text('birthday2', null, array('id' => 'fechafin','class' => 'form-control', 'placeholder' => 'Fecha de fin', 'data-date-format' => 'YYYY-MM-DD')) }}
 		        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 		    </div>
 		</div>
@@ -130,6 +130,7 @@
 			});
 		});
 		function generar () {
+			$('.boton').addClass('hidden');
 			i = $('#fechainicio').val();
 			f = $('#fechafin').val();
 			lugar = $( "[name=lugar]" ).val();
