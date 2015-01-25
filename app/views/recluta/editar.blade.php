@@ -408,8 +408,10 @@
             </div>
         </div>
     </div>
-    <div id="status" class="row col-md-offset-4 col-md-4">
-    </div>
+    @if(!is_null(User::find(Auth::id())->roles()->where('id','=',2)->first()))
+      <div id="status" class="row col-md-offset-4 col-md-4">
+      </div>
+    @endif  
 @endsection
 @section('scripts')
   <!-- Para Bootstrap Validator -->
