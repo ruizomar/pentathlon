@@ -46,6 +46,7 @@
   {{  HTML::script('js/sweet-alert.min.js'); }}
   <script type="text/javascript">
     $(document).ready(function(){
+      $('#Credenciales, #2Credenciales').addClass('active');
       $('[name = compania]').change(function(){
         $('.fa-spin').removeClass('hidden');
           $.post("{{ URL::to('credenciales/elementos'); }}", {compania:$('[name = compania]').val()}, function(json) {

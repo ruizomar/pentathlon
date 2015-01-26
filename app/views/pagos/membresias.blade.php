@@ -21,10 +21,8 @@
 @endsection
 @section('contenido')
 	<div id="reportes" class="col-md-12">
-		<br>
-		    <label class="label label-primary"><i class="fa fa-chevron-circle-right"></i> Rango de fechas</label><br>
-		<br>
-		<div class="col-sm-offset-3 col-sm-6">
+		<label class="parte1 label label-primary pull-left"><i class="fa fa-chevron-circle-right"></i> Rango de fechas</label>
+		<div class="parte1 col-sm-6">
 			<div class="col-md-6 form-group">
 			    <div class="input-group" id="datetimePicker">
 			        {{ Form::text('birthday', null, array('id' => 'fechainicio','class' => 'form-control', 'placeholder' => 'Inicio', 'data-date-format' => 'YYYY-MM-DD')) }}
@@ -38,9 +36,10 @@
 			    </div>
 			</div>
 		</div>
-		<button class="boton pull-right btn-sm btn btn-success" onclick="$('#reportes').data('bootstrapValidator').validate(); if($('#reportes').data('bootstrapValidator').isValid()) generar()"><i class="fa fa-bars"></i> Mostrar lista</button>
-		<div class="total row">
-		</div>
+		<button class="boton2 pull-right btn-xs btn btn-warning" onclick="sinentero()"><i class="fa fa-bars"></i> Sin registro de entero de este año</button>
+		<button class="boton parte1 pull-rights btn-sm btn btn-success" onclick="$('#reportes').data('bootstrapValidator').validate(); if($('#reportes').data('bootstrapValidator').isValid()) generar()"><i class="fa fa-bars"></i> Mostrar lista</button>
+
+		<button class="hidden mensaje btn btn-primary col-md-offset-5"></button>
 		<table id="telementos" class="hidden col-md-offset-1 col-md-10 display" cellspacing="0" width="100%">
 			<thead>
 				<tr>
@@ -54,6 +53,20 @@
 				</tr>
 			</thead>
 			<tbody id="elementobody">
+			</tbody>
+		</table>
+		<table id="telementos2" class="hidden col-md-offset-1 col-md-10 display" cellspacing="0" width="100%">
+			<thead>
+				<tr>
+					<th>Nombre</th>
+					<th>Paterno</th>
+					<th>Materno</th>
+					<th>Membresia</th>
+					<th>Zona</th>
+					<th>Grado</th>
+				</tr>
+			</thead>
+			<tbody id="elementobody2">
 			</tbody>
 		</table>
 	</div>
@@ -106,6 +119,7 @@
 		});
 		function generar () {
 			$('.boton').addClass('hidden');
+			$('.boton2').addClass('hidden');
 			i = $('#fechainicio').val();
 			f = $('#fechafin').val();
 			$.post('membresias',{i:i,f:f}, function(json) {
@@ -151,6 +165,56 @@
 			}, 'json');
 			$('#telementos').removeClass('hidden');
 		}
+		function sinentero () {
+			$('.boton2, .parte1').addClass('hidden');
+			anio = (new Date).getFullYear();;
+			$.post('sinentero',{anio:anio}, function(json) {
+				$.each(json,function(index,pago){
+					$('#elementobody2').append('<tr>'+
+						'<td class"danger">'+pago.nombre+'</td>'+
+						'<td class"danger">'+pago.paterno+'</td>'+
+						'<td class"danger">'+pago.materno+'</td>'+
+						'<td class"danger">'+pago.membresia+'</td>'+
+						'<td class"danger">'+pago.zona+'</td>'+
+						'<td class"danger">'+pago.grado+'</td>');
+				});
+				$('.mensaje').removeClass('hidden');
+				$('.mensaje').html('<i class="fa fa-chevron-down"></i> Mostrar los '+json.length+' registros');
+			}, 'json');
+		}
+		$( ".mensaje" ).click(function() {
+			$('#telementos2').removeClass('hidden');
+			$('.mensaje').addClass('hidden');
+			table = $('#telementos2').DataTable( {
+			    "language": {
+			        "sProcessing": "Procesando...",
+			        "sLengthMenu": "Mostrar _MENU_ registros",
+			        "sZeroRecords": "No se encontraron resultados",
+			        "sEmptyTable": "Ningún dato disponible en esta tabla",
+			        "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+			        "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+			        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+			        "sInfoPostFix": "",
+			        "sSearch": "Buscar:",
+			        "sUrl": "",
+			        "sInfoThousands": ",",
+			        "sLoadingRecords": "Cargando...",
+			        "oPaginate": {
+			        "sFirst": "Primero",
+			        "sLast": "Último",
+			        "sNext": "Siguiente",
+			        "sPrevious": "Anterior"
+			        },
+			        "oAria": {
+			        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+			        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+			        }
+			    },
+			    paging: true,
+			    searching: true,
+			    dom: 'T<"clear">lfrtip',
+			});
+		});
 	</script>
 	{{  HTML::script('js/moment.js'); }}
 	{{  HTML::script('js/bootstrap-datetimepicker.js'); }}

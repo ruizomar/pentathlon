@@ -62,6 +62,39 @@ class MembresiasController extends BaseController {
 		return Response::json($data);
 	}
 
+	public function postSinentero()
+	{
+		$anio = $_POST['anio'];
+		$elementos = Elemento::all();
+		$no = array();
+		foreach ($elementos as $elemento) {
+			if(is_null($elemento -> matricula )){
+				$no[] = array(
+					'nombre' => $elemento -> persona -> nombre,
+					'paterno' => $elemento -> persona -> apellidopaterno,
+					'materno' => $elemento -> persona -> apellidomaterno,
+					'zona' => $elemento -> companiasysubzona -> nombre,
+					'grado' => $elemento -> grados -> last() -> nombre,
+					'membresia' => 'No tiene matrícula',
+				);
+			}
+			$pagos = $elemento -> pagos;
+			foreach ($pagos as $pago) {
+				if ($pago -> concepto != 'Membresia '.$anio) {
+					$no[] = array(
+						'nombre' => $elemento -> persona -> nombre,
+						'paterno' => $elemento -> persona -> apellidopaterno,
+						'materno' => $elemento -> persona -> apellidomaterno,
+						'zona' => $elemento -> companiasysubzona -> nombre,
+						'grado' => $elemento -> grados -> last() -> nombre,
+						'membresia' => 'Sin registro de entero '.$anio,
+					);
+				}
+			}
+		}
+		return Response::json($no);
+	}
+
 	public function getImprimir(){
 		$hacienda = Cargo::find(2)->elementos()->where('fecha_fin','=',null)->first();
 		if(is_null($hacienda)){
