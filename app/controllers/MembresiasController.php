@@ -78,18 +78,15 @@ class MembresiasController extends BaseController {
 					'membresia' => 'No tiene matrícula',
 				);
 			}
-			$pagos = $elemento -> pagos;
-			foreach ($pagos as $pago) {
-				if ($pago -> concepto != 'Membresia '.$anio) {
-					$no[] = array(
-						'nombre' => $elemento -> persona -> nombre,
-						'paterno' => $elemento -> persona -> apellidopaterno,
-						'materno' => $elemento -> persona -> apellidomaterno,
-						'zona' => $elemento -> companiasysubzona -> nombre,
-						'grado' => $elemento -> grados -> last() -> nombre,
-						'membresia' => 'Sin registro de entero '.$anio,
-					);
-				}
+			if(is_null($elemento -> pagos() ->where('concepto','like','Membresia 2015') -> first())){
+			$no[] = array(
+					$elemento -> persona -> nombre,
+					$elemento -> persona -> apellidopaterno,
+					$elemento -> persona -> apellidomaterno,
+					'Sin registro de entero '.$anio,
+					$elemento -> companiasysubzona -> nombre,
+					$elemento -> grados -> last() -> nombre,
+				);
 			}
 		}
 		return Response::json($no);

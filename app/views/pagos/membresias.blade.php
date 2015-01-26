@@ -38,23 +38,7 @@
 		</div>
 		<button class="boton2 pull-right btn-xs btn btn-warning" onclick="sinentero()"><i class="fa fa-bars"></i> Sin registro de entero de este año</button>
 		<button class="boton parte1 pull-rights btn-sm btn btn-success" onclick="$('#reportes').data('bootstrapValidator').validate(); if($('#reportes').data('bootstrapValidator').isValid()) generar()"><i class="fa fa-bars"></i> Mostrar lista</button>
-
-		<button class="hidden mensaje btn btn-primary col-md-offset-5"></button>
-		<table id="telementos" class="hidden col-md-offset-1 col-md-10 display" cellspacing="0" width="100%">
-			<thead>
-				<tr>
-					<th>Nombre</th>
-					<th>Paterno</th>
-					<th>Materno</th>
-					<th>Membresia</th>
-					<th>Fecha</th>
-					<th>Zona</th>
-					<th>Grado</th>
-				</tr>
-			</thead>
-			<tbody id="elementobody">
-			</tbody>
-		</table>
+		<div id="divelementos"></div>
 		<table id="telementos2" class="hidden col-md-offset-1 col-md-10 display" cellspacing="0" width="100%">
 			<thead>
 				<tr>
@@ -169,52 +153,35 @@
 			$('.boton2, .parte1').addClass('hidden');
 			anio = (new Date).getFullYear();;
 			$.post('sinentero',{anio:anio}, function(json) {
-				$.each(json,function(index,pago){
-					$('#elementobody2').append('<tr>'+
-						'<td class"danger">'+pago.nombre+'</td>'+
-						'<td class"danger">'+pago.paterno+'</td>'+
-						'<td class"danger">'+pago.materno+'</td>'+
-						'<td class"danger">'+pago.membresia+'</td>'+
-						'<td class"danger">'+pago.zona+'</td>'+
-						'<td class"danger">'+pago.grado+'</td>');
-				});
-				$('.mensaje').removeClass('hidden');
-				$('.mensaje').html('<i class="fa fa-chevron-down"></i> Mostrar los '+json.length+' registros');
+				console.log(json);
+				$('#divelementos').html('<table id="telementos" class="table table-hover table-first-column-number data-table display full"></table>');
+				$('#telementos').dataTable( {
+				    "data": json,
+				    "columns": [
+				        { "title": "Nombre" },
+				        { "title": "Paterno" },
+				        { "title": "Materno" },
+				        { "title": "Membresia" },
+				        { "title": "Zona" },
+				        { "title": "Grado" },
+				    ],
+				    "language": {
+				      "lengthMenu": "Elementos por página _MENU_",
+				      "zeroRecords": "No se encontro",
+				      "info": "Pagina _PAGE_ de _PAGES_",
+				      "infoEmpty": "No records available",
+				      "infoFiltered": "(Ver _MAX_ total records)",
+				      'search': 'Buscar: ',
+				      "paginate": {
+				        "first":      "Inicio",
+				        "last":       "Fin",
+				        "next":       "Siguiente",
+				        "previous":   "Anterior"
+				      },
+				}
+				} );
 			}, 'json');
 		}
-		$( ".mensaje" ).click(function() {
-			$('#telementos2').removeClass('hidden');
-			$('.mensaje').addClass('hidden');
-			table = $('#telementos2').DataTable( {
-			    "language": {
-			        "sProcessing": "Procesando...",
-			        "sLengthMenu": "Mostrar _MENU_ registros",
-			        "sZeroRecords": "No se encontraron resultados",
-			        "sEmptyTable": "Ningún dato disponible en esta tabla",
-			        "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-			        "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-			        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-			        "sInfoPostFix": "",
-			        "sSearch": "Buscar:",
-			        "sUrl": "",
-			        "sInfoThousands": ",",
-			        "sLoadingRecords": "Cargando...",
-			        "oPaginate": {
-			        "sFirst": "Primero",
-			        "sLast": "Último",
-			        "sNext": "Siguiente",
-			        "sPrevious": "Anterior"
-			        },
-			        "oAria": {
-			        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-			        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-			        }
-			    },
-			    paging: true,
-			    searching: true,
-			    dom: 'T<"clear">lfrtip',
-			});
-		});
 	</script>
 	{{  HTML::script('js/moment.js'); }}
 	{{  HTML::script('js/bootstrap-datetimepicker.js'); }}
