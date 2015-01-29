@@ -70,12 +70,12 @@ class MembresiasController extends BaseController {
 		foreach ($elementos as $elemento) {
 			if(is_null($elemento -> matricula )){
 				$no[] = array(
-					'nombre' => $elemento -> persona -> nombre,
-					'paterno' => $elemento -> persona -> apellidopaterno,
-					'materno' => $elemento -> persona -> apellidomaterno,
-					'zona' => $elemento -> companiasysubzona -> nombre,
-					'grado' => $elemento -> grados -> last() -> nombre,
-					'membresia' => 'No tiene matrícula',
+					$elemento -> persona -> nombre,
+					$elemento -> persona -> apellidopaterno,
+					$elemento -> persona -> apellidomaterno,
+					$elemento -> companiasysubzona -> nombre,
+					$elemento -> grados -> last() -> nombre,
+					'No tiene matrícula',
 				);
 			}
 			if(is_null($elemento -> pagos() ->where('concepto','like','Membresia '.$anio) -> first())){

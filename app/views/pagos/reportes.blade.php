@@ -138,7 +138,7 @@
 		                { "title": "Cantidad" },
 		            ],
 		            "language": {
-		              "lengthMenu": "Subzonas por página _MENU_",
+		              "lengthMenu": "Elementos por página _MENU_",
 		              "zeroRecords": "No se encontro",
 		              "info": "Pagina _PAGE_ de _PAGES_",
 		              "infoEmpty": "No records available",
