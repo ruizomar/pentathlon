@@ -42,12 +42,13 @@
 		<table id="telementos2" class="hidden col-md-offset-1 col-md-10 display" cellspacing="0" width="100%">
 			<thead>
 				<tr>
-					<th>Nombre</th>
-					<th>Paterno</th>
-					<th>Materno</th>
-					<th>Membresia</th>
-					<th>Zona</th>
-					<th>Grado</th>
+					<th>nombre</th>
+					<th>paterno</th>
+					<th>materno</th>
+					<th>membresia</th>
+					<th>fecha</th>
+					<th>zona</th>
+					<th>grado</th>
 				</tr>
 			</thead>
 			<tbody id="elementobody2">
@@ -108,7 +109,7 @@
 			f = $('#fechafin').val();
 			$.post('membresias',{i:i,f:f}, function(json) {
 				$.each(json,function(index,pago){
-					$('#elementobody').append('<tr>'+
+					$('#elementobody2').append('<tr>'+
 						'<td>'+pago.nombre+'</td>'+
 						'<td>'+pago.paterno+'</td>'+
 						'<td>'+pago.materno+'</td>'+
@@ -117,7 +118,7 @@
 						'<td>'+pago.zona+'</td>'+
 						'<td>'+pago.grado+'</td>');
 				});
-				table = $('#telementos').DataTable( {
+				table = $('#telementos2').DataTable( {
 				    "language": {
 				        "sProcessing": "Procesando...",
 				        "sLengthMenu": "Mostrar _MENU_ registros",
@@ -147,7 +148,7 @@
 				    dom: 'T<"clear">lfrtip',
 				});
 			}, 'json');
-			$('#telementos').removeClass('hidden');
+			$('#telementos2').removeClass('hidden');
 		}
 		function sinentero () {
 			$('.boton2, .parte1').addClass('hidden');
