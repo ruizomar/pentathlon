@@ -25,7 +25,6 @@
   </style>
 @endsection
 @section('contenido')
-<?php $status=Session::get('status'); ?>
 <div class="row">
     <div class="col-sm-6 col-sm-offset-3 col-xs-7">
         <h1 style="margin-bottom:20px;">Eventos <i class="fa fa-refresh fa-spin hidden"></i></h1>

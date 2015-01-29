@@ -235,13 +235,13 @@
 						</div>
 						<div class="col-md-2 form-group">
 							{{ Form::label('estadocivil', 'Estado Civil') }}
-							{{ Form::text('estadocivil', null, array('class' => 'form-control mayuscula')) }}
+							{{Form::select('estadocivil', array('Soltero' => 'Soltero','casado' => 'casado'),null,array('placeholder' => '','class' => 'form-control')) }}
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-2 form-group">
 							{{ Form::label('escolaridad', 'Escolaridad') }}
-							{{Form::select('escolaridad', array('primaria' => 'primaria','secundaria' => 'secundaria','bachillerato' => 'bachillerato','universidad' => 'universidad','licenciatura' => 'licenciatura','maestria' => 'maestria','doctorado' => 'doctorado',),null,array('placeholder' => '','class' => 'form-control')) }}
+							{{Form::select('escolaridad', array('primaria' => 'primaria','secundaria' => 'secundaria','bachillerato' => 'bachillerato','licenciatura' => 'licenciatura'),null,array('placeholder' => '','class' => 'form-control')) }}
 						</div>
 						<div class="col-md-4 form-group">
 							{{ Form::label('escuela', 'Escuela') }}
@@ -391,7 +391,9 @@
 		$(document).ready(function() {
 			$('#datetimePicker').datetimepicker({
 		        language: 'es',
-		        pickTime: false
+		        pickTime: false,
+		        defaultDate: moment().subtract(10, 'y'),
+		        maxDate: moment().subtract(7, 'y')
 		    });
 			$("#test-upload").fileinput({
 				'showPreview' : true,

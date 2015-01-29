@@ -33,7 +33,7 @@ class ExamenesController extends BaseController{
 		$validation = Validator::make(Input::all(), $rules);
 		if($validation->fails())
 		{		
-		  return Redirect::back()->withInput()->with('status', 'fail_create');
+		  return Response::json(array('success' => false));
 		}
 		if(is_null(Examen::where('nombre','=',Input::get('nombre'))
 			->where('grado_id','=',Input::get('grado'))->first()) ){
@@ -43,10 +43,10 @@ class ExamenesController extends BaseController{
 				$examen->precio 	= Input::get('precio');
 			$examen->save();
 
-			return Redirect::back()->with('status', 'ok_create');
+			return Response::json(array('success' => true));
 		}
 		else
-			return Redirect::back()->with('status', 'ocupado');
+			return Response::json(array('ocupado' => true));
 	}
 	public function postUpdate(){
 		$rules = array(
@@ -59,13 +59,13 @@ class ExamenesController extends BaseController{
 		$validation = Validator::make(Input::all(), $rules);
 		if($validation->fails())
 		{		
-		  return Redirect::back()->withInput()->with('status', 'fail_create');
+		  return Response::json(array('success' => false));
 		}
 		$examen = Examen::where('nombre','=',Input::get('nombre'))
 						->where('grado_id','=',Input::get('grado'))->first();
 		if(!is_null($examen) )
 			if($examen->id != Input::get('id'))
-					return Redirect::back()->with('status', 'ocupado');
+					return Response::json(array('ocupado' => true));
 
 			$examen = Examen::find(Input::get('id'));
 			$examen->update(array(
@@ -73,7 +73,7 @@ class ExamenesController extends BaseController{
 				'grado_id' 	=> Input::get('grado'),
 				'precio'		=> Input::get('precio')
 				));
-		return Redirect::back()->with('status', 'ok_create');
+		return Response::json(array('success' => true));
 	}
 
 	public function getCalificaciones(){

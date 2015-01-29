@@ -12,7 +12,6 @@
 </style>
 @endsection
 @section('contenido')
-<?php $status=Session::get('status'); ?>
 <div class="row">
     <div class="col-md-8 col-md-offset-1">
         <h1 style="margin-bottom:20px;"><i class="fa  fa-crosshairs"></i> Armas</h1>
@@ -20,21 +19,6 @@
     <div class="col-md-2" style="margin-top:20px;">
         <button type="button" class="btn btn-success btn-lg" id="bnuevo"><i class="fa fa-plus fa-lg"></i> Nueva</button>
     </div>   
-    <div class="message col-md-6 col-md-offset-3 hidden">
-        @if($status == 'fail_create')
-        <label id="status_title">Error</label>
-            <label id="status">error</label>
-            <label id="message">Ocurrio un error</label>
-        @elseif(($status == 'ok_create'))
-        <label id="status_title">Operacion completada correctamente</label>
-            <label id="status">success</label>
-            <label id="message"></label>
-        @elseif(($status == 'ocupado'))
-        <label id="status_title">Error</label>
-            <label id="status">error</label>
-            <label id="message">Ya existe un tipo de arma con ese nombre</label>
-        @endif
-    </div> 
 	<div class="col-md-8 col-md-offset-2">
 		<table id='armas'class="table table-hover table-first-column-number data-table display full">
 			<thead>
@@ -169,7 +153,29 @@ $(document).ready(function() {
         }
     })
     .on('success.form.bv', function(e) {
+        e.preventDefault();
         $('.fa-refresh').removeClass('hidden');
+        $.post($('#nueva-arma').attr('action'),$('#nueva-arma').serialize(), function(json) {
+                $('#nuevo').modal('hide');
+                if(json.success)
+                    swal({
+                        title: 'Operacion completada correctamente',
+                        text: '',
+                        type: 'success',
+                        showCancelButton: false,
+                        confirmButtonColor: '#AEDEF4',
+                        confirmButtonText: 'OK',
+                        cancelButtonText: 'No, regresar a revisar',
+                        closeOnConfirm: false,
+                        closeOnCancel: false
+                    },
+                    function(isConfirm){
+                        window.location.reload();
+                    });
+                if(json.ocupado)
+                    swal('Error','Ya existe un cuerpo con ese nombre', "error");
+            $('.fa-refresh').addClass('hidden');    
+            }, 'json');
     });
     $('#edit').bootstrapValidator({
         feedbackIcons: {
@@ -197,7 +203,29 @@ $(document).ready(function() {
         }
     })
     .on('success.form.bv', function(e) {
+        e.preventDefault();
         $('.fa-refresh').removeClass('hidden');
+        $.post($('#edit').attr('action'),$('#edit').serialize(), function(json) {
+                $('#editar').modal('hide');
+                if(json.success)
+                    swal({
+                        title: 'Operacion completada correctamente',
+                        text: '',
+                        type: 'success',
+                        showCancelButton: false,
+                        confirmButtonColor: '#AEDEF4',
+                        confirmButtonText: 'OK',
+                        cancelButtonText: 'No, regresar a revisar',
+                        closeOnConfirm: false,
+                        closeOnCancel: false
+                    },
+                    function(isConfirm){
+                        window.location.reload();
+                    });
+                if(json.ocupado)
+                    swal('Error','Ya existe un cuerpo con ese nombre', "error");
+            $('.fa-refresh').addClass('hidden');    
+            }, 'json');
     });
 });
 $('#bnuevo').click(function(){

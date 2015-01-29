@@ -12,7 +12,6 @@
 </style>
 @endsection
 @section('contenido')
-<?php $status=Session::get('status'); ?>
 <div class="row">
     <div class="col-md-8 col-md-offset-1">
         <h1 style="margin-bottom:20px;">Subzonas y Compañías</h1>
@@ -20,21 +19,6 @@
     <div class="col-md-2" style="margin-top:20px;">
         <button type="button" class="btn btn-success btn-lg" id="bnueva"><i class="fa fa-plus fa-lg"></i> Nueva</button>
     </div>   
-    <div class="message col-md-6 col-md-offset-3 hidden">
-        @if($status == 'fail_create')
-        <label id="status_title">Error</label>
-            <label id="status">error</label>
-            <label id="message">Ocurrio un error</label>
-        @elseif(($status == 'ok_create'))
-        <label id="status_title">Operacion completada correctamente</label>
-            <label id="status">success</label>
-            <label id="message"></label>
-        @elseif(($status == 'ocupado'))
-        <label id="status_title">Error</label>
-            <label id="status">error</label>
-            <label id="message">Ya existe una compañía con ese nombre</label>
-        @endif
-    </div> 
 	<div class="col-md-10 col-md-offset-1">
 		<table id='companias'class="table table-hover table-first-column-number data-table display full">
 			<thead>
@@ -194,7 +178,29 @@ $(document).ready(function() {
             }
         })
     .on('success.form.bv', function(e) {
+        e.preventDefault();
         $('.fa-refresh').removeClass('hidden');
+        $.post($(this).attr('action'),$(this).serialize(), function(json) {
+                $('#nueva').modal('hide');
+                if(json.success)
+                    swal({
+                        title: 'Operacion completada correctamente',
+                        text: '',
+                        type: 'success',
+                        showCancelButton: false,
+                        confirmButtonColor: '#AEDEF4',
+                        confirmButtonText: 'OK',
+                        cancelButtonText: 'No, regresar a revisar',
+                        closeOnConfirm: false,
+                        closeOnCancel: false
+                    },
+                    function(isConfirm){
+                        window.location.reload();
+                    });
+                if(json.ocupado)
+                    swal('Error','Ya existe una compañia o subzona con ese nombre', "error");
+            $('.fa-refresh').addClass('hidden');    
+            }, 'json');
     });
 });
 $('[name=estatus]').change(function() {
