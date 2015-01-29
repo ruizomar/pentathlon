@@ -78,7 +78,7 @@ class MembresiasController extends BaseController {
 					'membresia' => 'No tiene matrícula',
 				);
 			}
-			if(is_null($elemento -> pagos() ->where('concepto','like','Membresia 2015') -> first())){
+			if(is_null($elemento -> pagos() ->where('concepto','like','Membresia '.$anio) -> first())){
 			$no[] = array(
 					$elemento -> persona -> nombre,
 					$elemento -> persona -> apellidopaterno,
