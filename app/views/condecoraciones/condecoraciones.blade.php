@@ -224,7 +224,7 @@ Condecoraciones
     $( "#agregar" ).submit(function( event ) {
         event.preventDefault();
       $.post("{{ URL::to('condecoraciones/agregar'); }}", $( "#agregar" ).serialize(), function(json) {
-        console.log(json)
+        // // console.log(json)
             if(json.success == true){
                 encontrado($('[name = id]').val())
                 reconocimiento(json.condecoraciones)

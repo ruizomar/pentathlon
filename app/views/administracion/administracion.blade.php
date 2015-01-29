@@ -45,7 +45,7 @@
 $('#Administracion, #2Administracion').addClass('active');
 $(".restore").click(function(){
     $.getJSON( $(this).attr('href'), function( json ) {
-        console.log(json)
+        // // console.log(json)
       if(json.success){
         swal('Operacion completada correctamente', null, "success");
       }

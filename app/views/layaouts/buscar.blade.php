@@ -129,7 +129,7 @@ $(document).ready(function() {
 
             $('.spin-form').removeClass('hidden');
             $.post($form.attr('action'), $form.serialize(), function(json) {
-                console.log(json)
+                // // console.log(json)
                 if (json.success) {
                     $('#error').addClass('hidden');
                     $('#activ').addClass('hidden');

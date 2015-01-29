@@ -21,7 +21,7 @@ Historial
 @section('scripts2')
 <script type="text/javascript">
     function encontrado(id){
-        console.log("asd");
+        // // console.log("asd");
         $('[name=id]').val(id);
         $( "#hitoria" ).submit();
     }

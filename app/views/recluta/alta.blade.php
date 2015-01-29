@@ -367,7 +367,7 @@
 		var curp = $(this).val();
 		$.post('curp',{curp:curp}, function(json) {
 			if (!json.success) {
-				console.log(json);
+				// // console.log(json);
 				$('#curperror').removeClass('hidden');
 				$('#idcurp').addClass('has-error');
 				$('[name=curp]').val('');

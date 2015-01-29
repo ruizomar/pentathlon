@@ -152,7 +152,7 @@
 			$('#calificaciones').html('');
 			$('#reconocimientos').html('');
 			$.post('ascensos/buscar',{id:id}, function(json) {
-				// console.log(json);
+				// // // console.log(json);
 				$('#ascender').html(json.ascenso);
 				ascenso_id = json.ascenso_id;
 				elemento_id = id;
@@ -234,7 +234,7 @@
 					if (isConfirm){
 						swal('!Hecho!', 'Se ha guardado el cargo', 'success');
 						$.post('ascensos/ascender',{ascenso_id:ascenso_id,elemento_id:elemento_id}, function(json) {
-							console.log(json);
+							// // console.log(json);
 						}, 'json');
 						encontrado(elemento_id);
 					}

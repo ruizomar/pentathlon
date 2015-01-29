@@ -945,7 +945,7 @@
       compania = $('[name=compania]').val();
       persona_id = $('[name=persona_id]').val();
       $.post('cargos',{compania:compania,persona_id:persona_id}, function(json) {
-        console.log(json);
+        // // console.log(json);
         if (json.success){
           $('[name=compania]').text('');
           $('[name=compania]').append('<option value="'+json.companiasysubzona_id+'">'+json.compania+'</option>');

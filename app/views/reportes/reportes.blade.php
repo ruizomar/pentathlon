@@ -452,7 +452,7 @@
             inicio = $('#fechainicio').val();
             fin = $('#fechafin').val();
             $.post('reportes/compania',{id:id,inicio:inicio,fin:fin}, function(json) {
-                console.log(json);
+                // // console.log(json);
                 thombres = 0;
                 recluta = 0;
                 cadete = 0;

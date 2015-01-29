@@ -99,7 +99,7 @@
 					$('.cargos').html('<h2><label class="label label-default label-warning"><i class="fa fa-exclamation-circle"></i> No puede asignarse cargo</label></h2>');
 				}
 				i = 0;
-				// console.log(json.cargo);
+				// // // console.log(json.cargo);
 				$.each(json.cargo,function(index,value){
 					$('#cargos').append('<li class="cargolabel'+i+'" style="list-style-type: none; margin-left: -40px; margin-top:5px;"><label class="label label-success"><a class="closes" data-dismiss="alert2" onclick="eliminar('+id+','+value.cargo_id+','+i+')"><i class="fa fa-times"></i></a>'+value.nombre+'</label></li>');
 					i++;
@@ -114,7 +114,7 @@
 			$('#btnupdate').on('click', function(e) {
 				e.preventDefault();
 				$.post('cargos/confirma',$("#formulariocargos").serialize(), function(json) {
-					// console.log(json);
+					// // // console.log(json);
 					if (!json.success) {
 						swal({
 							title: '¿Estás seguro?',
@@ -148,10 +148,10 @@
 			});
 		})();
 		function insertar () {
-			// console.log('1');
+			// // // console.log('1');
 			$.post('cargos/update',$("#formulariocargos").serialize(), function(json) {
-				// console.log(2);
-				// console.log(json.ubicacion);
+				// // // console.log(2);
+				// // // console.log(json.ubicacion);
 				if(json.success){
 					$('label[for=companiasysubzonas]').text(json.ubicacion);
 					$('#cargos').html('');
@@ -193,7 +193,7 @@
 			function(){
 				$.post('cargos/eliminar',{id:id,cargo:cargo}, function(json) {
 					if(json.success){
-						console.log(json.message);
+						// // console.log(json.message);
 						if (json.message == 0){
 							swal('¡Hecho!', 'Se ha eliminado el cargo', 'success');
 						}

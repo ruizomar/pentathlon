@@ -127,7 +127,7 @@
 			$('#dtabla2').html('');
 			anio = (new Date).getFullYear();;
 			$.post('sinentero',{anio:anio}, function(json) {
-				console.log(json);
+				// // console.log(json);
 				$('#divelementos').html('<table id="telementos" class="table table-hover table-first-column-number data-table display full"></table>');
 				$('#telementos').dataTable( {
 				    "data": json,
