@@ -50,6 +50,7 @@ Route::controller('ascensos', 'AsignaAscensosController');
 Route::controller('jura', 'JuraBanderaController');
 Route::controller('reportes', 'ReportesController');
 Route::controller('concursos', 'ConcursosController');
+Route::controller('elementos', 'ElementosController');
 
 
 Route::post('buscar','BuscarController@buscar');
