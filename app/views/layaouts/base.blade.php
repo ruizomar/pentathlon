@@ -68,10 +68,12 @@
           <li id="2Eventos"><a rel="tooltip" data-placement="right" data-original-title="Pricing" href="{{ URL::to('eventos'); }}"><i class="fa fa-calendar-o"></i> <span class="caption">Eventos</span></a></li>
 
           <li id="2Ascensos"><a rel="tooltip" data-placement="right" data-original-title="Calendar" href="{{ URL::to('ascensos'); }}"><i class="fa fa-line-chart"></i> <span class="caption">Ascensos</span></a></li>
-        @endif
-        @if(!is_null(User::find(Auth::id())->roles()->where('id','=',4)->first()))
+
           <li id="2Credenciales"><a rel="tooltip" data-placement="right" data-original-title="Reports" href="{{ URL::to('credenciales'); }}"><i class="fa fa-user"></i> <span class="caption">Impresión de Credenciales</span></a></li>
 
+          <li id="Reportes" class=" "><a rel="tooltip" data-placement="right" data-original-title="Icons" href="{{ URL::to('reportes'); }}"><i class="fa fa-bar-chart"></i> <span class="caption">Reportes</span></a></li> 
+        @endif
+        @if(!is_null(User::find(Auth::id())->roles()->where('id','=',4)->first()))
           <li id="2Companias"><a rel="tooltip" data-placement="right" data-original-title="Reports" href="{{ URL::to('companias'); }}"><i class="fa fa-map-marker"></i> <span class="caption">Companias</span></a></li>
           
           <li id="2Cargos"><a rel="tooltip" data-placement="right" data-original-title="Faq" href="{{ URL::to('cargos'); }}"><i class="fa fa-magic"></i> <span class="caption">Cargos</span></a></li>
@@ -84,10 +86,10 @@
           <li id="2Asistencias"><a rel="tooltip" data-placement="right" data-original-title="Blog" href="{{ URL::to('asistencias'); }}"><i class="fa fa-calendar"></i> <span class="caption">Asistencias</span></a></li>
           <li id="2Examenes"><a rel="tooltip" data-placement="right" data-original-title="Media" href="{{ URL::to('examenes/calificaciones'); }}"><i class="fa  fa-file-text-o"></i> <span class="caption">Calificaciones</span></a></li>
         @endif
-        @if(!is_null(User::find(Auth::id())->roles()->where('id','=',4)->first()) || !is_null(User::find(Auth::id())->roles()->where('id','=',6)->first()))
-          <li id="2Asistencias"><a rel="tooltip" data-placement="right" data-original-title="Blog" href="{{ URL::to('asistencias/reporte'); }}"><i class="fa fa-calendar"></i> <span class="caption">Reporte de Asistencias</span></a></li>
+        @if(!is_null(User::find(Auth::id())->roles()->where('id','=',8)->first()) || !is_null(User::find(Auth::id())->roles()->where('id','=',4)->first()) || !is_null(User::find(Auth::id())->roles()->where('id','=',6)->first()))
+          <li id="2AsistenciasReporte"><a rel="tooltip" data-placement="right" data-original-title="Blog" href="{{ URL::to('asistencias/reporte'); }}"><i class="fa fa-calendar"></i> <span class="caption">Reporte de Asistencias</span></a></li>
         @endif
-        @if(!is_null(User::find(Auth::id())->roles()->where('id','<',8)->first()))
+        @if(!is_null(User::find(Auth::id())->roles()->where('id','<',8)->where('id','>',1)->first()))
           <li id="2Altas"><a rel="tooltip" data-placement="right" data-original-title="Blog Entry" href="{{ URL::to('recluta/alta'); }}"><i class="fa fa-plus"></i> <span class="caption">Altas</span></a></li>
 
           <li id="2Editar"><a rel="tooltip" data-placement="right" data-original-title="Help" href="{{ URL::to('recluta/editar'); }}"><i class="fa fa-pencil"></i> <span class="caption">Editar</span></a></li>
@@ -123,9 +125,12 @@
           <li id="Eventos"><a rel="tooltip" data-placement="right" data-original-title="Pricing" href="{{ URL::to('eventos'); }}"><i class="fa fa-calendar-o"></i> <span class="caption">Eventos</span></a></li>
 
           <li id="Ascensos"><a rel="tooltip" data-placement="right" data-original-title="Calendar" href="{{ URL::to('ascensos'); }}"><i class="fa fa-line-chart"></i> <span class="caption">Ascensos</span></a></li>
+
+          <li id="2Historial" class=" "><a rel="tooltip" data-placement="right" data-original-title="Icons" href="{{ URL::to('historial'); }}"><i class="fa fa-clock-o"></i> <span class="caption">Historial</span></a></li>
+
+          <li id="2Credenciales"><a rel="tooltip" data-placement="right" data-original-title="Reports" href="{{ URL::to('credenciales'); }}"><i class="fa fa-user"></i> <span class="caption">Impresión de Credenciales</span></a></li>
         @endif
         @if(!is_null(User::find(Auth::id())->roles()->where('id','=',4)->first()))
-          <li id="2Credenciales"><a rel="tooltip" data-placement="right" data-original-title="Reports" href="{{ URL::to('credenciales'); }}"><i class="fa fa-user"></i> <span class="caption">Impresión de Credenciales</span></a></li>
           <li id="Companias"><a rel="tooltip" data-placement="right" data-original-title="Reports" href="{{ URL::to('companias'); }}"><i class="fa fa-map-marker"></i> <span class="caption">Companias</span></a></li>
           
           <li id="Cargos"><a rel="tooltip" data-placement="right" data-original-title="Faq" href="{{ URL::to('cargos'); }}"><i class="fa fa-magic"></i> <span class="caption">Cargos</span></a></li>
@@ -138,16 +143,13 @@
           <li id="Asistencias"><a rel="tooltip" data-placement="right" data-original-title="Blog" href="{{ URL::to('asistencias'); }}"><i class="fa fa-calendar"></i> <span class="caption">Asistencias</span></a></li>
           <li id="Examenes"><a rel="tooltip" data-placement="right" data-original-title="Media" href="{{ URL::to('examenes/calificaciones'); }}"><i class="fa  fa-file-text-o"></i> <span class="caption">Calificaciones</span></a></li>
         @endif
-        @if(!is_null(User::find(Auth::id())->roles()->where('id','=',4)->first()) || !is_null(User::find(Auth::id())->roles()->where('id','=',6)->first()))
-          <li id="Asistencias"><a rel="tooltip" data-placement="right" data-original-title="Blog" href="{{ URL::to('asistencias/reporte'); }}"><i class="fa fa-calendar"></i> <span class="caption">Reporte de Asistencias</span></a></li>
+        @if(!is_null(User::find(Auth::id())->roles()->where('id','=',8)->first()) || !is_null(User::find(Auth::id())->roles()->where('id','=',4)->first()) || !is_null(User::find(Auth::id())->roles()->where('id','=',6)->first()))
+          <li id="AsistenciasReporte"><a rel="tooltip" data-placement="right" data-original-title="Blog" href="{{ URL::to('asistencias/reporte'); }}"><i class="fa fa-calendar"></i> <span class="caption">Reporte de Asistencias</span></a></li>
         @endif
-        @if(!is_null(User::find(Auth::id())->roles()->where('id','<',8)->first()))
+        @if(!is_null(User::find(Auth::id())->roles()->where('id','<',9)->where('id','>',1)->first()))
           <li id="2Altas"><a rel="tooltip" data-placement="right" data-original-title="Blog Entry" href="{{ URL::to('recluta/alta'); }}"><i class="fa fa-plus"></i> <span class="caption">Altas</span></a></li>
 
           <li id="2Editar"><a rel="tooltip" data-placement="right" data-original-title="Help" href="{{ URL::to('recluta/editar'); }}"><i class="fa fa-pencil"></i> <span class="caption">Editar</span></a></li>
-
-          <li id="2Historial" class=" "><a rel="tooltip" data-placement="right" data-original-title="Icons" href="{{ URL::to('historial'); }}"><i class="fa fa-clock-o"></i> <span class="caption">Historial</span></a></li>
-        <li id="Reportes" class=" "><a rel="tooltip" data-placement="right" data-original-title="Icons" href="{{ URL::to('reportes'); }}"><i class="fa fa-bar-chart"></i> <span class="caption">Reportes</span></a></li> 
         @endif
 
         @if(!is_null(User::find(Auth::id())->roles()->where('id','>',2)->where('id','<',6)->first()))

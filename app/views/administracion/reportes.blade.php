@@ -118,7 +118,7 @@
 		    $('#datetimePicker2').on('dp.change dp.show', function(e) {
 		        $('#reportes').bootstrapValidator('revalidateField', 'birthday2');
 		    });
-		    $('#Arrestos, #2Arrestos').addClass('active');
+		    $('#AsistenciasReporte, #2AsistenciasReporte').addClass('active');
 		});
 		$( ".option1" ).click(function() {
 			$( ".fecha2" ).removeClass('hidden');
