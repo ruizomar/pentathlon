@@ -4,8 +4,11 @@ class AsistenciasController extends BaseController{
 	 public function __construct()
     {
         $this->beforeFilter('auth');
-        //$this->beforeFilter('instructor', array('only' => 'getIndex');
-       	//$this->beforeFilter('investigacion', array('only' => 'getReporte');
+        $this->beforeFilter('instructor', array('only' => 'getIndex'));
+    	$this->beforeFilter(function(){
+	    if(is_null(User::find(Auth::id())->roles()->where('id','=',4)->orWhere('id','=',6)->first()))
+	 		return "No Tienes acceso";
+        }, array('only' => 'getReporte'));
     }
 	public function getIndex(){
 		$id = Auth::user()->elemento_id;
@@ -69,9 +72,7 @@ class AsistenciasController extends BaseController{
 			$companiasysubzonasArr[$compania->id] = $compania->tipo.' '.$compania->nombre;
 			return View::make('administracion/reportes')->with('compania',$companiasysubzonasArr);
 		}
-		$conf = Elemento::find($id)->cargos()->where('fecha_fin','=',null,'and')
-											->where('cargo_id','=','6')->first();
-		if(!is_null($conf)){
+
 			$companiasysubzonas = Companiasysubzona::where('status','=','activa')->get();
 			$companiasysubzonasArr = array();
 			foreach($companiasysubzonas as $compayzona)
@@ -79,11 +80,7 @@ class AsistenciasController extends BaseController{
 				$companiasysubzonasArr[$compayzona->id] = $compayzona->tipo.' '.$compayzona->nombre;
 			}
 			return View::make('administracion/reportes')->with('compania',$companiasysubzonasArr);
-		}
-		if(is_null($conf)){
-			echo "No eres instructor lastimanentes";
-		}
-
+		
 	}
 
 	public function postDia(){

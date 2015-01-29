@@ -409,7 +409,7 @@
             </div>
         </div>
     </div>
-    @if(!is_null(User::find(Auth::id())->roles()->where('id','=',2)->first()))
+    @if(!is_null(User::find(Auth::id())->roles()->where('id','=',3)->first()))
       <div id="titlstatus" class="row col-md-offset-4 col-md-4" style="bottom:10px;"></div>
       <div id="status" class="row col-md-offset-4 col-md-4 hidden">
         <textarea id="descripcion" placeholder="Añade un comentario al cambio" class="form-control" rows="3"></textarea>

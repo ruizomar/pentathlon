@@ -4,6 +4,10 @@ class ReportesController extends BaseController {
 	public function __construct()
     {
         $this->beforeFilter('auth');
+        $this->beforeFilter(function(){
+		    if(is_null(User::find(Auth::id())->roles()->where('id','<',7)->where('id','>',1)->first()))
+    	 		return "No Tienes acceso";
+        });
     }
 
 	public function getIndex()
