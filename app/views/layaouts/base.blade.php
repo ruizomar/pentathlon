@@ -84,7 +84,7 @@
           <li id="2Asistencias"><a rel="tooltip" data-placement="right" data-original-title="Blog" href="{{ URL::to('asistencias'); }}"><i class="fa fa-calendar"></i> <span class="caption">Asistencias</span></a></li>
           <li id="2Examenes"><a rel="tooltip" data-placement="right" data-original-title="Media" href="{{ URL::to('examenes/calificaciones'); }}"><i class="fa  fa-file-text-o"></i> <span class="caption">Calificaciones</span></a></li>
         @endif
-        @if(!is_null(User::find(Auth::id())->roles()->where('id','=',4)->first()) || !is_null(User::find(Auth::id())->roles()->where('id','=',6)->first()))
+        @if(!is_null(User::find(Auth::id())->roles()->where('id','=',8)->first()) ||!is_null(User::find(Auth::id())->roles()->where('id','=',4)->first()) || !is_null(User::find(Auth::id())->roles()->where('id','=',6)->first()))
           <li id="2Asistencias"><a rel="tooltip" data-placement="right" data-original-title="Blog" href="{{ URL::to('asistencias/reporte'); }}"><i class="fa fa-calendar"></i> <span class="caption">Reporte de Asistencias</span></a></li>
         @endif
         @if(!is_null(User::find(Auth::id())->roles()->where('id','<',8)->first()))
@@ -138,7 +138,7 @@
           <li id="Asistencias"><a rel="tooltip" data-placement="right" data-original-title="Blog" href="{{ URL::to('asistencias'); }}"><i class="fa fa-calendar"></i> <span class="caption">Asistencias</span></a></li>
           <li id="Examenes"><a rel="tooltip" data-placement="right" data-original-title="Media" href="{{ URL::to('examenes/calificaciones'); }}"><i class="fa  fa-file-text-o"></i> <span class="caption">Calificaciones</span></a></li>
         @endif
-        @if(!is_null(User::find(Auth::id())->roles()->where('id','=',4)->first()) || !is_null(User::find(Auth::id())->roles()->where('id','=',6)->first()))
+        @if(!is_null(User::find(Auth::id())->roles()->where('id','=',8)->first()) ||!is_null(User::find(Auth::id())->roles()->where('id','=',4)->first()) || !is_null(User::find(Auth::id())->roles()->where('id','=',6)->first()))
           <li id="Asistencias"><a rel="tooltip" data-placement="right" data-original-title="Blog" href="{{ URL::to('asistencias/reporte'); }}"><i class="fa fa-calendar"></i> <span class="caption">Reporte de Asistencias</span></a></li>
         @endif
         @if(!is_null(User::find(Auth::id())->roles()->where('id','<',8)->first()))
