@@ -50,13 +50,13 @@ class MembresiasController extends BaseController {
 		$pagos = Pago::where('concepto','like','Membresia'.'%') -> where('fecha','>=',$inicio) -> where('fecha','<=',$fin) -> get();
 		foreach ($pagos as $pago) {
 			$data[] = array(
-				'nombre' => $pago -> elemento -> persona -> nombre,
-				'paterno' => $pago -> elemento -> persona -> apellidopaterno,
-				'materno' => $pago -> elemento -> persona -> apellidomaterno,
-				'membresia' => $pago -> concepto,
-				'fecha' => $pago -> fecha,
-				'zona' => $pago -> elemento -> companiasysubzona -> nombre,
-				'grado' => $pago -> elemento -> grados -> last() -> nombre,
+				$pago -> elemento -> persona -> nombre,
+				$pago -> elemento -> persona -> apellidopaterno,
+				$pago -> elemento -> persona -> apellidomaterno,
+				$pago -> concepto,
+				$pago -> fecha,
+				$pago -> elemento -> companiasysubzona -> nombre,
+				$pago -> elemento -> grados -> last() -> nombre,
 				);
 		}
 		return Response::json($data);

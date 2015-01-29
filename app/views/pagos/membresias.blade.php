@@ -39,21 +39,7 @@
 		<button class="boton2 pull-right btn-xs btn btn-warning" onclick="sinentero()"><i class="fa fa-bars"></i> Sin registro de entero de este año</button>
 		<button class="boton parte1 pull-rights btn-sm btn btn-success" onclick="$('#reportes').data('bootstrapValidator').validate(); if($('#reportes').data('bootstrapValidator').isValid()) generar()"><i class="fa fa-bars"></i> Mostrar lista</button>
 		<div id="divelementos"></div>
-		<table id="telementos2" class="hidden col-md-offset-1 col-md-10 display" cellspacing="0" width="100%">
-			<thead>
-				<tr>
-					<th>nombre</th>
-					<th>paterno</th>
-					<th>materno</th>
-					<th>membresia</th>
-					<th>fecha</th>
-					<th>zona</th>
-					<th>grado</th>
-				</tr>
-			</thead>
-			<tbody id="elementobody2">
-			</tbody>
-		</table>
+		<div id="dtabla2"></div>
 	</div>
 @stop
 @section('scripts')
@@ -103,55 +89,42 @@
 		    });
 		});
 		function generar () {
-			$('.boton').addClass('hidden');
-			$('.boton2').addClass('hidden');
 			i = $('#fechainicio').val();
 			f = $('#fechafin').val();
 			$.post('membresias',{i:i,f:f}, function(json) {
-				$.each(json,function(index,pago){
-					$('#elementobody2').append('<tr>'+
-						'<td>'+pago.nombre+'</td>'+
-						'<td>'+pago.paterno+'</td>'+
-						'<td>'+pago.materno+'</td>'+
-						'<td>'+pago.membresia+'</td>'+
-						'<td>'+pago.fecha+'</td>'+
-						'<td>'+pago.zona+'</td>'+
-						'<td>'+pago.grado+'</td>');
-				});
-				table = $('#telementos2').DataTable( {
-				    "language": {
-				        "sProcessing": "Procesando...",
-				        "sLengthMenu": "Mostrar _MENU_ registros",
-				        "sZeroRecords": "No se encontraron resultados",
-				        "sEmptyTable": "Ningún dato disponible en esta tabla",
-				        "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-				        "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-				        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-				        "sInfoPostFix": "",
-				        "sSearch": "Buscar:",
-				        "sUrl": "",
-				        "sInfoThousands": ",",
-				        "sLoadingRecords": "Cargando...",
-				        "oPaginate": {
-				        "sFirst": "Primero",
-				        "sLast": "Último",
-				        "sNext": "Siguiente",
-				        "sPrevious": "Anterior"
-				        },
-				        "oAria": {
-				        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-				        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-				        }
-				    },
-				    paging: true,
-				    searching: true,
-				    dom: 'T<"clear">lfrtip',
-				});
+				$('#dtabla2').html('<table id="tabla2" class="table table-hover table-first-column-number data-table display full"></table>');
+		        $('#tabla2').dataTable( {
+		            "data": json,
+		            "columns": [
+		                { "title": "Nombre" },
+		                { "title": "Apellido paterno" },
+		                { "title": "Apellido materno" },
+		                { "title": "Membresia" },
+		                { "title": "Fecha" },
+		                { "title": "Subzona/Compañia" },
+		                { "title": "Grado" },
+		            ],
+		            "language": {
+		              "lengthMenu": "Elementos por página _MENU_",
+		              "zeroRecords": "No se encontro",
+		              "info": "Pagina _PAGE_ de _PAGES_",
+		              "infoEmpty": "No records available",
+		              "infoFiltered": "(Ver _MAX_ total records)",
+		              'search': 'Buscar: ',
+		              "paginate": {
+		                "first":      "Inicio",
+		                "last":       "Fin",
+		                "next":       "Siguiente",
+		                "previous":   "Anterior"
+		              },
+		        }
+		        } );
 			}, 'json');
 			$('#telementos2').removeClass('hidden');
 		}
 		function sinentero () {
 			$('.boton2, .parte1').addClass('hidden');
+			$('#dtabla2').html('');
 			anio = (new Date).getFullYear();;
 			$.post('sinentero',{anio:anio}, function(json) {
 				console.log(json);

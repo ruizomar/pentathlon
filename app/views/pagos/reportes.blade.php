@@ -124,7 +124,6 @@
 			if ($('#4').is(':checked')) {exa = $('#4').val();};
 			if ($('#5').is(':checked')) {don = $('#5').val();};
 			$.post('reportes',{i:i,f:f,mem:mem,cre:cre,eve:eve,exa:exa,don:don}, function(json) {
-				console.log(json);
 				total = 0;
 				$.each(json,function(index,pago){
 						total += pago[2];
