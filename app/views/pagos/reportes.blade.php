@@ -56,17 +56,8 @@
 			</div>
 		</div>
 		<button class="boton pull-right btn-sm btn btn-success" onclick="$('#reportes').data('bootstrapValidator').validate(); if($('#reportes').data('bootstrapValidator').isValid()) generar()"><i class="fa fa-bar-chart"></i> Generar</button>
-		<table id="telementos" class="hidden col-md-12 display" cellspacing="0" width="100%">
-			<thead>
-				<tr>
-					<th>Concepto</th>
-					<th>Fecha</th>
-					<th>Cantidad</th>
-				</tr>
-			</thead>
-			<tbody id="elementobody">
-			</tbody>
-		</table>
+		<div id="dtabla">
+		</div>
 		<div class="total row">
 		</div>
 	</div>
@@ -119,7 +110,7 @@
 		});
 		function generar () {
 			$('#elementobody').html('');
-			$('.boton').addClass('hidden');
+			//$('.boton').addClass('hidden');
 			i = $('#fechainicio').val();
 			f = $('#fechafin').val();
 			mem = '.';
@@ -136,43 +127,34 @@
 				console.log(json);
 				total = 0;
 				$.each(json,function(index,pago){
-					$('#elementobody').append('<tr>'+
-						'<td>'+pago.concepto+'</td>'+
-						'<td>'+pago.fecha+'</td>'+
-						'<td>'+pago.cantidad+'</td>');
-						total += pago.cantidad;
+						total += pago[2];
 				});
-				tabla = $('#telementos').DataTable( {
-					"language": {
-						"sProcessing":     "Procesando...",
-						"sLengthMenu":     "Mostrar _MENU_ registros",
-						"sZeroRecords":    "No se encontraron resultados",
-						"sEmptyTable":     "Ningún dato disponible en esta tabla",
-						"sInfo":           "Mostrando un total de _TOTAL_ registros",
-						"sInfoEmpty":      "Mostrando un total de 0 registros",
-						"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-						"sInfoPostFix":    "",
-						"sSearch":         "Buscar:",
-						"sUrl":            "",
-						"sInfoThousands":  ",",
-						"sLoadingRecords": "Cargando...",
-						"oPaginate": {
-							"sFirst":    "Primero",
-							"sLast":     "Último",
-							"sNext":     "Siguiente",
-							"sPrevious": "Anterior"
-						},
-						"oAria": {
-							"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-							"sSortDescending": ": Activar para ordenar la columna de manera descendente"
-						}
-					},
-					paging: true,
-					searching: true,
-				});
-				$('.total').html('<strong>Total: '+total+'</strong>');
+				$('#dtabla').html('<table id="tabla" class="table table-hover table-first-column-number data-table display full"></table>');
+		        $('#tabla').dataTable( {
+		            "data": json,
+		            "columns": [
+		                { "title": "Concepto" },
+		                { "title": "Fecha" },
+		                { "title": "Cantidad" },
+		            ],
+		            "language": {
+		              "lengthMenu": "Subzonas por página _MENU_",
+		              "zeroRecords": "No se encontro",
+		              "info": "Pagina _PAGE_ de _PAGES_",
+		              "infoEmpty": "No records available",
+		              "infoFiltered": "(Ver _MAX_ total records)",
+		              'search': 'Buscar: ',
+		              "paginate": {
+		                "first":      "Inicio",
+		                "last":       "Fin",
+		                "next":       "Siguiente",
+		                "previous":   "Anterior"
+		              },
+		        }
+		        } );
+				$('.total').html('<strong>Total: $'+total+'</strong>');
 			}, 'json');
-			$('#telementos').removeClass('hidden');
+			//$('#telementos').removeClass('hidden');
 		}
 	</script>
 	{{  HTML::script('js/moment.js'); }}
