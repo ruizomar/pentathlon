@@ -383,9 +383,9 @@
 	</script>
 	<script>
 		$("#filefoto").fileinput({
-			showUpload: false,
-			showCaption: false,
-			showRemove : false,
+			showUpload: true,
+			showCaption: true,
+			showRemove : true,
 			fileType: "any"
 		});
 		$(document).ready(function() {

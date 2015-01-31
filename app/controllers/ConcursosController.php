@@ -26,7 +26,7 @@ class ConcursosController extends BaseController {
 			'nombre' => 'required|max:35',
 			'paterno' => 'required|max:35',
 			'materno' => 'max:35',
-			'telefono' => 'required|numeric',
+			'telefono' => 'numeric',
 			'email' => 'email',
 		);
 		$reglasIntegrantes = array(

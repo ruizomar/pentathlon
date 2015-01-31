@@ -3,77 +3,6 @@
 	Alta de elementos
 @endsection
 @section('head')
-	<style>
-		.hiddenStepInfo {
-			display: none;
-		}
-		.activeStepInfo {
-			display: block !important;
-		}
-		.setup-content {
-			margin-top: 10px;
-		}
-		.progress {
-			position: relative;
-			height: 5px;
-			margin-top: 10px;
-		}
-		.progress > .progress-type {
-			padding: 3px 30px 2px 10px;
-			color: rgb(255, 255, 255);
-			background-color: rgba(25, 25, 25, 0.2);
-		}
-		.progress > .progress-completed {
-			position: absolute;
-			right: 0px;
-			font-weight: 800;
-			padding: 3px 10px 2px;
-		}
-		.step {
-			text-align: center;
-		}
-		.step .seleccion {
-			background-color: #fff;
-			border: 1px solid #C0C0C0;
-			border-radius: 5px 5px 5px 5px;
-			margin-top: 10px;
-		}
-		.step .seleccion:last-child {
-			border: 1px solid #C0C0C0;
-			border-radius: 5px 5px 5px 5px;
-			margin-top: 10px;
-		}
-		.step .seleccion:first-child {
-			border-radius: 5px 5px 5px 5px;
-			margin-top: 10px;
-		}
-		.step .seleccion:last-child {
-			border-radius: 5px 5px 5px 5px;
-			margin-top: 10px;
-		}
-		.step .seleccion:hover {
-			color: #F58723;
-			cursor: pointer;
-		}
-		.setup-content {
-			background-color: #f2f2f2;
-		}
-		.step .activestep {
-			color: #F58723;
-			border-left: 2px solid #5CB85C !important;
-			border-right: 2px solid #5CB85C !important;
-			border-top: 2px solid #5CB85C !important;
-			border-bottom: 2px solid #5CB85C !important;
-			vertical-align: central;
-		}
-		.step .fa {
-			padding-top: 15px;
-			font-size: 40px;
-		}
-		.fecha i{
-	    	right: 60px !important;
-		}
-	</style>
 	{{  HTML::script('js/fileinput.js'); }}
   	{{  HTML::style('css/fileinput.css');  }}
   	{{  HTML::style('css/bootstrap-datetimepicker.min.css');  }}
@@ -82,6 +11,7 @@
 @section('contenido')
 	{{ Form::open(array('id' => 'formularioalta','url'=>'recluta/alta','files'=>true)) }}
 		<div class="col-md-12">
+			<label class="label label-primary"><span class="glyphicon glyphicon-user"></span> Datos de Elemento</label>
 			<div class="" id="">
 				<div class="col-md-12">
 					<div class="row">
@@ -106,7 +36,7 @@
 						<div class="col-md-3 form-group fecha">
 							{{ Form::label('birthday', 'Fecha nacimiento') }}
 							<div class="input-group date" id="datetimePicker">
-	                            {{ Form::text('birthday', null, array('class' => 'form-control', 'placeholder' => 'YYYY-MM-DD', 'data-date-format' => 'YYYY-MM-DD')) }}
+	                            {{ Form::text('birthday', null, array('class' => 'form-control', 'placeholder' => 'AAAA-MM-DD', 'data-date-format' => 'YYYY-MM-DD')) }}
 	                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 	                        </div>
 						</div>
@@ -264,6 +194,8 @@
 					</div>
 				</div>
 			</div>
+			<br>
+			<label class="label label-primary">Datos de Contacto</label>
 			<div class="" id="">
 				<div class="col-md-12 ">
 					<div class="row">
@@ -369,17 +301,15 @@
 	</script>
 	<script>
 		$("#filefoto").fileinput({
-			showUpload: false,
-			showCaption: false,
-			showRemove : false,
+			showUpload: true,
+			showCaption: true,
+			showRemove : true,
 			fileType: "any"
 		});
 		$(document).ready(function() {
 			$('#datetimePicker').datetimepicker({
 		        language: 'es',
 		        pickTime: false,
-		        defaultDate: moment().subtract(10, 'y'),
-		        maxDate: moment().subtract(7, 'y')
 		    });
 			$("#test-upload").fileinput({
 				'showPreview' : true,

@@ -355,14 +355,14 @@
             var self = this;
             self.isDisabled = true;
             self.$element.attr('disabled', 'disabled');
-            self.$container.find(".kv-fileinput-caption").addClass("file-caption-disabled");
+            self.$container.find(".kv-fileinput-caption hidden").addClass("file-caption-disabled");
             self.$container.find(".btn-file, .fileinput-remove, .kv-fileinput-upload").attr("disabled", true);
         },
         enable: function (e) {
             var self = this;
             self.isDisabled = false;
             self.$element.removeAttr('disabled');
-            self.$container.find(".kv-fileinput-caption").removeClass("file-caption-disabled");
+            self.$container.find(".kv-fileinput-caption hidden").removeClass("file-caption-disabled");
             self.$container.find(".btn-file, .fileinput-remove, .kv-fileinput-upload").removeAttr("disabled");
         },
         hideFileIcon: function () {
@@ -635,7 +635,7 @@
             var self = this;
             var preview = self.showPreview ? self.getLayoutTemplate('preview').replace(/\{class\}/g, self.previewClass) : '';
             var css = self.isDisabled ? self.captionClass + ' file-caption-disabled' : self.captionClass;
-            var caption = self.captionTemplate.replace(/\{class\}/g, css + ' kv-fileinput-caption');
+            var caption = self.captionTemplate.replace(/\{class\}/g, css + ' kv-fileinput-caption hidden');
             return self.mainTemplate.replace(/\{class\}/g, self.mainClass).
                 replace(/\{preview\}/g, preview).
                 replace(/\{caption\}/g, caption).
@@ -669,9 +669,9 @@
                 status = ' disabled ';
             }
             if (isEmpty(self.uploadUrl)) {
-                content = '<button type="submit" class="' + css + '"' + status + '>' + self.uploadIcon + self.uploadLabel + '</button>';
+                content = '<button type="submit" class="hidden ' + css + '"' + status + '>' + self.uploadIcon + self.uploadLabel + '</button>';
             } else {
-                content = '<a href="' + self.uploadUrl + '" class="' + self.uploadClass + '"' + status + '>' + self.uploadIcon + self.uploadLabel + '</a>';
+                content = '<a href="' + self.uploadUrl + '" class="hidden' + self.uploadClass + '"' + status + '>' + self.uploadIcon + self.uploadLabel + '</a>';
             }
             return content;
         }
