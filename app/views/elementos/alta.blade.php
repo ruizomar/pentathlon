@@ -9,9 +9,9 @@
   	{{  HTML::style('css/sweet-alert.css');  }}
 @endsection
 @section('contenido')
-	{{ Form::open(array('id' => 'formularioalta','url'=>'recluta/alta','files'=>true)) }}
+	{{ Form::open(array('id' => 'formularioalta','url'=>'elementos/alta','files'=>true)) }}
 		<div class="col-md-12">
-			<label class="label label-primary"><span class="glyphicon glyphicon-user"></span> Datos de Elemento</label>
+			<label class="label label-primary"><span class="glyphicon glyphicon-user"></span> Datos de elemento</label>
 			<div class="" id="">
 				<div class="col-md-12">
 					<div class="row">
@@ -71,40 +71,38 @@
 						</div>
 					</div>
 					<div class="row">
-						<div id="idcurp" class="col-md-4 form-group">
+						<div id="idcurp" class="col-md-3 form-group">
 							{{ Form::label('curp', 'CURP') }}
 							{{ Form::text('curp', null, array('id' => 'curp','class' => 'form-control mayuscula')) }}
 						</div>
-						<div class="col-md-4 form-group">
+						<div class="col-md-3 form-group">
 							{{ Form::label('email', 'e-mail') }}
 							<div class="input-group">
 								<div class="input-group-addon"><i class="fa fa-envelope"></i></div>
 								{{ Form::email('recluemail', null, array('placeholder' => 'ejemplo@ejemplo.com','class' => 'form-control')) }}
 							</div>
 						</div>
-						<div class="col-md-4 form-group">
+						<div class="col-md-3 form-group">
 							{{ Form::label('reclutelefonofijo', 'Teléfono casa') }}
 							<div class="input-group">
 								<div class="input-group-addon"><i class="fa fa-phone"></i></div>
 								{{ Form::text('reclutelefonofijo', null, array('placeholder' => '9511234567','class' => 'form-control')) }}
 							</div>
 						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-4 form-group">
+						<div class="col-md-3 form-group">
 							{{ Form::label('reclutelefonomovil', 'Teléfono móvil') }}
 							<div class="input-group">
 								<div class="input-group-addon"><i class="fa fa-mobile"></i></div>
 								{{ Form::text('reclutelefonomovil', null, array('placeholder' => '9511234567','class' => 'form-control')) }}
 							</div>
 						</div>
-						<div class="col-md-3">
-						<br><br>
-							{{Form::button('<i class="fa fa-plus"></i> Redes Sociales',array('class' => 'btn btn-success btn-xs','id' => 'recluredes'))}}
-						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-12" id="fbtw" style="display: none;">
+						<div class="col-md-3">
+						<br>
+							{{Form::button('<i class="fa fa-plus"></i> Redes Sociales',array('class' => 'btn btn-success btn-xs','id' => 'recluredes'))}}
+						</div>
+						<div id="fbtw" style="display: none;">
 							<div class="col-md-4 form-group">
 								{{ Form::label('reclufacebook', 'Facebook') }}
 								<div class="input-group">
@@ -127,14 +125,14 @@
 			<div class="" id="">
 				<div class="col-md-12">
 					<div class="row">
-						<div class="col-md-3 form-group">
+						<div class="col-md-2 form-group">
 							{{ Form::label('estatura', 'Estatura') }}
 							<div class="input-group">
 								<div class="input-group-addon">cm:</div>
 								{{ Form::text('estatura', null, array('class' => 'form-control')) }}
 							</div>
 						</div>
-						<div class="col-md-3 form-group">
+						<div class="col-md-2 form-group">
 							{{ Form::label('peso', 'Peso') }}
 							<div class="input-group">
 								<div class="input-group-addon">kg:</div>
@@ -153,29 +151,27 @@
 							{{ Form::label('estadocivil', 'Estado Civil') }}
 							{{Form::select('estadocivil', array('Soltero' => 'Soltero','casado' => 'casado'),null,array('placeholder' => '','class' => 'form-control')) }}
 						</div>
-					</div>
-					<div class="row">
 						<div class="col-md-2 form-group">
 							{{ Form::label('escolaridad', 'Escolaridad') }}
 							{{Form::select('escolaridad', array('primaria' => 'primaria','secundaria' => 'secundaria','bachillerato' => 'bachillerato','licenciatura' => 'licenciatura'),null,array('placeholder' => '','class' => 'form-control')) }}
 						</div>
+					</div>
+					<div class="row">
 						<div class="col-md-4 form-group">
 							{{ Form::label('escuela', 'Escuela') }}
 							{{ Form::text('escuela', null, array('class' => 'form-control mayuscula')) }}
 						</div>
-						<div class="col-md-3 form-group">
+						<div class="col-md-2 form-group">
 							{{ Form::label('alergia', 'Alergias') }}
 							<div class="input-group">
 								<div class="input-group-addon"><i class="fa fa-ambulance"></i></div>
 								{{ Form::text('alergia', null, array('class' => 'form-control mayuscula')) }}
 							</div>
 						</div>
-						<div class="col-md-3 form-group">
+						<div class="col-md-2 form-group">
 							{{ Form::label('vicios', 'Vicios') }}
 							{{ Form::text('vicios', null, array('class' => 'form-control mayuscula')) }}
 						</div>
-					</div>
-					<div class="row">
 						<div class="col-md-2 form-group">
 							{{ Form::label('arma', 'Arma') }} <br>
 							{{ Form::select('arma', $armas,null,array('class' => 'form-control')) }}
@@ -184,9 +180,39 @@
 							{{ Form::label('cuerpo', 'Cuerpo') }} <br>
 							{{Form::select('cuerpo',$cuerpos,null,array('placeholder' => '','class' => 'form-control')) }}
 						</div>
+					</div>
+					<div class="row">
 						<div class="col-md-3 form-group">
 							{{ Form::label('compania', 'Compañia - Subzona') }} <br>
 							{{Form::select('compania',$companiasysubzonas,null,array('placeholder' => '','class' => 'form-control')) }}
+						</div>
+						<div class="col-md-2 form-group">
+							{{ Form::label('grado', 'Grado actual') }} <br>
+							{{Form::select('grado',$grados,null,array('placeholder' => '','class' => 'form-control')) }}
+						</div>
+						<div class="col-md-3 form-group fecha">
+							{{ Form::label('fechagrado', 'Fecha de ascenso del grado') }}
+							<div class="input-group date" id="datetimePicker">
+	                            {{ Form::text('fechagrado', null, array('class' => 'form-control', 'placeholder' => 'AAAA-MM-DD', 'data-date-format' => 'YYYY-MM-DD')) }}
+	                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+	                        </div>
+						</div>
+						<div class="col-md-2 form-group">
+							{{ Form::label('reclutamiento', 'No. reclutamiento') }}
+							{{ Form::text('reclutamiento', null, array('class' => 'form-control mayuscula')) }}
+						</div>
+						<div class="col-md-2 form-group">
+							{{ Form::label('matricula', 'Matricula') }}
+							{{ Form::text('matricula', null, array('class' => 'form-control mayuscula')) }}
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-3 form-group fecha">
+							{{ Form::label('fechajura', 'Fecha de jura de bandera') }}
+							<div class="input-group date" id="datetimePicker">
+	                            {{ Form::text('fechajura', null, array('class' => 'form-control', 'placeholder' => 'AAAA-MM-DD', 'data-date-format' => 'YYYY-MM-DD')) }}
+	                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+	                        </div>
 						</div>
 						<div class="col-md-4 form-group">
 							{{ Form::file('fotoperfil',array('id' => 'filefoto')) }}
@@ -194,8 +220,7 @@
 					</div>
 				</div>
 			</div>
-			<br>
-			<label class="label label-primary">Datos de Contacto</label>
+			<label class="label label-primary">Datos de contacto o tutor</label>
 			<div class="" id="">
 				<div class="col-md-12 ">
 					<div class="row">
@@ -283,7 +308,7 @@
 	<script>
 	$( "#curp" ).focusout(function() {
 		var curp = $(this).val();
-		$.post('curp',{curp:curp}, function(json) {
+		$.post('elementos/curp',{curp:curp}, function(json) {
 			if (!json.success) {
 				// // console.log(json);
 				$('#curperror').removeClass('hidden');
@@ -331,7 +356,20 @@
 								extension: 'jpeg,png,jpg,gif',
 								type: 'image/jpg,image/jpeg,image/png,image/gif',
 								maxSize: 2048 * 1024,   // 2 MB
+								message: 'Únicamente jpg o png y menores a 2MB'
 							}
+						}
+					},
+					reclutamiento:{
+						validators:{
+							notEmpty:{},
+							integer:{}
+						}
+					},
+					matricula:{
+						validators:{
+							integer:{},
+							notEmpty:{}
 						}
 					},
 		            nombre: {
@@ -412,6 +450,22 @@
 		                }
 		            },
 		            birthday: {
+		                validators: {
+		                    notEmpty: {},
+		                    date: {
+		                        format: 'YYYY-MM-DD',
+		                    }
+		                }
+		            },
+		            fechagrado: {
+		                validators: {
+		                    notEmpty: {},
+		                    date: {
+		                        format: 'YYYY-MM-DD',
+		                    }
+		                }
+		            },
+		            fechajura: {
 		                validators: {
 		                    notEmpty: {},
 		                    date: {
@@ -648,35 +702,6 @@
 	</script>
 	<script type="text/javascript">
 	$('#Altas,#2Altas').addClass('active');
-		function resetActive(event, percent, step) {
-			//$(".progress-bar").css("width", percent + "%").attr("aria-valuenow", percent);
-			//$(".progress-completed").text(percent + "%");
-			$("div").each(function () {
-			if ($(this).hasClass("activestep")) {
-			$(this).removeClass("activestep");
-			}
-			});
-			if (event.target.className == "seleccion") {
-			$(event.target).addClass("activestep");
-			}
-			else {
-			$(event.target.parentNode).addClass("activestep");
-			}
-			hideSteps();
-			showCurrentStepInfo(step);
-		}
-		function hideSteps() {
-			$("div").each(function () {
-			if ($(this).hasClass("activeStepInfo")) {
-			$(this).removeClass("activeStepInfo");
-			$(this).addClass("hiddenStepInfo");
-			}
-			});
-		}
-		function showCurrentStepInfo(step) {
-			var id = "#" + step;
-			$(id).addClass("activeStepInfo");
-		}
 	</script>
 {{  HTML::script('js/bootstrapValidator.js'); }}
 {{  HTML::script('js/es_ES.js'); }}
