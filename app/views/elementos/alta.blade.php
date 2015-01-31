@@ -340,6 +340,8 @@
 			$('#datetimePicker,#datetimePicker2,#datetimePicker3').datetimepicker({
 		        language: 'es',
 		        pickTime: false,
+		        defaultDate: moment().subtract(10, 'y'),
+		        maxDate: moment().subtract(7, 'y')
 		    });
 			$("#test-upload").fileinput({
 				'showPreview' : true,
