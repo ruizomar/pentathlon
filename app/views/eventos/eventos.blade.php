@@ -74,10 +74,10 @@
           {{ Form::button('OK', array('class' => 'btn btn-success','id' => 'ok','type' => 'submit')) }}
         </div>
         <div class="col-sm-3 hidden update" style='top:25px;'>
-          <button type="button" class="btn btn-success" onClick="$('#form-nueva').data('bootstrapValidator').validate();">Update</button>
+          <button type="button" class="btn btn-success" onClick="$('#form-nueva').data('bootstrapValidator').validate();" style="min-width:93px;">Update</button>
         </div>
         <div class="col-sm-3 hidden update" style='top:30px;'>
-          <button type="button" class="btn btn-warning" onClick="cancel()">Cancelar</button>
+          <button type="button" class="btn btn-warning" onClick="cancel()" style="min-width:93px;">Cancelar</button>
         </div>
       {{ Form::close() }}
     </div>

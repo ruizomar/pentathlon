@@ -25,7 +25,7 @@
 <?php $status=Session::get('status'); ?>
 <div class="row">
     <div class="col-sm-6 col-sm-offset-3 col-xs-7">
-        <h1 style="margin-bottom:20px;">Elementos_Eventos <i class="fa fa-refresh fa-spin hidden"></i></h1>
+        <h1 style="margin-bottom:20px;">Inscripciones a eventos <i class="fa fa-refresh fa-spin hidden"></i></h1>
     </div>
 </div>
     <div class="contenedor col-sm-8 col-sm-offset-2">
@@ -61,9 +61,9 @@
       <div id="dnoinscritos"></div>
     </div>
     <div class="col-sm-1" style="top:20px; margin-bottom:60px;">
-      <button id="agregar" type="button" class="btn btn-info" style="margin-top:20px;">Agregar</button>
+      <button id="agregar" type="button" class="btn btn-primary" style="margin-top:20px;min-width:84px;">Agregar</button>
       <i class="fa fa-refresh fa-spin fa-4x hidden"></i>
-      <button id="remover" type="button" class="btn btn-warning" style="margin-top:20px;">Remover</button>
+      <button id="remover" type="button" class="btn btn-warning" style="margin-top:20px;min-width:84px;">Remover</button>
     </div>
     <div class="col-sm-5 contenedor" style="min-height:610px;">
       <h2>Inscritos</h2>
