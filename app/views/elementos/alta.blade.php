@@ -7,6 +7,11 @@
   	{{  HTML::style('css/fileinput.css');  }}
   	{{  HTML::style('css/bootstrap-datetimepicker.min.css');  }}
   	{{  HTML::style('css/sweet-alert.css');  }}
+  	<style type="text/css" media="screen">
+  		.fecha i{
+  			right: 55px !important;
+  		}
+  	</style>
 @endsection
 @section('contenido')
 	{{ Form::open(array('id' => 'formularioalta','url'=>'elementos/alta','files'=>true)) }}
@@ -192,7 +197,7 @@
 						</div>
 						<div class="col-md-3 form-group fecha">
 							{{ Form::label('fechagrado', 'Fecha de ascenso del grado') }}
-							<div class="input-group date" id="datetimePicker">
+							<div class="input-group date" id="datetimePicker2">
 	                            {{ Form::text('fechagrado', null, array('class' => 'form-control', 'placeholder' => 'AAAA-MM-DD', 'data-date-format' => 'YYYY-MM-DD')) }}
 	                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 	                        </div>
@@ -209,13 +214,13 @@
 					<div class="row">
 						<div class="col-md-3 form-group fecha">
 							{{ Form::label('fechajura', 'Fecha de jura de bandera') }}
-							<div class="input-group date" id="datetimePicker">
+							<div class="input-group date" id="datetimePicker3">
 	                            {{ Form::text('fechajura', null, array('class' => 'form-control', 'placeholder' => 'AAAA-MM-DD', 'data-date-format' => 'YYYY-MM-DD')) }}
 	                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 	                        </div>
 						</div>
 						<div class="col-md-4 form-group">
-							{{ Form::file('fotoperfil',array('id' => 'filefoto')) }}
+							{{ Form::file('fotoperfil',array('id' => 'filefoto','style' => 'max-width: 20px;')) }}
 						</div>
 					</div>
 				</div>
@@ -332,7 +337,7 @@
 			fileType: "any"
 		});
 		$(document).ready(function() {
-			$('#datetimePicker').datetimepicker({
+			$('#datetimePicker,#datetimePicker2,#datetimePicker3').datetimepicker({
 		        language: 'es',
 		        pickTime: false,
 		    });
@@ -698,6 +703,12 @@
 			$('#datetimePicker').on('dp.change dp.show', function(e) {
 		        $('#formularioalta').bootstrapValidator('revalidateField', 'birthday');
 		    });
+		    $('#datetimePicker2').on('dp.change dp.show', function(e) {
+		        $('#formularioalta').bootstrapValidator('revalidateField', 'fechagrado');
+		    });
+		    $('#datetimePicker3').on('dp.change dp.show', function(e) {
+		        $('#formularioalta').bootstrapValidator('revalidateField', 'fechajura');
+		    });  
 		});
 	</script>
 	<script type="text/javascript">
