@@ -6,4 +6,8 @@ class Equipo extends Eloquent {
     {
         return $this->hasOne('Evento');
     }
+    public function concursantes()
+    {
+        return $this->hasMany('Concursante');
+    }
 }

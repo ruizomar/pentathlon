@@ -16,6 +16,60 @@ class ConcursosController extends BaseController {
 		return View::make('concursos.concursos');
 	}
 
+	public function getReporte(){
+		return View::make('concursos.reporte');
+	}
+
+	public function postReporte(){
+		$equipos = Equipo::where('estado','=',Input::get('state')) -> get();
+		$secuArr = array();
+		$bachiArr = array();
+		$licArr = array();
+		foreach ($equipos as $equipo) {
+			foreach ($equipo -> concursantes() -> get() as $concursantes) {
+				if ($equipo -> nivel == 'Secundaria') {
+					$secuArr[] = array(
+						$concursantes -> nombre,
+						$concursantes -> paterno,
+						$concursantes -> materno,
+						$concursantes -> tipo,
+						$equipo -> estado,
+						$equipo -> escuela,
+						$equipo -> nivel
+					);
+				}
+				if ($equipo -> nivel == 'Bachillerato') {
+					$bachiArr[] = array(
+						$concursantes -> nombre,
+						$concursantes -> paterno,
+						$concursantes -> materno,
+						$concursantes -> tipo,
+						$equipo -> estado,
+						$equipo -> escuela,
+						$equipo -> nivel
+					);
+				}
+				if ($equipo -> nivel == 'Licenciatura') {
+					$licArr[] = array(
+						$concursantes -> nombre,
+						$concursantes -> paterno,
+						$concursantes -> materno,
+						$concursantes -> tipo,
+						$equipo -> estado,
+						$equipo -> escuela,
+						$equipo -> nivel
+					);
+				}
+			}
+		}
+		$data = array(
+			'secundaria' => $secuArr,
+			'bachillerato' => $bachiArr,
+			'licenciatura' => $licArr
+		);
+		return Response::json($data);
+	}
+
 	public function postGuardar()
 	{
 		$data = $_POST['data'];
@@ -118,7 +172,7 @@ class ConcursosController extends BaseController {
 			'nombre' => $data['lider']['nombre'],
 			'paterno' => $data['lider']['paterno'],
 			'materno' => $data['lider']['materno'],
-			'tipo' => 'Lider',
+			'tipo' => 'Responsable',
 		));
 		$dato = array(
 			'success' => true,
