@@ -179,4 +179,32 @@ class ConcursosController extends BaseController {
 		);
 		return Response::json($dato);
 	}
+
+	public function postEscuelas()
+	{
+		$estado = Input::get('estado');
+		$nivel = Input::get('nivel');
+		$equipos = Equipo::where('estado','=',$estado) -> where('nivel','=',$nivel) -> select('id','escuela') -> orderBy('escuela') -> get();
+		return Response::json($equipos);
+	}
+
+	public function postEscuela()
+	{
+		$equipo = Equipo::find(Input::get('id'));
+		$equipoArr = array();
+		foreach ($equipo -> concursantes() -> get() as $concursantes) {
+			$equipoArr[] = array(
+				$concursantes -> nombre,
+				$concursantes -> paterno,
+				$concursantes -> materno,
+				$concursantes -> tipo,
+				$equipo -> estado,
+				$equipo -> escuela,
+				$equipo -> nivel,
+				$equipo -> correo,
+				$equipo -> telefono,
+			);
+		}
+		return Response::json($equipoArr);
+	}
 }

@@ -11,7 +11,8 @@
 	{{  HTML::script('js/dataTables.tableTools.min.js')}}
 @endsection
 @section('contenido')
-	<a class="label label-success pull-right" href="#" onclick="equipos()" style="font-size:15px; margin-top:5px;">Búsqueda por Equipos</a>
+	<a class="label label-success pull-right parte1" href="#" onclick="parte1()" style="font-size:15px; margin-top:5px;">Búsqueda por escuelas</a>
+	<a class="label label-success pull-right parte2 hidden" href="#" onclick="parte2()" style="font-size:15px; margin-top:5px;">Búsqueda por estado</a>
 	{{ Form::open(array('id' => 'reporte','url'=>'concursos/reporte','class'=>'parte1')) }}
 		<div class="col-md-3 form-group">
 		    {{ Form::label('estado', 'Estado') }}
@@ -60,6 +61,63 @@
 		<div class="col-md-offset-1 col-md-10" id="tbachillerato"></div>
 		<h1 class="hidden text-center titulo">Licenciatura</h1>
 		<div class="col-md-offset-1 col-md-10" id="tlicenciatura"></div>
+	</div>
+	<div class="parte2 hidden">
+		<div class="col-md-3 form-group">
+			{{ Form::label('estado', 'Estado') }}
+			<select class="form-control" name="state" id="estado">
+		        <option value="Aguascalientes">Aguascalientes</option>
+		        <option value="Baja California">Baja California</option>
+		        <option value="Baja California Sur">Baja California Sur</option>
+		        <option value="Campeche">Campeche</option>
+		        <option value="Chiapas">Chiapas</option>
+		        <option value="Chihuahua">Chihuahua</option>
+		        <option value="Coahuila">Coahuila</option>
+		        <option value="Colima">Colima</option>
+		        <option value="Distrito Federal">Distrito Federal</option>
+		        <option value="Durango">Durango</option>
+		        <option value="Estado de México">Estado de México</option>
+		        <option value="Guanajuato">Guanajuato</option>
+		        <option value="Guerrero">Guerrero</option>
+		        <option value="Hidalgo">Hidalgo</option>
+		        <option value="Jalisco">Jalisco</option>
+		        <option value="Michoacán">Michoacán</option>
+		        <option value="Morelos">Morelos</option>
+		        <option value="Nayarit">Nayarit</option>
+		        <option value="Nuevo León">Nuevo León</option>
+		        <option value="Oaxaca">Oaxaca</option>
+		        <option value="Puebla">Puebla</option>
+		        <option value="Querétaro">Querétaro</option>
+		        <option value="Quintana Roo">Quintana Roo</option>
+		        <option value="San Luis Potosí">San Luis Potosí</option>
+		        <option value="Sinaloa">Sinaloa</option>
+		        <option value="Sonora">Sonora</option>
+		        <option value="Tabasco">Tabasco</option>
+		        <option value="Tamaulipas">Tamaulipas</option>
+		        <option value="Tlaxcala">Tlaxcala</option>
+		        <option value="Veracruz">Veracruz</option>
+		        <option value="Yucatán">Yucatán</option>
+		        <option value="Zacatecas">Zacatecas</option>
+			</select>
+		</div>
+		<div class="col-md-2 form-group">
+			{{ Form::label('estado', 'Nivel') }}
+			<select class="form-control" name="state" id="nivel">
+                <option value="Secundaria">Secundaria</option>
+                <option value="Bachillerato">Bachillerato</option>
+                <option value="Licenciatura">Licenciatura</option>
+			</select>
+		</div>
+		<div class="col-md-3 form-group">
+			{{ Form::label('estado', 'Escuela') }}
+			<select class="form-control" name="state" id="escuelas">
+			</select>
+			<input class="escuela btn btn-success pull-right hidden" type="button" value="Ver datos de la escuela">
+		</div>
+		<div class="col-md-2">
+			<input class="btn btn-primary" type="button" value="Ver lista de escuelas" onclick="escuelas();">
+		</div>
+		<div class="col-md-offset-1 col-md-10" id="tescuela"></div>
 	</div>
 @stop
 @section('scripts')
@@ -214,8 +272,90 @@
 				} );
 			}, 'json');
 		});
-		function equipos () {
+		function parte1 () {
 			$('.parte1').addClass('hidden');
-		}
+			$('.parte2').removeClass('hidden');
+		};
+		function parte2 () {
+			$('.parte2').addClass('hidden');
+			$('.parte1').removeClass('hidden');
+		};
+		function escuelas () {
+			$('#escuelas').html('');
+			$('.escuela').addClass('hidden');
+			estado = $('#estado').val();
+			nivel = $('#nivel').val();
+			$.post('escuelas',{estado:estado,nivel:nivel}, function(json) {
+				if(json.length){
+					$.each(json,function(index,escuela){
+						$('#escuelas').append('<option value=' + escuela.id + '>' + escuela.escuela + '</option>');
+					});
+					$('.escuela').removeClass('hidden');
+				};
+			},'json');
+		};
+		$('.escuela').click(function() {
+			id = ($('#escuelas').val());
+			$.post('escuela',{id:id}, function(json) {
+				$('#tescuela').html('<table id="tabla4" class="table table-hover"></table>');
+				$('#tabla4').dataTable( {
+		            "data": json,
+		            "columns": [
+		                { "title": "Nombre" },
+		                { "title": "Paterno" },
+		                { "title": "Materno" },
+		                { "title": "Rol" },
+		                { "title": "Estado" },
+		                { "title": "Escuela" },
+		                { "title": "Nivel" },
+		                { "title": "Email" },
+		                { "title": "Teléfono" },
+		            ],
+		            "language": {
+						"sProcessing":     "Procesando...",
+						"sLengthMenu":     "Mostrar _MENU_ registros",
+						"sZeroRecords":    "No se encontraron resultados",
+						"sEmptyTable":     "Ningún dato disponible en esta tabla",
+						"sInfo":           "Mostrando un total de _TOTAL_ registros",
+						"sInfoEmpty":      "Mostrando un total de 0 registros",
+						"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+						"sInfoPostFix":    "",
+						"sSearch":         "Buscar:",
+						"sUrl":            "",
+						"sInfoThousands":  ",",
+						"sLoadingRecords": "Cargando...",
+						"oPaginate": {
+							"sFirst":    "Primero",
+							"sLast":     "Último",
+							"sNext":     "Siguiente",
+							"sPrevious": "Anterior"
+						},
+						"oAria": {
+							"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+							"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+						}
+					},
+					dom: 'T<"clear">lfrtip',
+					tableTools : {
+					    aButtons: [
+					        "copy",
+					        {
+                                "sExtends": "xls",
+                                "sFileName": "Concursantes_Bachillerato.csv",
+                                "bFooter": false
+                            },
+					    ]
+					},
+				} );
+			},'json');
+		});
+		$("#estado").change(function() {
+			$('.escuela').addClass('hidden');
+			$('#escuelas').html('');
+		});
+		$("#nivel").change(function() {
+			$('.escuela').addClass('hidden');
+			$('#escuelas').html('');
+		});
 	</script>
 @endsection
