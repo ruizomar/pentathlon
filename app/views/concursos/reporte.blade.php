@@ -1,18 +1,19 @@
-@extends('layaouts.base')
+@extends('layaouts.public')
 @section('titulo')
 	Concurso de escoltas
 @endsection
 @section('head')
-	<style>
-	</style>
 	{{  HTML::script('js/tables/jquery.dataTables.min.js')}}
+	{{  HTML::script('js/tables/dataTables.responsive.js')}}
 	{{  HTML::style('css/jquery.dataTables.css')}}
 	{{  HTML::style('css/dataTables.tableTools.css')}}
+	{{  HTML::style('css/dataTables.responsive.css')}}
 	{{  HTML::script('js/dataTables.tableTools.min.js')}}
 @endsection
 @section('contenido')
-	<a class="label label-success pull-right parte1" href="#" onclick="parte1()" style="font-size:15px; margin-top:5px;">Búsqueda por escuelas</a>
-	<a class="label label-success pull-right parte2 hidden" href="#" onclick="parte2()" style="font-size:15px; margin-top:5px;">Búsqueda por estado</a>
+	<a class="label label-success pull-right parte1" href="#" onclick="parte1()" style="font-size:15px; margin-top:25px;">Búsqueda por escuelas</a>
+	<a class="label label-success pull-right parte2 hidden" href="#" onclick="parte2()" style="font-size:15px; margin-top:25px;">Búsqueda por estado</a>
+	<br><br>
 	{{ Form::open(array('id' => 'reporte','url'=>'concursos/reporte','class'=>'parte1')) }}
 		<div class="col-md-3 form-group">
 		    {{ Form::label('estado', 'Estado') }}
@@ -56,11 +57,15 @@
 	{{Form::close()}}
 	<div class="parte1 col-md-12">
 		<h1 class="hidden text-center titulo">Secundaria</h1>
-		<div class="col-md-offset-1 col-md-10" id="tsecundaria"></div>
+		<div class="table-responsive" id="tsecundaria"></div>
+	</div>
+	<div class="parte1 col-md-12">
 		<h1 class="hidden text-center titulo">Bachillerato</h1>
-		<div class="col-md-offset-1 col-md-10" id="tbachillerato"></div>
+		<div class="table-responsive" id="tbachillerato"></div>
+	</div>
+	<div class="parte1 col-md-12">
 		<h1 class="hidden text-center titulo">Licenciatura</h1>
-		<div class="col-md-offset-1 col-md-10" id="tlicenciatura"></div>
+		<div class="table-responsive" id="tlicenciatura"></div>
 	</div>
 	<div class="parte2 hidden">
 		<div class="col-md-3 form-group">
@@ -117,7 +122,7 @@
 		<div class="col-md-2">
 			<input class="btn btn-primary" type="button" value="Ver lista de escuelas" onclick="escuelas();">
 		</div>
-		<div class="col-md-offset-1 col-md-10" id="tescuela"></div>
+		<div class="table-responsive" id="tescuela"></div>
 	</div>
 @stop
 @section('scripts')
@@ -129,6 +134,7 @@
 				$('#tsecundaria').html('<table id="tabla1" class="table table-hover"></table>');
 				$('#tabla1').dataTable( {
 		            "data": json.secundaria,
+		            responsive: true,
 		            "columns": [
 		                { "title": "Nombre" },
 		                { "title": "Paterno" },
@@ -177,6 +183,7 @@
 				$('#tbachillerato').html('<table id="tabla2" class="table table-hover"></table>');
 				$('#tabla2').dataTable( {
 		            "data": json.bachillerato,
+		            responsive: true,
 		            "columns": [
 		                { "title": "Nombre" },
 		                { "title": "Paterno" },
@@ -225,6 +232,7 @@
 				$('#tlicenciatura').html('<table id="tabla3" class="table table-hover"></table>');
 				$('#tabla3').dataTable( {
 		            "data": json.licenciatura,
+		            responsive: true,
 		            "columns": [
 		                { "title": "Nombre" },
 		                { "title": "Paterno" },
@@ -300,6 +308,7 @@
 				$('#tescuela').html('<table id="tabla4" class="table table-hover"></table>');
 				$('#tabla4').dataTable( {
 		            "data": json,
+		            responsive: true,
 		            "columns": [
 		                { "title": "Nombre" },
 		                { "title": "Paterno" },
