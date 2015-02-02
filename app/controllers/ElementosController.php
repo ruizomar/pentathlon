@@ -163,7 +163,7 @@ class ElementosController extends BaseController {
 		// $persona = Persona::find($personaElemento -> id);
 		// $fotoperfil = $elemento -> documentos() -> where('tipo','=','fotoperfil') -> first() -> ruta;
 		// return View::make('recluta.lista')->with('persona',$persona)->with('fotoperfil',$fotoperfil)->with('elemento',$elemento);
-		ElementosController::getIndex();
+		return Redirect::to('login');
 
 	}
 	public function agregarTelefono($id,$tel,$tipo)

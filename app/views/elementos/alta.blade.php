@@ -271,7 +271,7 @@
 					</div>
 					<div class="row">
 						<div class="col-md-4 form-group">
-							{{ Form::label('contactorelacion', 'Relación con el recluta') }}
+							{{ Form::label('contactorelacion', 'Relación con el elemento') }}
 							<div class="input-group">
 								<div class="input-group-addon"><i class="fa fa-link"></i></div>
 								{{ Form::text('contactorelacion', null, array('placeholder' => 'padre, madre, hermano, etc.','class' => 'form-control mayuscula')) }}
@@ -671,6 +671,7 @@
 		            },
 		            contactorelacion:{
 						validators:{
+							notEmpty:{},
 							stringLength:{
 								max: 40,
 							},
