@@ -3,7 +3,7 @@ class ConcursosController extends BaseController {
 
 	public function __construct()
     {
-        // $this->beforeFilter('auth');
+        $this->beforeFilter('auth');
     }
 
 	public function getIndex()
@@ -206,5 +206,33 @@ class ConcursosController extends BaseController {
 			);
 		}
 		return Response::json($equipoArr);
+	}
+
+	public function getTotal()
+	{
+		$totales = array();
+		$estados = ['Aguascalientes','Baja California','Baja California Sur','Campeche','Chiapas','Chihuahua','Coahuila','Colima','Distrito Federal','Durango','Estado de México','Guanajuato','Guerrero','Hidalgo','Jalisco','Michoacán','Morelos','Nayarit','Nuevo León','Oaxaca','Puebla','Querétaro','Quintana Roo','San Luis Potosí','Sinaloa','Sonora','Tabasco','Tamaulipas','Tlaxcala','Veracruz','Yucatán','Zacatecas'];
+		foreach ($estados as $estado) {
+			$totales[] = ConcursosController::conteo($estado);
+		}
+		$data = array(
+			'data' => $totales,
+			'secundaria' => count(Equipo::where('nivel','=','Secundaria') -> get()),
+			'bachillerato' => count(Equipo::where('nivel','=','Bachillerato') -> get()),
+			'licenciatura' => count(Equipo::where('nivel','=','Licenciatura') -> get()),
+		);
+		return Response::json($data);
+	}
+
+	private function conteo($estado)
+	{
+		$con = 0;
+		return array(
+			$estado,
+			$equipo = count(Equipo::where('estado','=',$estado) -> where('nivel','=','Secundaria') -> get()),
+			$equipo = count(Equipo::where('estado','=',$estado) -> where('nivel','=','Bachillerato') -> get()),
+			$equipo = count(Equipo::where('estado','=',$estado) -> where('nivel','=','Licenciatura') -> get()),
+			$equipo = count(Equipo::where('estado','=',$estado) -> get()),
+		);
 	}
 }

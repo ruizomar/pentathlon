@@ -11,8 +11,9 @@
 	{{  HTML::script('js/dataTables.tableTools.min.js')}}
 @endsection
 @section('contenido')
-	<a class="label label-success pull-right parte1" href="#" onclick="parte1()" style="font-size:15px; margin-top:25px;">Búsqueda por escuelas</a>
-	<a class="label label-success pull-right parte2 hidden" href="#" onclick="parte2()" style="font-size:15px; margin-top:25px;">Búsqueda por estado</a>
+	<a class="label label-success pull-right" href="#" onclick="parte1()" style="font-size:15px; margin-top:25px;">Búsqueda por escuelas</a>
+	<a class="label label-success pull-right" href="#" onclick="parte2()" style="font-size:15px; margin-top:25px;">Búsqueda por estado</a>
+	<a class="label label-warning pull-right" href="#" onclick="parte3()" style="font-size:15px; margin-top:25px;">Reporte general</a>
 	<br><br>
 	{{ Form::open(array('id' => 'reporte','url'=>'concursos/reporte','class'=>'parte1')) }}
 		<div class="col-md-3 form-group">
@@ -123,6 +124,11 @@
 			<input class="btn btn-primary" type="button" value="Ver lista de escuelas" onclick="escuelas();">
 		</div>
 		<div class="table-responsive" id="tescuela"></div>
+	</div>
+	<div class="parte3 hidden2">
+		<br>
+		<div class="table-responsive" id="testados"></div>
+		<div class="col-md 12 totales"></div>
 	</div>
 @stop
 @section('scripts')
@@ -282,11 +288,68 @@
 		});
 		function parte1 () {
 			$('.parte1').addClass('hidden');
+			$('.parte3').addClass('hidden');
 			$('.parte2').removeClass('hidden');
 		};
 		function parte2 () {
 			$('.parte2').addClass('hidden');
+			$('.parte3').addClass('hidden');
 			$('.parte1').removeClass('hidden');
+		};
+		function parte3 () {
+			$('.parte1').addClass('hidden');
+			$('.parte2').addClass('hidden');
+			$('.parte3').removeClass('hidden');
+			$.get('total', function(json) {
+				$('#testados').html('<table id="tabla4" class="table table-hover"></table>');
+				$('#tabla4').dataTable( {
+		            "data": json.data,
+		            responsive: true,
+		            "columns": [
+		                { "title": "Nombre" },
+		                { "title": "Secundaria" },
+		                { "title": "Bachillerato" },
+		                { "title": "Licenciatura" },
+		                { "title": "Total" },
+		            ],
+		            "language": {
+						"sProcessing":     "Procesando...",
+						"sLengthMenu":     "Mostrar _MENU_ registros",
+						"sZeroRecords":    "No se encontraron resultados",
+						"sEmptyTable":     "Ningún dato disponible en esta tabla",
+						"sInfo":           "Mostrando un total de _TOTAL_ registros",
+						"sInfoEmpty":      "Mostrando un total de 0 registros",
+						"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+						"sInfoPostFix":    "",
+						"sSearch":         "Buscar:",
+						"sUrl":            "",
+						"sInfoThousands":  ",",
+						"sLoadingRecords": "Cargando...",
+						"oPaginate": {
+							"sFirst":    "Primero",
+							"sLast":     "Último",
+							"sNext":     "Siguiente",
+							"sPrevious": "Anterior"
+						},
+						"oAria": {
+							"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+							"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+						}
+					},
+					dom: 'T<"clear">lfrtip',
+					tableTools : {
+					    aButtons: [
+					        "copy",
+					        {
+                                "sExtends": "xls",
+                                "sFileName": "Concursantes_Secundaria.csv",
+                                "bFooter": false
+                            },
+					    ]
+					},
+				} );
+				$('.totales').html('<h2>Total de secundarias: <span class="label label-danger">'+json.secundaria+'</span></h2><h2>Total de bachilletaros: <span class="label label-danger">'+json.bachillerato+'</span></h2><h2>Total de licenciaturas: <span class="label label-danger">'+json.licenciatura+'</span></h2>');
+			},'json');
 		};
 		function escuelas () {
 			$('#escuelas').html('');
