@@ -65,7 +65,6 @@
 
           <li id="2Juras"><a rel="tooltip" data-placement="right" data-original-title="Forms" href="{{ URL::to('jura'); }}"><i class="fa fa-flag"></i> <span class="caption">Juras</span></a></li>
 
-          <li id="2Condecoraciones"><a rel="tooltip" data-placement="right" data-original-title="UI Features" href="{{ URL::to('condecoraciones'); }}"><i class="fa fa-shield"></i> <span class="caption">Condecoraciones</span></a></li>
 
           <li id="2Eventos"><a rel="tooltip" data-placement="right" data-original-title="Pricing" href="{{ URL::to('eventos'); }}"><i class="fa fa-calendar-o"></i> <span class="caption">Eventos</span></a></li>
 
@@ -73,18 +72,19 @@
 
           <li id="2Credenciales"><a rel="tooltip" data-placement="right" data-original-title="Reports" href="{{ URL::to('credenciales'); }}"><i class="fa fa-user"></i> <span class="caption">Impresión de Credenciales</span></a></li>
 
-          <li id="Reportes" class=" "><a rel="tooltip" data-placement="right" data-original-title="Icons" href="{{ URL::to('reportes'); }}"><i class="fa fa-bar-chart"></i> <span class="caption">Reportes</span></a></li> 
+          <li id="Reportes" class=" "><a rel="tooltip" data-placement="right" data-original-title="Icons" href="{{ URL::to('reportes'); }}"><i class="fa fa-bar-chart"></i> <span class="caption">Reportes</span></a></li>
+
+          <li id="2Companias"><a rel="tooltip" data-placement="right" data-original-title="Reports" href="{{ URL::to('companias'); }}"><i class="fa fa-map-marker"></i> <span class="caption">Companias</span></a></li>
         @endif
         @if(!is_null(User::find(Auth::id())->roles()->where('id','=',2)->first()))
           <li id="2Enteros"><a rel="tooltip" data-placement="right" data-original-title="Dashboard" href="{{ URL::to('pagos'); }}"><i class="fa fa-money"></i> <span class="caption">Enteros</span></a></li>
         @endif  
         @if(!is_null(User::find(Auth::id())->roles()->where('id','=',3)->first()))
-
+          <li id="2Condecoraciones"><a rel="tooltip" data-placement="right" data-original-title="UI Features" href="{{ URL::to('condecoraciones'); }}"><i class="fa fa-shield"></i> <span class="caption">Condecoraciones</span></a></li>
         @endif
         @if(!is_null(User::find(Auth::id())->roles()->where('id','=',3)->first()))
           <li id="Companias"><a rel="tooltip" data-placement="right" data-original-title="Reports" href="{{ URL::to('concursos/reporte'); }}"><i class="fa fa-chevron-circle-right"></i> <span class="caption">Concurso de Escoltas</span></a></li>
 
-          <li id="2Companias"><a rel="tooltip" data-placement="right" data-original-title="Reports" href="{{ URL::to('companias'); }}"><i class="fa fa-map-marker"></i> <span class="caption">Companias</span></a></li>
 
         @endif
         @if(!is_null(User::find(Auth::id())->roles()->where('id','=',8)->first()))
@@ -115,7 +115,7 @@
   <div id="sidebar-nav" class="hidden-xs">
       <ul id="dashboard-menu" class="nav nav-list">
         @if(!is_null(User::find(Auth::id())->roles()->where('id','=',1)->first()))
-        
+
           <li id="2Administracion" class=" "><a rel="tooltip" data-placement="right" data-original-title="Icons" href="http://www.admin.pentathlonoaxaca.mx"><i class="fa fa-tachometer"></i> <span class="caption">Administración</span></a></li>
 
           <li id="2Armas"><a rel="tooltip" data-placement="right" data-original-title="Tables" href="{{ URL::to('armas'); }}"><i class="fa  fa-crosshairs"></i> <span class="caption">Armas</span></a></li>
@@ -132,7 +132,7 @@
 
           <li id="Ascensos"><a rel="tooltip" data-placement="right" data-original-title="Calendar" href="{{ URL::to('ascensos'); }}"><i class="fa fa-line-chart"></i> <span class="caption">Ascensos</span></a></li>
 
-          <li id="Condecoraciones"><a rel="tooltip" data-placement="right" data-original-title="UI Features" href="{{ URL::to('condecoraciones'); }}"><i class="fa fa-shield"></i> <span class="caption">Condecoraciones</span></a></li>
+          <li id="Companias"><a rel="tooltip" data-placement="right" data-original-title="Reports" href="{{ URL::to('companias'); }}"><i class="fa fa-map-marker"></i> <span class="caption">Companias</span></a></li>
 
           <li id="Arrestos"><a rel="tooltip" data-placement="right" data-original-title="Forms" href="{{ URL::to('arrestos'); }}"><i class="fa fa-gavel"></i> <span class="caption">Arrestos</span></a></li>
         @endif
@@ -140,6 +140,7 @@
           <li id="Enteros"><a rel="tooltip" data-placement="right" data-original-title="Dashboard" href="{{ URL::to('pagos'); }}"><i class="fa fa-money"></i> <span class="caption">Enteros</span></a></li>
         @endif  
         @if(!is_null(User::find(Auth::id())->roles()->where('id','=',3)->first()))
+          <li id="Condecoraciones"><a rel="tooltip" data-placement="right" data-original-title="UI Features" href="{{ URL::to('condecoraciones'); }}"><i class="fa fa-shield"></i> <span class="caption">Condecoraciones</span></a></li>
 
           <li id="2Historial" class=" "><a rel="tooltip" data-placement="right" data-original-title="Icons" href="{{ URL::to('historial'); }}"><i class="fa fa-clock-o"></i> <span class="caption">Historial</span></a></li>
 
@@ -147,7 +148,6 @@
         @if(!is_null(User::find(Auth::id())->roles()->where('id','=',3)->first()))
           <li id="Companias"><a rel="tooltip" data-placement="right" data-original-title="Reports" href="{{ URL::to('concursos/reporte'); }}"><i class="fa fa-chevron-circle-right"></i> <span class="caption">Concurso de Escoltas</span></a></li>
 
-          <li id="Companias"><a rel="tooltip" data-placement="right" data-original-title="Reports" href="{{ URL::to('companias'); }}"><i class="fa fa-map-marker"></i> <span class="caption">Companias</span></a></li>
         @endif
         @if(!is_null(User::find(Auth::id())->roles()->where('id','=',8)->first()))
           <li id="Asistencias"><a rel="tooltip" data-placement="right" data-original-title="Blog" href="{{ URL::to('asistencias'); }}"><i class="fa fa-calendar"></i> <span class="caption">Asistencias</span></a></li>
