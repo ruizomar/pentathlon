@@ -5,7 +5,7 @@ class CredencialesController extends BaseController {
     public function __construct()
     {
         $this->beforeFilter('auth');
-        $this->beforeFilter('tecnica');
+        $this->beforeFilter('admin');
     }
     public function getIndex()
     {
