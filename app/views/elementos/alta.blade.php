@@ -303,7 +303,7 @@
 				</div>
 				<div class="col-md-12">
 					{{ Form::button('<i class="fa fa-floppy-o"></i> Guardar',array('id' => 'btnenviar','class' => 'btn-sm pull-right btn btn-info btn-lg hidden','type' => 'submit')) }}
-					{{ Form::button('<i class="fa fa-floppy-o"></i> Guardar',array('id' => 'btnenviarr','class' => 'btn-sm pull-right btn btn-info btn-lg','type' => 'button','onclick' => '$("#formularioalta").data("bootstrapValidator").validate(); if($("[name = estatura]").val() == "" && $("#formularioalta").data("bootstrapValidator").isValid())swal("Error","Faltan los datos del elemento", "error");')) }}
+					{{ Form::button('<i class="fa fa-floppy-o"></i> Guardar',array('id' => 'btnenviarr','class' => 'btn-sm pull-right btn btn-info btn-lg','type' => 'submit',)) }}
 				</div>
 			</div>
 		</div>
