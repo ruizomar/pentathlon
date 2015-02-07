@@ -59,6 +59,9 @@ class AltaReclutaController extends BaseController {
 			'apellidomaterno' => Input::get('reclumaterno'),
 			'sexo' => Input::get('reclusexo')
 		));
+		$reclutamiento = 40 + ((date('Y') - 2013) * 2);
+		if(date('m') > 6)
+			$reclutamiento++;
 		$elemento = Elemento::create(array(
 			'persona_id' => $personaElemento->id,
 			'estatura' => Input::get('estatura'),
@@ -76,7 +79,7 @@ class AltaReclutaController extends BaseController {
 			'cp' => Input::get('postal'),
 			'municipio' => Input::get('municipio'),
 			'estado' => Input::get('estado'),
-			'reclutamiento' => 33,
+			'reclutamiento' => $reclutamiento,
 			'alergias' => Input::get('alergia'),
 			'adiccion' => Input::get('vicios'),
 			'tipoarma_id' => Input::get('arma'),
