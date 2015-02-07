@@ -159,6 +159,12 @@ class ElementosController extends BaseController {
 			'tipo' => 'Activo',
 			'inicio' => Input::get('fechajura'),
 			'descripcion' => 'Jura de Bandera')));
+		$pago = new Pago;
+		$pago -> elemento_id = $elemento -> id;
+		$pago -> concepto = 'Membresia '.date("Y");
+		$pago -> fecha = date("Y-m-d");
+		$pago -> cantidad = 200;
+		$pago -> save();
 		 // -> matricula ->attach(array('id' => '12345678'));
 		// $persona = Persona::find($personaElemento -> id);
 		// $fotoperfil = $elemento -> documentos() -> where('tipo','=','fotoperfil') -> first() -> ruta;
