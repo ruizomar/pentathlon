@@ -1,4 +1,4 @@
-@extends('layaouts.public')
+@extends('layaouts.base')
 @section('titulo')
 	Concurso de escoltas
 @endsection
@@ -69,7 +69,7 @@
 		<div class="table-responsive" id="tlicenciatura"></div>
 	</div>
 	<div class="parte2 hidden">
-		<div class="col-md-3 form-group">
+		<div class="col-md-2 form-group">
 			{{ Form::label('estado', 'Estado') }}
 			<select class="form-control" name="state" id="estado">
 		        <option value="Aguascalientes">Aguascalientes</option>
@@ -105,8 +105,6 @@
 		        <option value="Yucatán">Yucatán</option>
 		        <option value="Zacatecas">Zacatecas</option>
 			</select>
-		</div>
-		<div class="col-md-2 form-group">
 			{{ Form::label('estado', 'Nivel') }}
 			<select class="form-control" name="state" id="nivel">
                 <option value="Secundaria">Secundaria</option>

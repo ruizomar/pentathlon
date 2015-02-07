@@ -1,4 +1,4 @@
-@extends('layaouts.public')
+@extends('layaouts.base')
 @section('titulo')
   Convocatorias
 @endsection

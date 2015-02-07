@@ -5,8 +5,8 @@ class ElementosController extends BaseController {
     {
         $this->beforeFilter('auth');
         $this->beforeFilter(function(){
-		    if(is_null(User::find(Auth::id())->roles()->where('id','<',9)->where('id','>',1)->first()))
-    	 		return "No Tienes acceso";
+		if(is_null(User::find(Auth::id())->roles()->where('id','<',9)->where('id','>',1)->first()))
+			return "No Tienes acceso";
         });
     }
 
