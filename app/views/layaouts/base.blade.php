@@ -114,6 +114,9 @@
 
   <div id="sidebar-nav" class="hidden-xs">
       <ul id="dashboard-menu" class="nav nav-list">
+        <!-- @if(!is_null(User::find(Auth::id())->roles()->where('id','=','ARCHIVO')->first()))
+          <li id="2Administracion" class=" "><a rel="tooltip" data-placement="right" data-original-title="Icons" href="http://www.admin.pentathlonoaxaca.mx"><i class="fa fa-tachometer"></i> <span class="caption">Administración</span></a></li>
+        @endif -->
         @if(!is_null(User::find(Auth::id())->roles()->where('id','=',1)->first()))
 
           <li id="2Administracion" class=" "><a rel="tooltip" data-placement="right" data-original-title="Icons" href="http://www.admin.pentathlonoaxaca.mx"><i class="fa fa-tachometer"></i> <span class="caption">Administración</span></a></li>

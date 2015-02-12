@@ -163,7 +163,7 @@ class ElementosController extends BaseController {
 		$pago -> elemento_id = $elemento -> id;
 		$pago -> concepto = 'Membresia '.date("Y");
 		$pago -> fecha = date("Y-m-d");
-		$pago -> cantidad = 200;
+		$pago -> cantidad = 300;
 		$pago -> save();
 		 // -> matricula ->attach(array('id' => '12345678'));
 		// $persona = Persona::find($personaElemento -> id);

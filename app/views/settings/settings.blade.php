@@ -31,13 +31,13 @@
           <div class="form-group">
               <label class="col-sm-2 control-label"><strong>Password: </strong></label>
               <div class="col-sm-10">
-                <input type="password" class="text" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" name="password" autocomplete="off">
+                <input type="password" class="text" onblur="if (this.value == '') {this.value = '';}" name="password" autocomplete="off">
                 </div>  
           </div>
           <div class="form-group">
               <label class="col-sm-2 control-label"><strong>Password: </strong></label>
               <div class="col-sm-10">
-              <input type="password" class="text" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" name="password_confirmation" autocomplete="off">
+              <input type="password" class="text" onblur="if (this.value == '') {this.value = '';}" name="password_confirmation" autocomplete="off">
               </div>  
           </div>
               <?php $status=Session::get('mensaje_error'); ?> 
@@ -72,9 +72,6 @@
                     notEmpty: {
                     },
                     emailAddress: {},
-                    stringLength:{
-                      max: 30,
-                    }
                 }
             },
             enabled: false,
