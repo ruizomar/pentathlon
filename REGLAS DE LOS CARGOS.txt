@@ -1,0 +1,27 @@
+Cuerpos:  -> Archivo
+	Elementos
+	instructores
+	profesionistas
+	Estado Mayor
+	Policia Militar Banda de guerra
+
+Impresión de credenciales: -> archivo
+Jura de Bandera -> técnica
+creación de Eventos ->  Técnica
+registro evento gratuito ->  Técnica
+Cargos -> Archivo
+creación de Companias -> Administrador
+Arrestos -> comandantes de compañía
+Enteros -> Hacienda [Exportas los datos de las tablas]
+Condecoraciones -> Técnica [Impresión de XX a 20]
+Historial -> técnica, archivo
+ascensos -> técnica
+escoltas -> técnica,archivo
+asistencias -> instructor
+calificaciones exámenes -> técnica
+reporte de asistencias -> militar [revisar botón por día]
+Alta -> comandantes de compañía,archivo
+Editar -> archivo,comandantes de compañía
+Activo/Inactivo -> comandantes de compañía [revisar]
+Creación de exámenes -> archivo
+reportes -> investigación y estadística
