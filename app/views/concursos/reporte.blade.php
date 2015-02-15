@@ -131,6 +131,7 @@
 @stop
 @section('scripts')
 	<script>
+		$('#escoltas,#2escoltas').addClass('active');
 		$("#reporte").submit(function(e){
 			e.preventDefault();
 			$.post($(this).attr('action'),$(this).serialize(), function(json) {

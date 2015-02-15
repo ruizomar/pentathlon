@@ -102,6 +102,8 @@
           <li id="2Arrestos"><a rel="tooltip" data-placement="right" data-original-title="Forms" href="{{ URL::to('arrestos'); }}"><i class="fa fa-gavel"></i> <span class="caption">Arrestos</span></a></li>
         @endif
 
+            <li id="2escoltas"><a rel="tooltip" data-placement="right" data-original-title="Media" href="{{ URL::to('concursos/reporte'); }}"><i class="fa  fa-flag"></i> <span class="caption">Concursos de escoltas</span></a></li>
+
       </ul>
     </div>
   </div>
@@ -159,7 +161,7 @@
         @if(!is_null(User::find(Auth::id())->roles()->where('id','<',8)->first()))
           <li id="Arrestos"><a rel="tooltip" data-placement="right" data-original-title="Forms" href="{{ URL::to('arrestos'); }}"><i class="fa fa-gavel"></i> <span class="caption">Arrestos</span></a></li>
         @endif
-
+        <li id="escoltas"><a rel="tooltip" data-placement="right" data-original-title="Forms" href="{{ URL::to('concursos/reporte'); }}"><i class="fa fa-flag"></i> <span class="caption">Reporte Concurso de escoltas</span></a></li>
       </ul>
   </div>
 <!-- end sidenavbar -->
