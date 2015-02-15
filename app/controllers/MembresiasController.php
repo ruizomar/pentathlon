@@ -229,13 +229,16 @@ class MembresiasController extends BaseController {
 		if(is_null($pagos)){
 			$matricula = Elemento::find(Input::get('id'))->matricula;
 			if(is_null($matricula)){
+				$nummatricula = MembresiasController::calcula_matricula();
 				$matricula = new Matricula;
 					$matricula->elemento_id = Input::get('id');
+					$matricula->id = $nummatricula;
 				$matricula->save();
 			}
 				$dato = MembresiasController::pago(Input::get('id'),Input::get('cantidad'),"Membresia ".date("Y"));
 				$dato['matricula'] = '<strong>'.$matricula->id.'</strong>';
 				$dato['message'] = 'El entero se a registrado exitosamente numero de Matricula: ';
+				$dato['asd'] = $nummatricula;
 		}
 		else
 			$dato = array('success' => false,
@@ -339,5 +342,21 @@ class MembresiasController extends BaseController {
 					);
 			$html = View::make('pagos/recibodonativo')->with('datos',$datos);
 			return $html;
+	}
+
+	public function calcula_matricula(){
+		$matricula = '20';
+		$matricula .= date('y');
+		$reclutamiento = 40 + ((date('Y') - 2013) * 2);
+		if(date('m') > 6)
+			$reclutamiento++;
+		$matricula .= $reclutamiento;
+		$last = Matricula::where('id','>',$matricula.'000','and')->where('id','<',$matricula.'999')->orderBy('id','desc')->first();
+		if(is_null($last))
+			return $matricula .= '001';
+		else{
+			return ($last->id)+1;
+		}
+
 	}
 }

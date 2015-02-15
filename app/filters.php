@@ -104,7 +104,7 @@ Route::filter('militar',function(){
     if (is_null(User::find(Auth::id())->roles()->where('id','=',4)->first()))
     	 return "No eres de Seccion Militar";
 });
-Route::filter('deportiva',function(){
+Route::filter('archivo',function(){
     if (is_null(User::find(Auth::id())->roles()->where('id','=',5)->first()))
     	 return "No eres de Seccion Deporiva";
 });
@@ -112,7 +112,7 @@ Route::filter('investigacion',function(){
     if (is_null(User::find(Auth::id())->roles()->where('id','=',6)->first()))
     	 return "No eres de Seccion de Investigacion";
 });
-Route::filter('oganizacion',function(){
+Route::filter('comandante',function(){
     if (is_null(User::find(Auth::id())->roles()->where('id','=',7)->first()))
     	 return "No eres de Seccion Organizacion";
 });
