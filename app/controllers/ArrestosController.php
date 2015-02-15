@@ -3,7 +3,10 @@ class ArrestosController extends BaseController{
 	public function __construct()
     {
         $this->beforeFilter('auth');
-        $this->beforeFilter('militar');
+        $this->beforeFilter(function(){
+		    if(is_null(User::find(Auth::id())->roles()->where('id','<',8)->first()))
+    	 		return Redirect::to('inicio');
+        }, array('except' =>array('getIndex')));
     }
 	public function getIndex(){
 		return View::make('arrestos/arrestos');

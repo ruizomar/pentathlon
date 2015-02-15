@@ -31,8 +31,8 @@
 	@if(is_numeric($key))
 		<center>
 			<img src="{{ asset('imgs/pdmu.jpg') }}" alt="">
-			<h2 class='azul'>PENTATHLÓN DEPORTIVO MILITARIZADO UNIVERSITARIO A.C.<br>
-				XX/a. Zona Oaxaca <br>
+			<h2 class=''>PENTATHLÓN DEPORTIVO MILITARIZADO UNIVERSITARIO A.C.<br>
+				20/a. Zona Oaxaca <br>
 				Otorga el presente 
 			</h2>
 			<p style="font-size:50px;">Reconocimiento</p>
@@ -45,7 +45,7 @@
 			<br>
 			<br>
 			<label style="font-size:25px;">"PATRIA, HONOR Y FUERZA"</label><br>
-			<label >Comandante de la XX/a. Zona Oaxaca</label>
+			<label >Comandante de la 20/a. Zona Oaxaca</label>
 			<br>
 			<br>
 			<label style="font-size:22px;">{{$comandante->grados()->orderBy('fecha','desc')->first()->nombre}}</label>

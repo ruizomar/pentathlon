@@ -1,3 +1,6 @@
+admin -> administrador
+creación de Companias -> Administrador
+
 Cuerpos:  -> Archivo
 	Elementos
 	instructores
@@ -6,22 +9,30 @@ Cuerpos:  -> Archivo
 	Policia Militar Banda de guerra
 
 Impresión de credenciales: -> archivo
+Creación de exámenes -> archivo
+Cargos -> Archivo
+
+Enteros -> Hacienda [Exportas los datos de las tablas]
+
 Jura de Bandera -> técnica
 creación de Eventos ->  Técnica
 registro evento gratuito ->  Técnica
-Cargos -> Archivo
-creación de Companias -> Administrador
-Arrestos -> comandantes de compañía
-Enteros -> Hacienda [Exportas los datos de las tablas]
-Condecoraciones -> Técnica [Impresión de XX a 20]
-Historial -> técnica, archivo
-ascensos -> técnica
-escoltas -> técnica,archivo
-asistencias -> instructor
 calificaciones exámenes -> técnica
+ascensos -> técnica
+Condecoraciones -> Técnica [Impresión de XX a 20]
+
 reporte de asistencias -> militar [revisar botón por día]
+
+reportes -> investigación y estadística
+
+Historial -> técnica, archivo
+escoltas -> técnica,archivo
+
+Activo/Inactivo -> comandantes de compañía [revisar]
+Arrestos -> comandantes de compañía
+
+asistencias -> instructor
+
 Alta -> comandantes de compañía,archivo
 Editar -> archivo,comandantes de compañía
-Activo/Inactivo -> comandantes de compañía [revisar]
-Creación de exámenes -> archivo
-reportes -> investigación y estadística
+

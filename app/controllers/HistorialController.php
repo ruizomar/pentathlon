@@ -4,7 +4,7 @@ class HistorialController extends BaseController{
     {
         $this->beforeFilter('auth');
         $this->beforeFilter(function(){
-		    if(is_null(User::find(Auth::id())->roles()->where('id','=',3)->first()))
+		    if(is_null(User::find(Auth::id())->roles()->where('nombre','=','archivo')->first()) && is_null(User::find(Auth::id())->roles()->where('nombre','=','tecnica')->first()))
     	 		return Redirect::to('historial/me');
         }, array('except' =>array('getMe')));
     }

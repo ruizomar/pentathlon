@@ -21,12 +21,6 @@ Route::get('/', function(){
 Route::get('inicio', array('before' => 'auth', function(){
 	return View::make('inicio');
 }));
-Route::get('asd', function(){
-	$elemento = Elemento::find(2)->arrestos;
-	//$elemento = Arresto::find(2)->elemento;
-	return Response::json($elemento);
-});
-
 // Route::controller('editar', 'EditaReclutaController');
 
 Route::get('recluta/alta','AltaReclutaController@get_nuevo');
