@@ -5,10 +5,7 @@ class AsistenciasController extends BaseController{
     {
         $this->beforeFilter('auth');
         $this->beforeFilter('instructor', array('only' => 'getIndex'));
-    	$this->beforeFilter(function(){
-	    if(is_null(User::find(Auth::id())->roles()->where('id','=',4)->orWhere('id','=',6)->first()))
-	 		return "No Tienes acceso";
-        }, array('only' => 'getReporte'));
+    	$this->beforeFilter('militar', array('only' => 'getReporte'));
     }
 	public function getIndex(){
 		$id = Auth::user()->elemento_id;

@@ -3,7 +3,7 @@ class CompaniasController extends BaseController{
 	public function __construct()
     {
         $this->beforeFilter('auth');
-        $this->beforeFilter('militar');
+        $this->beforeFilter('admin');
     }
 	public function getIndex(){
 		$companias = Companiasysubzona::all();

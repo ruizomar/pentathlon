@@ -5,7 +5,7 @@ class AltaReclutaController extends BaseController {
     {
         $this->beforeFilter('auth');
         $this->beforeFilter(function(){
-		    if(is_null(User::find(Auth::id())->roles()->where('id','<',9)->where('id','>',1)->first()))
+		    if(is_null(User::find(Auth::id())->roles()->where('nombre','=','archivo')->first()) && is_null(User::find(Auth::id())->roles()->where('nombre','=','comandante de compañia')->first()))
     	 		return "No Tienes acceso";
         });
     }
