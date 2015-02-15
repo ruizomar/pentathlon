@@ -11,6 +11,8 @@
 	{{  HTML::style('css/jquery.dataTables.css')}}
 	{{  HTML::style('css/bootstrap-datetimepicker.min.css');  }}
 	{{  HTML::script('js/bootstrapValidator.js'); }}
+	{{  HTML::style('css/dataTables.tableTools.css')}}
+	{{  HTML::script('js/dataTables.tableTools.min.js')}}
 	{{  HTML::script('js/es_ES.js'); }}
 	<style type="text/css" media="screen">
 		.fecha{
@@ -105,19 +107,30 @@
 		                { "title": "Grado" },
 		            ],
 		            "language": {
-		              "lengthMenu": "Elementos por página _MENU_",
-		              "zeroRecords": "No se encontro",
-		              "info": "Pagina _PAGE_ de _PAGES_",
-		              "infoEmpty": "No records available",
-		              "infoFiltered": "(Ver _MAX_ total records)",
-		              'search': 'Buscar: ',
-		              "paginate": {
-		                "first":      "Inicio",
-		                "last":       "Fin",
-		                "next":       "Siguiente",
-		                "previous":   "Anterior"
-		              },
-		        }
+			              "lengthMenu": "Elementos por página _MENU_",
+			              "zeroRecords": "No se encontro",
+			              "info": "Pagina _PAGE_ de _PAGES_",
+			              "infoEmpty": "No records available",
+			              "infoFiltered": "(Ver _MAX_ total records)",
+			              'search': 'Buscar: ',
+			              "paginate": {
+				                "first":      "Inicio",
+				                "last":       "Fin",
+				                "next":       "Siguiente",
+				                "previous":   "Anterior"
+			              },
+		        	},
+					dom: 'T<"clear">lfrtip',
+					tableTools : {
+					    aButtons: [
+					        "copy",
+					        {
+                                "sExtends": "xls",
+                                "sFileName": "Concursantes_Secundaria.csv",
+                                "bFooter": false
+                            },
+					    ]
+					},
 		        } );
 			}, 'json');
 			$('#telementos2').removeClass('hidden');
@@ -140,19 +153,30 @@
 				        { "title": "Grado" },
 				    ],
 				    "language": {
-				      "lengthMenu": "Elementos por página _MENU_",
-				      "zeroRecords": "No se encontro",
-				      "info": "Pagina _PAGE_ de _PAGES_",
-				      "infoEmpty": "No records available",
-				      "infoFiltered": "(Ver _MAX_ total records)",
-				      'search': 'Buscar: ',
-				      "paginate": {
-				        "first":      "Inicio",
-				        "last":       "Fin",
-				        "next":       "Siguiente",
-				        "previous":   "Anterior"
-				      },
-				}
+					      "lengthMenu": "Elementos por página _MENU_",
+					      "zeroRecords": "Ningún elemento se ha registrado",
+					      "info": "Pagina _PAGE_ de _PAGES_",
+					      "infoEmpty": "No records available",
+					      "infoFiltered": "(Ver _MAX_ total records)",
+					      'search': 'Buscar: ',
+					      "paginate": {
+						        "first":      "Inicio",
+						        "last":       "Fin",
+						        "next":       "Siguiente",
+						        "previous":   "Anterior"
+				      	},
+					},
+					dom: 'T<"clear">lfrtip',
+					tableTools : {
+					    aButtons: [
+					        "copy",
+					        {
+                                "sExtends": "xls",
+                                "sFileName": "Concursantes_Secundaria.csv",
+                                "bFooter": false
+                            },
+					    ]
+					},
 				} );
 			}, 'json');
 		}
