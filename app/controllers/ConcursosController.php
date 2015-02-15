@@ -3,9 +3,9 @@ class ConcursosController extends BaseController {
 
 	public function __construct()
     {
-        $this->beforeFilter('auth');
+        $this->beforeFilter('auth',array('only' => array('getReporte')));
         $this->beforeFilter(function(){
-		    if(is_null(User::find(Auth::id())->roles()->where('nombre','=','tecnica')->first()) && is_null(User::find(Auth::id())->roles()->where('nombre','=','tecnica')->first()))
+		    if(is_null(User::find(Auth::id())->roles()->where('nombre','=','tecnica')->first()) && is_null(User::find(Auth::id())->roles()->where('nombre','=','archivo')->first()))
     	 		return Redirect::to('inicio');
         }, array('only' => array('getReporte')));
     }
