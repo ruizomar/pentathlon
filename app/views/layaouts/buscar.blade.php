@@ -162,7 +162,7 @@ $(document).ready(function() {
                             "<td>"+matricula+'</td>'+
                             '<td><button type="button" onclick="select(this)" class="btn btn-info select btn-sm">seleccionar</button></td>').appendTo( "#elementos tbody" );
                     };
-                    $('#Elementos').modal('show')
+                    $('#Elementos').modal('show');
                     $('#error').addClass('hidden');
                     $('#activ').addClass('hidden');
                     $('.fa-spin').addClass('hidden');

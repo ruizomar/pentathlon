@@ -123,7 +123,7 @@
           <li id="Credenciales"><a rel="tooltip" data-placement="right" data-original-title="Reports" href="{{ URL::to('credenciales'); }}"><i class="fa fa-user"></i> <span class="caption">Impresión de Credenciales</span></a></li>
           <li id="Examenes"><a rel="tooltip" data-placement="right" data-original-title="Media" href="{{ URL::to('examenes'); }}"><i class="fa  fa-file-text-o"></i> <span class="caption">Exámenes</span></a></li>
           <li id="Cargos"><a rel="tooltip" data-placement="right" data-original-title="Faq" href="{{ URL::to('cargos'); }}"><i class="fa fa-magic"></i> <span class="caption">Cargos</span></a></li>
-          <li id="Elementos"><a rel="tooltip" data-placement="right" data-original-title="Faq" href="{{ URL::to('elementos'); }}"><i class="fa fa-user"></i> <span class="caption">Alta de elementos</span></a></li>
+          <li id="Elementoss"><a rel="tooltip" data-placement="right" data-original-title="Faq" href="{{ URL::to('elementos'); }}"><i class="fa fa-user"></i> <span class="caption">Alta de elementos</span></a></li>
         @endif
         
         @if(!is_null(User::find(Auth::id())->roles()->where('nombre','=','tecnica')->first()))
