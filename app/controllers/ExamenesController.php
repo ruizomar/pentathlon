@@ -4,6 +4,7 @@ class ExamenesController extends BaseController{
     {
         $this->beforeFilter('auth');
         $this->beforeFilter('archivo', array('only' =>array('getIndex', 'postNuevo','postUpdate')));
+        $this->beforeFilter('tecnica', array('only' =>array('getCalificaciones','getAsignar')));
     }
 	public function getIndex(){
 		$grados = array();
@@ -72,31 +73,37 @@ class ExamenesController extends BaseController{
 				));
 		return Response::json(array('success' => true));
 	}
-
 	public function getCalificaciones(){
-		$id = Auth::user()->elemento_id;
-		$conf = Elemento::find($id)->cargos()->where('fecha_fin','=',null,'and')
-											->where('cargo_id','=','12')->first();
-		if(!is_null($conf)){
-											
-		$instructorid = $id;
-		$compania = Elemento::find($id)->companiasysubzona;
-
-		$elementos = $compania->elementos()->where('id','<>',$instructorid)->get();
-		$elementoss = array();
-		foreach ($elementos as $elemento) {
-			$estatus = $elemento->status()->orderBy('inicio','desc')->first();
-			if ($estatus->tipo == 'Activo') {
-				$elementoss[] = $elemento;
-			}
+		$companias = Companiasysubzona::where('status','=','activa')->get();
+		$companias_arreglo = array();
+		foreach ($companias as $compania) {
+			$companias_arreglo[$compania->id] = $compania->nombre;
 		}
-		return View::make('examenes/calificaciones')
-						->with('elementos',$elementoss)
-						->with('compania',$compania)
-						->with('id',$id);
+		return View::make('examenes/calificaciones')->with('companias',$companias_arreglo);
+	}
+	public function getAsignar($id = 1){
+		// $id = Auth::user()->elemento_id;
+		// $conf = Elemento::find($id)->cargos()->where('fecha_fin','=',null,'and')
+		// 									->where('cargo_id','=','12')->first();
+		// if(!is_null($conf)){
+											
+		// $instructorid = $id;
+		$compania = Companiasysubzona::find($id);
+		if(!is_null($compania)){
+			$elementos = $compania->elementos()->get();
+			$elementoss = array();
+			foreach ($elementos as $elemento) {
+				$estatus = $elemento->status()->orderBy('inicio','desc')->first();
+				if ($estatus->tipo == 'Activo') {
+					$elementoss[] = $elemento;
+				}
+			}
+			return View::make('examenes/asignar')
+							->with('elementos',$elementoss)
+							->with('compania',$compania);
 		}
 		else
-			echo "No eres instructor lastimanente";
+			return Redirect::to('examenes/calificaciones');
 	}
 	public function postAsignar(){
 		$rules = array(
