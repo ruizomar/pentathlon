@@ -151,7 +151,7 @@
         @if(!is_null(User::find(Auth::id())->roles()->where('nombre','=','archivo')->first()) || !is_null(User::find(Auth::id())->roles()->where('nombre','=','tecnica')->first()))
           <li id="Historial" class=" "><a rel="tooltip" data-placement="right" data-original-title="Icons" href="{{ URL::to('historial'); }}"><i class="fa fa-clock-o"></i> <span class="caption">Historial</span></a></li>
 
-          <li id="Escoltas"><a rel="tooltip" data-placement="right" data-original-title="Reports" href="{{ URL::to('concursos/reporte'); }}"><i class="fa fa-chevron-circle-right"></i> <span class="caption">Concurso de Escoltas</span></a></li>
+          <li id="escoltas"><a rel="tooltip" data-placement="right" data-original-title="Forms" href="{{ URL::to('concursos/reporte'); }}"><i class="fa fa-flag"></i> <span class="caption">Reporte Concurso de escoltas</span></a></li>
         @endif
         @if(!is_null(User::find(Auth::id())->roles()->where('nombre','=','archivo')->first()) || !is_null(User::find(Auth::id())->roles()->where('nombre','=','comandante de compañia')->first()))
           <li id="Altas"><a rel="tooltip" data-placement="right" data-original-title="Blog Entry" href="{{ URL::to('recluta/alta'); }}"><i class="fa fa-plus"></i> <span class="caption">Altas</span></a></li>
@@ -161,7 +161,6 @@
         @if(!is_null(User::find(Auth::id())->roles()->where('id','<',8)->first()))
           <li id="Arrestos"><a rel="tooltip" data-placement="right" data-original-title="Forms" href="{{ URL::to('arrestos'); }}"><i class="fa fa-gavel"></i> <span class="caption">Arrestos</span></a></li>
         @endif
-        <li id="escoltas"><a rel="tooltip" data-placement="right" data-original-title="Forms" href="{{ URL::to('concursos/reporte'); }}"><i class="fa fa-flag"></i> <span class="caption">Reporte Concurso de escoltas</span></a></li>
       </ul>
   </div>
 <!-- end sidenavbar -->

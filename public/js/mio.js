@@ -224,7 +224,7 @@ function baja (id) {
     $('#status').removeClass('hidden');
 }
 function alta (id) {
-    $('#btnstatus').html('<a class="label label-danger pull-right" style="font-size:12px;" onclick="$(\'#status\').data(\'bootstrapValidator\').validate(); if($(\'#status\').data(\'bootstrapValidator\").isValid())activar('+id+')"></i><i class="fa fa-question-circle"></i> Confirmar cambio</a>');
+    $('#btnstatus').html('<a class="label label-danger pull-right" style="font-size:12px;" onclick="$(\'#status\').data(\'bootstrapValidator\').validate(); if($(\'#status\').data(\'bootstrapValidator\').isValid())activar('+id+')"></i><i class="fa fa-question-circle"></i> Confirmar cambio</a>');
     $('#status').removeClass('hidden');
 }
 function inactivar (id) {
