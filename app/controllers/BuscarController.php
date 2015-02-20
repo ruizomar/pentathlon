@@ -7,7 +7,6 @@ class BuscarController extends BaseController{
 	public function buscar(){
 		$rules = array(
 			'nombre' => 'required',
-			'paterno' => 'required'
 			);
 
 		$validation = Validator::make(Input::all(), $rules);
@@ -24,7 +23,7 @@ class BuscarController extends BaseController{
 
 		$elemento = Elemento::whereHas('persona',function($q) use ($nombre,$paterno,$materno){ 
 			$q->where('nombre','like',$nombre.'%','and')
-			->where('apellidopaterno','=',$paterno,'and')
+			->where('apellidopaterno','like',$paterno.'%','and')
 			->where('apellidomaterno','like',$materno.'%');
 		})->get();
 

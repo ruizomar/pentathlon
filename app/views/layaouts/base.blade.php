@@ -4,6 +4,13 @@
     <title>@yield('titulo')</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta HTTP-EQUIV="Expires" content="0">
+    <meta HTTP-EQUIV="Pragma" content="no-cache">
+
+{{header('Last-Modified:'.gmdate('D, d M Y H:i:s').'GMT');}}
+{{header('Cache-Control: no-store, no-cache, must-revalidate');}}
+{{header('Cache-Control: post-check=0, pre-check=0',false);}}
+{{header('Pragma: no-cache');}}
     {{  HTML::style('css/bootstrap.css');  }}
     {{  HTML::style('css/bootstrap-theme.min.css');  }}
     {{  HTML::style('font-awesome/css/font-awesome.css');  }}

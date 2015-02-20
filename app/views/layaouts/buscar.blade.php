@@ -98,7 +98,6 @@ $(document).ready(function() {
             },
             paterno: {
                 validators: {
-                    notEmpty: { },
                     regexp: {
                         regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
                         message: 'Por favor verifica el campo'
