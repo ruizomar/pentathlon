@@ -49,7 +49,7 @@
           <table id="elementos" class="table">
             <thead>
               <tr>
-                <th>id</th>
+                <th class="hidden">id</th>
                 <th>Nombre(s)</th>
                 <th>Apellido paterno</th>
                 <th>Apellido materno</th>
@@ -154,7 +154,7 @@ $(document).ready(function() {
                         if(json[i].matricula!=null)
                                 matricula=json[i].matricula.id;
                         $( "<tr>" ).append(
-                            "<td>"+json[i].id+'</td>'+
+                            "<td class='hidden'>"+json[i].id+'</td>'+
                             "<td>"+json[i].nombre+'</td>'+
                             "<td>"+json[i].paterno+'</td>'+
                             "<td>"+json[i].materno+'</td>'+

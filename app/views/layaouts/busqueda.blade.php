@@ -104,6 +104,27 @@
 							{{ Form::label(null,'Fecha Nacimiento: ',array('class' => 'small')) }}
 							{{ Form::label('fechagrado',null,array('class' => 'pull-right label label-default')) }}
 						</h4>
+						<h4>
+							{{ Form::label(null,'Tipo de sangre: ',array('class' => 'small')) }}
+							{{ Form::label('sangre',null,array('class' => 'pull-right label label-default')) }}
+						</h4>
+						<h4>
+							{{ Form::label(null,'Adicción: ',array('class' => 'small')) }}
+							{{ Form::label('adiccion',null,array('class' => 'pull-right label label-default')) }}
+						</h4>
+						<h4>
+							{{ Form::label(null,'Alergias: ',array('class' => 'small')) }}
+							{{ Form::label('alergia',null,array('class' => 'pull-right label label-default')) }}
+						</h4>
+						<h3>Contacto</h3>
+						<h4>
+							{{ Form::label(null,'Nombre: ',array('class' => 'small')) }}
+							{{ Form::label('nombrecontacto',null,array('class' => 'pull-right label label-default')) }}
+						</h4>
+						<h4>
+							{{ Form::label(null,'Teléfono: ',array('class' => 'small')) }}
+							{{ Form::label('telfonocontacto',null,array('class' => 'pull-right label label-default')) }}
+						</h4>
 					</div>
 				</div>
 			</div>
@@ -115,18 +136,35 @@
 	var ascenso_id = 0;
 	var elemento_id = 0;
 		function encontrado (id) {
-			$('#graficaAsistencias').html('');
-			$('#calificaciones').html('');
-			$('#reconocimientos').html('');
 			$.post('buscar/elemento',{id:id}, function(json) {
-				// console.log(json);
+				console.log(json);
+				$('label[for=telfonocontacto]').text('');
 				$('.fa-spinner').addClass('hidden');
 				$('#elemento').removeClass('hidden');
 				$('[name=id]').val(json.id);
 				$('#nombreelemento').text(json.nombre+' '+json.paterno+' '+json.materno);
 				$('label[for=matricula]').text(json.matricula);
 				$('label[for=companiasysubzonas]').text(json.companiasysubzonas);
-				$('label[for=grado]').text(json.grado);
+				$('label[for=fechagrado]').text(json.nace);
+				$('label[for=sangre]').text(json.sangre);
+				$('label[for=nombrecontacto]').text(json.tutor);
+				if(json.adiccion != ''){
+					$('label[for=adiccion]').text(json.adiccion);
+				}
+				else{
+					$('label[for=adiccion]').text('Ninguna');
+				}
+				if(json.alergia != ''){
+					$('label[for=alergia]').text(json.alergia);
+				}
+				else{
+					$('label[for=alergia]').text('Ninguna');
+				}
+				if(json.telcontacto.length > 0){
+					$.each(json.telcontacto,function(index,tel){
+						$('label[for=telfonocontacto]').append('<span class="pull-left">'+tel.tipo+':    </span><span class="pull-right">'+tel.telefono +'</span><br>');
+					});
+				}
 				$('#fotoperfil').html('<img id="theImg" class="img-responsive img-thumbnail img-circle" src="'+json.fotoperfil+'" alt="Responsive image"/>');
 			}, 'json');
 		}

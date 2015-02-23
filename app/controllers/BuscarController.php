@@ -112,10 +112,14 @@ class BuscarController extends BaseController{
 			'materno' => $elemento -> persona -> apellidomaterno,
 			'fotoperfil' => $fotoperfil,
 			'matricula' => $matricula,
-			'grado' => $grado -> nombre,
-			'ascenso_id' => $grado -> id + 1,
-			'fechagrado' => $grado -> pivot -> fecha,
+			'nace' => $elemento -> fechanacimiento,
 			'companiasysubzonas' => $elemento -> companiasysubzona -> tipo .' '. $elemento ->  companiasysubzona -> nombre,
+			'tutor' => $elemento -> tutor -> persona -> nombre.' '.$elemento -> tutor -> persona -> apellidopaterno.' '.$elemento -> tutor -> persona -> apellidomaterno,
+			'telcontacto' => $elemento -> tutor -> persona -> telefonos() -> get(),
+			'domicilio' => $elemento -> calle.' '.$elemento -> colonia. ' '.$elemento -> municipio.' '.$elemento -> cp,
+			'alergia' => $elemento -> alergias,
+			'adiccion' => $elemento -> adiccion,
+			'sangre' => $elemento -> tiposangre,
 		);
 		return ($dato);
 	}
