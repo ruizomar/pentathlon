@@ -465,7 +465,7 @@
             },
             paterno: {
               validators: {
-                notEmpty: { },
+                // notEmpty: { },
                 regexp: {
                   regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
                   message: 'Por favor verifica el campo'

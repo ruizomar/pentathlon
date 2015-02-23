@@ -42,8 +42,8 @@ class EditaReclutaController extends BaseController {
 		$materno = Input::get('materno');
 		$elemento = Elemento::whereHas('persona',function($q) use ($nombre,$paterno,$materno)
 		{
-			$q->where('nombre','like',$nombre.'%')
-			->where('apellidopaterno','=',$paterno)
+			$q->where('nombre','like',$nombre.'%','and')
+			->where('apellidopaterno','like',$paterno.'%','and')
 			->where('apellidomaterno','like',$materno.'%');
 		})
 		->get();
