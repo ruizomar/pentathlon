@@ -23,7 +23,7 @@
         </div>
     {{ Form::close() }}
         <div id="error" class="col-sm-12 hidden" style="margin-top:10px;">
-        <p class="alert alert-danger"><i class="fa fa-exclamation-triangle fa-lg"></i> No se encontro al Elemento
+        <p class="alert alert-danger"><i class="fa fa-exclamation-triangle fa-lg"></i> No se encontró al Elemento
         </p>
         </div>
         <div id="activ" class="col-sm-12 hidden" style="margin-top:10px;">
@@ -55,6 +55,7 @@
                 <th>Apellido materno</th>
                 <th>Fecha de nacimiento</th>
                 <th>Matrícula</th>
+                <th>Ubicación</th>
                 <th>seleccionar</th>
               </tr>
             </thead>
@@ -159,6 +160,7 @@ $(document).ready(function() {
                             "<td>"+json[i].materno+'</td>'+
                             "<td>"+json[i].fecha+'</td>'+
                             "<td>"+matricula+'</td>'+
+                            "<td>"+json[i].ubicacion+'</td>'+
                             '<td><button type="button" onclick="select(this)" class="btn btn-info select btn-sm">seleccionar</button></td>').appendTo( "#elementos tbody" );
                     };
                     $('#Elementos').modal('show');

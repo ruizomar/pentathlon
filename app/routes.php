@@ -48,6 +48,7 @@ Route::controller('elementos', 'ElementosController');
 
 
 Route::post('buscar','BuscarController@buscar');
+Route::controller('buscar', 'BuscarController');
 Route::controller('pagos', 'MembresiasController');
 Route::controller('companias','CompaniasController');
 Route::controller('asistencias','AsistenciasController');

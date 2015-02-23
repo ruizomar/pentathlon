@@ -4,6 +4,11 @@ class BuscarController extends BaseController{
     {
         $this->beforeFilter('auth');
     }
+
+	public function getIndex(){
+		return View::make('layaouts.busqueda');
+	}
+
 	public function buscar(){
 		$rules = array(
 			'nombre' => 'required',
@@ -49,6 +54,7 @@ class BuscarController extends BaseController{
 						'materno' => $elemento->persona->apellidomaterno,
 						'fecha' => $elemento->fechanacimiento,
 						'matricula' => $elemento->matricula,
+						'ubicacion' => Companiasysubzona::find($elemento->companiasysubzona_id) -> nombre,
 						);
 				}
 			}
@@ -58,5 +64,61 @@ class BuscarController extends BaseController{
 
 		return Response::json($dato);
 	}
+
+	public function postElemento()
+	{
+		$rules = array(
+			'id' => 'integer',
+			);
+
+		$validation = Validator::make(Input::all(), $rules);
+		if($validation->fails())
+		{
+			$dato = array(
+				'success'=>false,
+				'errormessage'=>'<i class="fa fa-exclamation-triangle fa-lg"></i>Ocurrio un error'
+			);
+			return Response::json($dato);
+		}
+		$elemento = Elemento::find(Input::get('id'));
+		$fotoperfil ="default.png";
+		$matricula = 'Sin registro';
+		if(!is_null($elemento -> documentos() -> where('tipo','=','fotoperfil') -> first() ) )
+		{
+			$fotoperfil = $elemento -> documentos() -> where('tipo','=','fotoperfil') -> first() -> ruta;
+		}
+		if(!is_null($elemento -> matricula ))
+		{
+			$matricula = $elemento -> matricula -> id;
+		}
+		$grado = $elemento -> grados -> last();
+		$examenesHechos = $elemento -> examenes() -> where('grado_id','=',$grado -> id) -> get();
+		$totalexamenes = Examen::where('grado_id','=',$grado -> id) -> get();
+		$examenesNoHechos = $totalexamenes;
+		$i = 0;
+		foreach ($examenesNoHechos as $examen) {
+			foreach ($examenesHechos as $hecho) {
+				if ($examen -> id == $hecho -> id) {
+					unset($examenesNoHechos[$i]);
+				}
+			}
+			$i++;
+		}
+		// $rr = ;
+		$dato = array(
+			'success' => true,
+			'nombre' => $elemento -> persona -> nombre,
+			'paterno' => $elemento -> persona -> apellidopaterno,
+			'materno' => $elemento -> persona -> apellidomaterno,
+			'fotoperfil' => $fotoperfil,
+			'matricula' => $matricula,
+			'grado' => $grado -> nombre,
+			'ascenso_id' => $grado -> id + 1,
+			'fechagrado' => $grado -> pivot -> fecha,
+			'companiasysubzonas' => $elemento -> companiasysubzona -> tipo .' '. $elemento ->  companiasysubzona -> nombre,
+		);
+		return ($dato);
+	}
+
 
 }
