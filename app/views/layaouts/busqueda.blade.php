@@ -98,7 +98,7 @@
 						</h4>
 						<h4>
 							{{ Form::label(null,'Grado actual: ',array('class' => 'small')) }}
-							{{ Form::label('grado',null,array('class' => 'tour-2 pull-right label label-danger')) }}
+							{{ Form::label('grado',null,array('class' => 'tour-2 pull-right label label-default')) }}
 						</h4>
 						<h4>
 							{{ Form::label(null,'Fecha Nacimiento: ',array('class' => 'small')) }}
@@ -110,20 +110,40 @@
 						</h4>
 						<h4>
 							{{ Form::label(null,'Adicción: ',array('class' => 'small')) }}
-							{{ Form::label('adiccion',null,array('class' => 'pull-right label label-default')) }}
+							{{ Form::label('adiccion',null,array('class' => 'pull-right label label-warning')) }}
 						</h4>
 						<h4>
 							{{ Form::label(null,'Alergias: ',array('class' => 'small')) }}
-							{{ Form::label('alergia',null,array('class' => 'pull-right label label-default')) }}
+							{{ Form::label('alergia',null,array('class' => 'pull-right label label-warning')) }}
+						</h4>
+						<h4>
+							{{ Form::label(null,'Facebook: ',array('class' => 'small')) }}
+							{{ Form::label('facebook',null,array('class' => 'pull-right label label-primary')) }}
+						</h4>
+						<h4>
+							{{ Form::label(null,'Twitter: ',array('class' => 'small')) }}
+							{{ Form::label('twitter',null,array('class' => 'pull-right label label-info')) }}
+						</h4>
+						<h4>
+							{{ Form::label(null,'Teléfono: ',array('class' => 'small')) }}
+							{{ Form::label('telemento',null,array('class' => 'pull-right label label-success')) }}
 						</h4>
 						<h3>Contacto</h3>
 						<h4>
 							{{ Form::label(null,'Nombre: ',array('class' => 'small')) }}
-							{{ Form::label('nombrecontacto',null,array('class' => 'pull-right label label-default')) }}
+							{{ Form::label('nombrecontacto',null,array('class' => 'pull-right label label-danger')) }}
+						</h4>
+						<h4>
+							{{ Form::label(null,'Facebook: ',array('class' => 'small')) }}
+							{{ Form::label('facebook',null,array('class' => 'pull-right label label-primary')) }}
+						</h4>
+						<h4>
+							{{ Form::label(null,'Twitter: ',array('class' => 'small')) }}
+							{{ Form::label('twitter',null,array('class' => 'pull-right label label-info')) }}
 						</h4>
 						<h4>
 							{{ Form::label(null,'Teléfono: ',array('class' => 'small')) }}
-							{{ Form::label('telfonocontacto',null,array('class' => 'pull-right label label-default')) }}
+							{{ Form::label('telfonocontacto',null,array('class' => 'pull-right label label-success')) }}
 						</h4>
 					</div>
 				</div>
@@ -165,6 +185,7 @@
 			$.post('buscar/elemento',{id:id}, function(json) {
 				console.log(json);
 				$('label[for=telfonocontacto]').text('');
+				$('label[for=telemento]').text('');
 				$('.fa-spinner').addClass('hidden');
 				$('#elemento').removeClass('hidden');
 				$('[name=id]').val(json.id);
@@ -174,6 +195,14 @@
 				$('label[for=fechagrado]').text(json.nace);
 				$('label[for=sangre]').text(json.sangre);
 				$('label[for=nombrecontacto]').text(json.tutor);
+				$('label[for=facebook]').text('Sin Registro');
+				if (json.facebook) {
+					$('label[for=facebook]').text(json.facebook);
+				}
+				$('label[for=twitter]').text('Sin Registro');
+				if(json.twitter){
+					$('label[for=twitter]').text(json.twitter);
+				}
 				$('label[for=grado]').text(json.grado);
 				if(json.adiccion != ''){
 					$('label[for=adiccion]').text(json.adiccion);
@@ -187,10 +216,22 @@
 				else{
 					$('label[for=alergia]').text('Ninguna');
 				}
+				console.log(json.tel);
+				if(json.tel.length > 0){
+					$.each(json.tel,function(index,tel){
+						$('label[for=telemento]').append('<span class="pull-left">'+tel.tipo+':    </span><span class="pull-right">'+tel.telefono +'</span><br>');
+					});
+				}
+				else{
+					$('label[for=telemento]').text('Sin registro');
+				}
 				if(json.telcontacto.length > 0){
 					$.each(json.telcontacto,function(index,tel){
 						$('label[for=telfonocontacto]').append('<span class="pull-left">'+tel.tipo+':    </span><span class="pull-right">'+tel.telefono +'</span><br>');
 					});
+				}
+				else{
+					$('label[for=telfonocontacto]').text('Sin registro');
 				}
 				$('#fotoperfil').html('<img id="theImg" class="img-responsive img-thumbnail img-circle" src="'+json.fotoperfil+'" alt="Responsive image"/>');
 			}, 'json');
