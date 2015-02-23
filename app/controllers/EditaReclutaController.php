@@ -335,7 +335,7 @@ class EditaReclutaController extends BaseController {
 		{
 			$companiasysubzonasArr[$compayzona->id] = array(
 				'id' => $compayzona->id,
-				'nombre' => $compayzona->tipo.' '.ucwords(strtolower($compayzona->nombre))
+				'nombre' => $compayzona->tipo.' '.$compayzona->nombre
 				);
 		}
 		return Response::json($companiasysubzonasArr);
