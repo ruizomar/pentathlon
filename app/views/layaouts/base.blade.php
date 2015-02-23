@@ -168,6 +168,7 @@
         @if(!is_null(User::find(Auth::id())->roles()->where('id','<',8)->first()))
           <li id="Arrestos"><a rel="tooltip" data-placement="right" data-original-title="Forms" href="{{ URL::to('arrestos'); }}"><i class="fa fa-gavel"></i> <span class="caption">Arrestos</span></a></li>
         @endif
+        <li id="2Buscar" class=" "><a rel="tooltip" data-placement="right" data-original-title="Icons" href="{{ URL::to('buscar'); }}"><i class="fa fa-search"></i> <span class="caption">Búsqueda de elementos</span></a></li>
       </ul>
   </div>
 <!-- end sidenavbar -->

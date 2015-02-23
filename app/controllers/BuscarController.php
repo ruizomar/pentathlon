@@ -125,5 +125,40 @@ class BuscarController extends BaseController{
 		return ($dato);
 	}
 
+	public function getLugares()
+	{
+		$companiasysubzonas = Companiasysubzona::all();
+		$companiasysubzonasArr = array();
+		foreach($companiasysubzonas as $compayzona)
+		{
+			$companiasysubzonasArr[$compayzona->id] = array(
+				'id' => $compayzona->id,
+				'nombre' => $compayzona->tipo.' '.$compayzona->nombre
+				);
+		}
+		return Response::json($companiasysubzonasArr);
+	}
 
+	public function postExtendidos()
+	{
+		$lugar_id = $_POST['id'];
+		$lugar = Companiasysubzona::find($lugar_id);
+		$elementos = $lugar -> elementos() -> get();
+		$dato = array();
+		$dato = array();
+		foreach ($elementos as $elemento) {
+			if ($elemento->status()->orderBy('inicio','desc')->first()->tipo == 'Nuevo' || $elemento->status()->orderBy('inicio','desc')->first()->tipo == 'Activo') {
+				$dato[] = array(
+					'id' => $elemento->id,
+					'nombre' => $elemento->persona->nombre,
+					'paterno' => $elemento->persona->apellidopaterno,
+					'materno' => $elemento->persona->apellidomaterno,
+					'fecha' => $elemento->fechanacimiento,
+					'matricula' => $elemento->matricula,
+					'ubicacion' => Companiasysubzona::find($elemento->companiasysubzona_id) -> nombre,
+					);
+			}
+		}
+		return Response::json($dato);
+	}
 }
