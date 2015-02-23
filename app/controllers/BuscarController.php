@@ -120,6 +120,7 @@ class BuscarController extends BaseController{
 			'alergia' => $elemento -> alergias,
 			'adiccion' => $elemento -> adiccion,
 			'sangre' => $elemento -> tiposangre,
+			'grado' => $grado -> nombre,
 		);
 		return ($dato);
 	}

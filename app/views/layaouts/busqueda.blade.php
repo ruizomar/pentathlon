@@ -148,6 +148,7 @@
 				$('label[for=fechagrado]').text(json.nace);
 				$('label[for=sangre]').text(json.sangre);
 				$('label[for=nombrecontacto]').text(json.tutor);
+				$('label[for=grado]').text(json.grado);
 				if(json.adiccion != ''){
 					$('label[for=adiccion]').text(json.adiccion);
 				}
