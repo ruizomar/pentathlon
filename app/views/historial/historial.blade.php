@@ -60,7 +60,11 @@
         <div class="col-sm-8 col-sm-offset-1">
                 <h2 id='lnombre'><strong>{{ $elemento->persona->nombre." ".$elemento->persona->apellidopaterno." ".$elemento->persona->apellidomaterno }}</strong></h2>
                 <p id='lmatricula'><strong>Matrícula: </strong>{{  $elemento->matricula->id  }}</p>
-                <p id='lfecha'><strong>Fecha de jura de bandera: </strong>{{  $elemento->status()->where('descripcion','=','Jura de Bandera')->first()->inicio  }}</p>
+                <p id='lfecha'><strong>Fecha de jura de bandera: </strong>
+                    @if($elemento->status()->where('descripcion','=','Jura de Bandera')->first())
+                    {{  $elemento->status()->where('descripcion','=','Jura de Bandera')->first()->inicio  }}
+                    @endif
+                </p>
                 <p id='lgrado'><strong>Grado: </strong>{{  $elemento->grados->last()->nombre  }}</p>
                 <p id='ladscripcion'><strong>Adscripción: </strong>{{  $elemento->companiasysubzona->tipo  }}{{  $elemento->companiasysubzona->nombre  }}</p>
         </div>
