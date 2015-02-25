@@ -21,6 +21,7 @@
 @endsection
 @section('contenido')
 	<div id="reportes" class="col-md-12">
+		<h1>Reporte de enteros</h1>
 		<br>
 		<div class="form-group col-md-6">
 		    <label class="label label-primary"><i class="fa fa-chevron-circle-right"></i> Parámetros</label><br>
