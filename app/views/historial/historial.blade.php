@@ -6,47 +6,52 @@
 @section('head')
 {{  HTML::style('css/sweet-alert.css');  }}
 <style type="text/css">
-.nombre{
-    top: 25px !important;
-}
-.menu{
-    background: #fff;
-    padding: 10px;
-    margin-bottom: 15px;
-    box-shadow: 0px 3px 2px #aab2bd;
-    -moz-box-shadow: 0px 3px 2px #aab2bd;
-    -webkit-box-shadow: 0px 3px 2px #aab2bd;
-    left: 12px;
-    border-top-width: 3px;
-    border-top-style: solid;
-    border-top-color: #82B1FF;
-    font-size: 19px;
-}
-.resultado{
-    background: #fff;
-    padding: 10px;
-    margin-bottom: 15px;
-    box-shadow: 0px 3px 2px #aab2bd;
-    -moz-box-shadow: 0px 3px 2px #aab2bd;
-    -webkit-box-shadow: 0px 3px 2px #aab2bd;
-    left: 12px;
-    border-top-width: 5px;
-    border-top-style: solid;
-    border-top-color: #F44336;
-    font-size: 19px;
-}
-.menu:hover{
-    background: #E3F2FD;
-    cursor:pointer; cursor: hand;
-}
+    .nombre{
+        top: 25px !important;
+    }
+    .menu{
+        background: #fff;
+        padding: 10px;
+        margin-bottom: 15px;
+        box-shadow: 0px 3px 2px #aab2bd;
+        -moz-box-shadow: 0px 3px 2px #aab2bd;
+        -webkit-box-shadow: 0px 3px 2px #aab2bd;
+        left: 12px;
+        border-top-width: 3px;
+        border-top-style: solid;
+        border-top-color: #82B1FF;
+        font-size: 19px;
+    }
+    .resultado{
+        background: #fff;
+        padding: 10px;
+        margin-bottom: 15px;
+        box-shadow: 0px 3px 2px #aab2bd;
+        -moz-box-shadow: 0px 3px 2px #aab2bd;
+        -webkit-box-shadow: 0px 3px 2px #aab2bd;
+        left: 12px;
+        border-top-width: 5px;
+        border-top-style: solid;
+        border-top-color: #F44336;
+        font-size: 19px;
+    }
+    .menu:hover{
+        background: #E3F2FD;
+        cursor:pointer; cursor: hand;
+    }
 </style>
 @endsection
 @section('contenido')
 <?php $status=Session::get('status'); ?>
 <div class="row">
-    <div class="col-md-10 col-md-offset-1">
-        <h1 style="margin-bottom:20px;"><i class="fa  fa-clock-o"></i> Historial</h1>
-    </div>
+
+        <div class="col-sm-8 col-sm-offset-2">
+            <h1 style="margin-bottom:20px;"><i class="fa  fa-clock-o"></i> Historial</h1>
+        </div>
+        <div class="col-sm-2">
+            <button style="margin-top: 15px;"class="btn btn-success" onClick="window.open('{{URL::to('historial/historial/'.$elemento->id);}}')"><i class="fa  fa-print"></i> PDF</button>
+        </div>
+
     <div class="col-sm-3 text-center">
         <p class="menu" href="#enteros" data-toggle="tab" title="Enteros"><i class="fa fa-money pull-left"></i><span><strong> Enteros</strong></span></p>
         <p class="menu" href="#condecoraciones" data-toggle="tab" title="Condecoraciones"><i class="fa fa-shield pull-left"></i><span><strong> Condecoraciones</strong></span></p>
