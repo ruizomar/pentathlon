@@ -23,6 +23,7 @@
 @endsection
 @section('contenido')
 	<div id="reportes" class="col-md-12">
+		<h1>Reporte de membresias</h1>
 		<label class="parte1 label label-primary pull-left"><i class="fa fa-chevron-circle-right"></i> Rango de fechas</label>
 		<div class="parte1 col-sm-6">
 			<div class="col-md-6 form-group">
@@ -138,10 +139,10 @@
 		function sinentero () {
 			$('.boton2, .parte1').addClass('hidden');
 			$('#dtabla2').html('');
-			anio = (new Date).getFullYear();;
+			anio = (new Date).getFullYear();
 			$.post('sinentero',{anio:anio}, function(json) {
 				// // console.log(json);
-				$('#divelementos').html('<table id="telementos" class="table table-hover table-first-column-number data-table display full"></table>');
+				$('#divelementos').html('<h2>Elementos sin membresia '+moment().year()+'</h2><table id="telementos" class="table table-hover table-first-column-number data-table display full"></table>');
 				$('#telementos').dataTable( {
 				    "data": json,
 				    "columns": [
