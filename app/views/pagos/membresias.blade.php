@@ -149,9 +149,10 @@
 				        { "title": "Nombre" },
 				        { "title": "Paterno" },
 				        { "title": "Materno" },
+				        { "title": "Matricula" },
 				        { "title": "Membresia" },
-				        { "title": "Zona" },
 				        { "title": "Grado" },
+				        { "title": "Zona" },
 				    ],
 				    "language": {
 					      "lengthMenu": "Elementos por página _MENU_",

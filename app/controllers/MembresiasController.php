@@ -64,30 +64,24 @@ class MembresiasController extends BaseController {
 
 	public function postSinentero()
 	{
-		$anio = $_POST['anio'];
+		$anio = date('Y');
 		$elementos = Elemento::all();
 		$no = array();
 		foreach ($elementos as $elemento) {
-			if(is_null($elemento -> matricula )){
-				$no[] = array(
-					$elemento -> persona -> nombre,
-					$elemento -> persona -> apellidopaterno,
-					$elemento -> persona -> apellidomaterno,
-					$elemento -> companiasysubzona -> nombre,
-					$elemento -> grados -> last() -> nombre,
-					'No tiene matrícula',
-				);
-			}
 			if(is_null($elemento -> pagos() ->where('concepto','like','Membresia '.$anio) -> first())){
-			$no[] = array(
-					$elemento -> persona -> nombre,
-					$elemento -> persona -> apellidopaterno,
-					$elemento -> persona -> apellidomaterno,
-					'Sin registro de entero '.$anio,
-					$elemento -> companiasysubzona -> nombre,
-					$elemento -> grados -> last() -> nombre,
-				);
-			}
+				$matricula = 'No tiene matrícula';
+				if(!is_null($elemento -> matricula ))
+					$matricula = $elemento -> matricula -> id;
+				$no[] = array(
+						$elemento -> persona -> nombre,
+						$elemento -> persona -> apellidopaterno,
+						$elemento -> persona -> apellidomaterno,
+						$matricula,
+						'Sin registro de entero '.$anio,
+						$elemento -> grados -> last() -> nombre,
+						$elemento -> companiasysubzona -> nombre,
+					);
+				}
 		}
 		return Response::json($no);
 	}
