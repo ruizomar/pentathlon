@@ -122,7 +122,7 @@ class BuscarController extends BaseController{
 			'sangre' => $elemento -> tiposangre,
 			'grado' => $grado -> nombre,
 			'tel' => $elemento -> persona -> telefonos() -> get(),
-			'email' => $elemento -> persona -> email -> email,
+			'email' => $elemento -> persona -> email,
 			'facebook' => $elemento -> persona -> facebook,
 			'twitter' => $elemento -> persona -> twitter,
 		);
