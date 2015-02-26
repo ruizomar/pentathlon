@@ -240,11 +240,11 @@
         <i class="fa fa-cog fa-spin fa-5x"></i>
     </div>
     <div class="col-md-12">
-        <div id="graficasexos" class="grafica col-md-4">
+        <div id="graficasexos" class="grafica col-md-4" style="max-width: 360px;float: left;">
         </div>
-        <div id="graficaedades" class="grafica col-md-4">
+        <div id="graficaedades" class="grafica col-md-4" style="max-width: 360px;float: left;">
         </div>
-        <div id="graficagrados" class="grafica col-md-4">
+        <div id="graficagrados" class="grafica col-md-4" style="max-width: 360px;float: left;">
         </div>
     </div>
     <div class="row">

@@ -32,7 +32,7 @@ class MembresiasController extends BaseController {
 					-> get();
 		$pagosArr = array();
 		foreach ($pagos as $pago) {
-				if (strpos($pago -> concepto, $membresia) === 0 || $pago -> concepto == $credencial || $pago -> concepto == $evento || $pago -> concepto == $examen || $pago -> concepto == $donativo) {
+				if (strpos($pago -> concepto, $membresia) === 0 || $pago -> concepto == $credencial || strpos($pago -> concepto, $evento) === 0 || strpos($pago -> concepto, $examen) === 0 || $pago -> concepto == $donativo) {
 					$pagosArr[] = array($pago->concepto,$pago->fecha,$pago->cantidad);
 				}
 		}
