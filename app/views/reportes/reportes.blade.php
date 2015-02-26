@@ -380,7 +380,7 @@
             var output = d.getFullYear() + '/' +
                 (month<10 ? '0' : '') + month + '/' +
                 (day<10 ? '0' : '') + day;
-            mensaje = 'PDMU (Rango de fechas: '+inicio+' al '+fin+')';
+            mensaje = 'Rango de fechas: ['+inicio+' al '+fin+']    ';
             if($('#1').is(':checked')){mensaje += ' Hombres: ' +thombres};
             if($('#2').is(':checked')){mensaje += ' Mujeres: '+tmujeres};
             if($('#3').is(':checked')){mensaje += ' Menores: '+(menor + menorM)};
@@ -399,7 +399,6 @@
             if($('#16').is(':checked')){mensaje += ' 3 Comandante: '+(Comandante1 + Comandante1M)};
             if($('#17').is(':checked')){mensaje += ' 2 Comandante: '+(Comandate2 + Comandate2M)};
             if($('#18').is(':checked')){mensaje += ' 1 Comandante: '+(Comandante3 + Comandante3M)};
-            mensaje += ' Fecha del reporte: '+output;
             $('#telementos').DataTable( {
                 "language": {
                     "sProcessing": "Procesando...",
@@ -436,7 +435,8 @@
                         {
                             "sExtends": "pdf",
                             "sPdfOrientation": "landscape",
-                            "sPdfMessage": mensaje
+                            "sPdfMessage": mensaje,
+                            "fecha": ' Fecha del reporte: '+output
                         },
                     ]
                 },
