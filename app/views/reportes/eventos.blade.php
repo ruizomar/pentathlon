@@ -76,6 +76,7 @@
 		        language: 'es',
 		        pickTime: false,
 		    });
+		    $('#Reportes, #2Reportes').addClass('active');
 		});
 		function todos () {
 			$.get('todos', function(json) {
