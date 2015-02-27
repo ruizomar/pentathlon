@@ -12,6 +12,60 @@ class ReportesController extends BaseController {
 		return View::make('reportes.reportes');
 	}
 
+	public function getEventos()
+	{
+		$eventos = Evento::select('id','nombre','lugar','fecha','descripcion','tipoevento_id') -> orderby('fecha') -> get();
+		foreach ($eventos as $evento) {
+			$evento -> tipoevento;
+		}
+		return View::make('reportes.eventos')->with('eventos',$eventos);
+	}
+	public function postEvento()
+	{
+		$id = Input::get('id');
+		$elementosArr = array();
+		$evento = Evento::find($id);
+		$elementos = $evento -> elementos() -> get();
+		foreach ($elementos as $elemento) {
+			$elementosArr[] = array(
+				$elemento -> persona -> nombre,
+				$elemento -> persona -> apellidopaterno,
+				$elemento -> persona -> apellidomaterno,
+				$elemento -> persona -> sexo,
+				$elemento -> companiasysubzona -> nombre,
+				ReportesController::getAge($elemento -> fechanacimiento),
+				$elemento -> grados -> last() -> nombre,
+				$evento -> nombre,
+				$evento -> fecha,
+				$evento -> lugar,
+			);
+		}
+		return Response::json($elementosArr);
+	}
+	public function getTodos()
+	{
+		$elementosArr = array();
+		$eventos = Evento::all();
+		foreach ($eventos as $evento) {
+			$elementos = $evento -> elementos() -> get();
+			foreach ($elementos as $elemento) {
+				$elementosArr[] = array(
+					$elemento -> persona -> nombre,
+					$elemento -> persona -> apellidopaterno,
+					$elemento -> persona -> apellidomaterno,
+					$elemento -> persona -> sexo,
+					$elemento -> companiasysubzona -> nombre,
+					ReportesController::getAge($elemento -> fechanacimiento),
+					$elemento -> grados -> last() -> nombre,
+					$evento -> nombre,
+					$evento -> fecha,
+					$evento -> lugar,
+				);
+			}
+		}
+		return Response::json($elementosArr);
+	}
+
 	public function getLugares()
 	{
 		$companiasysubzonas = Companiasysubzona::all();
