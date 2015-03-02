@@ -25,9 +25,16 @@ class ReportesController extends BaseController {
 		$id = Input::get('id');
 		$elementosArr = array();
 		$evento = Evento::find($id);
+		$hombre = 0;
+		$mujer = 0;
+		$grados = Grado::all();
+		$gradosArr = array();
+		foreach ($grados as $grado) {
+			$gradosArr[$grado -> nombre] = array('nombre' => $grado -> nombre, 'cantidad' => 0);
+		}
 		$elementos = $evento -> elementos() -> get();
 		foreach ($elementos as $elemento) {
-			$elementosArr[] = array(
+			$elementosArr['tabla'][] = array(
 				$elemento -> persona -> nombre,
 				$elemento -> persona -> apellidopaterno,
 				$elemento -> persona -> apellidomaterno,
@@ -39,17 +46,37 @@ class ReportesController extends BaseController {
 				$evento -> fecha,
 				$evento -> lugar,
 			);
+			if ($elemento -> persona -> sexo == 'Masculino') {
+				$hombre++;
+			}
+			else{
+				$mujer++;
+			}
+			$gradosArr[$elemento -> grados -> last() -> nombre]['cantidad'] ++;
 		}
+		$elementosArr['grafica']['hombre'] = $hombre++;
+		$elementosArr['grafica']['mujer'] = $mujer++;
+		$elementosArr['grafica']['grados'] = $gradosArr;
+
 		return Response::json($elementosArr);
 	}
-	public function getTodos()
+	public function postTodos()
 	{
+		$inicio = Input::get('inicio');
+		$fin = Input::get('fin');
 		$elementosArr = array();
-		$eventos = Evento::all();
+		$eventos = Evento::whereBetween('fecha', array($inicio,$fin))->get();
+		$gradosArr = array();
+		$hombre = 0;
+		$mujer = 0;
+		$grados = Grado::all();
+		foreach ($grados as $grado) {
+			$gradosArr[$grado -> nombre] = array('nombre' => $grado -> nombre, 'cantidad' => 0);
+		}
 		foreach ($eventos as $evento) {
 			$elementos = $evento -> elementos() -> get();
 			foreach ($elementos as $elemento) {
-				$elementosArr[] = array(
+				$elementosArr['tabla'][] = array(
 					$elemento -> persona -> nombre,
 					$elemento -> persona -> apellidopaterno,
 					$elemento -> persona -> apellidomaterno,
@@ -61,8 +88,18 @@ class ReportesController extends BaseController {
 					$evento -> fecha,
 					$evento -> lugar,
 				);
+				if ($elemento -> persona -> sexo == 'Masculino') {
+					$hombre++;
+				}
+				else{
+					$mujer++;
+				}
+				$gradosArr[$elemento -> grados -> last() -> nombre]['cantidad'] ++;
 			}
 		}
+		$elementosArr['grafica']['hombre'] = $hombre++;
+		$elementosArr['grafica']['mujer'] = $mujer++;
+		$elementosArr['grafica']['grados'] = $gradosArr;
 		return Response::json($elementosArr);
 	}
 
