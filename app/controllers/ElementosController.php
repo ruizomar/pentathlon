@@ -207,7 +207,7 @@ class ElementosController extends BaseController {
 		$elemento = Elemento::find($id);
 		$elemento->grados()->attach($grado, array('fecha' => $fechagrado));
 		$status = $elemento->status()->save(new Statu(array(
-					'tipo' => 'Activo',
+					'tipo' => 'Nuevo',
 					'inicio' => date("Y-m-d"),
 					'descripcion' => 'Elemento registrado directo')));
 	}
