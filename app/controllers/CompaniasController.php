@@ -1,6 +1,10 @@
 <?php 
 class CompaniasController extends BaseController{
-
+	public function __construct()
+    {
+        $this->beforeFilter('auth');
+        $this->beforeFilter('admin');
+    }
 	public function getIndex(){
 		$companias = Companiasysubzona::all();
 		return View::make('administracion/companias')->with('companias',$companias);
@@ -8,14 +12,14 @@ class CompaniasController extends BaseController{
 
 	public function postUpdate(){
 		$rules = array(
-			'id' => 'integer',
-			'nombre' => 'required'
+			'id' 		=> 'integer',
+			'nombre' 	=> 'required'
 			);
 		
 		$validation = Validator::make(Input::all(), $rules);
 		if($validation->fails())
 		{		
-		  return Redirect::back()->withInput()->with('status', 'fail_create');
+		  return Response::json(array('success' => false));
 		}
 
 		$id = Input::get('id');
@@ -34,7 +38,7 @@ class CompaniasController extends BaseController{
 		else{
 			if(!is_null($compania))
 				if($compania->id != $id)
-					return Redirect::back()->with('status', 'fail_create');
+					return Response::json(array('ocupado' => true));
 			if(is_null($compania))
 				$compania = Companiasysubzona::find($id);
 			$compania->update(array(
@@ -47,7 +51,7 @@ class CompaniasController extends BaseController{
 			}
 		}
 		
-		return Redirect::back()->with('status', 'ok_create');
+		return Response::json(array('success' => true));
 	}
 
 	public function bajaElementos($compania){

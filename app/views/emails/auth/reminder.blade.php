@@ -3,12 +3,18 @@
 	<head>
 		<meta charset="utf-8">
 	</head>
-	<body>
-		<h2>Password Reset</h2>
+<body>
+	<h2>Estimado(a) {{$nombre}}</h2>
+<div>
+	<p>Recientemente has solicitado restablecer tu contraseña.</p>
 
-		<div>
-			To reset your password, complete this form: {{ URL::to('password/reset', array($token)) }}.<br/>
-			This link will expire in {{ Config::get('auth.reminder.expire', 60) }} minutes.
-		</div>
-	</body>
+	<p>Click en el enlace para restablecer tu contraseña:<br>
+	{{ URL::to('recover', array($token)) }}</p>
+
+	<p>Te recomendamos que cambies la contraseña por una que recuerdes fácilmente.</p>
+
+	<p>Atentamente<br/>
+	Pentathlón Deportivo Militarizado Universitario de Oaxaca</p>
+</div>
+</body>
 </html>

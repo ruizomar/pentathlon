@@ -3,7 +3,11 @@ class AltaReclutaController extends BaseController {
 
 	public function __construct()
     {
-        // $this->beforeFilter('auth');
+        $this->beforeFilter('auth');
+        $this->beforeFilter(function(){
+		    if(is_null(User::find(Auth::id())->roles()->where('nombre','=','archivo')->first()) && is_null(User::find(Auth::id())->roles()->where('nombre','=','comandante de compañia')->first()))
+    	 		return "No Tienes acceso";
+        });
     }
 
 	public function get_nuevo()
@@ -55,6 +59,9 @@ class AltaReclutaController extends BaseController {
 			'apellidomaterno' => Input::get('reclumaterno'),
 			'sexo' => Input::get('reclusexo')
 		));
+		$reclutamiento = 40 + ((date('Y') - 2013) * 2);
+		if(date('m') > 6)
+			$reclutamiento++;
 		$elemento = Elemento::create(array(
 			'persona_id' => $personaElemento->id,
 			'estatura' => Input::get('estatura'),
@@ -72,7 +79,7 @@ class AltaReclutaController extends BaseController {
 			'cp' => Input::get('postal'),
 			'municipio' => Input::get('municipio'),
 			'estado' => Input::get('estado'),
-			'reclutamiento' => 33,
+			'reclutamiento' => $reclutamiento,
 			'alergias' => Input::get('alergia'),
 			'adiccion' => Input::get('vicios'),
 			'tipoarma_id' => Input::get('arma'),
@@ -105,6 +112,8 @@ class AltaReclutaController extends BaseController {
 			$documento -> ruta = 'imgs/fotos/'.$elemento->id.'.'.Input::file('fotoperfil')->guessClientExtension();
 			$documento -> tipo = 'fotoperfil';
 			$documento -> save();
+
+			AltaReclutaController::resizeImagen('', $documento->ruta, 200, 200,$documento->ruta,Input::file('fotoperfil')->guessClientExtension());
 		}
 		else{
 			$documento = new Documento;
@@ -194,4 +203,40 @@ class AltaReclutaController extends BaseController {
 		$email -> email = $correo;
 		$email -> save();
 	}
+	public function resizeImagen($ruta, $nombre, $alto, $ancho,$nombreN,$extension){
+        $rutaImagenOriginal = $ruta.$nombre;
+        if($extension == 'GIF' || $extension == 'gif'){
+        $img_original = imagecreatefromgif($rutaImagenOriginal);
+        }
+        if($extension == 'jpg' || $extension == 'JPG'){
+        $img_original = imagecreatefromjpeg($rutaImagenOriginal);
+        }
+        if($extension == 'png' || $extension == 'PNG'){
+        $img_original = imagecreatefrompng($rutaImagenOriginal);
+        }
+        if($extension == 'jpeg' || $extension == 'JPEG'){
+        $img_original = imagecreatefromjpeg($rutaImagenOriginal);
+        }
+        $max_ancho = $ancho;
+        $max_alto = $alto;
+        list($ancho,$alto)=getimagesize($rutaImagenOriginal);
+        $x_ratio = $max_ancho / $ancho;
+        $y_ratio = $max_alto / $alto;
+        if( ($ancho <= $max_ancho) && ($alto <= $max_alto) ){//Si ancho 
+        $ancho_final = $ancho;
+            $alto_final = $alto;
+        } elseif (($x_ratio * $alto) < $max_alto){
+            $alto_final = ceil($x_ratio * $alto);
+            $ancho_final = $max_ancho;
+        } else{
+            $ancho_final = ceil($y_ratio * $ancho);
+            $alto_final = $max_alto;
+        }
+        $tmp=imagecreatetruecolor($ancho_final,$alto_final);
+        imagecopyresampled($tmp,$img_original,0,0,0,0,$ancho_final, $alto_final,$ancho,$alto);
+        imagedestroy($img_original);
+        $calidad=70;
+        imagejpeg($tmp,$ruta.$nombreN,$calidad);
+        
+    }
 }

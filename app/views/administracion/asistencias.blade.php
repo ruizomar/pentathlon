@@ -5,13 +5,14 @@
 @endsection
 @section('head')
 <style type="text/css">
-.fech,.bv-no-label{
-    margin-right: 65px !important;
+.fecha{
+    right: 120px !important;
 }
 .boton{
     margin-left: 10px !important;
 }
 </style>
+{{  HTML::style('css/bootstrap-datetimepicker.min.css');  }}
 @endsection
 @section('contenido')
 <?php $status=Session::get('status'); ?>
@@ -41,10 +42,13 @@
 			<thead>
 				<tr>
                     <th>
-                    <div class="form-group"> 
-                        <input type="date" name="fecha" class="form-control input-sm"/>
+                    <div class="form-group">
+                        <div class="input-group date" id="datetimePicker">
+                            <input type="text" class="form-control" name="fecha" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD"/>
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                        </div>
                         <input type="text" class="hidden"name="instructor" value="{{ $id }}">
-                        <button type="submit" class="btn btn-success btn-sm boton">Guardar</button>
+                                <button type="submit" class="btn btn-success btn-sm boton">Guardar</button>
                     </div>
                     </th>
 					<th>Matricula <i class="fa fa-sort-desc"></i></th>
@@ -134,7 +138,9 @@
 {{  HTML::script('js/tables/jquery.dataTables.bootstrap.js'); }}
 {{  HTML::script('js/bootstrapValidator.js'); }}
 {{  HTML::script('js/es_ES.js'); }}
-
+{{  HTML::script('js/moment.js'); }}
+{{  HTML::script('js/bootstrap-datetimepicker.js'); }}
+{{  HTML::script('js/bootstrap-datetimepicker.es.js'); }}
 <script type="text/javascript">
     $('#elementos').dataTable( {
         "paging": false,
@@ -151,19 +157,24 @@
 </script>
 <script type="text/javascript">
 $(document).ready(function() {
+    $('#datetimePicker').datetimepicker({
+        language: 'es',
+        pickTime: false
+    });
+
     $('#asis').bootstrapValidator({
         feedbackIcons: {
-            valid: 'glyphicon glyphicon-ok fech',
-            invalid: 'glyphicon glyphicon-remove fech',
-            validating: 'glyphicon glyphicon-refresh fech'
+            valid: 'glyphicon glyphicon-ok fecha',
+            invalid: 'glyphicon glyphicon-remove fecha',
+            validating: 'glyphicon glyphicon-refresh fecha'
         },
         fields: {
             fecha: {
                 validators: {
                     notEmpty: {
                     },
-                    date:{
-                        format: 'DD/MM/YYYY'
+                    date: {
+                        format: 'YYYY-MM-DD',
                     }
                 }
             }
@@ -171,30 +182,33 @@ $(document).ready(function() {
     })
     .on('success.form.bv', function(e) {
             $('.fa-spin').removeClass('hidden');
-        });
-    $('#main-menu').find('li').removeClass('active');
-    $('#main-menu ul li:nth-child(4)').addClass('active');
+    });
+
+    $('#datetimePicker').on('dp.change dp.show', function(e) {
+        $('#asis').bootstrapValidator('revalidateField', 'fecha');
+    });
+    $('#Asistencias, #2Asistencias').addClass('active');
 });
 </script>
 <script type="text/javascript" charset="utf-8">
     $( "select" ).change(function () {
-        if($(this).val() == 0 && $(this).closest("tr").find("td:nth-child(4)").text() == 0 && $(this).closest("tr").find("td:nth-child(5)").text() == 0 && $(this).closest("tr").find("td:nth-child(6)").text() == 0)
+        if($(this).val() == 0 && $(this).closest("tr").find("td:nth-child(4)").text() == 0 && $(this).closest("tr").find("td:nth-child(5)").text() == 0 && $(this).closest("tr").find("td:nth-child(6)").text() == 0 && $(this).closest("tr").find("td").length >= 6)
             message($(this).attr('name'))
   });
 function message(id){
-    $.post("<?php echo URL::to('asistencias/elemento'); ?>", 'id='+id, function(json) {
+    $.post("{{ URL::to('asistencias/elemento'); }}", 'id='+id, function(json) {
             $('.modal-body').html('');
             $('.modal-body').append('<h2>Elemento:</h2>');
             $('.modal-body').append('<label><strong>'+json.elemento.nombre+' '+json.elemento.apellidopaterno+' '+json.elemento.apellidomaterno+'</strong></label>');
             $(json.telefonosElemento).each(function() {
-                $('.modal-body').append('<p>'+this.tipo+': '+this.telefono+'</p>');
+                $('.modal-body').append('<p>Telefono '+this.tipo+': '+this.telefono+'</p>');
             });
             if (json.correoElemento)
                 $('.modal-body').append('<p>Email: '+json.correoElemento+'</p>');
             $('.modal-body').append('<h2>'+json.relacion+':</h2>');
             $('.modal-body').append('<label><strong>'+json.tutor.nombre+' '+json.tutor.apellidopaterno+' '+json.tutor.apellidomaterno+'</strong></label>');
             $(json.telefonosTutor).each(function() {
-                $('.modal-body').append('<p>'+this.tipo+': '+this.telefono+'</p>');
+                $('.modal-body').append('<p>Telefono '+this.tipo+': '+this.telefono+'</p>');
             });
             if (json.correotutor)
                 $('.modal-body').append('<p>Email: '+json.correotutor+'</p>');

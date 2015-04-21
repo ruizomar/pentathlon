@@ -8,7 +8,7 @@ use Illuminate\Auth\Reminders\RemindableInterface;
 class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	use UserTrait, RemindableTrait;
-
+	public $timestamps = false;
 	/**
 	* The database table used by the model.
 	*
@@ -22,5 +22,14 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	* @var array
 	*/
 	protected $hidden = array('password', 'remember_token');
-
+	public function elemento(){
+		return $this->belongsTo('Elemento');
+	}
+	public function roles()
+    {
+        return $this->belongsToMany('Role');
+    }
+    public function reminder(){
+		return $this->hasOne('Reminder');
+	}
 }

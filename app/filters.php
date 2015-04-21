@@ -67,7 +67,7 @@ Route::filter('auth.basic', function()
 
 Route::filter('guest', function()
 {
-	if (Auth::check()) return Redirect::to('/');
+	if (Auth::check()) return Redirect::to('inicio');
 });
 
 /*
@@ -87,4 +87,36 @@ Route::filter('csrf', function()
 	{
 		throw new Illuminate\Session\TokenMismatchException;
 	}
+});
+Route::filter('admin',function(){
+    if(is_null(User::find(Auth::id())->roles()->where('id','=',1)->first()))
+    	 return "No eres Administrador";
+});
+Route::filter('hacienda',function(){
+    if(is_null(User::find(Auth::id())->roles()->where('id','=',2)->first()))
+    	 return "No eres de Hacienda";
+});
+Route::filter('tecnica',function(){
+    if(is_null(User::find(Auth::id())->roles()->where('id','=',3)->first()))
+    	 return "No eres de Seccion Tecnica";
+});
+Route::filter('militar',function(){
+    if (is_null(User::find(Auth::id())->roles()->where('id','=',4)->first()))
+    	 return "No eres de Seccion Militar";
+});
+Route::filter('archivo',function(){
+    if (is_null(User::find(Auth::id())->roles()->where('id','=',5)->first()))
+    	 return "No eres de Seccion Archivo";
+});
+Route::filter('investigacion',function(){
+    if (is_null(User::find(Auth::id())->roles()->where('id','=',6)->first()))
+    	 return "No eres de Seccion de Investigacion";
+});
+Route::filter('comandante',function(){
+    if (is_null(User::find(Auth::id())->roles()->where('id','=',7)->first()))
+    	 return "No eres Comandante de Compañia";
+});
+Route::filter('instructor',function(){
+    if (is_null(User::find(Auth::id())->roles()->where('id','=',8)->first()))
+    	 return "No eres de Instructor";
 });

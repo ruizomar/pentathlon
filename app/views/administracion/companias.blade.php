@@ -1,30 +1,24 @@
 @extends('layaouts.base')
 
 @section('titulo')
-  Subzonas|Compañias PDMU
+  Subzonas|Compañías PDMU
+@endsection
+@section('head')
+{{  HTML::style('css/sweet-alert.css');  }}
+<style type="text/css">
+.nombre{
+    top: 20px !important;
+}
+</style>
 @endsection
 @section('contenido')
-<?php $status=Session::get('status'); ?>
 <div class="row">
     <div class="col-md-8 col-md-offset-1">
-        <h1 style="margin-bottom:20px;">Subzonas y Compañias</h1>
+        <h1 style="margin-bottom:20px;">Subzonas y Compañías</h1>
     </div>
     <div class="col-md-2" style="margin-top:20px;">
         <button type="button" class="btn btn-success btn-lg" id="bnueva"><i class="fa fa-plus fa-lg"></i> Nueva</button>
     </div>   
-    <div class="message col-md-6 col-md-offset-3">
-        @if($status == 'fail_create')
-        <div id="error" style="margin-top:10px;">
-            <p class="alert alert-danger"><i class="fa fa-exclamation-triangle fa-lg"></i> Ocurrio un error 
-            </p>
-        </div>
-        @elseif(($status == 'ok_create'))
-        <div id="error" style="margin-top:10px;">
-            <p class="alert alert-success"><i class="fa fa-check-square-o fa-lg"></i> Operacion completada correctamente
-            </p>
-        </div>
-        @endif
-    </div> 
 	<div class="col-md-10 col-md-offset-1">
 		<table id='companias'class="table table-hover table-first-column-number data-table display full">
 			<thead>
@@ -51,7 +45,7 @@
 				@else
 				<div class="alert alert-danger fade in">
 				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-				<strong>Error</strong>Todavia no hay Compañias registradas.
+				<strong>Error</strong>Todavia no hay Compañías registradas.
 				</div>
 				@endif	
 			</tbody>
@@ -64,13 +58,13 @@
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
           <h4 class="modal-title" id="companias">
-            <i class="fa fa-pencil-square-o fa-lg"></i> Subzonas/Compañias
+            <i class="fa fa-pencil-square-o fa-lg"></i> Subzonas/Compañías
           </h4>
         </div>
         {{ Form::open(array('url' => 'companias/update','role' => 'form','id' => 'update','class' => '')) }}
         <div class="modal-body">
             <center>
-            <h2 name="name"><i class="fa fa-pencil"></i> Nueva Subzona/Compañia</h2>
+            <h2 name="name"><i class="fa fa-pencil"></i> Nueva Subzona/Compañía</h2>
             <i class="fa fa-refresh fa-spin hidden fa-2x"></i>
             </center>
             <div class="form-group">
@@ -83,7 +77,7 @@
             </div>
             <div class="form-group">
               {{ Form::label('tipo', 'Tipo',array('class' => 'control-label','name' => 'tipo')) }}
-              {{ Form::select('tipo', array('Subzona' => 'Subzona','Compañia' => 'Compañia'),null,array('placeholder' => '','class' => 'form-control')) }}
+              {{ Form::select('tipo', array('Subzona' => 'Subzona','Compañía' => 'Compañía'),null,array('placeholder' => '','class' => 'form-control')) }}
             </div>
             <div class="form-group">
               {{ Form::label('estatus', 'Estatus',array('class' => 'control-label')) }}
@@ -129,15 +123,11 @@
 </div>
 @endsection
 @section('scripts')
-<style type="text/css">
-.nombre{
-	top: 20px !important;
-}
-</style>
-<script type="text/javascript" src="js/tables/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="js/tables/jquery.dataTables.bootstrap.js"></script>
-<script src="js/bootstrapValidator.js" type="text/javascript"></script>
-<script src="js/es_ES.js" type="text/javascript"></script>
+{{  HTML::script('js/tables/jquery.dataTables.min.js'); }}
+{{  HTML::script('js/tables/jquery.dataTables.bootstrap.js'); }}
+{{  HTML::script('js/bootstrapValidator.js'); }}
+{{  HTML::script('js/es_ES.js'); }}
+{{  HTML::script('js/sweet-alert.min.js'); }}
 <script type="text/javascript">
     $('#companias').dataTable( {
         "language": {
@@ -168,6 +158,9 @@ $(document).ready(function() {
             nombre: {
                 validators: {
                     notEmpty: {
+                    },
+                    stringLength:{
+                      max: 45,
                     }
                 }
             },
@@ -185,7 +178,29 @@ $(document).ready(function() {
             }
         })
     .on('success.form.bv', function(e) {
+        e.preventDefault();
         $('.fa-refresh').removeClass('hidden');
+        $.post($(this).attr('action'),$(this).serialize(), function(json) {
+                $('#nueva').modal('hide');
+                if(json.success)
+                    swal({
+                        title: 'Operacion completada correctamente',
+                        text: '',
+                        type: 'success',
+                        showCancelButton: false,
+                        confirmButtonColor: '#AEDEF4',
+                        confirmButtonText: 'OK',
+                        cancelButtonText: 'No, regresar a revisar',
+                        closeOnConfirm: false,
+                        closeOnCancel: false
+                    },
+                    function(isConfirm){
+                        window.location.reload();
+                    });
+                if(json.ocupado)
+                    swal('Error','Ya existe una compañia o subzona con ese nombre', "error");
+            $('.fa-refresh').addClass('hidden');    
+            }, 'json');
     });
 });
 $('[name=estatus]').change(function() {
@@ -203,15 +218,24 @@ $('#bconfirmar').click(function(){
 $('#bcancelar').click(function(){
     $("tbody").find('tr').removeClass('danger') .find('button').attr('disabled',false);
 });
+$('#status').change(function(){
+    setTimeout (function () {
+        swal($('#status_title').text(), $('#message').text(), $('#status').text())
+    }, 1000);
+}).change();
 $('#bnueva').click(function(){
         $('#nueva').modal('show');
-        $('[name=name]').html('<i class="fa fa-pencil"></i> Nueva Subzona/Compañia');
+        $('[name=name]').html('<i class="fa fa-pencil"></i> Nueva Subzona/Compañía');
         $('[name=id]').val("");
         $('[name=nombre]').val("");
         $("tbody").find('tr').removeClass('danger') .find('button').attr('disabled',false);
     });
-$('#main-menu').find('li').removeClass('active');
-$('#main-menu ul li:nth-child(3)').addClass('active');
+$('#nueva').on('hide.bs.modal', function() {
+    if($('[name=id]').val() == '')
+        $('#update').bootstrapValidator('resetForm', true);
+    $('#update').bootstrapValidator('resetForm');
+});
+$('#Companias, #2Companias').addClass('active');
 function editar(btn){
 	$(btn).closest("tbody").find('tr').removeClass('danger').find('button').attr('disabled',false);
 	$(btn).attr('disabled',true).closest("tr").addClass('danger');

@@ -5,4 +5,7 @@ class Companiasysubzona extends Eloquent{
 	public function elementos(){
 		return $this->hasMany('Elemento');
 	}
+	public function asistencias(){
+		return $this->hasMany('Asistencia');
+	}
 }

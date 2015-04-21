@@ -11,18 +11,16 @@
 |
 */
 
-Route::get('/', function()
-{
+Route::get('login', array('before' => 'guest', function(){
+	return View::make('login/login');
+}));
+Route::get('/', function(){
+	// return View::make('hello');
 	return View::make('hello');
 });
-
-/*
-Route::get('/ejemplo', function()
-{
-	return View::make('registro.ejemplo');
-});
-*/
-
+Route::get('inicio', array('before' => 'auth', function(){
+	return View::make('inicio');
+}));
 // Route::controller('editar', 'EditaReclutaController');
 
 Route::get('recluta/alta','AltaReclutaController@get_nuevo');
@@ -35,6 +33,7 @@ Route::post('recluta/update','EditaReclutaController@update');
 Route::get('recluta/lugares','EditaReclutaController@lugares');
 Route::post('recluta/extendidos','EditaReclutaController@extendidos');
 Route::post('recluta/cargos','EditaReclutaController@cargos');
+Route::post('recluta/status','EditaReclutaController@status');
 
 /*Route::get('cargos/editar','AsignaCargosController@editar');
 Route::post('cargos/buscar','AsignaCargosController@buscar');
@@ -43,15 +42,32 @@ Route::post('cargos/update','AsignaCargosController@update');*/
 Route::controller('cargos', 'AsignaCargosController');
 Route::controller('ascensos', 'AsignaAscensosController');
 Route::controller('jura', 'JuraBanderaController');
+Route::controller('reportes', 'ReportesController');
+Route::controller('concursos', 'ConcursosController');
+Route::controller('elementos', 'ElementosController');
 
 
 Route::post('buscar','BuscarController@buscar');
+Route::controller('buscar', 'BuscarController');
 Route::controller('pagos', 'MembresiasController');
 Route::controller('companias','CompaniasController');
 Route::controller('asistencias','AsistenciasController');
 Route::controller('condecoraciones','CondecoracionesController');
 
-Route::get('/22',function()
-{
-	return View::make('login.login');
-});
+Route::controller('eventos','EventosController');
+Route::controller('examenes','ExamenesController');
+Route::controller('arrestos','ArrestosController');
+Route::controller('armas','ArmasController');
+Route::controller('cuerpos','CuerposController');
+Route::controller('historial','HistorialController');
+
+Route::post('login', 'UserLogin@user');
+Route::get('logout', 'UserLogin@logOut');
+
+Route::get('forgot','RecoverPassword@getForgotpassword');
+Route::post('forgot','RecoverPassword@postForgotpassword');
+Route::get('recover/{token?}','RecoverPassword@getRecover');
+Route::post('recover','RecoverPassword@postRecover');
+Route::controller('settings','settingsController');
+Route::controller('administrador','AdminController');
+Route::controller('credenciales','CredencialesController');

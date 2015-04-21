@@ -6,4 +6,7 @@ class Grado extends Eloquent{
 		return $this->belongsToMany('Elemento','ascensos')->withPivot('fecha');
 	}
 
+	public function examenes(){
+		return $this->hasMany('Examen');
+	}
 }

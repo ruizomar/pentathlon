@@ -5,12 +5,14 @@
 @section('head')
 	<style>
 	</style>
+	{{  HTML::script('js/bootstrapValidator.js'); }}
 	{{  HTML::script('js/tables/jquery.dataTables.min.js')}}
 	{{  HTML::script('js/tables/jquery.tabletojson.min.js')}}
 	{{  HTML::script('js/tour/bootstrap-tour.min.js')}}
 	{{  HTML::style('css/sweet-alert.css')}}
 	{{  HTML::style('css/jquery.dataTables.css')}}
-	<!-- <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.4/css/jquery.dataTables.css"> -->
+	{{  HTML::style('css/bootstrap-datetimepicker.min.css');  }}
+	{{  HTML::script('js/es_ES.js'); }}
 	{{  HTML::style('css/tour/bootstrap-tour.min.css')}}
 @endsection
 @section('contenido')
@@ -44,19 +46,57 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="col-md-12" style="margin-top:1em;">
-			{{ Form::button('<i class="fa fa-flag"></i> Jurar',array('id' => 'jurar','class' => 'tour-9 pull-right col-md-1 hidden btn btn-success')) }}
+		<div id="reportes" class="jurar hidden col-md-12" style="margin-top:1em;">
+			<div class="col-md-3 form-group">
+				<div class="input-group" id="datetimePicker">
+					{{ Form::text('birthday', null, array('id' => 'fechainicio','class' => 'form-control', 'placeholder' => 'Fecha de jura', 'data-date-format' => 'YYYY-MM-DD')) }}
+					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+				</div>
+			</div>
+			{{ Form::button('<i class="fa fa-flag"></i> Jurar',array('id' => 'jurar','class' => 'tour-9 col-md-offset-1 col-md-1 btn btn-success')) }}
 		</div>
 	</div>
 @stop
 @section('scripts')
 	{{  HTML::script('js/sweet-alert.min.js')}}
 	<script>
+	$(document).ready(function() {
+	    $('#fechainicio').datetimepicker({
+	        language: 'es',
+	        pickTime: false,
+	    });
+	    $('#reportes').bootstrapValidator({
+	        feedbackIcons: {
+	            valid: 'glyphicon glyphicon-ok fecha',
+	            invalid: 'glyphicon glyphicon-remove fecha',
+	            validating: 'glyphicon glyphicon-refresh fecha'
+	        },
+	        fields: {
+	            birthday: {
+	                validators: {
+	                    notEmpty: {},
+	                    date: {
+	                        format: 'YYYY-MM-DD',
+	                    }
+	                }
+	            },
+	        }
+	    });
+	    $('#datetimePicker').on('dp.change dp.show', function(e) {
+	        $('#reportes').bootstrapValidator('revalidateField', 'birthday');
+	    });
+	});
+	var tamanio = 0;
+	$('#Juras,#2Juras').addClass('active');
 		$('#listar').on('click', function(e) {
 			$('#eliminar').removeClass('hidden');
 			$('#elementobody').html('');
 			id = $( "[name=lugar]" ).val();
 			$.post('jura/llenartabla',{id:id}, function(json) {
+				if (json.length) {
+					$('.jurar').removeClass('hidden');
+					tamanio = json.length;
+				};
 				$.each(json,function(index,elementos){
 					$('#elementobody').append('<tr>'+
 						'<td>'+elementos.nombre+'</td>'+
@@ -100,7 +140,6 @@
 				});
 			}, 'json');
 			$('#listar').prop( "disabled",true);
-			$('#jurar').removeClass('hidden');
 			$('#telementos').removeClass('hidden');
 		});
 		$('#telementos tbody').on( 'click', 'tr', function () {
@@ -111,8 +150,12 @@
 			}
 		});
 		$('#eliminar').click( function () {
+			tamanio--;
 			tabla.row('.selected').remove().draw( false );
 			$('#eliminar').addClass('disabled');
+			if (tamanio == 0) {
+				$('.jurar').addClass('hidden');
+			};
 		});
 		$('#lugares').change(function(){
 			if (typeof tabla !== 'undefined') {
@@ -157,7 +200,8 @@
 			var data = $('#telementos').tableToJSON({
 				onlyColumns:[4],
 			});
-			$.post('jura/jurar',{data:data}, function(json) {
+			fecha = $('#fechainicio').val();
+			$.post('jura/jurar',{data:data,fecha:fecha}, function(json) {
 				if (json) {
 					swal('!Hecho!', 'Se han guardado los cambios', 'success');
 					location.reload(true)
@@ -230,4 +274,7 @@
 	    tour.start();
 	  });
 	</script>
+	{{  HTML::script('js/moment.js'); }}
+	{{  HTML::script('js/bootstrap-datetimepicker.js'); }}
+	{{  HTML::script('js/bootstrap-datetimepicker.es.js'); }}
 @endsection

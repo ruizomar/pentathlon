@@ -1,8 +1,12 @@
 <?php 
 class CondecoracionesController extends BaseController{
-
+	public function __construct()
+    {
+        $this->beforeFilter('auth');
+        $this->beforeFilter('tecnica');
+    }
 	public function getIndex(){
-		return View::make('administracion/condecoraciones');
+		return View::make('condecoraciones/condecoraciones');
 	}
 
 	public function postElemento(){
@@ -43,7 +47,6 @@ class CondecoracionesController extends BaseController{
 				$d1 = date_create(date('Y-m-d',strtotime ( '+'.$tiempo.' day' , strtotime( $estatu->inicio) )));		
 		}
 		$tiempo = (int)($tiempo/365);
-		$tiempo = 15;
 		$conde = array();
 		for ($i=5; $i < 100; $i=$i+5) {
 			$condecoraciones = Elemento::find(Input::get('id'))->reconocimientos()
@@ -60,14 +63,24 @@ class CondecoracionesController extends BaseController{
 	}
 	public function postAgregar(){
 		$elemento = Elemento::find(Input::get('id'));
+		$condecoraciones=array();
 		foreach (Input::all() as $key => $value) {
 			if(is_numeric($key))
-				$elemento->reconocimientos()
+				$condecoraciones[] = $elemento->reconocimientos()
 				->save(new Reconocimiento(array(
-						'nombre' => 'Condecoracion por '.$key.' años',
+						'nombre' => 'Condecoración por '.$key.' años',
 						'fecha' => date('Y-m-d'),)
 				));
 		}
-		return Response::json(array('success' => true));
+		return Response::json(array('success' => true,
+			'condecoraciones' => $condecoraciones));
+	}
+	public function postImprimir(){
+		$pdf = App::make('dompdf');
+		$comandante = Cargo::find(9)->elementos()->where('fecha_fin','=',null)->first();
+		$html = View::make('condecoraciones/reconocimiento')
+		->with('condecoraciones',Input::all())->with('comandante',$comandante);
+		$pdf->loadHTML($html)->setPaper('a4')->setOrientation('landscape');
+		return $pdf->stream();
 	}
 }

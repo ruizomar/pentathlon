@@ -3,7 +3,8 @@ class AsignaAscensosController extends BaseController {
 
 	public function __construct()
     {
-        // $this->beforeFilter('auth');
+        $this->beforeFilter('auth');
+        $this->beforeFilter('tecnica');
     }
 
 	public function getIndex()
@@ -52,6 +53,7 @@ class AsignaAscensosController extends BaseController {
 			}
 			$i++;
 		}
+		// $rr = ;
 		$dato = array(
 			'id' => $id,
 			'success' => true,
@@ -61,6 +63,8 @@ class AsignaAscensosController extends BaseController {
 			'fotoperfil' => $fotoperfil,
 			'matricula' => $matricula,
 			'grado' => $grado -> nombre,
+			'ascenso' => Grado::find($grado -> id + 1) -> nombre,
+			'ascenso_id' => $grado -> id + 1,
 			'fechagrado' => $grado -> pivot -> fecha,
 			'companiasysubzonas' => $elemento -> companiasysubzona -> tipo .' '. $elemento ->  companiasysubzona -> nombre,
 			'faltas' => count($elemento -> asistencias() -> where('tipo' , '=' , 0) -> get()),
@@ -74,5 +78,15 @@ class AsignaAscensosController extends BaseController {
 		return ($dato);
 	}
 
-
+	public function postAscender()
+	{
+		$ascenso_id = $_POST['ascenso_id'];
+		$elemento_id = $_POST['elemento_id'];
+		$personaElemento = Ascenso::create(array(
+			'grado_id' => $ascenso_id,
+			'elemento_id' => $elemento_id,
+			'fecha' => date('Y-m-d'),
+		));
+		return Response::json($personaElemento);
+	}
 }

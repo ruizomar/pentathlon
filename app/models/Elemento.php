@@ -1,7 +1,7 @@
 <?php
 class Elemento extends Eloquent{
 	public $timestamps = false;
-	protected $fillable = array('persona_id','estatura','peso','ocupacion','estadocivil','fechanacimiento','escolaridad','escuela','fechaingreso','lugarnacimiento','curp','calle','colonia','cp','municipio','reclutamiento','email','alergias','adiccion','tipoarma_id','tipocuerpo_id','companiasysubzona_id');
+	protected $fillable = array('persona_id','estatura','peso','ocupacion','estadocivil','fechanacimiento','escolaridad','escuela','fechaingreso','lugarnacimiento','curp','calle','colonia','cp','municipio','reclutamiento','email','alergias','adiccion','tipoarma_id','tipocuerpo_id','companiasysubzona_id','estado','tiposangre');
 
 	public function persona(){
 		return $this->belongsTo('Persona');
@@ -32,6 +32,13 @@ class Elemento extends Eloquent{
 	}
 	public function documentos(){
 		return $this->hasMany('Documento');
+	}
+    public function user()
+    {
+        return $this->hasOne('User');
+    }
+    public function arrestos(){
+		return $this->hasMany('Arresto', 'arrestado');
 	}
     public function tipoarma(){
 		return $this->belongsTo('Tipoarma');

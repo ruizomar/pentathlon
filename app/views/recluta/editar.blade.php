@@ -1,6 +1,6 @@
 @extends('layaouts.base')
 @section('titulo')
-  PDMU
+  Editar elemento
 @endsection
 @section('head')
   <style>
@@ -65,6 +65,9 @@
       padding-top: 15px;
       font-size: 40px;
     }
+    .fecha i{
+      right: 60px !important;
+  }
   </style>
   {{  HTML::script('js/fileinput.js')}}
   {{  HTML::script('js/tour/bootstrap-tour.min.js')}}
@@ -73,8 +76,15 @@
   {{  HTML::script('js/tables/jquery.dataTables.min.js')}}
   {{  HTML::style('css/jquery.dataTables.css')}}
   {{  HTML::style('css/bootstrap-datetimepicker.min.css');  }}
+  {{  HTML::style('css/sweet-alert.css')}}
+  {{  HTML::script('js/sweet-alert.min.js')}}
 @endsection
 @section('contenido')
+  <div id="inactivo" class="alert alert-danger hidden" role="alert">
+    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+    <span class="sr-only">Error:</span>
+    Este elemento se encuentra inactivo
+  </div>
   <form id="buscarelemento" role="form" method="POST" action="buscar">
     {{ Form::button('<i class="fa fa-question"></i>',array('id' => 'tour','class' => 'pull-right btn btn-warning btn-xs')) }}
     <div class="col-md-10">
@@ -118,7 +128,7 @@
     </table>
   </div>
   <i class="fa fa-spinner fa-2x fa-spin hidden spin-form"></i>
-  <form id="buscarelemento" role="form" method="POST" action="update">
+  {{ Form::open(array('id' => 'update_elemento','url'=>'recluta/update','files'=>true)) }}
     <div id="elemento" class="col-mds-12 tabla hidden">
     <div class="col-md-10">
       <div class="col-md-2 step">
@@ -136,78 +146,88 @@
         </div>
       </div>
       <div class="col-md-10 row setup-content activeStepInfo" id="step-1">
-        <div class="col-md-4 form-group">
-          {{ Form::label('reclunombre', 'Nombre (s)',array('class' => 'control-label')) }}
-          {{ Form::text('reclunombre', null, array('placeholder' => 'introduce nombre','class' => 'form-control')) }}
-          {{ Form::text('persona_id', null, array('placeholder' => 'id','class' => 'hidden form-control')) }}
-        </div>
-        <div class="col-md-3 form-group">
-          {{ Form::label('reclupaterno', 'Apellido paterno') }}
-          {{ Form::text('reclupaterno', null, array('placeholder' => 'introduce apellido paterno','class' => 'form-control')) }}
-        </div>
-        <div class="col-md-3 form-group">
-          {{ Form::label('reclumaterno', 'Apellido materno') }}
-          {{ Form::text('reclumaterno', null, array('placeholder' => 'introduce apellido materno','class' => 'form-control')) }}
-        </div>
-        <div class="col-md-2 form-group">
-          {{ Form::label('reclusexo', 'Sexo') }}
-          {{Form::select('reclusexo', array('Hombre' => 'Hombre','Mujer' => 'Mujer',),null,array('class' => 'form-control')) }}
-        </div>
-        <div class="col-md-4 form-group fecha">
-          {{ Form::label('birthday', 'Fecha nacimiento') }}
-          <div class="input-group date" id="datetimePicker">
-              {{ Form::text('birthday', null, array('class' => 'form-control', 'placeholder' => 'YYYY-MM-DD', 'data-date-format' => 'YYYY-MM-DD')) }}
-              <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+        <div class="row">
+          <div class="col-md-4 form-group">
+            {{ Form::label('reclunombre', 'Nombre (s)',array('class' => 'control-label')) }}
+            {{ Form::text('reclunombre', null, array('placeholder' => 'introduce nombre','class' => 'form-control')) }}
+            {{ Form::text('persona_id', null, array('placeholder' => 'id','class' => 'hidden form-control')) }}
+          </div>
+          <div class="col-md-3 form-group">
+            {{ Form::label('reclupaterno', 'Apellido paterno') }}
+            {{ Form::text('reclupaterno', null, array('placeholder' => 'introduce apellido paterno','class' => 'form-control')) }}
+          </div>
+          <div class="col-md-3 form-group">
+            {{ Form::label('reclumaterno', 'Apellido materno') }}
+            {{ Form::text('reclumaterno', null, array('placeholder' => 'introduce apellido materno','class' => 'form-control')) }}
+          </div>
+          <div class="col-md-2 form-group">
+            {{ Form::label('reclusexo', 'Sexo') }}
+            {{Form::select('reclusexo', array('Masculino' => 'Masculino','Femenino' => 'Femenino',),null,array('class' => 'form-control')) }}
           </div>
         </div>
-        <div class="col-md-5 form-group">
-          {{ Form::label('domicilio', 'Calle y número') }}
-          {{ Form::text('domicilio', null, array('placeholder' => 'Wallaby Way 42','class' => 'form-control')) }}
+        <div class="row">
+          <div class="col-md-4 form-group fecha">
+            {{ Form::label('birthday', 'Fecha nacimiento') }}
+            <div class="input-group date" id="datetimePicker">
+                {{ Form::text('birthday', null, array('class' => 'form-control', 'placeholder' => 'YYYY-MM-DD', 'data-date-format' => 'YYYY-MM-DD')) }}
+                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+            </div>
+          </div>
+          <div class="col-md-5 form-group">
+            {{ Form::label('domicilio', 'Calle y número') }}
+            {{ Form::text('domicilio', null, array('placeholder' => 'Wallaby Way 42','class' => 'form-control')) }}
+          </div>
+          <div class="col-md-3 form-group">
+            {{ Form::label('colonia', 'Colonia') }}
+            {{ Form::text('colonia', null, array('placeholder' => 'Sydney','class' => 'form-control')) }}
+          </div>
         </div>
-        <div class="col-md-3 form-group">
-          {{ Form::label('colonia', 'Colonia') }}
-          {{ Form::text('colonia', null, array('placeholder' => 'Sydney','class' => 'form-control')) }}
-        </div>
-        <div class="col-md-4 form-group">
-          {{ Form::label('municipio', 'Municipio') }}
-          {{ Form::text('municipio', null, array('placeholder' => 'introduce municipio','class' => 'form-control')) }}
-        </div>
-        <div class="col-md-2 form-group">
-          {{ Form::label('estado', 'Estado') }}
-          {{Form::select('estado', array('Oaxaca' => 'Oaxaca',),null,array('placeholder' => '','class' => 'form-control')) }}
-        </div>
-        <div class="col-md-2 form-group">
-          {{ Form::label('postal', 'C. P.',array('class' => 'control-label')) }}
-          {{ Form::text('postal', null, array('placeholder' => '00000','class' => 'form-control')) }}
-        </div>
-        <div class="col-md-4 form-group">
-          {{ Form::label('lugnac', 'Lugar nacimiento') }}
-          {{ Form::text('lugnac', null, array('placeholder' => 'introduce lugar nacimiento','class' => 'form-control')) }}
-        </div>
-        <div class="col-md-4 form-group">
-          {{ Form::label('curp', 'CURP') }}
-          {{ Form::text('curp', null, array('placeholder' => 'XXXXXXXXXXXXXXXXXX','class' => 'form-control')) }}
-        </div>
-        <div class="col-md-4 form-group">
-          {{ Form::label('email', 'e-mail') }}
-          {{ Form::email('email', null, array('placeholder' => 'ejemplo@ejemplo.com','class' => 'form-control')) }}
-        </div>
-        <div class="col-md-4 form-group">
-          {{ Form::label('reclutelefonofijo', 'Teléfono casa') }}
-          {{ Form::text('reclutelefonofijo', null, array('placeholder' => '(XXX) XXX XX XX','class' => 'form-control')) }}
-        </div>
-        <div class="col-md-4 form-group">
-          {{ Form::label('reclutelefonomovil', 'Teléfono móvil') }}
-          {{ Form::text('reclutelefonomovil', null, array('placeholder' => '(XXX) XXX XX XX','class' => 'form-control')) }}
-        </div>
-        <div id="fbtw" style="display: none;">
+        <div class="row">
           <div class="col-md-4 form-group">
-            {{ Form::label('reclufacebook', 'Facebook') }}
-            {{ Form::text('reclufacebook', null, array('placeholder' => 'facebook.com/','class' => 'form-control')) }}
+            {{ Form::label('municipio', 'Municipio') }}
+            {{ Form::text('municipio', null, array('placeholder' => 'introduce municipio','class' => 'form-control')) }}
+          </div>
+          <div class="col-md-2 form-group">
+            {{ Form::label('estado', 'Estado') }}
+            {{Form::select('estado', array('Oaxaca' => 'Oaxaca',),null,array('placeholder' => '','class' => 'form-control')) }}
+          </div>
+          <div class="col-md-2 form-group">
+            {{ Form::label('postal', 'C. P.',array('class' => 'control-label')) }}
+            {{ Form::text('postal', null, array('placeholder' => '00000','class' => 'form-control')) }}
           </div>
           <div class="col-md-4 form-group">
-            {{ Form::label('reclutwitter', 'Twitter') }}
-            {{ Form::text('reclutwitter', null, array('placeholder' => '@usuario','class' => 'form-control')) }}
+            {{ Form::label('lugnac', 'Lugar nacimiento') }}
+            {{ Form::text('lugnac', null, array('placeholder' => 'introduce lugar nacimiento','class' => 'form-control')) }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 form-group">
+            {{ Form::label('curp', 'CURP') }}
+            {{ Form::text('curp', null, array('placeholder' => '','class' => 'form-control')) }}
+          </div>
+          <div class="col-md-4 form-group">
+            {{ Form::label('email', 'e-mail') }}
+            {{ Form::email('email', null, array('placeholder' => 'ejemplo@ejemplo.com','class' => 'form-control')) }}
+          </div>
+          <div class="col-md-4 form-group">
+            {{ Form::label('reclutelefonofijo', 'Teléfono casa') }}
+            {{ Form::text('reclutelefonofijo', null, array('placeholder' => '','class' => 'form-control')) }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 form-group">
+            {{ Form::label('reclutelefonomovil', 'Teléfono móvil') }}
+            {{ Form::text('reclutelefonomovil', null, array('placeholder' => '','class' => 'form-control')) }}
+          </div>
+          <div id="fbtw" style="display: none;">
+            <div class="col-md-4 form-group">
+              {{ Form::label('reclufacebook', 'Facebook') }}
+              {{ Form::text('reclufacebook', null, array('placeholder' => 'facebook.com/','class' => 'form-control')) }}
+            </div>
+            <div class="col-md-4 form-group">
+              {{ Form::label('reclutwitter', 'Twitter') }}
+              {{ Form::text('reclutwitter', null, array('placeholder' => '@usuario','class' => 'form-control')) }}
+            </div>
           </div>
         </div>
         <div class="col-md-2">
@@ -218,118 +238,130 @@
         </div>
       </div>
       <div class="col-md-10 row setup-content hiddenStepInfo" id="step-2">
-        <div class="col-md-2 form-group">
-          {{ Form::label('estatura', 'Estatura') }}
-          {{ Form::text('estatura', null, array('placeholder' => 'cm','class' => 'form-control')) }}
+        <div class="row">
+          <div class="col-md-2 form-group">
+            {{ Form::label('estatura', 'Estatura') }}
+            {{ Form::text('estatura', null, array('placeholder' => 'cm','class' => 'form-control')) }}
+          </div>
+          <div class="col-md-2 form-group">
+            {{ Form::label('peso', 'peso') }}
+            {{ Form::text('peso', null, array('placeholder' => 'kg','class' => 'form-control')) }}
+          </div>
+          <div class="col-md-2 form-group">
+          {{Form::label('tiposangre', 'Tipo Sangre') }}
+          {{Form::select('tiposangre', array('Apositivo' => 'A+','Anegativo' => 'A-','Bpositivo' => 'B+','Bnegativo' => 'B-','ABpositivo' => 'AB+','ABnegativo' => 'AB-','Opositivo' => 'O+','Onegativo' => 'O-',),null,array('placeholder' => '','class' => 'form-control')) }}
+          </div>
+          <div class="col-md-3 form-group">
+            {{ Form::label('ocupacion', 'Ocupación') }}
+            {{ Form::text('ocupacion', null, array('placeholder' => '','class' => 'form-control')) }}
+          </div>
+          <div class="col-md-3 form-group">
+            {{ Form::label('estadocivil', 'Estado Civil') }}
+            {{ Form::text('estadocivil', null, array('placeholder' => '','class' => 'form-control')) }}
+          </div>
         </div>
-        <div class="col-md-2 form-group">
-          {{ Form::label('peso', 'peso') }}
-          {{ Form::text('peso', null, array('placeholder' => 'kg','class' => 'form-control')) }}
+        <div class="row">
+          <div class="col-md-3 form-group">
+            {{ Form::label('escolaridad', 'Escolaridad') }}
+            {{Form::select('escolaridad', array('primaria' => 'primaria','secundaria' => 'secundaria','bachillerato' => 'bachillerato','universidad' => 'universidad','licenciatura' => 'licenciatura','maestria' => 'maestria','doctorado' => 'doctorado',),null,array('placeholder' => '','class' => 'form-control')) }}
+          </div>
+          <div class="col-md-5 form-group">
+            {{ Form::label('escuela', 'Escuela') }}
+            {{ Form::text('escuela', null, array('placeholder' => 'Nombre de la escuela','class' => 'form-control')) }}
+          </div>
+          <div class="col-md-4 form-group">
+            {{ Form::label('alergia', 'Alergias') }}
+            {{ Form::text('alergia', null, array('placeholder' => '','class' => 'form-control')) }}
+          </div>
         </div>
-        <div class="col-md-2 form-group">
-        {{Form::label('tiposangre', 'Tipo Sangre') }}
-        {{Form::select('tiposangre', array('Apositivo' => 'A+','Anegativo' => 'A-','Bpositivo' => 'B+','Bnegativo' => 'B-','ABpositivo' => 'AB+','ABnegativo' => 'AB-','Opositivo' => 'O+','Onegativo' => 'O-',),null,array('placeholder' => '','class' => 'form-control')) }}
-        </div>
-        <div class="col-md-3 form-group">
-          {{ Form::label('ocupacion', 'Ocupación') }}
-          {{ Form::text('ocupacion', null, array('placeholder' => '','class' => 'form-control')) }}
-        </div>
-        <div class="col-md-3 form-group">
-          {{ Form::label('estadocivil', 'Estado Civil') }}
-          {{ Form::text('estadocivil', null, array('placeholder' => '','class' => 'form-control')) }}
-        </div>
-        <div class="col-md-3 form-group">
-          {{ Form::label('escolaridad', 'Escolaridad') }}
-          {{Form::select('escolaridad', array('primaria' => 'primaria','secundaria' => 'secundaria','bachillerato' => 'bachillerato','universidad' => 'universidad','licenciatura' => 'licenciatura','maestria' => 'maestria','doctorado' => 'doctorado',),null,array('placeholder' => '','class' => 'form-control')) }}
-        </div>
-        <div class="col-md-5 form-group">
-          {{ Form::label('escuela', 'Escuela') }}
-          {{ Form::text('escuela', null, array('placeholder' => 'Nombre de la escuela','class' => 'form-control')) }}
-        </div>
-        <div class="col-md-4 form-group">
-          {{ Form::label('alergia', 'Alergias') }}
-          {{ Form::text('alergia', null, array('placeholder' => '','class' => 'form-control')) }}
-        </div>
-        <div class="col-md-3 form-group">
-          {{ Form::label('vicios', 'Vicios') }}
-          {{ Form::text('vicios', null, array('placeholder' => '','class' => 'form-control')) }}
-        </div>
-        <div class="col-md-3 form-group">
-          {{ Form::label('arma', 'Arma') }} <br>
-          {{ Form::select('arma', $armas,null,array('class' => 'form-control')) }}
-        </div>
-        <div class="col-md-3 form-group">
-          {{ Form::label('cuerpo', 'Cuerpo') }} <br>
-          {{Form::select('cuerpo',$cuerpos,null,array('placeholder' => '','class' => 'form-control')) }}
-        </div>
-        <div class="col-md-3 form-group">
-          {{ Form::label('compania', 'Compañia - Subzona') }} <br>
-          {{Form::select('compania',$companiasysubzonas,null,array('placeholder' => '','class' => 'form-control')) }}
-          {{ Form::label('msginstructor','El elemento es instructor',array('id' => 'msginstructor' ,'class' => 'hidden label label-danger')) }}
+        <div class="row">
+          <div class="col-md-3 form-group">
+            {{ Form::label('vicios', 'Vicios') }}
+            {{ Form::text('vicios', null, array('placeholder' => '','class' => 'form-control')) }}
+          </div>
+          <div class="col-md-3 form-group">
+            {{ Form::label('arma', 'Arma') }} <br>
+            {{ Form::select('arma', $armas,null,array('class' => 'form-control')) }}
+          </div>
+          <div class="col-md-3 form-group">
+            {{ Form::label('cuerpo', 'Cuerpo') }} <br>
+            {{Form::select('cuerpo',$cuerpos,null,array('placeholder' => '','class' => 'form-control')) }}
+          </div>
+          <div class="col-md-3 form-group">
+            {{ Form::label('compania', 'Compañia - Subzona') }} <br>
+            {{Form::select('compania',$companiasysubzonas,null,array('placeholder' => '','class' => 'form-control')) }}
+            {{ Form::label('msginstructor','El elemento es instructor',array('id' => 'msginstructor' ,'class' => 'hidden label label-danger')) }}
+          </div>
         </div>
       </div>
       <div class="col-md-10 row setup-content hiddenStepInfo" id="step-3">
-        <div class="col-md-4 form-group">
-          {{ Form::label('contactonombre', 'Nombre (s)') }}
-          {{ Form::text('contactonombre', null, array('class' => 'form-control mayuscula')) }}
-        </div>
-        <div class="col-md-4 form-group">
-          {{ Form::label('contactopaterno', 'Apellido paterno') }}
-          {{ Form::text('contactopaterno', null, array('class' => 'form-control mayuscula')) }}
-        </div>
-        <div class="col-md-4 form-group">
-          {{ Form::label('contactomaterno', 'Apellido materno') }}
-          {{ Form::text('contactomaterno', null, array('class' => 'form-control mayuscula')) }}
-        </div>
-        <div class="col-md-4 form-group">
-          {{ Form::label('email', 'e-mail') }}
-          <div class="input-group">
-            <div class="input-group-addon"><i class="fa fa-envelope"></i></div>
-            {{ Form::email('contactoemail', null, array('placeholder' => 'ejemplo@ejemplo.com','class' => 'form-control')) }}
-          </div>
-        </div>
-        <div class="col-md-3 form-group">
-          {{ Form::label('contactotelefonofijo', 'Teléfono de casa') }}
-          <div class="input-group">
-            <div class="input-group-addon"><i class="fa fa-phone"></i></div>
-            {{ Form::text('contactotelefonofijo', null, array('placeholder' => '9511234567','class' => 'form-control')) }}
-          </div>
-        </div>
-        <div class="col-md-3 form-group">
-          {{ Form::label('contactotelefonomovil', 'Teléfono de movil') }}
-          <div class="input-group">
-            <div class="input-group-addon"><i class="fa fa-mobile"></i></div>
-            {{ Form::text('contactotelefonomovil', null, array('placeholder' => '9511234567','class' => 'form-control')) }}
-          </div>
-        </div>
-        <div class="col-md-2 form-group">
-          {{ Form::label('contactosexo', 'Sexo') }}
-          {{Form::select('contactosexo', array('Hombre' => 'Hombre','Mujer' => 'Mujer',),null,array('placeholder' => '','class' => 'form-control')) }}
-        </div>
-        <div class="col-md-4 form-group">
-          {{ Form::label('contactorelacion', 'Relación con el recluta') }}
-          <div class="input-group">
-            <div class="input-group-addon"><i class="fa fa-link"></i></div>
-            {{ Form::text('contactorelacion', null, array('placeholder' => 'padre, madre, hermano, etc.','class' => 'form-control mayuscula')) }}
-          </div>
-        </div>
-        <div class="col-md-2">
-          <br><br>
-          {{Form::button('<i class="fa fa-plus"></i> Redes Sociales',array('class' => 'btn btn-success btn-xs','id' => 'contactoredes'))}}
-        </div>
-        <div id="contactofbtw" style="display: none;">
+        <div class="row">
           <div class="col-md-4 form-group">
-            {{ Form::label('contactofacebook', 'Facebook') }}
+            {{ Form::label('contactonombre', 'Nombre (s)') }}
+            {{ Form::text('contactonombre', null, array('class' => 'form-control mayuscula')) }}
+          </div>
+          <div class="col-md-4 form-group">
+            {{ Form::label('contactopaterno', 'Apellido paterno') }}
+            {{ Form::text('contactopaterno', null, array('class' => 'form-control mayuscula')) }}
+          </div>
+          <div class="col-md-4 form-group">
+            {{ Form::label('contactomaterno', 'Apellido materno') }}
+            {{ Form::text('contactomaterno', null, array('class' => 'form-control mayuscula')) }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 form-group">
+            {{ Form::label('email', 'e-mail') }}
             <div class="input-group">
-              <div class="input-group-addon"><i class="fa fa-facebook"></i></div>
-              {{ Form::text('contactofacebook', null, array('placeholder' => 'facebook.com/','class' => 'form-control')) }}
+              <div class="input-group-addon"><i class="fa fa-envelope"></i></div>
+              {{ Form::email('contactoemail', null, array('placeholder' => 'ejemplo@ejemplo.com','class' => 'form-control')) }}
             </div>
           </div>
-          <div class="col-md-4 form-group">
-            {{ Form::label('contactotwitter', 'Twitter') }}
+          <div class="col-md-3 form-group">
+            {{ Form::label('contactotelefonofijo', 'Teléfono de casa') }}
             <div class="input-group">
-              <div class="input-group-addon"><i class="fa fa-twitter"></i></div>
-              {{ Form::text('contactotwitter', null, array('placeholder' => '@usuario','class' => 'form-control')) }}
+              <div class="input-group-addon"><i class="fa fa-phone"></i></div>
+              {{ Form::text('contactotelefonofijo', null, array('placeholder' => '9511234567','class' => 'form-control')) }}
+            </div>
+          </div>
+          <div class="col-md-3 form-group">
+            {{ Form::label('contactotelefonomovil', 'Teléfono de movil') }}
+            <div class="input-group">
+              <div class="input-group-addon"><i class="fa fa-mobile"></i></div>
+              {{ Form::text('contactotelefonomovil', null, array('placeholder' => '9511234567','class' => 'form-control')) }}
+            </div>
+          </div>
+          <div class="col-md-2 form-group">
+            {{ Form::label('contactosexo', 'Sexo') }}
+            {{Form::select('contactosexo', array('Masculino' => 'Masculino','Femenino' => 'Femenino',),null,array('placeholder' => '','class' => 'form-control')) }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 form-group">
+            {{ Form::label('contactorelacion', 'Relación con el recluta') }}
+            <div class="input-group">
+              <div class="input-group-addon"><i class="fa fa-link"></i></div>
+              {{ Form::text('contactorelacion', null, array('placeholder' => 'padre, madre, hermano, etc.','class' => 'form-control mayuscula')) }}
+            </div>
+          </div>
+          <div class="col-md-2">
+            <br><br>
+            {{Form::button('<i class="fa fa-plus"></i> Redes Sociales',array('class' => 'btn btn-success btn-xs','id' => 'contactoredes'))}}
+          </div>
+          <div id="contactofbtw" style="display: none;">
+            <div class="col-md-4 form-group">
+              {{ Form::label('contactofacebook', 'Facebook') }}
+              <div class="input-group">
+                <div class="input-group-addon"><i class="fa fa-facebook"></i></div>
+                {{ Form::text('contactofacebook', null, array('placeholder' => 'facebook.com/','class' => 'form-control')) }}
+              </div>
+            </div>
+            <div class="col-md-4 form-group">
+              {{ Form::label('contactotwitter', 'Twitter') }}
+              <div class="input-group">
+                <div class="input-group-addon"><i class="fa fa-twitter"></i></div>
+                {{ Form::text('contactotwitter', null, array('placeholder' => '@usuario','class' => 'form-control')) }}
+              </div>
             </div>
           </div>
         </div>
@@ -339,12 +371,14 @@
       </div>
     </div>
     <div class="col-md-2">
-          {{ Form::image('imgs/fotos/default.png','fotoperfil',array('class' => 'img-responsive img-circle','alt' => 'Responsive image')) }}
+      {{ Form::image('imgs/fotos/default.png','fotoperfil',array('class' => 'img-responsive img-circle','alt' => 'Responsive image')) }}
           {{ Form::file('fotoperfil',array('id' => 'filefoto')) }}
     </div>
-  </form>
+  
+
     <!-- {{form::close()}} -->
   </div>
+  {{Form::close()}}
     <div class="modal fade bs-example-modal-lg" id="Elementos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog modal-lg">
             <div class="modal-content">
@@ -375,18 +409,31 @@
             </div>
         </div>
     </div>
+    @if(!is_null(User::find(Auth::id())->roles()->where('id','=',7)->first()))
+      <div id="titlstatus" class="row col-md-offset-4 col-md-4" style="bottom:10px;"></div>
+      <div id="status" class="row col-md-offset-4 col-md-4 hidden">
+        <textarea id="descripcion" placeholder="Añade un comentario al cambio" class="form-control" rows="3"></textarea>
+        <div class="form-group fecha">
+          <label for="fechabaja">Fecha nacimiento</label>
+            <div class="input-group date" id="datetimePicker2">
+              <input class="form-control" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD" name="fechabaja" type="text" id="fechabaja" data-bv-field="irthday"><span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span></span>
+            </div>
+        </div>
+        <div id="btnstatus"></div>
+      </div>
+    @endif  
 @endsection
 @section('scripts')
   <!-- Para Bootstrap Validator -->
   <script>
     $("#filefoto").fileinput({
-      showUpload: false,
-      showCaption: false,
-      showRemove : false,
+      showUpload: true,
+      showCaption: true,
+      showRemove : true,
       fileType: "any"
     });
     $(document).ready(function() {
-      $('#datetimePicker').datetimepicker({
+      $('#datetimePicker,#datetimePicker2').datetimepicker({
         language: 'es',
         pickTime: false
       });
@@ -403,25 +450,60 @@
               validating: 'glyphicon glyphicon-refresh'
           },
           fields: {
-              nombre: {
+            nombre: {
               validators: {
-                      notEmpty: {}
-                  }
-              },
-              paterno: {
-                  validators: {
-                      notEmpty: {}
-                  }
+                notEmpty: {
+                },
+                regexp: {
+                  regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+                  message: 'Por favor verifica el campo'
+                },
+                stringLength:{
+                  max: 35,
+                }
               }
+            },
+            paterno: {
+              validators: {
+                // notEmpty: { },
+                regexp: {
+                  regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+                  message: 'Por favor verifica el campo'
+                },
+                stringLength:{
+                  max: 35,
+                }
+              }
+            },
+            materno: {
+              validators: {
+                regexp: {
+                  regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+                  message: 'Por favor verifica el campo'
+                },
+                stringLength:{
+                  max: 35,
+                }
+              }
+            },
           }
       })
-      $('#elemento').bootstrapValidator({
+      $('#update_elemento').bootstrapValidator({
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
             invalid: 'glyphicon glyphicon-remove',
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
+          fotoperfil:{
+            validators: {
+              file: {
+                extension: 'jpeg,png,jpg,gif',
+                type: 'image/jpg,image/jpeg,image/png,image/gif',
+                maxSize: 2048 * 1024,   // 2 MB
+              }
+            }
+          },
           nombre: {
             validators: {
               notEmpty: {},
@@ -429,7 +511,15 @@
           },
           reclunombre: {
             validators: {
-              notEmpty: {},
+              notEmpty: {
+              },
+              regexp: {
+                regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+                message: 'Por favor verifica el campo'
+              },
+              stringLength:{
+                max: 35,
+              }
             }
           },
           postal:{
@@ -444,12 +534,11 @@
           },
           curp:{
             validators:{
-              stringLength: {
-                min: 18,
-                max:18,
-                message:'La CURP esta formada por 18 caracteres'
-              },
-              notEmpty:{}
+              notEmpty:{},
+              regexp: {
+                regexp:/^[a-zA-Z]{4}((\d{2}((0[13578]|1[02])(0[1-9]|[12]\d|3[01])|(0[13456789]|1[012])(0[1-9]|[12]\d|30)|02(0[1-9]|1\d|2[0-8])))|([02468][048]|[13579][26])0229)(H|M)(AS|BC|BS|CC|CL|CM|CS|CH|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|SM|NE)([a-zA-Z]{3})([a-zA-Z0-9\s]{1})\d{1}$/,
+                  message: 'Por favor verifica el campo'
+              }
             }
           },
           paterno: {
@@ -459,7 +548,28 @@
           },
           reclupaterno: {
             validators: {
-              notEmpty: {}
+              notEmpty: {
+              },
+              regexp: {
+                regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+                message: 'Por favor verifica el campo'
+              },
+              stringLength:{
+                max: 35,
+              }
+            }
+          },
+          reclumaterno: {
+            validators: {
+              notEmpty: {
+              },
+              regexp: {
+                regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+                message: 'Por favor verifica el campo'
+              },
+              stringLength:{
+                max: 35,
+              }
             }
           },
           email: {
@@ -470,6 +580,9 @@
           birthday: {
             validators: {
               notEmpty: {},
+              date: {
+                format: 'YYYY-MM-DD',
+              }
             }
           },
           telefono: {
@@ -484,17 +597,18 @@
             validators:{
               notEmpty: {},
               integer:{},
-              between:{
-                min: 100,
-                max: 300,
-                message: 'Establece una altura mínima a 100 cm'
-              }
+              stringLength:{
+                max:3,
+              },
             }
           },
           peso:{
             validators:{
               notEmpty:{},
               integer:{},
+              stringLength:{
+                max:3,
+              }
             }
           },
           contactonombre:{
@@ -511,9 +625,196 @@
             validators:{
               notEmpty:{},
             }
+          },
+          domicilio:{
+            validators:{
+              stringLength:{
+                max: 40,
+              },
+              regexp: {
+                regexp:/^[0-9 a-zA-Z áéíóúñÑÁÉÍÓÚ # .]+$/,
+                message: 'Por favor verifica el campo'
+              },
+            }
+          },
+          colonia:{
+            validators:{
+              stringLength:{
+                max: 40,
+              },
+              regexp: {
+                regexp:/^[0-9 a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+                message: 'Por favor verifica el campo'
+              },
+            }
+          },
+          municipio:{
+            validators:{
+              stringLength:{
+                max: 40,
+              },
+              regexp: {
+                regexp:/^[0-9 a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+                message: 'Por favor verifica el campo'
+              },
+            }
+          },
+          lugnac:{
+            validators:{
+              stringLength:{
+                max: 40,
+              },
+              regexp: {
+                regexp:/^[0-9 a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+                message: 'Por favor verifica el campo'
+              },
+            }
+          },
+          reclutelefonofijo: {
+            validators: {
+              integer:{},
+              stringLength: {
+                min: 7,
+                max:10,
+              },
+            }
+          },
+          reclutelefonomovil: {
+            validators: {
+              integer:{},
+              stringLength: {
+                min: 7,
+                max:10,
+              },
+            }
+          },
+          ocupacion:{
+            validators:{
+              stringLength:{
+                max: 40,
+              },
+              regexp: {
+                regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+                message: 'Por favor verifica el campo'
+              },
+            }
+          },
+          escuela:{
+            validators:{
+              stringLength:{
+                max: 40,
+              },
+              regexp: {
+                regexp:/^[0-9.a-zA-Z áéíóúñÑÁÉÍÓÚ]+(\#\d+)*$/,
+                message: 'Por favor verifica el campo'
+              },
+            }
+          },
+          alergia:{
+            validators:{
+              stringLength:{
+                max: 40,
+              },
+              regexp: {
+                regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+                message: 'Por favor verifica el campo'
+              },
+            }
+          },
+          vicios:{
+            validators:{
+              stringLength:{
+                max: 40,
+              },
+              regexp: {
+                regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+                message: 'Por favor verifica el campo'
+              },
+            }
+          },
+          contactonombre:{
+            validators:{
+              notEmpty:{},
+              stringLength:{
+                max: 40,
+              },
+              regexp: {
+                regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+                message: 'Por favor verifica el campo'
+              },
+            }
+          },
+          contactopaterno:{
+            notEmpty:{},
+            validators:{
+              stringLength:{
+                max: 40,
+              },
+              regexp: {
+                regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+                message: 'Por favor verifica el campo'
+              },
+            }
+          },
+          contactomaterno:{
+            validators:{
+              stringLength:{
+                max: 40,
+              },
+              regexp: {
+                regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+                message: 'Por favor verifica el campo'
+              },
+            }
+          },
+          contactorelacion:{
+            validators:{
+              notEmpty:{},
+              stringLength:{
+                max: 40,
+              },
+              regexp: {
+                regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+                message: 'Por favor verifica el campo'
+              },
+            }
+          },
+          estadocivil:{
+            validators:{
+              stringLength:{
+                max: 40,
+              },
+              regexp: {
+                regexp:/^[a-zA-Z áéíóúñÑÁÉÍÓÚ]+$/,
+                message: 'Por favor verifica el campo'
+              },
+            }
           }
         }
       })
+      $('#status').bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+          fechabaja: {
+            validators: {
+              notEmpty: {},
+              date: {
+                format: 'YYYY-MM-DD',
+              }
+            }
+          }
+        }
+      });
+      $('#datetimePicker').on('dp.change dp.show', function(e) {
+          $('#update_elemento').bootstrapValidator('revalidateField', 'birthday');
+      });
+      $('#datetimePicker2').on('dp.change dp.show', function(e) {
+          $('#status').bootstrapValidator('revalidateField', 'fechabaja');
+      });
       $('#bnext1').click(function(){
         $('#parte1').toggle(100);
         $('#parte2').toggle(200);
@@ -612,6 +913,7 @@
         });
       }, 'json');
     });
+    $('#Editar,#2Editar').addClass('active');
   </script>
   <script>
     $('#buscarext').click(function(){
@@ -643,7 +945,7 @@
       compania = $('[name=compania]').val();
       persona_id = $('[name=persona_id]').val();
       $.post('cargos',{compania:compania,persona_id:persona_id}, function(json) {
-        console.log(json);
+        // // console.log(json);
         if (json.success){
           $('[name=compania]').text('');
           $('[name=compania]').append('<option value="'+json.companiasysubzona_id+'">'+json.compania+'</option>');
