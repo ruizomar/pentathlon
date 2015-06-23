@@ -14,3 +14,4 @@ class Tutor extends Eloquent {
         return $this->belongsTo('Elemento');
     }
 }
+

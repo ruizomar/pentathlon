@@ -91,6 +91,7 @@
 				$('[name=id]').val(json.id);
 				$('#nombreelemento').text(json.nombre+' '+json.paterno+' '+json.materno);
 				$('label[for=matricula]').text(json.matricula);
+				$('[name=companiasysubzona] option[value='+json.compania+']').attr('selected', true);
 				if (!json.matricula) {
 					$('label[for=matricula]').text('Sin registro');
 					$('label[for=matricula]').removeClass('label-success');

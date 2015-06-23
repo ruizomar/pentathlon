@@ -61,6 +61,7 @@ class AsignaCargosController extends BaseController {
 			'matricula' => $matricula,
 			'cargo' => $cargo,
 			'companiasysubzonas' => $elemento -> companiasysubzona -> tipo .' '. $elemento ->  companiasysubzona -> nombre,
+			'compania'	=>	$elemento->companiasysubzona_id,
 		);
 		return ($dato);
 	}
@@ -71,6 +72,16 @@ class AsignaCargosController extends BaseController {
 		$elementos = Cargo::find($cargo) -> elementos() -> get();
 		$q = array();
 		foreach ($elementos as $elemento) {
+			if($cargo<10){
+				if(is_null($elemento -> pivot -> fecha_fin)){
+					$q = array(
+						'success' => false,
+						'nombre' => $elemento -> persona -> nombre,
+						'paterno' => $elemento -> persona -> apellidopaterno,
+						'materno' => $elemento -> persona -> apellidomaterno,
+						);
+				}
+			}
 			if ($elemento -> companiasysubzona_id == Input::get('companiasysubzona')) {
 				if(is_null($elemento -> pivot -> fecha_fin)){
 					$q = array(
@@ -103,8 +114,10 @@ class AsignaCargosController extends BaseController {
 				'companiasysubzona_id' => Input::get('companiasysubzona'),
 			));
 		}
-		$elementos = Cargo::find($cargo) -> elementos() -> get();
-		// $datos = Cargo::find($cargo) -> elementos() -> get();
+		$elementos = Cargo::find($cargo) -> elementos() ->where('companiasysubzona_id',$elemento->companiasysubzona_id) -> get();
+		if($cargo<10){
+			$elementos = Cargo::find($cargo) -> elementos() -> get();
+		}
 		$q = array();
 		foreach ($elementos as $elem) {
 			if(is_null($elem -> pivot -> fecha_fin)){
