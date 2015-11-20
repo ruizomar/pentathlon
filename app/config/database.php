@@ -55,9 +55,9 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'pentathl_pdmu',
-			'username'  => 'pentathl_pdmu',
-			'password'  => 'W216MHmgcT00',
+			'database'  => 'db_pdmu',
+			'username'  => 'root',
+			'password'  => '',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

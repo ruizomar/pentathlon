@@ -71,3 +71,5 @@ Route::post('recover','RecoverPassword@postRecover');
 Route::controller('settings','settingsController');
 Route::controller('administrador','AdminController');
 Route::controller('credenciales','CredencialesController');
+//Agregué esta ruta
+Route::controller('reunion', 'ReunionController');
