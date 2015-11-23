@@ -1,6 +1,6 @@
 @extends('layaouts.public')
 @section('titulo')
-  Convocatorias
+  Reunión
 @endsection
 @section('head')
     <style>
@@ -132,6 +132,7 @@
                             <option value="10">3/er Comandante de Inf.</option>
                             <option value="11">2/o Comandante de Inf.</option>
                             <option value="12">1/er Comandante de Inf.</option>
+                            <option value="13">Acompañante</option>
                         </select>
                     </div>
                     <div class="col-md-4 form-group">
@@ -148,12 +149,13 @@
                         </select>
                     </div>
                     <div class="col-md-4 form-group">
-                        {{ Form::label('cargo', 'Cargo') }}Jefe E.M.Z.
+                        {{ Form::label('cargo', 'Cargo') }}
                         <select class="form-control" name="cargo[]" id="cargo">
                             <option value="1">Comandante de Zona</option>
                             <option value="2">Jefe</option>
                             <option value="3">Subjefe</option>
                             <option value="4">Ayudante</option>
+                            <option value="5">Acompañante</option>
                         </select>
                     </div>
                     <div class="col-md-4 form-group">
@@ -168,6 +170,7 @@
                             <option value="7">sección de Inv. y Est.</option>
                             <option value="8">Sección de Archivo</option>
                             <option value="9">Sección de hacienda</option>
+                            <option value="10">Acompañante</option>
                         </select>
                     </div>
                     <div class="col-md-12"><hr>
