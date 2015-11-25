@@ -76,6 +76,7 @@ class ReunionController extends BaseController {
 			Reunion::create(array(
 				'zona'		=> Input::get('zona'),
 				'grado'		=> Input::get('grado')[$i],
+				'arma'		=> Input::get('arma')[$i],
 				'nombre'	=> Input::get('nombre')[$i],
 				'reunion'	=> Input::get('reunion')[$i],
 				'cargo'		=> Input::get('cargo')[$i],

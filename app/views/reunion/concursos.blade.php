@@ -120,19 +120,27 @@
                     <div class="col-md-4 form-group">
                         {{ Form::label('grado', 'Grado') }}
                         <select class="form-control" name="grado[]" id="grado">
-                            <option value="1">Cadete de Inf.</option>
-                            <option value="2">Cadete 1/a de Inf.</option>
-                            <option value="3">Cabo de Inf.</option>
-                            <option value="4">Sargento 2/o de Inf.</option>
-                            <option value="5">Sargento 1/o de Inf.</option>
-                            <option value="6">SubOficial de Inf.</option>
-                            <option value="7">3/er Oficial de Inf.</option>
-                            <option value="8">2/o Oficial de Inf.</option>
-                            <option value="9">1/er Oficial de Inf.</option>
-                            <option value="10">3/er Comandante de Inf.</option>
-                            <option value="11">2/o Comandante de Inf.</option>
-                            <option value="12">1/er Comandante de Inf.</option>
+                            <option value="1">Cadete</option>
+                            <option value="2">Cadete 1/a</option>
+                            <option value="3">Cabo</option>
+                            <option value="4">Sargento 2/o</option>
+                            <option value="5">Sargento 1/o</option>
+                            <option value="6">SubOficial</option>
+                            <option value="7">3/er Oficial</option>
+                            <option value="8">2/o Oficial</option>
+                            <option value="9">1/er Oficial</option>
+                            <option value="10">3/er Comandante</option>
+                            <option value="11">2/o Comandante</option>
+                            <option value="12">1/er Comandante</option>
                             <option value="13">Acompañante</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        {{ Form::label('arma', 'Arma') }}
+                        <select class="form-control" name="arma[]" id="arma">
+                            <option value="1">Caballería</option>
+                            <option value="2">Infantería</option>
+                            <option value="3">Infantería de Marina</option>
                         </select>
                     </div>
                     <div class="col-md-4 form-group">
