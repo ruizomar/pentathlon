@@ -25,7 +25,7 @@ class RecoverPassword extends BaseController {
             if(is_null($user->elemento->persona->email))
                 return Redirect::to('forgot')->with('mensaje_error','Error al enviar el correo');
             $email = $user->elemento->persona->email->email;
-            Mail::send('emails.auth.reminder', array('token' => $token,'nombre'=>$user->elemento->persona->nombre), function($message) use ($email){
+            Mail::send('emails.auth.reminder', array('token' => $token,'nombre'=>$user->elemento->persona->nombre), function($message) use ($email,$user){
                 $message->to($email,$user->elemento->persona->nombre)->subject('Recuperar contraseña');
             });
             return  View::make('login.reminder')

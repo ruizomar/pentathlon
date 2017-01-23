@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
-  <head>
+  <head><meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
     <title>Inicio</title>
-      <meta charset="utf-8">
+      
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
       {{  HTML::style('css/login.css')  }}
       {{  HTML::style('css/bootstrap.css');  }}

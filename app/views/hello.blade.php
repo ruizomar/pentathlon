@@ -11,9 +11,9 @@
     <div class="main">
       <div class="login-form text-center">
           <img src="{{ asset('imgs/penta.png') }}" class="img-responsive col-sm-6 col-sm-offset-3" alt="Responsive image" style="margin-top:1em; margin-bottom:1em;">
-          <form action="concursos" method="get" accept-charset="UTF-8" role="form">
+          <form action="reunion" method="get" accept-charset="UTF-8" role="form">
             <p>¡Bienvenido!</p>
-            <p>Registrarse al concurso nacional de escoltas</p>
+            <p>Reunión Nacional de Comandantes, Estados Mayores y Directoras</p>
               <div class="submit">
                 <input type="submit" value="Registrarse">
                 <!-- <a href="{{ URL::to('logout'); }}"><i class="fa fa-sign-out"></i> Logout</a> -->

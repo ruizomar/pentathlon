@@ -212,13 +212,9 @@
 			        tableTools : {
 			            "sSwfPath": "{{URL::to('swf/copy_csv_xls_pdf.swf')}}",
 			            aButtons: [
-                        "copy",
-                        "xls",
-                        {
-                            "sExtends": "pdf",
-                            "sPdfOrientation": "landscape",
-                        },
-                    ]
+			                "copy",
+			                "xls",
+			            ]
 			        },
 		        });
 				// console.log(json.grafica);
@@ -260,17 +256,13 @@
 							"previous":   "Anterior"
 		              	},
 		        	},
-			        dom: 'T<"clear">lfrtip',
+			        // dom: 'T<"clear">lfrtip',
 			        tableTools : {
 			            "sSwfPath": "{{URL::to('swf/copy_csv_xls_pdf.swf')}}",
 			            aButtons: [
-                        "copy",
-                        "xls",
-                        {
-                            "sExtends": "pdf",
-                            "sPdfOrientation": "landscape",
-                        },
-                    ]
+			                "copy",
+			                "xls",
+			            ]
 			        },
 		        });
 				if (typeof json.tabla != "undefined") {
