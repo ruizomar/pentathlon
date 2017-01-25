@@ -52,7 +52,22 @@ class AltaReclutaController extends BaseController {
 
 	public function post_nuevo()
 	{
-	///////////////////////////////////////////////////Elemento
+		////// 25/01/2017  validar curp //////
+		$rules = array(
+			'curp' => 'required|unique:elementos',
+			);
+		$mesages = array(
+						'curp.required' => 'La CURP es requerida!',
+						'curp.unique' => 'La CURP ya esta registrada!'
+						);
+
+		$validation = Validator::make(Input::all(), $rules, $mesages);
+		if($validation->fails())
+		{
+			return Redirect::back()->withInput()->withErrors($validation->errors());
+			//return redirect()->back()->withInput(Request::all())->withErrors($v->errors());
+		}
+	    ///////////////////////////////////////////////////Elemento
 		$personaElemento = Persona::create(array(
 			'nombre' => Input::get('reclunombre'),
 			'apellidopaterno' => Input::get('reclupaterno'),
@@ -123,7 +138,7 @@ class AltaReclutaController extends BaseController {
 			$documento -> save();
 		}
 
-	///////////////////////////////////////////////////Tutor
+	    ///////////////////////////////////////////////////Tutor
 		$personaTutor = Persona::create(array(
 			'nombre' => Input::get('contactonombre'),
 			'apellidopaterno' => Input::get('contactopaterno'),
@@ -145,7 +160,7 @@ class AltaReclutaController extends BaseController {
 		if (Input::get('contactoemail') != "") {
 			AltaReclutaController::agregarEmail($personaTutor->id,Input::get('contactoemail'));
 		}
-	///////////////////////////////////////////////////Relacion elemento-tutor
+	    ///////////////////////////////////////////////////Relacion elemento-tutor
 		AltaReclutaController::agregarTutor($personaTutor->id,$elemento->id,Input::get('contactorelacion'));
 
 		$persona = Persona::find($personaElemento -> id);

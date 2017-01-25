@@ -80,6 +80,17 @@
   	{{  HTML::style('css/sweet-alert.css');  }}
 @endsection
 @section('contenido')
+	<?php if (count($errors) > 0): ?>
+		<div id="inactivo" class="alert alert-danger" role="alert">
+		<?php foreach ($errors->all() as $error): ?>
+		    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+		    <span class="sr-only">Error:</span>
+			{{ $error}}
+			
+		<?php endforeach ?>
+  		</div>
+	<?php endif ?>
+
 	{{ Form::open(array('id' => 'formularioalta','url'=>'recluta/alta','files'=>true)) }}
 		<div class="col-md-2 step">
 			<div id="div1" class="seleccion activestep" onclick="javascript:$('#formularioalta').data('bootstrapValidator').validate(); if($('#formularioalta').data('bootstrapValidator').isValid())resetActive(event, 33, 'step-1');">
