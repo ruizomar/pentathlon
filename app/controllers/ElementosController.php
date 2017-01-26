@@ -56,6 +56,21 @@ class ElementosController extends BaseController {
 
 	public function postAlta()
 	{
+		////// 25/01/2017  validar curp //////
+		$rules = array(
+			'curp' => 'required|unique:elementos',
+			);
+		$mesages = array(
+						'curp.required' => 'La CURP es requerida!',
+						'curp.unique' => 'La CURP ya esta registrada!'
+						);
+
+		$validation = Validator::make(Input::all(), $rules, $mesages);
+		if($validation->fails())
+		{
+			return Redirect::back()->withInput()->withErrors($validation->errors());
+			//return redirect()->back()->withInput(Request::all())->withErrors($v->errors());
+		}
 	///////////////////////////////////////////////////Elemento
 		$personaElemento = Persona::create(array(
 			'nombre' => Input::get('reclunombre'),

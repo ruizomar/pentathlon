@@ -14,6 +14,16 @@
   	</style>
 @endsection
 @section('contenido')
+	<?php if (count($errors) > 0): ?>
+		<div id="inactivo" class="alert alert-danger" role="alert">
+		<?php foreach ($errors->all() as $error): ?>
+		    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+		    <span class="sr-only">Error:</span>
+			{{ $error}}
+			
+		<?php endforeach ?>
+  		</div>
+	<?php endif ?>
 	{{ Form::open(array('id' => 'formularioalta','url'=>'elementos/alta','files'=>true)) }}
 		<div class="col-md-12">
 			<label class="label label-primary"><span class="glyphicon glyphicon-user"></span> Datos de elemento</label>
